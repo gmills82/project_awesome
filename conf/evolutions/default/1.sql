@@ -20,7 +20,7 @@ create table client (
   name                      varchar(255),
   email                     varchar(255),
   phone_number              bigint,
-  birth_date                timestamp,
+  birth_date                bigint,
   birth_date_pretty         varchar(255),
   constraint pk_client primary key (id))
 ;

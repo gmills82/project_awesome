@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -29,7 +30,7 @@ public class Client extends Model {
     public String email;
     public Long phoneNumber;
 
-    public Date birthDate;
+    public Long birthDate;
     public String birthDatePretty;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
@@ -54,6 +55,7 @@ public class Client extends Model {
         client.debtList.remove(debt);
         debt.delete();
     }
+
 
     public static void addAsset(Client client, FinancialAsset asset) {
         client.assetList.add(asset);

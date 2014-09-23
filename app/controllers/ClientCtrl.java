@@ -48,7 +48,7 @@ public class ClientCtrl extends Controller {
 
         //Convert string date to java date
         if(null != data.findPath("birthDatePretty").textValue()) {
-            client.birthDate = new SimpleDateFormat("yyyy-mm-dd").parse(data.findPath("birthDatePretty").textValue());
+            client.birthDate = new SimpleDateFormat("yyyy-mm-dd").parse(data.findPath("birthDatePretty").textValue()).getTime();
         }
 
         client.save();
@@ -63,15 +63,6 @@ public class ClientCtrl extends Controller {
         Logger.debug("Reached editClientJSON");
 
         Form<Client> clientForm = Form.form(Client.class).bindFromRequest();
-        //check out for form errors
-        if(clientForm.hasErrors() || null == clientForm) {
-            for (String errorKey : clientForm.errors().keySet()) {
-                for (ValidationError error : clientForm.errors().get(errorKey)) {
-                    Logger.error(error.key() + " = " + error.message());
-                }
-            }
-            return badRequest();
-        }
 
         //There is no error on the form so it is now safe to get the Client
         Client client = clientForm.get();
