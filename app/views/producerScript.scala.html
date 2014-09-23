@@ -1,0 +1,38 @@
+@(user: User, scripts: List[Script])
+@home(user, "Producer Phone Scripts Tool") {
+
+    <h1 class="row">Producer Phone Scripts Tool</h1>
+
+    <!-- Nav tabs -->
+    <div class="row  scriptTabs" >
+        <ul class="nav nav-pills col-md-8" role="tablist">
+            @for((script, index) <- scripts.zipWithIndex) {
+                @if(index.equals(0)){
+                    <li class="active">
+                }else {
+                    <li>
+                }
+                    <a href="#script@index" role="tab" data-toggle="tab">@script.heading</a>
+                </li>
+            }
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content col-md-offset-1 col-md-8">
+            @for((script, index) <- scripts.zipWithIndex) {
+                @if(index.equals(0)){
+                    <div class="tab-pane fade in active" id="script@index">
+                }else {
+                    <div class="tab-pane fade" id="script@index">
+                }
+                    <p>@script.body Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae accumsan magna. In rutrum, tellus non egestas consectetur, augue leo sagittis metus, et gravida est dolor vitae sapien. Ut volutpat, justo eget pretium interdum, libero quam feugiat neque, interdum laoreet velit dui ultricies nisl. Mauris pretium urna arcu, non vehicula tortor consequat at. Suspendisse est nisi, gravida eget imperdiet nec, venenatis sed arcu. Phasellus pulvinar magna sed aliquam facilisis. Suspendisse gravida nulla vel nunc pharetra egestas sit amet vitae justo. Etiam cursus iaculis nulla et ornare. Etiam eu bibendum velit, ac consectetur tellus. Vestibulum euismod, sapien ac convallis dignissim, urna neque fringilla dui, ac tincidunt est augue non ligula. Suspendisse ullamcorper ut sapien vel pharetra. Vestibulum in laoreet sem, nec luctus magna. Duis elementum nibh lacus, a sollicitudin odio ullamcorper fermentum. Cras eget ex eget eros pellentesque volutpat eget quis ante.</p>
+
+                        <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Etiam eget semper elit, a tempor quam. Nam et dolor eu risus gravida rhoncus quis sed dui. Nunc volutpat faucibus consequat. Nullam magna arcu, tincidunt ut sem vel, posuere interdum mi. Suspendisse quis sem nibh. In hac habitasse platea dictumst. Aenean nec fermentum lorem. Curabitur euismod eu augue vitae imperdiet. Etiam magna mauris, luctus eget molestie vitae, viverra tempor risus. Donec malesuada libero ac ante finibus, sodales faucibus ligula rhoncus. Maecenas eros magna, aliquam et leo a, iaculis egestas risus.</p>
+                </div>
+            }
+        </div>
+    </div>
+    <div class="row">
+        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+    </div>
+}

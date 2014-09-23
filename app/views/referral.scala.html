@@ -1,0 +1,49 @@
+@(user: User, agents: List[User])
+@home(user, "Profile a Client") {
+    <h2 class="row">Create a Client Referral</h2>
+    <div class="row" ng-controller="ReferralController">
+        <form class="form-horizontal" ng-submit="addReferral(referral)" name="referralForm" novalidate>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Name:</label>
+                <div class="col-md-10">
+                    <input type="text" ng-model="referral.client.name" name="name" placeholder="Client Name" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" >E-mail:</label>
+                <div class="col-md-10">
+                    <input type="email" ng-model="referral.client.email" name="email" class="form-control" placeholder="Email" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" >Phone Number:</label>
+                <div class="col-md-10">
+                    <input type="number" ng-model="client.phoneNumber" name="phoneNumber" class="form-control" placeholder="Phone Number" />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" >Reason for referral:</label>
+                <div class="col-md-10">
+                    <textarea ng-model="referral.reasonForReferral" name="reasonForReferral" class="form-control" placeholder="Reason you are referring this person to a financial advisor"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" >Notes:</label>
+                <div class="col-md-10">
+                    <textarea ng-model="referral.creatorNotes" name="creatorNotes" class="form-control" placeholder="General Notes"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" >Assign to Agent:</label>
+                <div class="col-md-10">
+                    <select ng-model="referral.agentId" required>
+                        @for(agent <- agents) {
+                            <option value="@agent.id">@agent.email</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            <input type="submit" class="btn btn-primary col-md-offset-2" value="Submit" ng-disabled="(referralForm.$invalid || clientForm.$invalid)"/>
+        </form>
+    </div>
+}

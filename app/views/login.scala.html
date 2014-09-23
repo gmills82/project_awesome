@@ -1,0 +1,27 @@
+@(loginForm: Form[Application.Login])
+@main("Login page") {
+
+    <div class="container">
+        <h1>Sign in to the awesome</h1>
+
+        @if(loginForm.hasGlobalErrors) {
+            <p class="alert alert-danger">
+            @loginForm.globalError.message
+            </p>
+        }
+
+        @if(flash.contains("success")) {
+            <p class="alert alert-success">
+            @flash.get("success")
+            </p>
+        }
+
+        @helper.form(routes.Application.authenticate, '_class -> "row") {
+            <input type="email" name="email" class="form-control form-group" placeholder="E-mail" value="@loginForm("email").value()" />
+            <input type="password" name="password" class="form-control form-group" placeholder="Password" value="@loginForm("password").value()" />
+            <input type="submit" value="Login" />
+        }
+    </div>
+
+
+}

@@ -1,0 +1,54 @@
+@(user: User)
+@home(user, "Home") {
+    <h1>Welcome, @user.email</h1>
+
+    @*Flash messages*@
+    @if(flash.contains("success")) {
+        <p class="alert alert-success">@flash.get("success")</p>
+    }
+
+    <p>Actions and tracking tools will allow you to more efficiently manage your financial clients.
+        <span class="notifications"></span>
+    </p>
+
+    <h2 class="page-header">Tools <small>Work more efficiently</small></h2>
+
+    @* ActionController *@
+    <div class="row" ng-controller="ActionController" category="tool">
+
+        @* Looping through actions *@
+        <div class="thumbnails thumbnail-style thumbnail-kenburn col-sm-2" ng-repeat="action in actions">
+            <div class="thumbnail-img">
+                <div class="overflow-hidden">
+                    <img class="img-responsive" src="@routes.Assets.at("images/{{action.imageName}}")" alt="{{action.actionName}}">
+                </div>
+                <a class="btn-more hover-effect" href="{{action.actionURL}}">learn more +</a>
+            </div>
+            <div class="caption">
+                <h3><a class="hover-effect" href="{{action.actionURL}}">{{action.actionName}}</a></h3>
+                <p>{{action.shortDescription}}</p>
+            </div>
+        </div>
+
+    </div>
+
+    @* ActionController *@
+    <h2 class="page-header">Charts & Reports <small>Track your team's performance</small></h2>
+
+    <div class="row" ng-controller="ActionController" category="tracking">
+
+        @* Looping through actions *@
+        <div class="thumbnails thumbnail-style thumbnail-kenburn col-sm-2" ng-repeat="action in actions">
+            <div class="thumbnail-img">
+                <div class="overflow-hidden">
+                    <img class="img-responsive" src="@routes.Assets.at("images/{{action.imageName}}")" alt="{{action.actionName}}">
+                </div>
+                <a class="btn-more hover-effect" href="{{action.actionURL}}">learn more +</a>
+            </div>
+            <div class="caption">
+                <h3><a class="hover-effect" href="{{action.actionURL}}">{{action.actionName}}</a></h3>
+                <p>{{action.shortDescription}}</p>
+            </div>
+        </div>
+    </div>
+}

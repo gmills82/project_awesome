@@ -1,0 +1,33 @@
+@(signupForm: Form[User])
+
+@main("Signup page") {
+
+    <div class="container">
+        <h1 class="page-header">Sign up for Project Awesome!</h1>
+
+        @if(signupForm.hasGlobalErrors) {
+            <p class="alert alert-danger">
+            @signupForm.globalError.message
+            </p>
+        }
+
+        @helper.form(routes.Application.addSignup(), 'role -> "form", '_class -> "row") {
+
+            <input type="number" name="userId" class="form-control form-group" placeholder="Agent Id" value="@signupForm("userId").value()" />
+            <input type="text" name="userName" class="form-control form-group" placeholder="Username" value="@signupForm("userName").value()" />
+
+            <fieldset class="form-group">
+                <input type="password" name="password" class="form-control" placeholder="Password" value="@signupForm("password").value()" />
+                <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password" value="" />
+            </fieldset>
+
+            <select name="roleTypeString" class="form-control form-group">
+                <option value="Producer" selected>Producer</option>
+                <option value="Agent" >Agent</option>
+                <option value="FA">Financial Advisor</option>
+            </select>
+
+            <input type="submit" value="Sign up" />
+        }
+    </div>
+}
