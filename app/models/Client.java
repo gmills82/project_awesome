@@ -1,6 +1,7 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -36,6 +37,7 @@ public class Client extends Model {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     public List<Income> incomeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+	@JsonManagedReference
     public List<FinancialAsset> assetList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
     public List<Debt> debtList;
