@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -20,6 +21,7 @@ public class Income extends Model {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "client", referencedColumnName = "id")
+	@JsonBackReference
     public Client client;
 
     public Long assetId;

@@ -24,6 +24,7 @@ GET         /json/profile/:profileId          controllers.ProfileCtrl.getProfile
 POST        /json/referral                    controllers.ReferralCtrl.addReferral()
 GET         /json/referral/:referralId        controllers.ReferralCtrl.getReferral(referralId: Long)
 GET         /json/assetTypes                  controllers.ClientCtrl.getAssetTypes()
+GET         /json/debtTypes                   controllers.ClientCtrl.getDebtTypes()
 
 
 # Map static resources from the /public folder to the /assets URL path

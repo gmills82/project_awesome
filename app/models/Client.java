@@ -35,11 +35,13 @@ public class Client extends Model {
     public String birthDatePretty;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+	@JsonManagedReference
     public List<Income> incomeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
 	@JsonManagedReference
     public List<FinancialAsset> assetList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
+	@JsonManagedReference
     public List<Debt> debtList;
 
     public static void addIncome(Client client, Income income) {

@@ -87,6 +87,19 @@ public class ClientCtrl extends Controller {
         return ok(result);
     }
 
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result getDebtTypes() {
+		ObjectNode result = Json.newObject();
+		result.put("status", "OK");
+
+		List<Debt.DebtType> debtTypes = Debt.getAllDebtTypes();
+		JsonNode types = Json.toJson(debtTypes);
+
+		result.put("data", types);
+
+		return ok(result);
+	}
+
 //    /* Asset methods */
 //
 //    public static Result enterAsset(Long clientId) {

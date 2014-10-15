@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
@@ -7,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,6 +24,7 @@ public class Debt extends Model {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "client", referencedColumnName = "id")
+	@JsonBackReference
     public Client client;
 
     public enum DebtType {
@@ -37,8 +41,7 @@ public class Debt extends Model {
         }
     }
 
-    public DebtType debtType;
-    public Float value;
+    public DebtType realDebtType;
     public Frequency frequency;
     public Float totalOwed;
 
@@ -46,9 +49,13 @@ public class Debt extends Model {
     public String financialInstitute;
 
     public void setRealDebtType(String debtTypeString) {
-        String adj = debtTypeString.replaceAll("debtTypeString_", "");
-        this.debtType = DebtType.valueOf(debtTypeString);
+        this.realDebtType = DebtType.valueOf(debtTypeString);
     }
+
+	public static List<DebtType> getAllDebtTypes() {
+		List<DebtType> all = new ArrayList<DebtType>(Arrays.asList(DebtType.values()));
+		return all;
+	}
 
     public static Finder<Long, Debt> find = new Finder(Long.class, Debt.class);
 
