@@ -29,12 +29,12 @@ create table debt (
   id                        bigint not null,
   client                    bigint not null,
   real_debt_type            integer,
-  frequency                 integer,
+  frequency_str             varchar(255),
   total_owed                float,
+  recurring_amount          float,
   description               varchar(255),
   financial_institute       varchar(255),
   constraint ck_debt_real_debt_type check (real_debt_type in (0,1,2,3)),
-  constraint ck_debt_frequency check (frequency in (0,1,2,3,4)),
   constraint pk_debt primary key (id))
 ;
 

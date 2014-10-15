@@ -30,28 +30,21 @@ public class Debt extends Model {
     public enum DebtType {
         MORTGAGE, CC, STUDENT_LOANS, AUTO
     }
-    public enum Frequency {
-        ANNUALLY(1), MONTHLY(12), BIWEEKLY(26), WEEKLY(52), DAILY(365);
-        private Integer valueMultiplier;
-        Frequency(Integer valueMultiplier) {
-            this.valueMultiplier = valueMultiplier;
-        }
-        public Integer getValueMultiplier() {
-            return valueMultiplier;
-        }
-    }
 
     public DebtType realDebtType;
-    public Frequency frequency;
+    public String frequencyStr;
     public Float totalOwed;
+	public Float recurringAmount;
 
     public String description;
     public String financialInstitute;
 
+	//Getters and Setters
     public void setRealDebtType(String debtTypeString) {
         this.realDebtType = DebtType.valueOf(debtTypeString);
     }
 
+	//Util methods
 	public static List<DebtType> getAllDebtTypes() {
 		List<DebtType> all = new ArrayList<DebtType>(Arrays.asList(DebtType.values()));
 		return all;
