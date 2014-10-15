@@ -27,21 +27,41 @@ public class FinancialAsset extends Model {
 	@JsonBackReference
     public Client client;
 
+	public enum PaymentFrequency {
+		ANNUALLY(1), MONTHLY(12), BIWEEKLY(26), WEEKLY(52), DAILY(365);
+		private Integer valueMultiplier;
+		PaymentFrequency(Integer valueMultiplier) {
+			this.valueMultiplier = valueMultiplier;
+		}
+		public Integer getValueMultiplier() {
+			return valueMultiplier;
+		}
+	}
+
     public enum AssetType {
         K401, ANNUITY, CASH, CD, GOLD, IRA, PARTNERSHIP, RENTAL_PROP, RETIREMENT_ACCT
     }
 
     public float totalValue;
     public AssetType realAssetType;
-
+	public String frequencyStr;
+	public Integer frequency;
+	public Float recurringAmount;
     public String financialInstitute;
-
     public String description;
 
+	//Getters and Setters
     public void setRealAssetType (String assetTypeString) {
         this.realAssetType = AssetType.valueOf(assetTypeString);
     }
+	public void setFrequency(String frequencyStr) {
+		PaymentFrequency freq = PaymentFrequency.valueOf(frequencyStr);
+		if(null != freq) {
+			this.frequency = freq.getValueMultiplier();
+		}
+	}
 
+	//Util
     public static List<AssetType> getAllAssetTypes() {
         List<AssetType> all = new ArrayList<AssetType>(Arrays.asList(AssetType.values()));
         return all;
