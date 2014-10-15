@@ -61,7 +61,7 @@ public class Application extends Controller {
             return badRequest(login.render(loginForm));
         }else {
             session().clear();
-            session("email", loginForm.get().email);
+            session("userName", loginForm.get().userName);
             return redirect(routes.Application.home());
         }
     }
@@ -119,12 +119,13 @@ public class Application extends Controller {
     }
 
     public static class Login {
-        public String email;
+        public String userName;
         public String password;
 
         //Called when we bind a Login from a request
         public String validate() {
-            String errors = User.authenticate(email, password);
+			Logger.debug("userName in validate is: " + userName);
+            String errors = User.authenticate(userName, password);
             if(null == errors) {
                 return null;
             }
@@ -133,7 +134,7 @@ public class Application extends Controller {
     }
 
     public static User getCurrentUser() {
-        String userName = session().get("email");
+        String userName = session().get("userName");
         User currentUser = null;
         if(null != userName) {
             currentUser = User.getByEmail(userName);

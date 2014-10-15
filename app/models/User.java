@@ -27,7 +27,7 @@ public class User extends Model {
     @Constraints.Email
     @Constraints.Required
     @Column(unique=true)
-    public String email;
+    public String userName;
     @Constraints.Required
     public String password;
 
@@ -50,7 +50,7 @@ public class User extends Model {
 
     //Unique name check
     public static Boolean isUserNameTaken(String name) {
-        List<User> list = find.where().eq("email", name).findList();
+        List<User> list = find.where().eq("userName", name).findList();
         if(list.size() > 0) {
             return Boolean.TRUE;
         }
@@ -70,7 +70,7 @@ public class User extends Model {
     }
     //TODO: Same as above
     public static User getByEmail(String email) {
-        return find.where().eq("email", email).findList().listIterator().next();
+        return find.where().eq("userName", email).findList().listIterator().next();
     }
     public static List<User> getByPermissionLevel(Role roleType) {
         return find.where().eq("roleType", roleType.getPermissionLevel()).findList();
@@ -81,7 +81,7 @@ public class User extends Model {
     }
 
     public static String authenticate(String userName, String password) {
-        List<User> userList = find.where().eq("email", userName).findList();
+        List<User> userList = find.where().eq("userName", userName).findList();
 
         if(userList.size() == 0) {
 			Logger.debug("No user found");

@@ -38,7 +38,7 @@
                 <div class="col-md-10">
                     <select ng-model="referral.agentId" required>
                         @for(agent <- agents) {
-                            <option value="@agent.id">@agent.email</option>
+                            <option value="@agent.id">@agent.userName</option>
                         }
                     </select>
                 </div>

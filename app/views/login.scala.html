@@ -17,7 +17,7 @@
         }
 
         @helper.form(routes.Application.authenticate, '_class -> "row") {
-            <input type="email" name="email" class="form-control form-group" placeholder="E-mail" value="@loginForm("email").value()" />
+            <input type="email" name="userName" class="form-control form-group" placeholder="E-mail" value="@loginForm("userName").value()" />
             <input type="password" name="password" class="form-control form-group" placeholder="Password" value="@loginForm("password").value()" />
             <input type="submit" value="Login" />
         }

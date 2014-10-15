@@ -1,6 +1,6 @@
 @(user: User)
 @home(user, "Home") {
-    <h1>Welcome, @user.email</h1>
+    <h1>Welcome, @user.userName</h1>
 
     @*Flash messages*@
     @if(flash.contains("success")) {

@@ -28,7 +28,7 @@ public class Client extends Model {
     public String name;
 
     @Constraints.Email
-    public String email;
+    public String userName;
     public Long phoneNumber;
 
     public Long birthDate;

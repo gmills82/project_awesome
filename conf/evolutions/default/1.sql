@@ -18,7 +18,7 @@ create table client (
   id                        bigint not null,
   acct_number               varchar(255),
   name                      varchar(255),
-  email                     varchar(255),
+  user_name                 varchar(255),
   phone_number              bigint,
   birth_date                bigint,
   birth_date_pretty         varchar(255),
@@ -108,11 +108,11 @@ create table script (
 create table user (
   id                        bigint not null,
   user_id                   bigint,
-  email                     varchar(255),
+  user_name                 varchar(255),
   password                  varchar(255),
   role_type                 integer,
   constraint ck_user_role_type check (role_type in (0,1,2)),
-  constraint uq_user_email unique (email),
+  constraint uq_user_user_name unique (user_name),
   constraint pk_user primary key (id))
 ;
 

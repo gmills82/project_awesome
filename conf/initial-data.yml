@@ -1,10 +1,10 @@
 - !!models.Client
     acctNumber: 1234
     name: The One
-    email: gmills82@gmail.com
+    userName: gmills82@gmail.com
 
 - !!models.User
-    email: test@test.com
+    userName: test@test.com
     password: $2a$10$RIFSpI/UgdJDdkurk2MbRuVJ/NMeLiTprJjwOPRvA4HVKtC74Kyju
     roleType: FA
 

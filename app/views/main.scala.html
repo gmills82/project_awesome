@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="navbar-brand">
                         <a href="
-                            @if(null != session().get("username")) {
+                            @if(null != session().get("userName")) {
                                 @routes.Application.home()
                             }else {
                                 @routes.Application.index()
@@ -25,7 +25,7 @@
                     </div>
                     <div class="navbar-right">
                         <a class="navbar-text" href="@routes.Application.signup()">Create an account</a>
-                        @if(null != session().get("username")) {
+                        @if(null != session().get("userName")) {
                             <a href="@routes.Application.logout()" class="btn btn-default btn-sm navbar-btn">Logout <span class="glyphicon glyphicon-log-out"></span></a>
                         }else {
                             <a href="@routes.Application.login()" class="btn btn-default btn-sm navbar-btn">Login <span class="glyphicon glyphicon-log-in"></span></a>

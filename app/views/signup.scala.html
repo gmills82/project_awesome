@@ -14,7 +14,7 @@
         @helper.form(routes.Application.addSignup(), 'role -> "form", '_class -> "row") {
 
             <input type="number" name="userId" class="form-control form-group" placeholder="Agent Id" value="@signupForm("userId").value()" />
-            <input type="text" name="userName" class="form-control form-group" placeholder="Username" value="@signupForm("userName").value()" />
+            <input type="email" name="userName" class="form-control form-group" placeholder="Username" value="@signupForm("userName").value()" />
 
             <fieldset class="form-group">
                 <input type="password" name="password" class="form-control" placeholder="Password" value="@signupForm("password").value()" />
