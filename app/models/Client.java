@@ -33,6 +33,7 @@ public class Client extends Model {
 
     public Long birthDate;
     public String birthDatePretty;
+	public String refNotes;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
 	@JsonManagedReference

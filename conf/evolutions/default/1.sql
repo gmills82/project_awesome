@@ -22,6 +22,7 @@ create table client (
   phone_number              bigint,
   birth_date                bigint,
   birth_date_pretty         varchar(255),
+  ref_notes                 varchar(255),
   constraint pk_client primary key (id))
 ;
 
