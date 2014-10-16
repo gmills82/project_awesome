@@ -1,13 +1,13 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
 import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.sql.Ref;
 import java.util.List;
 
 /**
@@ -30,6 +30,10 @@ public class User extends Model {
     public String userName;
     @Constraints.Required
     public String password;
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@JsonManagedReference
+	public List<Referral> referrals;
 
     public enum Role {
         FA(0), Agent(1), Producer(2);
@@ -64,11 +68,10 @@ public class User extends Model {
 
     public static Finder<Long, User> find = new Finder(Long.class, User.class);
 
-    //TODO: Refactor into getBy
     public static User getById(Long id) {
         return find.where().eq("id", id).findList().listIterator().next();
     }
-    //TODO: Same as above
+
     public static User getByEmail(String email) {
         return find.where().eq("userName", email).findList().listIterator().next();
     }

@@ -4,6 +4,8 @@ import models.*;
 import models.Action;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import play.Logger;
+import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
 import views.html.*;
@@ -49,4 +51,34 @@ public class UserCtrl extends Controller {
 
         return ok(result);
     }
+
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result updateUser() {
+		Form<User> userForm = Form.form(User.class).bindFromRequest();
+
+		//There is no error on the form so it is now safe to get the User
+		User user = userForm.get();
+		user.update();
+
+		Logger.debug("User updated: " + user.userName);
+		response().setHeader(LOCATION, routes.UserCtrl.getUser(user.id).url());
+
+		return ok();
+	}
+	
+
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result getUser(Long userId) {
+		ObjectNode result = Json.newObject();
+		result.put("status", "OK");
+
+		User currentUser = User.getById(userId);
+		if(null == currentUser) {
+			return badRequest("User not found");
+		}
+		JsonNode user = Json.toJson(currentUser);
+		result.put("data", user);
+		
+		return ok(result);
+	}
 }

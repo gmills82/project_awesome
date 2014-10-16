@@ -87,8 +87,8 @@ create table profile (
 create table referral (
   id                        bigint not null,
   creator_id                bigint,
-  agent_id                  bigint,
   client_id                 bigint,
+  user                      bigint not null,
   date_created              bigint,
   next_step_date            timestamp,
   reason_for_referral       varchar(255),
@@ -140,6 +140,8 @@ alter table financial_asset add constraint fk_financial_asset_client_2 foreign k
 create index ix_financial_asset_client_2 on financial_asset (client);
 alter table income add constraint fk_income_client_3 foreign key (client) references client (id) on delete restrict on update restrict;
 create index ix_income_client_3 on income (client);
+alter table referral add constraint fk_referral_user_4 foreign key (user) references user (id) on delete restrict on update restrict;
+create index ix_referral_user_4 on referral (user);
 
 
 

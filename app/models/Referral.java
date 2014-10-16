@@ -1,9 +1,12 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.sql.Ref;
 import java.util.Date;
 import java.util.List;
@@ -19,8 +22,12 @@ public class Referral extends Model {
     public long id;
 
     public long creatorId;
-    public long agentId;
-    public long clientId;
+	public long clientId;
+
+	@ManyToOne(optional = false)
+	@JoinColumn(name="user", referencedColumnName = "id")
+	@JsonBackReference
+    public User user;
 
     public Long dateCreated = System.currentTimeMillis();
     public Date nextStepDate;

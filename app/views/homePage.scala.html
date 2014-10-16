@@ -1,15 +1,19 @@
 @(user: User)
 @home(user, "Home") {
+
     <h1>Welcome, @user.userName</h1>
+    <div class="notifications">
+        @*Flash messages*@
+        @if(flash.contains("success")) {
+            <p class="alert alert-success">@flash.get("success")</p>
+        }
+        <ul>
+        @for(ref <- user.referrals) {
+            <li><a href="@routes.Application.profile()?refId=@ref.id"> View new referral </a></li>
+        }
+        </ul>
+    </div>
 
-    @*Flash messages*@
-    @if(flash.contains("success")) {
-        <p class="alert alert-success">@flash.get("success")</p>
-    }
-
-    <p>Actions and tracking tools will allow you to more efficiently manage your financial clients.
-        <span class="notifications"></span>
-    </p>
 
     <h2 class="page-header">Tools <small>Work more efficiently</small></h2>
 
