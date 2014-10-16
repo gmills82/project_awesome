@@ -92,7 +92,7 @@ create table referral (
   date_created              bigint,
   next_step_date            timestamp,
   reason_for_referral       varchar(255),
-  creator_notes             varchar(255),
+  ref_notes                 varchar(255),
   was_productive            boolean,
   constraint pk_referral primary key (id))
 ;

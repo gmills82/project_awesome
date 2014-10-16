@@ -26,7 +26,7 @@ public class Referral extends Model {
     public Date nextStepDate;
 
     public String reasonForReferral;
-    public String creatorNotes;
+    public String refNotes;
     public Boolean wasProductive;
 
     public static Finder<Long, Referral> finder = new Finder(Long.class, Referral.class);
