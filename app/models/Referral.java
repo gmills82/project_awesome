@@ -7,8 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.sql.Ref;
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -23,6 +23,7 @@ public class Referral extends Model {
 
     public long creatorId;
 	public long clientId;
+	public String clientName;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name="user", referencedColumnName = "id")
@@ -30,11 +31,12 @@ public class Referral extends Model {
     public User user;
 
     public Long dateCreated = System.currentTimeMillis();
-    public Date nextStepDate;
+	public String nextStepDate;
 
     public String reasonForReferral;
     public String refNotes;
     public Boolean wasProductive;
+
 
     public static Finder<Long, Referral> finder = new Finder(Long.class, Referral.class);
     public static Referral getById(Long id) {

@@ -9,7 +9,7 @@
         }
         <ul>
         @for(ref <- user.referrals) {
-            <li><a href="@routes.Application.profile()?refId=@ref.id"> View new referral </a></li>
+            <li><a href="@routes.Application.profile()?refId=@ref.id"> View new referral - @ref.clientName @ref.nextStepDate</a></li>
         }
         </ul>
     </div>
