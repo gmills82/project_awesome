@@ -1,0 +1,35 @@
+@(agent: User, profile: Profile, client: Client)
+@home(agent, "Profile Review") {
+    <h1 class="row">Profile Review</h1>
+    <h3 class="row">Client Information</h3>
+    <div class="client-review row">
+        <dl class="col-md-6">
+            <dt>Name:</dt>
+            <dd>@client.name</dd>
+        </dl>
+        <dl class="col-md-6">
+
+        </dl>
+    </div>
+    <h3>Profile Information</h3>
+    <div class="profile-review row">
+        <dl class="col-md-6">
+            <dt>Notes:</dt>
+            <dd>@profile.advisorRecommendation</dd>
+        </dl>
+        <dl class="col-md-6">
+
+        </dl>
+    </div>
+    <h3>Financial Assets</h3>
+    <ul class="assets-review row">
+
+    </ul>
+    <h3>Debts</h3>
+    <ul class="debts-review row">
+
+    </ul>
+    <p class="row">
+        Financial Profile conducted and created by @agent.firstName @agent.lastName .
+    </p>
+}

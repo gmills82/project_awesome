@@ -7,6 +7,8 @@
     userName: test@test.com
     password: $2a$10$RIFSpI/UgdJDdkurk2MbRuVJ/NMeLiTprJjwOPRvA4HVKtC74Kyju
     roleType: FA
+    firstName: Grant
+    lastName: Mills
 
 - !!models.Action
     actionName: Profile a Client

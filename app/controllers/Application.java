@@ -23,6 +23,18 @@ public class Application extends Controller {
         return redirect(routes.Application.index());
     }
 
+	public static Result profileReview(Long profileId) {
+		User currentUser = getCurrentUser();
+		if(null != currentUser) {
+			Profile reviewedProfile = Profile.getById(profileId);
+			User agent = User.getById(reviewedProfile.agentId);
+			Logger.debug("Agent number " + agent.id + " retrieved from profile");
+			Client client = Client.getById(reviewedProfile.clientId);
+			return ok(profileReview.render(agent, reviewedProfile, client));
+		}
+		return redirect(routes.Application.index());
+	}
+
     public static Result producerScript() {
         User currentUser = getCurrentUser();
         if(null != currentUser) {

@@ -30,7 +30,6 @@ public class Profile extends Model {
 
     public String advisorRecommendation;
     public String nextSteps;
-    public String notes;
 
     public static Finder<Long, Profile> finder = new Finder(Long.class, Profile.class);
     public static Profile getById(Long id) {

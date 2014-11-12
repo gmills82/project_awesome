@@ -80,7 +80,6 @@ create table profile (
   expected_date_of_funds_use varchar(255),
   advisor_recommendation    varchar(255),
   next_steps                varchar(255),
-  notes                     varchar(255),
   constraint pk_profile primary key (id))
 ;
 
@@ -111,6 +110,8 @@ create table user (
   user_id                   bigint,
   user_name                 varchar(255),
   password                  varchar(255),
+  first_name                varchar(255),
+  last_name                 varchar(255),
   role_type                 integer,
   constraint ck_user_role_type check (role_type in (0,1,2)),
   constraint uq_user_user_name unique (user_name),

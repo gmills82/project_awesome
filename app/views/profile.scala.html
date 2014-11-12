@@ -80,6 +80,7 @@
                     <textarea name="nextSteps" class="form-control" ng-model="profile.nextSteps" placeholder="Next steps with this client" required ></textarea>
                 </div>
             </div>
+            <input type="hidden" ng-mode="profile.agentId" value="@user.id" />
 
             <input type="submit" value="Submit Profile" ng-disabled="!profile.clientId" class="btn btn-primary col-md-offset-2"/>
         </form>

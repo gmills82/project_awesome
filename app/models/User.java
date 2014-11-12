@@ -31,6 +31,12 @@ public class User extends Model {
     @Constraints.Required
     public String password;
 
+	@Constraints.Required
+	public String firstName;
+
+	@Constraints.Required
+	public String lastName;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
 	@JsonManagedReference
 	public List<Referral> referrals;
