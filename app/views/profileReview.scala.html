@@ -1,36 +1,43 @@
 @(agent: User, profile: Profile, client: Client)
 @home(agent, "Profile Review") {
     <h1 class="row">Profile Review</h1>
-    <h3 class="row">Client Information</h3>
-    <div class="client-review row">
-        <dl class="col-md-6">
-            <dt>Name:</dt>
-            <dd>@client.name</dd>
-            <dt>Acct Number:</dt>
-            <dd>@client.acctNumber</dd>
-            <dt>E-mail:</dt>
-            <dd>@client.userName</dd>
-            <dt>Date of birth:</dt>
-            <dd>@client.birthDatePretty</dd>
-            <dt>Referral Notes:</dt>
-            <dd>@client.refNotes</dd>
-        </dl>
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Client Information</h3>
+            <div class="client-review">
+                <dl>
+                    <dt>Name:</dt>
+                    <dd>@client.name</dd>
+                    <dt>Acct Number:</dt>
+                    <dd>@client.acctNumber</dd>
+                    <dt>E-mail:</dt>
+                    <dd>@client.userName</dd>
+                    <dt>Date of birth:</dt>
+                    <dd>@client.birthDatePretty</dd>
+                    <dt>Referral Notes:</dt>
+                    <dd>@client.refNotes</dd>
+                </dl>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <h3>Profile Information</h3>
+            <div class="profile-review">
+                <dl>
+                    <dt>Recommendation:</dt>
+                    <dd>@profile.advisorRecommendation</dd>
+                    <dt>Liquidity Needs:</dt>
+                    <dd>@profile.liquidityNeeds</dd>
+                    <dt>Expected date of funds use:</dt>
+                    <dd>@profile.expectedDateOfFundsUse</dd>
+                    <dt>Savings Plans:</dt>
+                    <dd>@profile.savingsPlans</dd>
+                    <dt>Next Steps:</dt>
+                    <dd>@profile.nextSteps</dd>
+                </dl>
+            </div>
+        </div>
     </div>
-    <h3 class="row">Profile Information</h3>
-    <div class="profile-review row">
-        <dl class="col-md-6">
-            <dt>Recommendation:</dt>
-            <dd>@profile.advisorRecommendation</dd>
-            <dt>Liquidity Needs:</dt>
-            <dd>@profile.liquidityNeeds</dd>
-            <dt>Expected date of funds use:</dt>
-            <dd>@profile.expectedDateOfFundsUse</dd>
-            <dt>Savings Plans:</dt>
-            <dd>@profile.savingsPlans</dd>
-            <dt>Next Steps:</dt>
-            <dd>@profile.nextSteps</dd>
-        </dl>
-    </div>
+
     <h3 class="row">Financial Assets</h3>
     <div class="assets-review row asset-list">
         @for((asset,index) <- client.assetList.zipWithIndex) {
@@ -65,7 +72,7 @@
             </dl>
         }
     </div>
-    <p class="row ">
+    <p class="row closing-text">
         Financial Profile conducted and created by @agent.firstName @agent.lastName .
     </p>
 }
