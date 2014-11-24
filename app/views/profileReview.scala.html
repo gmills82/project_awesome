@@ -1,6 +1,6 @@
 @(agent: User, profile: Profile, client: Client)
 @home(agent, "Profile Review") {
-    <h1 class="row">Profile Review</h1>
+    <h1 class="row">Client Profile Summary</h1>
     <div class="row">
         <div class="col-md-6">
             <h3>Client Information</h3>
@@ -37,9 +37,9 @@
             </div>
         </div>
     </div>
-
-    <h3 class="row">Financial Assets</h3>
-    <div class="assets-review row asset-list">
+    <div class="row col-md-12">
+        <h3>Financial Assets</h3>
+        <div class="assets-review asset-list">
         @for((asset,index) <- client.assetList.zipWithIndex) {
             <dl class="col-md-6 @if(index % 2 == 0) {even}else {odd}">
                 <dt>Type of Asset:</dt>
@@ -54,9 +54,11 @@
                 <dd>@asset.description</dd>
             </dl>
         }
+        </div>
     </div>
-    <h3 class="row">Debts</h3>
-    <div class="debts-review row asset-list">
+    <div class="row col-md-12">
+        <h3>Debts</h3>
+        <div class="debts-review asset-list">
         @for((debt,index) <- client.debtList.zipWithIndex) {
             <dl class="col-md-6 @if(index % 2 == 0) {even}else {odd}">
                 <dt>Type of Asset:</dt>
@@ -71,8 +73,9 @@
                 <dd>@debt.description</dd>
             </dl>
         }
+        </div>
     </div>
-    <p class="row closing-text">
+    <p class="row closing-text col-md-12">
         Financial Profile conducted and created by @agent.firstName @agent.lastName .
     </p>
 }
