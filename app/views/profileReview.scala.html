@@ -6,30 +6,66 @@
         <dl class="col-md-6">
             <dt>Name:</dt>
             <dd>@client.name</dd>
-        </dl>
-        <dl class="col-md-6">
-
+            <dt>Acct Number:</dt>
+            <dd>@client.acctNumber</dd>
+            <dt>E-mail:</dt>
+            <dd>@client.userName</dd>
+            <dt>Date of birth:</dt>
+            <dd>@client.birthDatePretty</dd>
+            <dt>Referral Notes:</dt>
+            <dd>@client.refNotes</dd>
         </dl>
     </div>
-    <h3>Profile Information</h3>
+    <h3 class="row">Profile Information</h3>
     <div class="profile-review row">
         <dl class="col-md-6">
-            <dt>Notes:</dt>
+            <dt>Recommendation:</dt>
             <dd>@profile.advisorRecommendation</dd>
-        </dl>
-        <dl class="col-md-6">
-
+            <dt>Liquidity Needs:</dt>
+            <dd>@profile.liquidityNeeds</dd>
+            <dt>Expected date of funds use:</dt>
+            <dd>@profile.expectedDateOfFundsUse</dd>
+            <dt>Savings Plans:</dt>
+            <dd>@profile.savingsPlans</dd>
+            <dt>Next Steps:</dt>
+            <dd>@profile.nextSteps</dd>
         </dl>
     </div>
-    <h3>Financial Assets</h3>
-    <ul class="assets-review row">
-
-    </ul>
-    <h3>Debts</h3>
-    <ul class="debts-review row">
-
-    </ul>
-    <p class="row">
+    <h3 class="row">Financial Assets</h3>
+    <div class="assets-review row asset-list">
+        @for((asset,index) <- client.assetList.zipWithIndex) {
+            <dl class="col-md-6 @if(index % 2 == 0) {even}else {odd}">
+                <dt>Type of Asset:</dt>
+                <dd>@asset.realAssetType</dd>
+                <dt>Value:</dt>
+                <dd>@asset.totalValue</dd>
+                <dt>Financial Institute:</dt>
+                <dd>@asset.financialInstitute</dd>
+                <dt>Payment:</dt>
+                <dd>@asset.recurringAmount / @asset.frequencyStr</dd>
+                <dt>Description:</dt>
+                <dd>@asset.description</dd>
+            </dl>
+        }
+    </div>
+    <h3 class="row">Debts</h3>
+    <div class="debts-review row asset-list">
+        @for((debt,index) <- client.debtList.zipWithIndex) {
+            <dl class="col-md-6 @if(index % 2 == 0) {even}else {odd}">
+                <dt>Type of Asset:</dt>
+                <dd>@debt.realDebtType</dd>
+                <dt>Value:</dt>
+                <dd>@debt.totalOwed</dd>
+                <dt>Financial Institute:</dt>
+                <dd>@debt.financialInstitute</dd>
+                <dt>Payment:</dt>
+                <dd>@debt.recurringAmount / @debt.frequencyStr</dd>
+                <dt>Description:</dt>
+                <dd>@debt.description</dd>
+            </dl>
+        }
+    </div>
+    <p class="row ">
         Financial Profile conducted and created by @agent.firstName @agent.lastName .
     </p>
 }
