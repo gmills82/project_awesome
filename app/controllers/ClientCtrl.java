@@ -45,6 +45,7 @@ public class ClientCtrl extends Controller {
         Client client = clientForm.bindFromRequest().get();
 
         JsonNode data = request().body().asJson();
+		Logger.debug(data.findPath("goals").toString());
 
         //Convert string date to java date
         if(null != data.findPath("birthDatePretty").textValue()) {

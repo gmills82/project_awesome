@@ -88,6 +88,7 @@ create table referral (
   creator_id                bigint,
   client_id                 bigint,
   client_name               varchar(255),
+  ref_type                  varchar(255),
   user                      bigint not null,
   date_created              bigint,
   next_step_date            varchar(255),

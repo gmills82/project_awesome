@@ -1,57 +1,68 @@
 @(user: User)
 @home(user, "Home") {
-
-    <h1>Welcome, @user.userName</h1>
-    <div class="notifications">
-        @*Flash messages*@
-        @if(flash.contains("success")) {
-            <p class="alert alert-success">@flash.get("success")</p>
-        }
-        <ul>
-        @for(ref <- user.referrals) {
-            <li><a href="@routes.Application.profile()?refId=@ref.id"> View new referral - @ref.clientName @ref.nextStepDate</a></li>
-        }
-        </ul>
+    <h2>Welcome, @user.userName</h2>
+    <div class="row">
+        <div class="notifications col-md-4 col-sm-12">
+            @*Flash messages*@
+            @if(flash.contains("success")) {
+                <p class="alert alert-success">@flash.get("success")</p>
+            }
+            @if(user.referrals.size() != 0) {
+                <ul class="alert alert-info">
+                @for(ref <- user.referrals) {
+                    <li><a href="@routes.Application.profile()?refId=@ref.id"> @ref.refType
+                        Referral - @ref.nextStepDate - @ref.clientName</a>
+                    </li>
+                }
+                </ul>
+            }
+        </div>
     </div>
 
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="page-header">Tools <small>Work more efficiently</small></h3>
 
-    <h2 class="page-header">Tools <small>Work more efficiently</small></h2>
+            @* ActionController *@
 
-    @* ActionController *@
-    <div class="row" ng-controller="ActionController" category="tool">
+            <div ng-controller="ActionController" category="tool">
 
-        @* Looping through actions *@
-        <div class="thumbnails thumbnail-style thumbnail-kenburn col-sm-2" ng-repeat="action in actions">
-            <div class="thumbnail-img">
-                <div class="overflow-hidden">
-                    <img class="img-responsive" src="@routes.Assets.at("images/{{action.imageName}}")" alt="{{action.actionName}}">
+                @* Looping through actions *@
+                <div class="thumbnails thumbnail-style thumbnail-kenburn col-md-4" ng-repeat="action in actions">
+                    <div class="thumbnail-img">
+                        <div class="overflow-hidden">
+                            <img class="img-responsive" src="@routes.Assets.at("images/{{action.imageName}}")" alt="{{action.actionName}}">
+                        </div>
+                        <a class="btn-more hover-effect" href="{{action.actionURL}}">learn more +</a>
+                    </div>
+                    <div class="caption">
+                        <h3><a class="hover-effect" href="{{action.actionURL}}">{{action.actionName}}</a></h3>
+                        <p>{{action.shortDescription}}</p>
+                    </div>
                 </div>
-                <a class="btn-more hover-effect" href="{{action.actionURL}}">learn more +</a>
-            </div>
-            <div class="caption">
-                <h3><a class="hover-effect" href="{{action.actionURL}}">{{action.actionName}}</a></h3>
-                <p>{{action.shortDescription}}</p>
+
             </div>
         </div>
 
-    </div>
+        <div class="col-md-6">
+            @* ActionController *@
+            <h3 class="page-header">Charts & Reports <small>Track your team's performance</small></h3>
 
-    @* ActionController *@
-    <h2 class="page-header">Charts & Reports <small>Track your team's performance</small></h2>
+            <div ng-controller="ActionController" category="tracking">
 
-    <div class="row" ng-controller="ActionController" category="tracking">
-
-        @* Looping through actions *@
-        <div class="thumbnails thumbnail-style thumbnail-kenburn col-sm-2" ng-repeat="action in actions">
-            <div class="thumbnail-img">
-                <div class="overflow-hidden">
-                    <img class="img-responsive" src="@routes.Assets.at("images/{{action.imageName}}")" alt="{{action.actionName}}">
+                @* Looping through actions *@
+                <div class="thumbnails thumbnail-style thumbnail-kenburn col-md-4" ng-repeat="action in actions">
+                    <div class="thumbnail-img">
+                        <div class="overflow-hidden">
+                            <img class="img-responsive" src="@routes.Assets.at("images/{{action.imageName}}")" alt="{{action.actionName}}">
+                        </div>
+                        <a class="btn-more hover-effect" href="{{action.actionURL}}">learn more +</a>
+                    </div>
+                    <div class="caption">
+                        <h3><a class="hover-effect" href="{{action.actionURL}}">{{action.actionName}}</a></h3>
+                        <p>{{action.shortDescription}}</p>
+                    </div>
                 </div>
-                <a class="btn-more hover-effect" href="{{action.actionURL}}">learn more +</a>
-            </div>
-            <div class="caption">
-                <h3><a class="hover-effect" href="{{action.actionURL}}">{{action.actionName}}</a></h3>
-                <p>{{action.shortDescription}}</p>
             </div>
         </div>
     </div>

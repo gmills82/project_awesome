@@ -4,6 +4,16 @@
     <div class="row" ng-controller="ReferralController">
         <form class="form-horizontal" ng-submit="addReferral(referral)" name="referralForm" novalidate>
             <div class="form-group">
+                <label class="col-md-2 control-label" >Referral Type:</label>
+                <div class="col-md-10">
+                    <select ng-model="referral.refType" required>
+                        <option value="Callout">Callout</option>
+                        <option value="Appt">Appointment</option>
+                        <option value="Quote">Quote</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
                 <label class="col-md-2 control-label">Name:</label>
                 <div class="col-md-10">
                     <input type="text" ng-model="referral.client.name" name="name" placeholder="Client Name" class="form-control" required />
@@ -25,6 +35,23 @@
                 <label class="col-md-2 control-label" >Reason for referral:</label>
                 <div class="col-md-10">
                     <textarea ng-model="referral.reasonForReferral" name="reasonForReferral" class="form-control" placeholder="Reason you are referring this person to a financial advisor"></textarea>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" >Client Goals:</label>
+                <div class="col-md-10">
+                    <label class="checkbox-inline">
+                    <input type="checkbox" ng-model="referral.client.goals.death" name="goals" />In Event of Death</label>
+                    <label class="checkbox-inline">
+                    <input type="checkbox" ng-model="referral.client.goals.retirement" name="goals" />Retirement</label>
+                    <label class="checkbox-inline">
+                    <input type="checkbox" ng-model="referral.client.goals.college" name="goals" />College Savings</label>
+                    <label class="checkbox-inline">
+                    <input type="checkbox" ng-model="referral.client.goals.longtermcare" name="goals" />Long Term Care</label>
+                    <label class="checkbox-inline">
+                    <input type="checkbox" ng-model="referral.client.goals.heath" name="goals" />Health</label>
+                    <label class="checkbox-inline">
+                    <input type="checkbox" ng-model="referral.client.goals.benefits" name="goals" />Benefits</label>
                 </div>
             </div>
             <div class="form-group">

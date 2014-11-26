@@ -24,6 +24,7 @@ public class Referral extends Model {
     public long creatorId;
 	public long clientId;
 	public String clientName;
+	public String refType;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name="user", referencedColumnName = "id")
