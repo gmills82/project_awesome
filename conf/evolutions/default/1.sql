@@ -23,6 +23,7 @@ create table client (
   birth_date                bigint,
   birth_date_pretty         varchar(255),
   ref_notes                 varchar(255),
+  goals_string              varchar(255),
   constraint pk_client primary key (id))
 ;
 
@@ -52,6 +53,17 @@ create table financial_asset (
   description               varchar(255),
   constraint ck_financial_asset_real_asset_type check (real_asset_type in (0,1,2,3,4,5,6,7,8)),
   constraint pk_financial_asset primary key (id))
+;
+
+create table goal (
+  id                        bigint not null,
+  death                     varchar(255),
+  retirement                varchar(255),
+  college                   varchar(255),
+  longtermcare              varchar(255),
+  health                    varchar(255),
+  benefits                  varchar(255),
+  constraint pk_goal primary key (id))
 ;
 
 create table income (
@@ -127,6 +139,8 @@ create sequence debt_seq;
 
 create sequence financial_asset_seq;
 
+create sequence goal_seq;
+
 create sequence income_seq;
 
 create sequence profile_seq;
@@ -160,6 +174,8 @@ drop table if exists debt;
 
 drop table if exists financial_asset;
 
+drop table if exists goal;
+
 drop table if exists income;
 
 drop table if exists profile;
@@ -179,6 +195,8 @@ drop sequence if exists client_seq;
 drop sequence if exists debt_seq;
 
 drop sequence if exists financial_asset_seq;
+
+drop sequence if exists goal_seq;
 
 drop sequence if exists income_seq;
 

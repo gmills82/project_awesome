@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.*;
 import play.*;
@@ -15,8 +16,10 @@ import views.html.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 
 /**
@@ -33,7 +36,14 @@ public class ClientCtrl extends Controller {
         result.put("status", "OK");
 
         Client currentClient = Client.getById(clientId);
-        JsonNode clientJson = Json.toJson(currentClient);
+		ObjectNode clientJson = (ObjectNode) Json.toJson(currentClient);
+		String[] goalsArray = currentClient.goalsString.split(" ");
+
+		ObjectNode goalNode = Json.newObject();
+		for(String goal : goalsArray) {
+			goalNode.put(goal, new String("true"));
+		}
+		clientJson.put("goals", goalNode);
 
         result.put("data", clientJson);
         return ok(result);
@@ -45,12 +55,20 @@ public class ClientCtrl extends Controller {
         Client client = clientForm.bindFromRequest().get();
 
         JsonNode data = request().body().asJson();
-		Logger.debug(data.findPath("goals").toString());
 
         //Convert string date to java date
         if(null != data.findPath("birthDatePretty").textValue()) {
             client.birthDate = new SimpleDateFormat("yyyy-mm-dd").parse(data.findPath("birthDatePretty").textValue()).getTime();
         }
+		if(null != data.findValue("goals")) {
+			JsonNode goalsNode = data.findValue("goals");
+			Iterator<Map.Entry<String, JsonNode>> iterator = goalsNode.fields();
+			String tmpStr = "";
+			while(iterator.hasNext()) {
+				tmpStr += iterator.next().getKey() + " ";
+			}
+			client.goalsString = tmpStr;
+		}
 
         client.save();
         Logger.debug("Client persisted: " + client.name);
@@ -61,8 +79,6 @@ public class ClientCtrl extends Controller {
 
     @BodyParser.Of(play.mvc.BodyParser.Json.class)
     public static Result editClientJSON() {
-        Logger.debug("Reached editClientJSON");
-
         Form<Client> clientForm = Form.form(Client.class).bindFromRequest();
 
         //There is no error on the form so it is now safe to get the Client

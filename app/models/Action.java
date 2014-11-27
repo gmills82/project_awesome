@@ -30,15 +30,9 @@ public class Action extends Model {
 
     public static List<Action> actionsByUserRole(Integer permissionLevel) {
         List<Action> allActions = find.all();
-        Logger.debug("Total available actions: " + allActions.size());
-        for(Action action : allActions) {
-            Logger.debug("Action name: " + action.actionName);
-        }
-        Logger.debug("User's permission level was: " + permissionLevel);
 
         //Filter matches base level and all higher permission levels - 0 = root
         List<Action> filteredActions = Ebean.filter(Action.class).le("requiredPermissionLevel", permissionLevel).filter(allActions);
-        Logger.debug("Filtered available actions: " + filteredActions.size());
         return filteredActions;
     }
 
