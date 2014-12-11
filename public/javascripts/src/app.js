@@ -1,7 +1,9 @@
 (function () {
     var app = angular.module("project_awesome", ["ngRoute"]);
     app.data = {};
-    app.data.currentUserId = document.getElementById("baseContainer").getAttribute("data-user");
+	if(document.getElementById("baseContainer")){
+		app.data.currentUserId = document.getElementById("baseContainer").getAttribute("data-user");
+	}
 
     //Actions controller
     app.controller('ActionController', ["$scope", "$http", "$attrs", function ($scope, $http, $attrs){
