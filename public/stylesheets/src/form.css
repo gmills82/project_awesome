@@ -1,0 +1,54 @@
+form .btn-group label.btn {
+    position: relative;
+    overflow: hidden;
+}
+form .btn-group label input[type=radio] {
+    position: absolute;
+    left: -100px;
+}
+.ng-dirty.ng-invalid {
+    border-color: red;
+}
+ul.nav-pills.nav-stacked li.sub-pill {
+    list-style-type: disc;
+}
+ul.nav-pills.nav-stacked li.sub-pill a {
+    background-color: transparent;
+    margin-left: 25px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+}
+ul.nav-pills.nav-stacked li.sub-pill.active a,
+ul.nav-pills.nav-stacked li.sub-pill:hover a {
+    background-color: #f0ad4e;
+    border-color: #eea236;
+}
+/* Assets/Debts on profile form */
+.assetListContainer,
+.debtListContainer {
+  margin-bottom: 20px;
+  border-bottom: 1px dashed #CCC;
+  padding-bottom: 13px;
+}
+.asset-list dl {
+  padding: 7px 0px 8px;
+  margin-bottom: 0;
+}
+.asset-list dt, .asset-list dd {
+  display: inline-block;
+}
+.asset-list dt {
+  padding-left: 25px;
+  margin-bottom: 0;
+}
+.asset-list dd {
+  padding-left: 10px;
+}
+.asset-list dl.even {
+  border-top: 1px solid#CCC;
+  border-bottom: 1px solid #CCC;
+  background-color: #EFEFEF;
+  width: 100%;
+}
+

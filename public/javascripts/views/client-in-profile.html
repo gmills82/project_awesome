@@ -1,0 +1,25 @@
+<div class="currentClient panel panel-default row" onload="preparePanel()" >
+    <div class="panel-heading">
+        <h2 class="panel-title">Verify your client's information</h2>
+    </div>
+    <div class="panel-body " id="clientTab">
+        <ul class="nav nav-pills nav-stacked col-md-2 border-right" role="tablist">
+            <li class=""><a href="#display" data-toggle="pill" role="tab">Client Information</a></li>
+            <li class="sub-pill active"><a href="#client" data-toggle="pill" role="pill">Edit information</a></li>
+        </ul>
+        <div class="tab-content col-md-10">
+            <div class="tab-pane fade" id="display">
+                <dl class="panel-body">
+                    <dt>Acct Number: </dt><dd>{{profile.client.acctNumber}}</dd>
+                    <dt>Name: </dt><dd>{{profile.client.name}}</dd>
+                    <dt>E-mail: </dt><dd>{{profile.client.userName}}</dd>
+                    <dt>Notes: </dt><dd>{{profile.client.refNotes}}</dd>
+                    <dt>Birth Date: </dt><dd>{{profile.client.birthDatePretty}}</dd>
+                </dl>
+            </div>
+            <div class="tab-pane active in fade" id="client" ng-include src="'/assets/javascripts/views/add-client.html'" onload="prepareAddClientPanel()"></div>
+
+        </div>
+    </div>
+
+</div>

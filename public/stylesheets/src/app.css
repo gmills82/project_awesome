@@ -1,0 +1,14 @@
+#baseContainer {
+  margin-bottom: 50px;
+}
+.closing-text {
+  margin-top: 20px;
+}
+.client-review dd, .profile-review dd {
+  padding-left: 2em;
+  padding-top: 0.3em;
+  padding-bottom: .3em;
+}
+.alert li {
+  list-style-type: none;
+}
