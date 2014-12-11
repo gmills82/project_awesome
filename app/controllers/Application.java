@@ -16,7 +16,7 @@ public class Application extends Controller {
     }
 
     public static Result profile() {
-        User currentUser = getCurrentUser();
+        UserModel currentUser = getCurrentUser();
         if(null != currentUser) {
             return ok(profile.render(currentUser));
         }
@@ -24,10 +24,10 @@ public class Application extends Controller {
     }
 
 	public static Result profileReview(Long profileId) {
-		User currentUser = getCurrentUser();
+		UserModel currentUser = getCurrentUser();
 		if(null != currentUser) {
 			Profile reviewedProfile = Profile.getById(profileId);
-			User agent = User.getById(reviewedProfile.agentId);
+			UserModel agent = UserModel.getById(reviewedProfile.agentId);
 			Logger.debug("Agent number " + agent.id + " retrieved from profile");
 			Client client = Client.getById(reviewedProfile.clientId);
 			return ok(profileReview.render(agent, reviewedProfile, client));
@@ -36,7 +36,7 @@ public class Application extends Controller {
 	}
 
     public static Result producerScript() {
-        User currentUser = getCurrentUser();
+        UserModel currentUser = getCurrentUser();
         if(null != currentUser) {
             List<Script> scriptList = Script.getAll();
             return ok(producerScript.render(currentUser, scriptList));
@@ -45,16 +45,16 @@ public class Application extends Controller {
     }
 
     public static Result referral() {
-        User currentUser = getCurrentUser();
+        UserModel currentUser = getCurrentUser();
         if(null != currentUser) {
-            List<User> faUsers = User.getByPermissionLevel(User.Role.FA);
+            List<UserModel> faUsers = UserModel.getByPermissionLevel(UserModel.Role.FA);
             return ok(referral.render(currentUser, faUsers));
         }
         return redirect(routes.Application.index());
     }
 
     public static Result home() {
-        User currentUser = getCurrentUser();
+        UserModel currentUser = getCurrentUser();
         if(null != currentUser) {
             return ok(homePage.render(currentUser));
         }
@@ -87,13 +87,13 @@ public class Application extends Controller {
     }
 
     public static Result signup() {
-        Form<User> signupForm = Form.form(User.class);
+        Form<UserModel> signupForm = Form.form(UserModel.class);
         return ok(signup.render(signupForm));
     }
 
     public static Result addSignup() {
-        Form<User> signupForm = Form.form(User.class);
-        User newUser = signupForm.bindFromRequest().get();
+        Form<UserModel> signupForm = Form.form(UserModel.class);
+        UserModel newUser = signupForm.bindFromRequest().get();
 
         //Get request params
         Map<String, String[]> requestMap = request().body().asFormUrlEncoded();
@@ -101,7 +101,7 @@ public class Application extends Controller {
         String[] userName = requestMap.get("userName");
 
         //Email already taken
-        if(User.isUserNameTaken(userName[0])) {
+        if(UserModel.isUserNameTaken(userName[0])) {
             signupForm.reject("That user name is already taken. Please try again.");
         }
 
@@ -110,12 +110,12 @@ public class Application extends Controller {
             signupForm.reject("Your passwords do not match. Please retype them.");
         }else {
             //Salt password
-            newUser.password = User.saltPassword(newUser.password);
+            newUser.password = UserModel.saltPassword(newUser.password);
         }
 
         //Set Roletype
         String[] roleTypeString = requestMap.get("roleTypeString");
-        User.setRoleType(newUser, roleTypeString[0]);
+        UserModel.setRoleType(newUser, roleTypeString[0]);
 
         //Check form for errors
         if(signupForm.hasErrors()) {
@@ -137,7 +137,7 @@ public class Application extends Controller {
         //Called when we bind a Login from a request
         public String validate() {
 			Logger.debug("userName in validate is: " + userName);
-            String errors = User.authenticate(userName, password);
+            String errors = UserModel.authenticate(userName, password);
             if(null == errors) {
                 return null;
             }
@@ -145,11 +145,11 @@ public class Application extends Controller {
         }
     }
 
-    public static User getCurrentUser() {
+    public static UserModel getCurrentUser() {
         String userName = session().get("userName");
-        User currentUser = null;
+        UserModel currentUser = null;
         if(null != userName) {
-            currentUser = User.getByEmail(userName);
+            currentUser = UserModel.getByEmail(userName);
         }
         return currentUser;
     }

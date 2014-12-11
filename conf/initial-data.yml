@@ -3,7 +3,7 @@
     name: The One
     userName: gmills82@gmail.com
 
-- !!models.User
+- !!models.UserModel
     userName: test@test.com
     password: $2a$10$RIFSpI/UgdJDdkurk2MbRuVJ/NMeLiTprJjwOPRvA4HVKtC74Kyju
     roleType: FA

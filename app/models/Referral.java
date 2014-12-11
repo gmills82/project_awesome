@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -27,9 +25,9 @@ public class Referral extends Model {
 	public String refType;
 
 	@ManyToOne(optional = false)
-	@JoinColumn(name="user", referencedColumnName = "id")
+	@JoinColumn(name="user_id", referencedColumnName = "id")
 	@JsonBackReference
-    public User user;
+    public UserModel user_id;
 
     public Long dateCreated = System.currentTimeMillis();
 	public String nextStepDate;

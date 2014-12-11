@@ -1,4 +1,4 @@
-@(user: User, pageTitle: String)(content: Html)
+@(user: UserModel, pageTitle: String)(content: Html)
 @main(pageTitle) {
     <div class="container" id="baseContainer" ng-app="project_awesome" data-user="@user.id">
         @content

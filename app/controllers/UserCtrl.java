@@ -8,7 +8,6 @@ import play.Logger;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
-import views.html.*;
 
 import java.util.List;
 
@@ -19,28 +18,12 @@ import java.util.List;
  */
 public class UserCtrl extends Controller {
 
-    //TODO: Convert to JSON routes
-//    public static Result enterUser() {
-//        Form<User> UserForm = Form.form(User.class);
-//        List<User> UserList = User.getAll();
-//
-//        return ok(user.render(UserForm, UserList));
-//    }
-//
-//    public static Result addUser() {
-//        Form<User> UserForm = Form.form(User.class);
-//        User User = UserForm.bindFromRequest().get();
-//        User.save();
-//
-//        return redirect(routes.UserCtrl.enterUser());
-//    }
-
     @BodyParser.Of(BodyParser.Json.class)
     public static Result getActions(Long userId, String category) {
         ObjectNode result = Json.newObject();
         result.put("status", "OK");
 
-        User currentUser = User.getById(userId);
+        UserModel currentUser = UserModel.getById(userId);
         List<Action> actionList = Action.actionsByUserRole(currentUser.roleType.getPermissionLevel());
         if(null != actionList) {
             actionList = Action.filterByCategory(actionList, category);
@@ -54,10 +37,10 @@ public class UserCtrl extends Controller {
 
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result updateUser() {
-		Form<User> userForm = Form.form(User.class).bindFromRequest();
+		Form<UserModel> userForm = Form.form(UserModel.class).bindFromRequest();
 
 		//There is no error on the form so it is now safe to get the User
-		User user = userForm.get();
+		UserModel user = userForm.get();
 		user.update();
 
 		Logger.debug("User updated: " + user.userName);
@@ -72,7 +55,7 @@ public class UserCtrl extends Controller {
 		ObjectNode result = Json.newObject();
 		result.put("status", "OK");
 
-		User currentUser = User.getById(userId);
+		UserModel currentUser = UserModel.getById(userId);
 		if(null == currentUser) {
 			return badRequest("User not found");
 		}

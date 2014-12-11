@@ -7,7 +7,6 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
-import java.sql.Ref;
 import java.util.List;
 
 /**
@@ -16,7 +15,7 @@ import java.util.List;
  * Time: 9:23 AM
  */
 @Entity
-public class User extends Model {
+public class UserModel extends Model {
 
     @Id
     public long id;
@@ -37,7 +36,7 @@ public class User extends Model {
 	@Constraints.Required
 	public String lastName;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user_id")
 	@JsonManagedReference
 	public List<Referral> referrals;
 
@@ -54,13 +53,13 @@ public class User extends Model {
 
     public Role roleType;
 
-    public static void setRoleType(User user, String roleType) {
+    public static void setRoleType(UserModel user, String roleType) {
         user.roleType = Role.valueOf(roleType);
     }
 
     //Unique name check
     public static Boolean isUserNameTaken(String name) {
-        List<User> list = find.where().eq("userName", name).findList();
+        List<UserModel> list = find.where().eq("userName", name).findList();
         if(list.size() > 0) {
             return Boolean.TRUE;
         }
@@ -72,31 +71,31 @@ public class User extends Model {
         return BCrypt.hashpw(password, BCrypt.gensalt());
     }
 
-    public static Finder<Long, User> find = new Finder(Long.class, User.class);
+    public static Finder<Long, UserModel> find = new Finder(Long.class, UserModel.class);
 
-    public static User getById(Long id) {
+    public static UserModel getById(Long id) {
         return find.where().eq("id", id).findList().listIterator().next();
     }
 
-    public static User getByEmail(String email) {
+    public static UserModel getByEmail(String email) {
         return find.where().eq("userName", email).findList().listIterator().next();
     }
-    public static List<User> getByPermissionLevel(Role roleType) {
+    public static List<UserModel> getByPermissionLevel(Role roleType) {
         return find.where().eq("roleType", roleType.getPermissionLevel()).findList();
     }
 
-    public static List<User> getAll() {
+    public static List<UserModel> getAll() {
         return find.all();
     }
 
     public static String authenticate(String userName, String password) {
-        List<User> userList = find.where().eq("userName", userName).findList();
+        List<UserModel> userList = find.where().eq("userName", userName).findList();
 
         if(userList.size() == 0) {
 			Logger.debug("No user found");
             return "User not found";
         }
-        User possibleUser = userList.listIterator().next();
+        UserModel possibleUser = userList.listIterator().next();
 		Logger.debug("Password: " + password.toString() + " Userpassword: " + possibleUser.password.toString());
 		if(BCrypt.checkpw(password, possibleUser.password)) {
             return null;
