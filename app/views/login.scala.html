@@ -1,27 +1,35 @@
 @(loginForm: Form[Application.Login])
-@main("Login page") {
+@main("Login page", "false") {
 
-    <div class="container">
-        <h1>Sign in to EFS Manager</h1>
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8">
+                    <h1>EFS Manager</h1>
+                    <p class="lead">Financial referral tracking for the modern era</p>
+                </div>
+                <div class="col-lg-4">
+                    <h3>Login to get started</h3>
 
-        @if(loginForm.hasGlobalErrors) {
-            <p class="alert alert-danger">
-            @loginForm.globalError.message
-            </p>
-        }
+                    @if(loginForm.hasGlobalErrors) {
+                        <p class="alert alert-danger">
+                        @loginForm.globalError.message
+                        </p>
+                    }
 
-        @if(flash.contains("success")) {
-            <p class="alert alert-success">
-            @flash.get("success")
-            </p>
-        }
+                    @if(flash.contains("success")) {
+                        <p class="alert alert-success">
+                        @flash.get("success")
+                        </p>
+                    }
 
-        @helper.form(routes.Application.authenticate, '_class -> "row") {
-            <input type="email" name="userName" class="form-control form-group" placeholder="E-mail" value="@loginForm("userName").value()" />
-            <input type="password" name="password" class="form-control form-group" placeholder="Password" value="@loginForm("password").value()" />
-            <input type="submit" value="Login" />
-        }
+                    @helper.form(routes.Application.authenticate, '_class -> "row") {
+                        <input type="email" name="userName" class="form-control form-group" placeholder="E-mail" value="@loginForm("userName").value()" />
+                        <input type="password" name="password" class="form-control form-group" placeholder="Password" value="@loginForm("password").value()" />
+                        <input type="submit" value="Login" />
+                    }
+                </div>
+            </div>
+        </div>
     </div>
-
-
 }

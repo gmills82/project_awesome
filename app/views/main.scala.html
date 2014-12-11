@@ -1,4 +1,4 @@
-@(title: String)(content: Html)
+@(title: String, showNav: String)(content: Html)
 
 <!DOCTYPE html>
 <html lang="en">
@@ -11,29 +11,29 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
     </head>
     <body>
-
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="container">
-                <div class="row">
-                    <div class="navbar-brand">
-                        <a href="
+        @if(showNav == "true") {
+            <nav class="navbar navbar-default" role="navigation">
+                <div class="container">
+                    <div class="row">
+                        <div class="navbar-brand">
+                            <a href="
+                                @if(null != session().get("userName")) {
+                                    @routes.Application.home()
+                                }else {
+                                    @routes.Application.login()
+                                }">EFS Manager</a>
+                        </div>
+                        <div class="navbar-right">
                             @if(null != session().get("userName")) {
-                                @routes.Application.home()
+                                <a href="@routes.Application.logout()" class="btn btn-default btn-sm navbar-btn">Logout <span class="glyphicon glyphicon-log-out"></span></a>
                             }else {
-                                @routes.Application.index()
-                            }">EFS Manager</a> - @title
+                                <a href="@routes.Application.login()" class="btn btn-default btn-sm navbar-btn">Login <span class="glyphicon glyphicon-log-in"></span></a>
+                        </div>
                     </div>
-                    <div class="navbar-right">
-                        <a class="navbar-text" href="@routes.Application.signup()">Create an account</a>
-                        @if(null != session().get("userName")) {
-                            <a href="@routes.Application.logout()" class="btn btn-default btn-sm navbar-btn">Logout <span class="glyphicon glyphicon-log-out"></span></a>
-                        }else {
-                            <a href="@routes.Application.login()" class="btn btn-default btn-sm navbar-btn">Login <span class="glyphicon glyphicon-log-in"></span></a>
-                    </div>
+                    }
                 </div>
-                }
-            </div>
-        </nav>
+            </nav>
+        }
 
         @content
 

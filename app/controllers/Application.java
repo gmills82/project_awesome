@@ -20,7 +20,7 @@ public class Application extends Controller {
         if(null != currentUser) {
             return ok(profile.render(currentUser));
         }
-        return redirect(routes.Application.index());
+        return redirect(routes.Application.login());
     }
 
 	public static Result profileReview(Long profileId) {
@@ -32,7 +32,7 @@ public class Application extends Controller {
 			Client client = Client.getById(reviewedProfile.clientId);
 			return ok(profileReview.render(agent, reviewedProfile, client));
 		}
-		return redirect(routes.Application.index());
+		return redirect(routes.Application.login());
 	}
 
     public static Result producerScript() {
@@ -41,7 +41,7 @@ public class Application extends Controller {
             List<Script> scriptList = Script.getAll();
             return ok(producerScript.render(currentUser, scriptList));
         }
-        return redirect(routes.Application.index());
+        return redirect(routes.Application.login());
     }
 
     public static Result referral() {
@@ -50,7 +50,7 @@ public class Application extends Controller {
             List<UserModel> faUsers = UserModel.getByPermissionLevel(UserModel.Role.FA);
             return ok(referral.render(currentUser, faUsers));
         }
-        return redirect(routes.Application.index());
+        return redirect(routes.Application.login());
     }
 
     public static Result home() {
@@ -58,7 +58,7 @@ public class Application extends Controller {
         if(null != currentUser) {
             return ok(homePage.render(currentUser));
         }
-        return redirect(routes.Application.index());
+        return redirect(routes.Application.login());
     }
 
     public static Result login() {

@@ -3,8 +3,7 @@
 # ~~~~
 
 # Home page
-GET         /                                 controllers.Application.index()
-GET         /login                            controllers.Application.login()
+GET         /                                 controllers.Application.login()
 POST        /login                            controllers.Application.authenticate()
 GET         /logout                           controllers.Application.logout()
 GET         /signup                           controllers.Application.signup()
