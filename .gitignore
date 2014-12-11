@@ -13,8 +13,6 @@ tmp
 /.project
 /RUNNING_PID
 /.settings
-/public/javascripts/*.min.js
-/public/stylesheets/min/*
 /public/bootstrap-3.2.0/dist
 /public/bootstrap-3.2.0/docs
 /conf/evolutions/*
