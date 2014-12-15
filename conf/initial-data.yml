@@ -27,6 +27,14 @@
     category: tool
 
 - !!models.Action
+    actionName: Create an account
+    requiredPermissionLevel: 0
+    actionURL: /signup
+    shortDescription: Create an account for a team member
+    imageName: action/phone.jpg
+    category: admin
+
+- !!models.Action
     actionName: Create a Client Referral
     requiredPermissionLevel: 2
     actionURL: /action/referral

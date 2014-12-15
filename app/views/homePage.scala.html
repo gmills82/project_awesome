@@ -21,12 +21,9 @@
 
     <div class="row">
         <div class="col-md-6">
-            <h3 class="page-header">Tools <small>Work more efficiently</small></h3>
-
             @* ActionController *@
-
-            <div ng-controller="ActionController" category="tool">
-
+            <div ng-controller="ActionController" category="tool" ng-show="actions.length">
+                <h3 class="page-header">Tools <small>Work more efficiently</small></h3>
                 @* Looping through actions *@
                 <div class="thumbnails thumbnail-style thumbnail-kenburn col-md-4" ng-repeat="action in actions">
                     <div class="thumbnail-img">
@@ -46,9 +43,8 @@
 
         <div class="col-md-6">
             @* ActionController *@
-            <h3 class="page-header">Charts & Reports <small>Track your team's performance</small></h3>
-
-            <div ng-controller="ActionController" category="tracking">
+            <div ng-controller="ActionController" category="tracking" ng-show="actions.length">
+                <h3 class="page-header">Charts & Reports <small>Track your team's performance</small></h3>
 
                 @* Looping through actions *@
                 <div class="thumbnails thumbnail-style thumbnail-kenburn col-md-4" ng-repeat="action in actions">
@@ -63,6 +59,30 @@
                         <p>{{action.shortDescription}}</p>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+            @* ActionController *@
+            <div ng-controller="ActionController" category="admin" ng-show="actions.length">
+                <h3 class="page-header">Admin <small>Account tools</small></h3>
+
+                @* Looping through actions *@
+                <div class="thumbnails thumbnail-style thumbnail-kenburn col-md-4" ng-repeat="action in actions">
+                    <div class="thumbnail-img">
+                        <div class="overflow-hidden">
+                            <img class="img-responsive" src="@routes.Assets.at("images/{{action.imageName}}")" alt="{{action.actionName}}">
+                        </div>
+                        <a class="btn-more hover-effect" href="{{action.actionURL}}">learn more +</a>
+                    </div>
+                    <div class="caption">
+                        <h3><a class="hover-effect" href="{{action.actionURL}}">{{action.actionName}}</a></h3>
+                        <p>{{action.shortDescription}}</p>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>

@@ -3,7 +3,7 @@
 @main("Signup page", "false") {
 
     <div class="container">
-        <h1 class="page-header">Sign up for EFS Manager</h1>
+        <h1 class="page-header">Sign you team mate up for EFS Manager</h1>
 
         @if(signupForm.hasGlobalErrors) {
             <p class="alert alert-danger">
@@ -14,9 +14,9 @@
         @helper.form(routes.Application.addSignup(), 'role -> "form", '_class -> "row") {
 
             <input type="number" name="userId" class="form-control form-group" placeholder="Agent Id" value="@signupForm("userId").value()" />
-            <input type="email" name="userName" class="form-control form-group" placeholder="Username" value="@signupForm("userName").value()" />
+            <input type="email" name="userName" class="form-control form-group" placeholder="E-mail address" value="@signupForm("userName").value()" />
             <input type="text" name="firstName" class="form-control form-group" placeholder="First Name" value="@signupForm("firstName").value()" />
-            <input type="text" name="lastName" class="form-control form-group" placeholder="First Name" value="@signupForm("lastName").value()" />
+            <input type="text" name="lastName" class="form-control form-group" placeholder="Last Name" value="@signupForm("lastName").value()" />
 
             <fieldset class="form-group">
                 <input type="password" name="password" class="form-control" placeholder="Password" value="@signupForm("password").value()" />
