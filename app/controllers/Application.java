@@ -57,7 +57,8 @@ public class Application extends Controller {
         UserModel currentUser = getCurrentUser();
         if(null != currentUser) {
 			//Collect a set of fresh referrals and send to homePage
-            return ok(homePage.render(currentUser));
+			List<Referral> freshReferrals = Referral.getFreshReferralsByUserId(currentUser.id);
+            return ok(homePage.render(currentUser, freshReferrals));
         }
         return redirect(routes.Application.login());
     }

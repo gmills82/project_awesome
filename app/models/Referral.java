@@ -45,6 +45,7 @@ public class Referral extends Model {
     public static List<Referral> getAll() {
         return finder.all();
     }
+	public static List<Referral> getFreshReferralsByUserId(Long id) { return finder.where().eq("agentId", id).eq("fresh", true).findList();}
     public static List<Referral> getByAgentId(Long id) {
         return finder.where().eq("agentId", id).findList();
     }
