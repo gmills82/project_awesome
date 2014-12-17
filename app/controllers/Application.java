@@ -56,6 +56,7 @@ public class Application extends Controller {
     public static Result home() {
         UserModel currentUser = getCurrentUser();
         if(null != currentUser) {
+			//Collect a set of fresh referrals and send to homePage
             return ok(homePage.render(currentUser));
         }
         return redirect(routes.Application.login());

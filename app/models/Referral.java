@@ -23,6 +23,7 @@ public class Referral extends Model {
 	public long clientId;
 	public String clientName;
 	public String refType;
+	public Boolean fresh = true;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name="user_id", referencedColumnName = "id")
