@@ -91,8 +91,22 @@ public class Application extends Controller {
     }
 
     public static Result signup(Integer roleType) {
-        Form<UserModel> signupForm = Form.form(UserModel.class);
-        return ok(signup.render(signupForm, roleType));
+		UserModel currentUser = getCurrentUser();
+		if(null != currentUser) {
+
+			Form<UserModel> signupForm = Form.form(UserModel.class);
+			if (roleType < 0 || roleType > 2) {
+				return badRequest(pageError.render());
+			} else {
+				//If currentUser is allowed to use signup action
+				if(currentUser.roleType.getPermissionLevel() < roleType) {
+					return ok(signup.render(signupForm, roleType));
+				}else {
+					return badRequest(pageError.render());
+				}
+			}
+
+		}return redirect(routes.Application.login());
     }
 
     public static Result addSignup() {
