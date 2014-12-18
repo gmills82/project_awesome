@@ -3,13 +3,20 @@
 @main("Signup page", "false") {
 
     <div class="container">
-        <h1 class="page-header">Sign you team mate up for EFS Manager</h1>
+        @if(roleType == 1) {
+            <h1 class="page-header">Sign your team member up as an agent</h1>
+        }
+        @if(roleType == 2) {
+            <h1 class="page-header">Sign your team member up as a producer</h1>
+        }
 
         @if(signupForm.hasGlobalErrors) {
             <p class="alert alert-danger">
             @signupForm.globalError.message
             </p>
         }
+
+        <p class="alert alert-warning col-md-6">This team member will be assigned to your account. If you would like this team member assigned to a different account please log in as that team member.</p>
 
         @helper.form(routes.Application.addSignup(), 'role -> "form", '_class -> "row") {
 
