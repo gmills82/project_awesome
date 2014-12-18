@@ -1,4 +1,4 @@
-@(signupForm: Form[UserModel])
+@(signupForm: Form[UserModel], roleType: Integer)
 
 @main("Signup page", "false") {
 
@@ -23,11 +23,7 @@
                 <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password" value="" />
             </fieldset>
 
-            <select name="roleTypeString" class="form-control form-group">
-                <option value="Producer" selected>Producer</option>
-                <option value="Agent" >Agent</option>
-                <option value="FA">Financial Advisor</option>
-            </select>
+            <input type="hidden" value="@roleType" name="roleTypeNum" />
 
             <input type="submit" value="Sign up" />
         }

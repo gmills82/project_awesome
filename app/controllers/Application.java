@@ -8,6 +8,8 @@ import play.mvc.*;
 import views.html.*;
 
 import java.util.*;
+import static ch.lambdaj.Lambda.*;
+import static org.hamcrest.Matchers.*;
 
 public class Application extends Controller {
   
@@ -57,7 +59,7 @@ public class Application extends Controller {
         UserModel currentUser = getCurrentUser();
         if(null != currentUser) {
 			//Collect a set of fresh referrals and send to homePage
-			List<Referral> freshReferrals = Referral.getFreshReferralsByUserId(currentUser.id);
+			List<Referral> freshReferrals = filter(having(on(Referral.class).fresh, equalTo(true)), currentUser.referrals);
             return ok(homePage.render(currentUser, freshReferrals));
         }
         return redirect(routes.Application.login());
@@ -88,9 +90,9 @@ public class Application extends Controller {
         );
     }
 
-    public static Result signup() {
+    public static Result signup(Integer roleType) {
         Form<UserModel> signupForm = Form.form(UserModel.class);
-        return ok(signup.render(signupForm));
+        return ok(signup.render(signupForm, roleType));
     }
 
     public static Result addSignup() {
@@ -115,13 +117,22 @@ public class Application extends Controller {
             newUser.password = UserModel.saltPassword(newUser.password);
         }
 
-        //Set Roletype
-        String[] roleTypeString = requestMap.get("roleTypeString");
-        UserModel.setRoleType(newUser, roleTypeString[0]);
+		//Set Roletype
+		Integer originalRoleType = Integer.parseInt(requestMap.get("roleTypeNum")[0]);
+		Logger.debug(originalRoleType.getClass().toString() + originalRoleType);
+		UserModel.setRoleType(newUser, originalRoleType);
+
+		//Set parent team member to the User currently signing them up
+		UserModel currentUser = getCurrentUser();
+		if(null != currentUser) {
+			newUser.parent_team_member = currentUser;
+		}else {
+			signupForm.reject("Error associating new team member with currently logged in team member.");
+		}
 
         //Check form for errors
         if(signupForm.hasErrors()) {
-            return badRequest(signup.render(signupForm));
+            return badRequest(signup.render(signupForm, originalRoleType));
         }else {
             flash("success", "Please login using your new credentials.");
         }

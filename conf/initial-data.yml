@@ -44,7 +44,7 @@
 
 - !!models.Action
     actionName: View Clients
-    requiredPermissionLevel: 0
+    requiredPermissionLevel: 1
     actionURL: /action/clients
     shortDescription: View your clients and their information
     imageName: action/viewClient.jpg
@@ -52,7 +52,7 @@
 
 - !!models.Action
     actionName: Track Agent efficiency
-    requiredPermissionLevel: 0
+    requiredPermissionLevel: 1
     actionURL: /action/agents
     shortDescription: Track which agents send you the most profitable referrals
     imageName: action/viewAgents.jpg

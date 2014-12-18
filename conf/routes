@@ -6,7 +6,7 @@
 GET         /                                 controllers.Application.login()
 POST        /login                            controllers.Application.authenticate()
 GET         /logout                           controllers.Application.logout()
-GET         /signup                           controllers.Application.signup()
+GET         /signup/:roleType                 controllers.Application.signup(roleType: Integer)
 POST        /signup                           controllers.Application.addSignup()
 GET         /home                             controllers.Application.home()
 GET         /action/profile                   controllers.Application.profile()

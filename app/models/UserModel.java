@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.mindrot.jbcrypt.BCrypt;
 import play.Logger;
@@ -36,6 +37,15 @@ public class UserModel extends Model {
 	@Constraints.Required
 	public String lastName;
 
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "parent_team_member")
+	@JsonManagedReference
+	public List<UserModel> childTeamMembers;
+
+	@ManyToOne(optional = true)
+	@JoinColumn(name="parent_team_member", referencedColumnName = "id")
+	@JsonBackReference
+	public UserModel parent_team_member;
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user_id")
 	@JsonManagedReference
 	public List<Referral> referrals;
@@ -55,6 +65,19 @@ public class UserModel extends Model {
 
     public static void setRoleType(UserModel user, String roleType) {
         user.roleType = Role.valueOf(roleType);
+    }
+    public static void setRoleType(UserModel user, Integer roleTypeNum) {
+		switch(roleTypeNum) {
+			case 0: user.roleType = Role.FA;
+				break;
+			case 1: user.roleType = Role.Agent;
+				break;
+			case 2: user.roleType = Role.Producer;
+				break;
+			default:
+				user.roleType = null;
+				break;
+		}
     }
 
     //Unique name check
