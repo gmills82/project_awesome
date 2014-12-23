@@ -14,7 +14,7 @@ module.exports = function (grunt) {
                 dest: 'javascripts/<%= pkg.name %>.min.js'
             },
             css: {
-                src: ["scss/compiled/theme.css", "stylesheets/src/*.css"],
+                src: ["stylesheets/libs/*.css", "scss/compiled/theme.css", "stylesheets/src/*.css"],
                 dest: "stylesheets/min/<%= pkg.name %>.min.css"
             }
         },
