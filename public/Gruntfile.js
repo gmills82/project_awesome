@@ -14,10 +14,20 @@ module.exports = function (grunt) {
                 dest: 'javascripts/<%= pkg.name %>.min.js'
             },
             css: {
-                src: ["stylesheets/src/*.css"],
+                src: ["scss/compiled/theme.css", "stylesheets/src/*.css"],
                 dest: "stylesheets/min/<%= pkg.name %>.min.css"
             }
         },
+		sass: {                              // Task
+			dist: {                            // Target
+				options: {                       // Target options
+					style: 'expanded'
+				},
+				files: {                         // Dictionary of files
+					'scss/compiled/theme.css': 'scss/theme/theme_styles.scss'       // 'destination': 'source'
+				}
+			}
+		},
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n'
@@ -54,10 +64,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-qunit');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
+    grunt.loadNpmTasks('grunt-contrib-sass');
 
     grunt.registerTask('test', ['jshint', 'qunit']);
 
-    grunt.registerTask('default', ['concat']);
+    grunt.registerTask('default', ['sass','concat']);
     grunt.registerTask('min', ['concat', 'uglify']);
 
 };

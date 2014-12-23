@@ -1,33 +1,50 @@
 @(loginForm: Form[Application.Login])
-@main("Login page", "false") {
+@main("Login page", "false", "login-page") {
 
-    <div class="jumbotron">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8">
-                    <h1>EFS Manager</h1>
-                    <p class="lead">Financial referral tracking for the modern era</p>
-                </div>
-                <div class="col-lg-4">
-                    <h3>Login to get started</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="login-box">
+                    <div id="login-box-holder">
+                        <div class="row">
+                            @if(loginForm.hasGlobalErrors) {
+                                <p class="alert alert-danger">
+                                @loginForm.globalError.message
+                                </p>
+                            }
 
-                    @if(loginForm.hasGlobalErrors) {
-                        <p class="alert alert-danger">
-                        @loginForm.globalError.message
-                        </p>
-                    }
+                            @if(flash.contains("success")) {
+                                <p class="alert alert-success">
+                                @flash.get("success")
+                                </p>
+                            }
+                            <div class="col-xs-12">
+                                <header id="login-header">
+                                    <div id="login-logo">
+                                        EFS Manager
+                                    </div>
+                                </header>
+                                <div id="login-box-inner">
+                                    @helper.form(routes.Application.authenticate, '_class -> "row") {
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                            <input type="email" name="userName" class="form-control" placeholder="E-mail" value="@loginForm("userName").value()" />
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                            <input type="password" name="password" class="form-control" placeholder="Password" value="@loginForm("password").value()" />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <input type="submit" value="Login" class="btn btn-success col-xs-12" />
+                                            </div>
+                                        </div>
+                                    }
 
-                    @if(flash.contains("success")) {
-                        <p class="alert alert-success">
-                        @flash.get("success")
-                        </p>
-                    }
-
-                    @helper.form(routes.Application.authenticate, '_class -> "row") {
-                        <input type="email" name="userName" class="form-control form-group" placeholder="E-mail" value="@loginForm("userName").value()" />
-                        <input type="password" name="password" class="form-control form-group" placeholder="Password" value="@loginForm("password").value()" />
-                        <input type="submit" value="Login" />
-                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

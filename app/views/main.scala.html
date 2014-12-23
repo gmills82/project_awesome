@@ -1,16 +1,19 @@
-@(title: String, showNav: String)(content: Html)
+@(title: String, showNav: String, cssId: String = "default")(content: Html)
 
 <!DOCTYPE html>
 <html lang="en">
 
     <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+
         <title>@title</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/min/bootstrap.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/min/project_awesome.min.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
     </head>
-    <body>
+    <body class="theme-blue-gradient" id="@cssId">
         @if(showNav == "true") {
             <nav class="navbar navbar-default" role="navigation">
                 <div class="container">
