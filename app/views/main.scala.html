@@ -12,32 +12,10 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/min/bootstrap.min.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/min/project_awesome.min.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-    </head>
-    <body class="theme-blue-gradient" id="@cssId">
-        @if(showNav == "true") {
-            <nav class="navbar navbar-default" role="navigation">
-                <div class="container">
-                    <div class="row">
-                        <div class="navbar-brand">
-                            <a href="
-                                @if(null != session().get("userName")) {
-                                    @routes.Application.home()
-                                }else {
-                                    @routes.Application.login()
-                                }">EFS Manager</a>
-                        </div>
-                        <div class="navbar-right">
-                            @if(null != session().get("userName")) {
-                                <a href="@routes.Application.logout()" class="btn btn-default btn-sm navbar-btn">Logout <span class="glyphicon glyphicon-log-out"></span></a>
-                            }else {
-                                <a href="@routes.Application.login()" class="btn btn-default btn-sm navbar-btn">Login <span class="glyphicon glyphicon-log-in"></span></a>
-                        </div>
-                    </div>
-                    }
-                </div>
-            </nav>
-        }
 
+        <link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+    </head>
+    <body class="theme-blue-gradient" id="@cssId" ng-app>
         @content
 
         @*Includes for javascript*@
