@@ -1,7 +1,7 @@
 @(user: UserModel, agents: List[UserModel])
-@home(user, "Profile a Client") {
-    <h2 class="row">Create a Client Referral</h2>
-    <div class="row" ng-controller="ReferralController">
+@home(user, "Refer a Client") {
+    <h2>Create a Client Referral</h2>
+    <div ng-controller="ReferralController" class="col-lg-12">
         <form class="form-horizontal" ng-submit="addReferral(referral)" name="referralForm" novalidate>
             <div class="form-group">
                 <label class="col-md-2 control-label" >Referral Type:</label>
