@@ -1,7 +1,7 @@
 @(user: UserModel, scripts: List[Script])
 @home(user, "Producer Phone Scripts Tool") {
 
-    <h1 class="row">Producer Phone Scripts Tool</h1>
+    <h1>Producer Phone Scripts Tool</h1>
 
     <!-- Nav tabs -->
     <div class="row  scriptTabs" >
@@ -31,6 +31,8 @@
         </div>
     </div>
     <div class="row">
-        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+        <div class="col-lg-12">
+            <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+        </div>
     </div>
 }
