@@ -100,7 +100,7 @@ public class Application extends Controller {
 			} else {
 				//If currentUser is allowed to use signup action
 				if(currentUser.roleType.getPermissionLevel() < roleType) {
-					return ok(signup.render(signupForm, roleType));
+					return ok(signup.render(currentUser, signupForm, roleType));
 				}else {
 					return badRequest(pageError.render());
 				}
@@ -146,7 +146,7 @@ public class Application extends Controller {
 
         //Check form for errors
         if(signupForm.hasErrors()) {
-            return badRequest(signup.render(signupForm, originalRoleType));
+            return badRequest(signup.render(currentUser, signupForm, originalRoleType));
         }else {
             flash("success", "Please login using your new credentials.");
         }

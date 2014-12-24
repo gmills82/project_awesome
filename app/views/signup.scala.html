@@ -1,38 +1,46 @@
-@(signupForm: Form[UserModel], roleType: Integer)
+@(user: UserModel, signupForm: Form[UserModel], roleType: Integer)
 
-@main("Signup page", "false") {
-
-    <div class="container">
+@home(user, "Signup page") {
+    @if(roleType == 1) {
+        <h1 >Agent Signup</h1>
+        }
+    @if(roleType == 2) {
+        <h1 >Producer Signup</h1>
+        }
+    <div class="main-box">
+        <header class="main-box-header">
         @if(roleType == 1) {
-            <h1 class="page-header">Sign your team member up as an agent</h1>
+            <h2 >Sign your team member up as an agent</h2>
         }
         @if(roleType == 2) {
-            <h1 class="page-header">Sign your team member up as a producer</h1>
+            <h2 >Sign your team member up as a producer</h2>
         }
+        </header>
+        <div class="main-box-body clearfix">
+            @if(signupForm.hasGlobalErrors) {
+                <p class="alert alert-danger">
+                @signupForm.globalError.message
+                </p>
+            }
 
-        @if(signupForm.hasGlobalErrors) {
-            <p class="alert alert-danger">
-            @signupForm.globalError.message
-            </p>
-        }
+            <p class="alert alert-warning col-md-6">This team member will be assigned to your account. If you would like this team member assigned to a different account please log in as that team member.</p>
 
-        <p class="alert alert-warning col-md-6">This team member will be assigned to your account. If you would like this team member assigned to a different account please log in as that team member.</p>
+            @helper.form(routes.Application.addSignup(), 'role -> "form") {
+                <input type="number" name="userId" class="form-control form-group" placeholder="@if(roleType == 1) {Agent Id}@if(roleType == 2) {Producer Id}"
+                value="@signupForm("userId").value()" />
+                <input type="email" name="userName" class="form-control form-group" placeholder="E-mail address" value="@signupForm("userName").value()" />
+                <input type="text" name="firstName" class="form-control form-group" placeholder="First Name" value="@signupForm("firstName").value()" />
+                <input type="text" name="lastName" class="form-control form-group" placeholder="Last Name" value="@signupForm("lastName").value()" />
 
-        @helper.form(routes.Application.addSignup(), 'role -> "form", '_class -> "row") {
+                <fieldset class="form-group">
+                    <input type="password" name="password" class="form-control" placeholder="Password" value="@signupForm("password").value()" />
+                    <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password" value="" />
+                </fieldset>
 
-            <input type="number" name="userId" class="form-control form-group" placeholder="Agent/Producer Id" value="@signupForm("userId").value()" />
-            <input type="email" name="userName" class="form-control form-group" placeholder="E-mail address" value="@signupForm("userName").value()" />
-            <input type="text" name="firstName" class="form-control form-group" placeholder="First Name" value="@signupForm("firstName").value()" />
-            <input type="text" name="lastName" class="form-control form-group" placeholder="Last Name" value="@signupForm("lastName").value()" />
+                <input type="hidden" value="@roleType" name="roleTypeNum" />
 
-            <fieldset class="form-group">
-                <input type="password" name="password" class="form-control" placeholder="Password" value="@signupForm("password").value()" />
-                <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password" value="" />
-            </fieldset>
-
-            <input type="hidden" value="@roleType" name="roleTypeNum" />
-
-            <input type="submit" value="Sign up" />
-        }
+                <input type="submit" value="Sign up" />
+            }
+        </div>
     </div>
 }

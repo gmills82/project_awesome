@@ -3,18 +3,24 @@ module.exports = function (grunt) {
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
         concat: {
-            dist: {
+            main: {
                 src: [
-                    "javascripts/src/html5shiv.js",
                     "javascripts/src/bootstrap.js",
                     "javascripts/src/angular.js",
                     "javascripts/src/angular-route.js",
-                    "javascripts/src/app.js"
+                    "javascripts/src/app.js",
+					"javascripts/jquery.nanoscroller.js",
+					"javascripts/scripts.js"
                     ],
-                dest: 'javascripts/<%= pkg.name %>.min.js'
+                dest: 'javascripts/min/<%= pkg.name %>.min.js'
             },
+			headlibs: {
+				src: ["javascripts/src/html5shiv.js","javascripts/src/modernizr.js","javascripts/respond.min.js"],
+				dest: "javascripts/min/headlibs.min.js"
+			},
+
             css: {
-                src: ["stylesheets/libs/*.css", "scss/compiled/theme.css", "stylesheets/src/*.css"],
+                src: [ "scss/compiled/theme.css", "stylesheets/libs/*.css", "stylesheets/src/*.css"],
                 dest: "stylesheets/min/<%= pkg.name %>.min.css"
             }
         },
@@ -34,7 +40,8 @@ module.exports = function (grunt) {
             },
             dist: {
                 files: {
-                    'javascripts/<%= pkg.name %>.min.js': ['<%= concat.dist.dest %>']
+                    'javascripts/min/<%= pkg.name %>.min.js': ['<%= concat.main.dest %>'],
+					'javascripts/min/headlibs.min.js': ['<%= concat.headlibs.dest %>']
                 }
             }
         },
@@ -69,6 +76,6 @@ module.exports = function (grunt) {
     grunt.registerTask('test', ['jshint', 'qunit']);
 
     grunt.registerTask('default', ['sass','concat']);
-    grunt.registerTask('min', ['concat', 'uglify']);
+    grunt.registerTask('min', ['sass', 'concat', 'uglify']);
 
 };

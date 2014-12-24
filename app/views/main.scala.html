@@ -14,12 +14,13 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
 
         <link href='//fonts.googleapis.com/css?family=Open+Sans:400,600,700,300' rel='stylesheet' type='text/css'>
+        <script src="@routes.Assets.at("javascripts/min/headlibs.min.js")"></script>
     </head>
     <body class="theme-blue-gradient" id="@cssId">
         @content
 
         @*Includes for javascript*@
-        <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.at("javascripts/project_awesome.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/min/jquery-1.9.0.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/min/project_awesome.min.js")" type="text/javascript"></script>
     </body>
 </html>
