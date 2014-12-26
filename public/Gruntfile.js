@@ -5,17 +5,18 @@ module.exports = function (grunt) {
         concat: {
             main: {
                 src: [
-                    "javascripts/src/bootstrap.js",
-                    "javascripts/src/angular.js",
-                    "javascripts/src/angular-route.js",
+                    "javascripts/libs/bootstrap.js",
+                    "javascripts/libs/angular.js",
+                    "javascripts/libs/angular-route.js",
                     "javascripts/src/app.js",
-					"javascripts/jquery.nanoscroller.js",
-					"javascripts/scripts.js"
+					"javascripts/src/controllers/*.js",
+					"javascripts/libs/jquery.nanoscroller.js",
+					"javascripts/src/scripts.js"
                     ],
                 dest: 'javascripts/min/<%= pkg.name %>.min.js'
             },
 			headlibs: {
-				src: ["javascripts/src/html5shiv.js","javascripts/src/modernizr.js","javascripts/respond.min.js"],
+				src: ["javascripts/libs/html5shiv.js","javascripts/libs/modernizr.js","javascripts/libs/respond.min.js"],
 				dest: "javascripts/min/headlibs.min.js"
 			},
 
