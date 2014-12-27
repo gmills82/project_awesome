@@ -2,6 +2,7 @@
 app.controller('RecentProfilesController', ["$scope", "$http", "$q", function ($scope, $http, $q){
 	$scope.recentProfiles = [];
 	$scope.childClients = [];
+	$scope.predicate = "-createdDate";
 
 	var profilePromise = getProfiles(app.data.currentUserId);
 	clientPromise = profilePromise.then(function (profileList) {
@@ -19,6 +20,13 @@ app.controller('RecentProfilesController', ["$scope", "$http", "$q", function ($
 				}
 			}
 		}
+
+		//Pretty dates for profiles
+		for(var q = 0; q < profiles.length; q++) {
+			date = new Date(profiles[q].createdDate);
+			profiles[q].createdDatePretty = (date.getMonth() + 1) + "/" + date.getDate() + "/" + date.getFullYear();
+		}
+
 		$scope.recentProfiles = profiles;
 	});
 

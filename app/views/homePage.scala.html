@@ -36,8 +36,8 @@
                     <h2>Your Recent Profiles</h2>
                 </header>
                 <div class="main-box-body">
-                    <ul  ng-show="recentProfiles.length">
-                        <li ng-repeat="profile in recentProfiles">{{profile.client.name}} - {{profile.client.notes}} - {{profile.nextSteps}}</li>
+                    <ul ng-show="recentProfiles.length">
+                        <li ng-repeat="profile in recentProfiles | orderBy:predicate:reverse"><a href="/action/profileReview/{{profile.id}}">{{profile.client.name}} - Completed on: {{profile.createdDatePretty}}</a></li>
                     </ul>
                     <ul ng-show="!recentProfiles.length">
                         <li>No recent profiles</li>
