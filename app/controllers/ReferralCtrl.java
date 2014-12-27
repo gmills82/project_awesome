@@ -15,6 +15,7 @@ import java.util.List;
 
 import static ch.lambdaj.Lambda.filter;
 import static ch.lambdaj.Lambda.having;
+import static ch.lambdaj.Lambda.sort;
 import static ch.lambdaj.Lambda.on;
 import static org.hamcrest.Matchers.equalTo;
 
@@ -44,6 +45,7 @@ public class ReferralCtrl extends Controller {
 		//Get user from userId
 		UserModel currentUser = UserModel.getById(userId);
 		List<Referral> freshReferrals = filter(having(on(Referral.class).fresh, equalTo(true)), currentUser.referrals);
+		freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
 
 		JsonNode referralJson = Json.toJson(freshReferrals);
 

@@ -61,7 +61,9 @@ public class ProfileCtrl extends Controller {
 		long DAY_IN_MS = 1000 * 60 * 60 * 24;
 		int numberOfDaysBack = 5;
 		Date timeLimit = new Date(System.currentTimeMillis() - (numberOfDaysBack * DAY_IN_MS));
-		profileList = filter(having(on(Profile.class).createdDate, greaterThanOrEqualTo(timeLimit)), profileList);
+		if(profileList.size() > 0) {
+			profileList = filter(having(on(Profile.class).createdDate, greaterThanOrEqualTo(timeLimit.getTime())), profileList);
+		}
 
 		JsonNode profileNode = Json.toJson(profileList);
 		node.put("data", profileNode);

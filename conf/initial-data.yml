@@ -27,10 +27,18 @@
     category: tool
 
 - !!models.Action
-    actionName: Create an account
+    actionName: Create a producer account
+    requiredPermissionLevel: 1
+    actionURL: /signup/2
+    shortDescription: Create a producer account for a team member
+    imageName: action/phone.jpg
+    category: admin
+
+- !!models.Action
+    actionName: Create an agent account
     requiredPermissionLevel: 0
-    actionURL: /signup
-    shortDescription: Create an account for a team member
+    actionURL: /signup/1
+    shortDescription: Create an agent account for a team member
     imageName: action/phone.jpg
     category: admin
 
