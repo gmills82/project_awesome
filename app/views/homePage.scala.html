@@ -1,30 +1,50 @@
-@(user: UserModel, freshReferrals: List[Referral])
+@(user: UserModel)
 @home(user, "Home") {
     @*Old*@
 
     <div class="row">
-        <h2>Welcome, @user.firstName @user.lastName</h2>
-        <div class="notifications col-md-4 col-sm-12">
+        <div class="col-lg-12">
+            <h1>Welcome, @user.firstName @user.lastName</h1>
             @*Flash messages*@
             @if(flash.contains("success")) {
                 <p class="alert alert-success">@flash.get("success")</p>
-            }
-            @if(freshReferrals.size() != 0) {
-                <ul class="alert alert-info">
-                @for(ref <- freshReferrals) {
-                    <li><a href="@routes.Application.profile()?refId=@ref.id"> @ref.refType
-                        Referral - @ref.nextStepDate - @ref.clientName</a>
-                    </li>
-                }
-                </ul>
             }
         </div>
     </div>
 
     <div class="row">
+        @*Angular components to show stats and clients*@
+        <div class="col-lg-12">
+            <div class="main-box" ng-controller="FreshReferralController">
+                <header class="main-box-header">
+                    <h2>Recent Referrals</h2>
+                </header>
+                <div class="main-box-body">
+                    <ul ng-repeat="referral in referrals" ng-show="referrals.length">
+                        <li><a href="@routes.Application.profile()?refId={{referral.id}}">{{referral.refType}} Referral - {{referral.nextStepDate}} - {{referral.clientName}}</a></li>
+                    </ul>
+                    <ul ng-show="!referrals.length">
+                        <li>No recent referrals</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
+        <div class="col-lg-12">
+            <div class="main-box" ng-controller="RecentProfilesController">
+                <header class="main-box-header">
+                    <h2>Recent Profiles</h2>
+                </header>
+                <div class="main-box-body">
+                    <ul ng-repeat="profile in recentProfiles" ng-show="recentProfiles.length">
+                        <li><a href="@routes.Application.profile()?refId={{profile.refId}}">{{profile.client.name}}</a></li>
+                    </ul>
+                    <ul ng-show="!recentProfiles.length">
+                        <li>No recent profiles</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
-
-    @*New*@
 
 }

@@ -19,6 +19,7 @@ public class Profile extends Model {
     public long agentId;
     public long clientId;
     public Long createdDate = System.currentTimeMillis();
+	public Long refId;
 
     public Integer riskTolerance;
     public Integer riskToleranceModifier;

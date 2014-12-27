@@ -5,13 +5,13 @@
     <div ng-controller="ProfileController">
 
         @*Client panel in profile tool*@
-        <div ng-controller="ClientController" ng-include src="'@routes.Assets.at("javascripts/views/client-in-profile.html")'"></div>
+        <div ng-controller="ClientController" ng-include src="'@routes.Assets.at("javascripts/src/views/client-in-profile.html")'"></div>
 
         @*Add assets panel in profile tool*@
-        <div ng-controller="AssetController" class="panel panel-default assets client-component" id="asset" ng-include src="'@routes.Assets.at("javascripts/views/add-asset.html")'"></div>
+        <div ng-controller="AssetController" class="panel panel-default assets client-component" id="asset" ng-include src="'@routes.Assets.at("javascripts/src/views/add-asset.html")'"></div>
 
         @*Add debts panel in profile tool*@
-        <div ng-controller="DebtController" class="panel panel-default debts client-component" id="debt" ng-include src="'@routes.Assets.at("javascripts/views/add-debt.html")'"></div>
+        <div ng-controller="DebtController" class="panel panel-default debts client-component" id="debt" ng-include src="'@routes.Assets.at("javascripts/src/views/add-debt.html")'"></div>
 
         <h3>Profile Questions</h3>
         <form class="form-horizontal" name="profileForm" ng-submit="profileForm.$valid && addProfile(profile)" novalidate>

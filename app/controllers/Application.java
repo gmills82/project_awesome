@@ -30,7 +30,7 @@ public class Application extends Controller {
 		if(null != currentUser) {
 			Profile reviewedProfile = Profile.getById(profileId);
 			UserModel agent = UserModel.getById(reviewedProfile.agentId);
-			Logger.debug("Agent number " + agent.id + " retrieved from profile");
+
 			Client client = Client.getById(reviewedProfile.clientId);
 			return ok(profileReview.render(agent, reviewedProfile, client));
 		}
@@ -58,9 +58,8 @@ public class Application extends Controller {
     public static Result home() {
         UserModel currentUser = getCurrentUser();
         if(null != currentUser) {
-			//Collect a set of fresh referrals and send to homePage
-			List<Referral> freshReferrals = filter(having(on(Referral.class).fresh, equalTo(true)), currentUser.referrals);
-            return ok(homePage.render(currentUser, freshReferrals));
+
+            return ok(homePage.render(currentUser));
         }
         return redirect(routes.Application.login());
     }
