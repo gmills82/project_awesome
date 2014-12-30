@@ -22580,7 +22580,8 @@ Modules - reusable parts of our design
 .alert li {
   list-style-type: none;
 }
-.fresh-referral h2 .badge {
+.fresh-referral h2 .badge,
+.recent-profile h2 .badge {
   top: -2px;
   position: relative;
 }

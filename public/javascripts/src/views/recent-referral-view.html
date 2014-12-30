@@ -1,0 +1,44 @@
+<header class="main-box-header">
+    <h2>Your Recent Profiles <span class="badge badge-success">{{recentProfiles.length}}</span></h2>
+</header>
+<div class="main-box-body">
+    <div class="table-responsive">
+        <table class="table dataTable no-footer" ng-show="recentProfiles.length">
+            <thead>
+            <tr>
+                <th>Date Completed</th>
+                <th>Client Name</th>
+                <th>Phone Number</th>
+                <th>Total Insurance</th>
+                <th>Total PC</th>
+                <th>Total IPS</th>
+                <th>Referred By</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="profile in recentProfiles">
+                <td>{{profile.createdDatePretty}}</td>
+                <td>{{profile.client.name}}</td>
+                <td>{{profile.client.phoneNumber}}</td>
+                <td>null</td>
+                <td>null</td>
+                <td>null</td>
+                <td>{{profile.referral.creator.firstName}} {{profile.referral.creator.lastName}}</td>
+                <td><a href="/action/profileReview/{{profile.id}}">Profile Review</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <ul ng-hide="recentProfiles.length">
+            <li>No Recent recentProfiles</li>
+        </ul>
+        <div class="view-all row">
+            <div class="pull-right">
+                <!--TODO: View all recentProfiles page-->
+                <a class="btn btn-primary pull-right" href="#"><i class="fa fa-eye fa-lg"></i>
+                    View All Profiles
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

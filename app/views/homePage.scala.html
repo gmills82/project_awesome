@@ -12,30 +12,16 @@
     </div>
 
     <div class="row">
-        @*Angular components to show stats and clients*@
         <div class="col-lg-12">
             @* Fresh Referrals Directive *@
-            <div class="main-box fresh-referral" fresh-referral></div>
+            <div class="main-box fresh-referral" fresh-referrals></div>
         </div>
     </div>
-
 
     <div class="row">
         <div class="col-lg-12">
-            <div class="main-box" ng-controller="RecentProfilesController">
-                <header class="main-box-header">
-                    <h2>Your Recent Profiles</h2>
-                </header>
-                <div class="main-box-body">
-                    <ul ng-show="recentProfiles.length">
-                        <li ng-repeat="profile in recentProfiles | orderBy:predicate:reverse"><a href="/action/profileReview/{{profile.id}}">{{profile.client.name}} - Completed on: {{profile.createdDatePretty}}</a></li>
-                    </ul>
-                    <ul ng-show="!recentProfiles.length">
-                        <li>No recent profiles</li>
-                    </ul>
-                </div>
-            </div>
+            @* Recent Profiles Directive *@
+            <div class="main-box recent-profile" recent-profiles></div>
         </div>
     </div>
-
 }

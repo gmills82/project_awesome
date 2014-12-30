@@ -11,6 +11,7 @@ import play.libs.Json;
 import play.mvc.*;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 import static ch.lambdaj.Lambda.filter;
@@ -66,8 +67,30 @@ public class ProfileCtrl extends Controller {
 		}
 
 		JsonNode profileNode = Json.toJson(profileList);
-		node.put("data", profileNode);
 
+		//Get each associated data object per profile
+		for(Iterator<JsonNode> iter = profileNode.iterator(); iter.hasNext();) {
+			ObjectNode profile = (ObjectNode) iter.next();
+
+			//Create a client JsonNode and attach it to each profileNode
+			Client clientModel = Client.getById(profile.get("clientId").longValue());
+			JsonNode clientNode = Json.toJson(clientModel);
+
+			profile.set("client", clientNode);
+
+			//Gather associated referrals that generated the profile
+			Referral refModel = Referral.getById(profile.get("refId").longValue());
+			ObjectNode refNode = (ObjectNode) Json.toJson(refModel);
+
+			//Gather referal creator object
+			UserModel refCreator = UserModel.getById(refNode.get("creatorId").longValue());
+			JsonNode refCreatorNode = Json.toJson(refCreator);
+
+			refNode.set("creator", refCreatorNode);
+			profile.set("referral", refNode);
+		}
+
+		node.put("data", profileNode);
 		return ok(node);
 	}
 }

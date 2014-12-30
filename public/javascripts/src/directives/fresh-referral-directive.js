@@ -1,4 +1,4 @@
-app.directive('freshReferral', ['$timeout', function(timer) {
+app.directive('freshReferrals', ['$timeout', function(timer) {
 	return {
 		restrict: 'A',
 		controller: 'FreshReferralController',
@@ -11,7 +11,6 @@ app.directive('freshReferral', ['$timeout', function(timer) {
 					searching: false,
 					info: false
 				});
-				console.log(element);
 			}
 
 			FreshReferralController.init();

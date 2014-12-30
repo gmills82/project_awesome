@@ -7,6 +7,7 @@ app.controller('ProfileController', ["$scope", "$http", function ($scope, $http)
 		//Get Referral
 		$http.get("/json/referral/" + refId).success(function (data, status, headers) {
 			var referral = data.data;
+			$scope.profile.refId = refId;
 
 			//Set profile's referral for tracking relationship between referral and profile
 			$scope.profile.referral = referral;
