@@ -20,12 +20,15 @@
                     <h2>Your Referrals</h2>
                 </header>
                 <div class="main-box-body">
+                    @* TODO: Change to table, and request client for this referral in this scope *@
+
                     <ul ng-show="referrals.length">
-                        <li  ng-repeat="referral in referrals" ><a href="@routes.Application.profile()?refId={{referral.id}}">{{referral.refType}} Referral - {{referral.nextStepDate}} - {{referral.clientName}}</a></li>
+                        <li  ng-repeat="referral in referrals" ><a href="@routes.Application.profile()?refId={{referral.id}}">{{referral.refType}} Referral - {{referral.nextStepDate}} - {{referral.clientName}} - {{referral.client.phoneNumber}}</a></li>
                     </ul>
                     <ul ng-show="!referrals.length">
                         <li>No recent referrals</li>
                     </ul>
+                    @* TODO: add view all link *@
                 </div>
             </div>
         </div>

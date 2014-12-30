@@ -43,10 +43,10 @@
     category: admin
 
 - !!models.Action
-    actionName: Create a Client Referral
+    actionName: Manage Client Referrals
     requiredPermissionLevel: 2
     actionURL: /action/referral
-    shortDescription: Create a client referral
+    shortDescription: Manage Client Referrals
     imageName: action/phone.jpg
     category: tool
 

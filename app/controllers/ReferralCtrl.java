@@ -1,7 +1,9 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.Client;
 import models.Referral;
 import models.UserModel;
 import play.mvc.Controller;
@@ -9,8 +11,12 @@ import play.*;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
+import scala.util.parsing.json.JSONArray;
+import scala.util.parsing.json.JSONArray$;
+import scala.util.parsing.json.JSONObject$;
 import views.html.*;
 
+import java.util.Iterator;
 import java.util.List;
 
 import static ch.lambdaj.Lambda.filter;
@@ -48,6 +54,20 @@ public class ReferralCtrl extends Controller {
 		freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
 
 		JsonNode referralJson = Json.toJson(freshReferrals);
+
+		//For each freshReferral retrieve client information and attach as "client" object in JSON
+		for(Iterator<JsonNode> iter = referralJson.iterator(); iter.hasNext(); ) {
+			//JsonNode is read only, ObjectNode is mutable
+			ObjectNode ref = (ObjectNode) iter.next();
+
+			//Lookup client
+			Client clientModel = Client.getById(ref.get("clientId").longValue());
+
+			//Create json node for client
+			JsonNode client = Json.toJson(clientModel);
+
+			ref.set("client", client);
+		}
 
 		result.put("data", referralJson);
 		return ok(result);
