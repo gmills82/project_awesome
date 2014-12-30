@@ -10,7 +10,10 @@ module.exports = function (grunt) {
                     "javascripts/libs/angular-route.js",
                     "javascripts/src/app.js",
 					"javascripts/src/controllers/*.js",
+					"javascripts/src/directives/*.js",
 					"javascripts/libs/jquery.nanoscroller.js",
+					"javascripts/libs/jquery.dataTables.js",
+					"javascripts/libs/jquery.dataTables.bootstrap.js",
 					"javascripts/src/scripts.js"
                     ],
                 dest: 'javascripts/min/<%= pkg.name %>.min.js'
