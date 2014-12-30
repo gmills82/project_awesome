@@ -31,8 +31,8 @@
 
                     <div class="nav-no-collapse pull-right" id="header-nav">
                         <ul class="nav navbar-nav pull-right">
-                            <li>
-                                <a href="@routes.Application.home()"><i class="fa fa-user"></i> @user.firstName @user.lastName</a>
+                            <li class="user">
+                                <a href="@routes.Application.home()"><span class="hidden-xs hidden-sm">Welcome, </span>@user.firstName @user.lastName</a>
                             </li>
                             <li class="hidden-xxs">
                                 <a class="btn" href="@routes.Application.logout()">

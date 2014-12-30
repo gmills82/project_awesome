@@ -2191,6 +2191,7 @@ blockquote.pull-right:before {
   border-bottom: 2px solid #e7ebee;
   text-transform: uppercase;
   font-size: 0.875em;
+  cursor: pointer;
 }
 .table thead > tr > th > a span {
   color: #212121;
