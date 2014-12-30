@@ -15,20 +15,47 @@
     <div class="row">
         @*Angular components to show stats and clients*@
         <div class="col-lg-6">
-            <div class="main-box" ng-controller="FreshReferralController">
+            @*TODO: Include in its own template file*@
+            <div class="main-box fresh-referral" ng-controller="FreshReferralController">
                 <header class="main-box-header">
-                    <h2>Your Referrals</h2>
+                    <h2>Recent Referrals <span class="badge badge-success">{{referrals.length}}</span></h2>
                 </header>
                 <div class="main-box-body">
-                    @* TODO: Change to table, and request client for this referral in this scope *@
-
-                    <ul ng-show="referrals.length">
-                        <li  ng-repeat="referral in referrals" ><a href="@routes.Application.profile()?refId={{referral.id}}">{{referral.refType}} Referral - {{referral.nextStepDate}} - {{referral.clientName}} - {{referral.client.phoneNumber}}</a></li>
-                    </ul>
-                    <ul ng-show="!referrals.length">
-                        <li>No recent referrals</li>
-                    </ul>
-                    @* TODO: add view all link *@
+                    <div class="table-responsive">
+                        <div class="dataTables_wrapper">
+                            <table class="table dataTable no-footer" ng-show="referrals.length">
+                                <thead>
+                                    <tr class="row">
+                                        <th rowspan="1" colspan="1">Type</th>
+                                        <th rowspan="1" colspan="1">Client Name</th>
+                                        <th rowspan="1" colspan="1">Next Steps Date</th>
+                                        <th rowspan="1" colspan="1">Phone Number</th>
+                                        <th rowspan="1" colspan="1">Take Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="row" ng-repeat="referral in referrals">
+                                        <td>{{referral.refType}} Referral</td>
+                                        <td>{{referral.clientName}}</td>
+                                        <td>{{referral.nextStepDate}}</td>
+                                        <td>{{referral.client.phoneNumber}}</td>
+                                        <td><a href="@routes.Application.profile()?refId={{referral.id}}">Begin Profiling</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <ul ng-hide="referrals.length">
+                                <li>No Recent Referrals</li>
+                            </ul>
+                            <div class="view-all row">
+                                <div class="pull-right">
+                                    @*TODO: View all referrals page*@
+                                    <a class="btn btn-primary pull-right" href="#"><i class="fa fa-eye fa-lg"></i>
+                                        View All Referrals
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

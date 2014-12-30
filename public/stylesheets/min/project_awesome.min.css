@@ -22579,6 +22579,10 @@ Modules - reusable parts of our design
 .alert li {
   list-style-type: none;
 }
+.fresh-referral h2 .badge {
+  top: -2px;
+  position: relative;
+}
 form .btn-group label.btn {
     position: relative;
     overflow: hidden;
