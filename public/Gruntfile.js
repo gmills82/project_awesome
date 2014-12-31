@@ -12,6 +12,7 @@ module.exports = function (grunt) {
                     "javascripts/src/app.js",
 					"javascripts/src/controllers/*.js",
 					"javascripts/src/directives/*.js",
+					"javascripts/libs/jquery-ui.custom.js",
 					"javascripts/libs/jquery.nanoscroller.js",
 					"javascripts/libs/jquery.dataTables.js",
 					"javascripts/libs/jquery.dataTables.bootstrap.js",
@@ -20,14 +21,18 @@ module.exports = function (grunt) {
                 dest: 'javascripts/min/<%= pkg.name %>.min.js'
             },
 			headlibs: {
-				src: ["javascripts/libs/html5shiv.js","javascripts/libs/modernizr.js","javascripts/libs/respond.min.js"],
+				src: ["javascripts/libs/jquery.js", "javascripts/libs/html5shiv.js","javascripts/libs/modernizr.js"],
 				dest: "javascripts/min/headlibs.min.js"
 			},
 
             css: {
-                src: [ "scss/compiled/theme.css", "stylesheets/libs/*.css", "stylesheets/src/*.css"],
-                dest: "stylesheets/min/<%= pkg.name %>.min.css"
-            }
+				src: [ "scss/compiled/theme.css", "stylesheets/libs/*.css", "stylesheets/src/*.css"],
+				dest: "stylesheets/min/<%= pkg.name %>.min.css"
+            },
+			bootstrap: {
+				src: ["scss/compiled/bootstrap.css"],
+				dest: "stylesheets/min/bootstrap.min.css"
+			}
         },
 		sass: {                              // Task
 			dist: {                            // Target
@@ -35,7 +40,8 @@ module.exports = function (grunt) {
 					style: 'expanded'
 				},
 				files: {                         // Dictionary of files
-					'scss/compiled/theme.css': 'scss/theme/theme_styles.scss'       // 'destination': 'source'
+					'scss/compiled/theme.css': 'scss/theme/theme_styles.scss',
+					'scss/compiled/bootstrap.css': 'scss/bootstrap.scss'
 				}
 			}
 		},
