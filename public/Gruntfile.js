@@ -8,6 +8,7 @@ module.exports = function (grunt) {
                     "javascripts/libs/bootstrap.js",
                     "javascripts/libs/angular.js",
                     "javascripts/libs/angular-route.js",
+                    "javascripts/libs/angular-match.js",
                     "javascripts/src/app.js",
 					"javascripts/src/controllers/*.js",
 					"javascripts/src/directives/*.js",

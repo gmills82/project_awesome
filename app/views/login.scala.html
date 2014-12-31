@@ -9,13 +9,15 @@
                         <div class="row">
                             @if(loginForm.hasGlobalErrors) {
                                 <p class="alert alert-danger">
-                                @loginForm.globalError.message
+                                    <i class="fa fa-times-circle fa-fw fa-lg"></i>
+                                    @loginForm.globalError.message
                                 </p>
                             }
 
                             @if(flash.contains("success")) {
                                 <p class="alert alert-success">
-                                @flash.get("success")
+                                    <i class="fa fa-check-circle fa-fw fa-lg"></i>
+                                    @flash.get("success")
                                 </p>
                             }
                             <div class="col-xs-12">

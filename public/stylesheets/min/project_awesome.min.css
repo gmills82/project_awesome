@@ -1007,8 +1007,10 @@ h3 .small {
 #sidebar-nav .nav li .submenu > li > a {
   display: block;
   font-size: 0.875em;
-  line-height: 38px;
+  line-height: 16px;
   padding-left: 66px;
+  padding-right: 10px;
+  margin-bottom: 15px;
   color: #fff;
   outline: none;
   text-decoration: none;
@@ -1218,8 +1220,10 @@ h3 .small {
   .nav-small #nav-col-submenu .submenu > li > a {
     display: block;
     font-size: 0.875em;
-    line-height: 38px;
+    line-height: 16px;
     padding-left: 66px;
+    padding-right: 10px;
+    margin-bottom: 15px;
     color: #fff;
     outline: none;
     text-decoration: none;

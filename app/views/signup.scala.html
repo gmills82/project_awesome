@@ -23,23 +23,24 @@
                 </p>
             }
 
-            <p class="alert alert-warning col-md-6">This team member will be assigned to your account. If you would like this team member assigned to a different account please log in as that team member.</p>
+            <p class="alert alert-info col-lg-12"><i class="fa fa-info-circle fa-fw fa-lg"></i> This team member will be assigned to your account. If you would like this team member assigned to a different account please log in as that team member.</p>
 
-            @helper.form(routes.Application.addSignup(), 'role -> "form") {
-                <input type="number" name="userId" class="form-control form-group" placeholder="@if(roleType == 1) {Agent Id}@if(roleType == 2) {Producer Id}"
-                value="@signupForm("userId").value()" />
-                <input type="email" name="userName" class="form-control form-group" placeholder="E-mail address" value="@signupForm("userName").value()" />
-                <input type="text" name="firstName" class="form-control form-group" placeholder="First Name" value="@signupForm("firstName").value()" />
-                <input type="text" name="lastName" class="form-control form-group" placeholder="Last Name" value="@signupForm("lastName").value()" />
+            @helper.form(routes.Application.addSignup(), 'role -> "form", 'name -> "signupForm") {
+                <input type="number" name="userId" class="form-control form-group" placeholder="@if(roleType == 1) {Agent Id}@if(roleType == 2) {Producer Id}" ng-model="user.userId" value="@signupForm("userId").value()" />
+                <input type="email" name="userName" class="form-control form-group" placeholder="E-mail address" ng-model="user.userName" value="@signupForm("userName").value()"required />
+                <input type="text" name="firstName" class="form-control form-group" placeholder="First Name" ng-model="user.firstName" value="@signupForm("firstName").value()" required />
+                <input type="text" name="lastName" class="form-control form-group" placeholder="Last Name" ng-model="user.lastName" value="@signupForm("lastName").value()" required />
 
                 <fieldset class="form-group">
-                    <input type="password" name="password" class="form-control" placeholder="Password" value="@signupForm("password").value()" />
-                    <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password" value="" />
+                    <input type="password" name="password" class="form-control" placeholder="Password" value="@signupForm("password").value()" ng-model="user.password" required/>
+                    <input type="password" name="confirmPassword" class="form-control" placeholder="Confirm password" ng-model="user.confirmPassword" data-match="user.password" value="" required/>
                 </fieldset>
 
-                <input type="hidden" value="@roleType" name="roleTypeNum" />
+                <div ng-show="signupForm.confirmPassword.$error.match" class="alert alert-warning form-group"><i class="fa fa-warning fa-fw fa-lg"></i> Password confirmation must match password</div>
 
-                <input type="submit" class="btn btn-primary" value="Sign up" />
+                <input type="hidden" value="@roleType" name="roleTypeNum" ng-model="user.roleTypeNum" />
+
+                <input type="submit" class="btn btn-primary" value="Sign up" ng-disabled="signupForm.$invalid" />
             }
         </div>
     </div>
