@@ -31,7 +31,8 @@ import static org.hamcrest.Matchers.equalTo;
  * Time: 9:04 PM
  */
 public class ReferralCtrl extends Controller {
-    @BodyParser.Of(BodyParser.Json.class)
+    //Read Referral
+	@BodyParser.Of(BodyParser.Json.class)
     public static Result getReferral(Long referralId) {
         ObjectNode result = Json.newObject();
         result.put("status", "OK");
@@ -43,17 +44,86 @@ public class ReferralCtrl extends Controller {
         return ok(result);
     }
 
+	//Create Referral
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result addReferral() {
+		Form<Referral> referralForm = Form.form(Referral.class);
+		Referral referral = referralForm.bindFromRequest().get();
+
+		referral.save();
+		flash().put("success", "Your referral was created successfully");
+		Logger.debug("Referral persisted with id: " + referral.id);
+		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
+
+		return status(201, "Created");
+	}
+
+	//Update Referral
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result editReferral() {
+		Form<Referral> referralForm = Form.form(Referral.class);
+		Referral referral = referralForm.bindFromRequest().get();
+
+		referral.update();
+		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
+
+		return ok();
+	}
+
+	//Delete Referral
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result deleteReferral(Long refId) {
+		Referral referral = Referral.getById(refId);
+
+		if(null != referral) {
+			//Status 200 - Resource succesfully deleted
+			referral.delete();
+			return ok();
+		}else {
+			return badRequest();
+		}
+	}
+
+	//Aggregate Referrals by user Id and filter on freshness Bool
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result getFreshReferrals(Long userId) {
+		//Response Json object
 		ObjectNode result = Json.newObject();
-		result.put("status", "OK");
 
 		//Get user from userId
 		UserModel currentUser = UserModel.getById(userId);
+
+		//Filter Referrals to only the ones we care about - Fresh Ones
 		List<Referral> freshReferrals = filter(having(on(Referral.class).fresh, equalTo(true)), currentUser.referrals);
 		freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
 
-		JsonNode referralJson = Json.toJson(freshReferrals);
+		//Gather client data for each Referral
+		JsonNode referralJson = gatherClientsForReferrals(freshReferrals);
+
+		//Put data in the response object
+		result.put("data", referralJson);
+		return ok(result);
+	}
+
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result getReferralsByUserId(Long userId) {
+		//Response Json object
+		ObjectNode result = Json.newObject();
+
+		//Get user from userId
+		UserModel requestedUser = UserModel.getById(userId);
+
+		//Gather client data for each Referral
+		JsonNode referralJson = gatherClientsForReferrals(requestedUser.referrals);
+
+		//Put data in the response object
+		result.put("data", referralJson);
+		return ok(result);
+	}
+
+	private static JsonNode gatherClientsForReferrals(List<Referral> referralList) {
+		//Convert list to Json
+		JsonNode referralJson = Json.toJson(referralList);
 
 		//For each freshReferral retrieve client information and attach as "client" object in JSON
 		for(Iterator<JsonNode> iter = referralJson.iterator(); iter.hasNext(); ) {
@@ -69,31 +139,6 @@ public class ReferralCtrl extends Controller {
 			ref.set("client", client);
 		}
 
-		result.put("data", referralJson);
-		return ok(result);
-	}
-
-	@BodyParser.Of(BodyParser.Json.class)
-	public static Result addReferral() {
-		Form<Referral> referralForm = Form.form(Referral.class);
-		Referral referral = referralForm.bindFromRequest().get();
-
-		referral.save();
-		flash().put("success", "Your referral was created successfully");
-		Logger.debug("Referral persisted with id: " + referral.id);
-		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
-
-		return status(201, "Created");
-	}
-
-	@BodyParser.Of(BodyParser.Json.class)
-	public static Result editReferral() {
-		Form<Referral> referralForm = Form.form(Referral.class);
-		Referral referral = referralForm.bindFromRequest().get();
-
-		referral.update();
-		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
-
-		return ok();
+		return referralJson;
 	}
 }
