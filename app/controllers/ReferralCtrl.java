@@ -90,7 +90,7 @@ public class ReferralCtrl extends Controller {
 		//Response Json object
 		ObjectNode result = Json.newObject();
 
-		//Get user from userId
+		//Get user from userId - USE HIS ASSIGNED REFERRALS
 		UserModel currentUser = UserModel.getById(userId);
 
 		//Filter Referrals to only the ones we care about - Fresh Ones
@@ -105,22 +105,24 @@ public class ReferralCtrl extends Controller {
 		return ok(result);
 	}
 
+	//Aggregate Referrals by their creator
 	@BodyParser.Of(BodyParser.Json.class)
-	public static Result getReferralsByUserId(Long userId) {
+	public static Result getReferralsByCreatorId(Long userId) {
 		//Response Json object
 		ObjectNode result = Json.newObject();
 
-		//Get user from userId
-		UserModel requestedUser = UserModel.getById(userId);
+		//Get list of referrals created by User - NOT ASSIGNED TO USER
+		List<Referral> referralsCreatedByUser = Referral.getByCreatorId(userId);
 
 		//Gather client data for each Referral
-		JsonNode referralJson = gatherClientsForReferrals(requestedUser.referrals);
+		JsonNode referralJson = gatherClientsForReferrals(referralsCreatedByUser);
 
 		//Put data in the response object
 		result.put("data", referralJson);
 		return ok(result);
 	}
 
+	//Gather client data for each Referral
 	private static JsonNode gatherClientsForReferrals(List<Referral> referralList) {
 		//Convert list to Json
 		JsonNode referralJson = Json.toJson(referralList);
