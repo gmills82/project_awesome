@@ -34,8 +34,8 @@ PUT           /json/referral                          controllers.ReferralCtrl.e
 DELETE        /json/referral/:referralId              controllers.ReferralCtrl.deleteReferral(referralId: Long)
 
 #Referral aggregation
-GET           /json/referrals/:userId                 controllers.ReferralCtrl.getReferralsByCreatorId(userId: Long)
 GET           /json/referrals/:userId                 controllers.ReferralCtrl.getFreshReferrals(userId: Long)
+GET           /json/referrals/creator/:userId         controllers.ReferralCtrl.getReferralsByCreatorId(userId: Long)
 
 #Assets and Debts CRUD
 GET           /json/assetTypes                        controllers.ClientCtrl.getAssetTypes()

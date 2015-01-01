@@ -1,0 +1,54 @@
+<header class="main-box-header">
+    <h2>Referrals You Created <span class="badge badge-primary">{{referrals.length}}</span></h2>
+</header>
+<div class="main-box-body">
+    <div class="table-responsive">
+        <table class="table dataTable no-footer" ng-show="referrals.length">
+            <thead>
+            <tr>
+                <th>Type</th>
+                <th>Client Name</th>
+                <th>Next Steps Date</th>
+                <th>Phone Number</th>
+                <th colspan="2">Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="referral in referrals">
+                <td>{{referral.refType}} Referral</td>
+                <td>{{referral.clientName}}</td>
+                <td>{{referral.nextStepDate}}</td>
+                <td>{{referral.client.phoneNumber}}</td>
+                <td><a href="/action/profile?refId={{referral.id}}">Edit Referral</a></td>
+                <td><a href="#deleteModal" data-toggle="modal">Delete Referral</a></td>
+            </tr>
+            </tbody>
+        </table>
+        <ul ng-hide="referrals.length">
+            <li>No Recent Referrals</li>
+        </ul>
+        <div class="view-all row">
+            <div class="pull-right">
+                <!--TODO: View all referrals page-->
+                <a class="btn btn-primary pull-right" href="#"><i class="fa fa-eye fa-lg"></i>
+                    View All Referrals
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Delete referral modal-->
+<div id="deleteModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4>Delete this referral?</h4>
+            </div>
+            <div class="modal-body">
+                <button class="btn btn-default" data-dismiss="modal">No</button>
+                <button class="btn btn-primary" ng-click="$scope.deleteReferral">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -16,6 +16,7 @@ import scala.util.parsing.json.JSONArray$;
 import scala.util.parsing.json.JSONObject$;
 import views.html.*;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -87,6 +88,7 @@ public class ReferralCtrl extends Controller {
 	//Aggregate Referrals by user Id and filter on freshness Bool
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result getFreshReferrals(Long userId) {
+		Long beginTime = System.currentTimeMillis();
 		//Response Json object
 		ObjectNode result = Json.newObject();
 
@@ -102,23 +104,29 @@ public class ReferralCtrl extends Controller {
 
 		//Put data in the response object
 		result.put("data", referralJson);
+		Logger.debug("Method getFreshReferrals responded in: " + (System.currentTimeMillis() - beginTime) + "ms");
 		return ok(result);
 	}
 
 	//Aggregate Referrals by their creator
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result getReferralsByCreatorId(Long userId) {
+		Long beginTime = System.currentTimeMillis();
 		//Response Json object
 		ObjectNode result = Json.newObject();
 
 		//Get list of referrals created by User - NOT ASSIGNED TO USER
 		List<Referral> referralsCreatedByUser = Referral.getByCreatorId(userId);
+		//Sort by date created
+		referralsCreatedByUser = sort(referralsCreatedByUser, on(Referral.class).dateCreated);
 
 		//Gather client data for each Referral
 		JsonNode referralJson = gatherClientsForReferrals(referralsCreatedByUser);
 
 		//Put data in the response object
 		result.put("data", referralJson);
+
+		Logger.debug("Method getReferralsByCreatorId responded in: " + (System.currentTimeMillis() - beginTime) + "ms");
 		return ok(result);
 	}
 

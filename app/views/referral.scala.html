@@ -1,6 +1,9 @@
 @(user: UserModel, agents: List[UserModel])
 @home(user, "Refer a Client") {
-    <h1>Client Referral Tool</h1>
+    <h1>Manage Client Referrals</h1>
+
+    <div class="main-box" referrals-by-creator></div>
+
     <div ng-controller="ReferralController">
         <div class="panel panel-default">
             <header class="panel-heading">
