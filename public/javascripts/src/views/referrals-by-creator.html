@@ -10,7 +10,7 @@
                 <th>Client Name</th>
                 <th>Next Steps Date</th>
                 <th>Phone Number</th>
-                <th colspan="2">Actions</th>
+                <th>Actions</th>
             </tr>
             </thead>
             <tbody>
@@ -19,22 +19,13 @@
                 <td>{{referral.clientName}}</td>
                 <td>{{referral.nextStepDate}}</td>
                 <td>{{referral.client.phoneNumber}}</td>
-                <td><a href="/action/profile?refId={{referral.id}}">Edit Referral</a></td>
-                <td><a href="#deleteModal" data-toggle="modal">Delete Referral</a></td>
+                <td><a href="#">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
             </tr>
             </tbody>
         </table>
         <ul ng-hide="referrals.length">
             <li>No Recent Referrals</li>
         </ul>
-        <div class="view-all row">
-            <div class="pull-right">
-                <!--TODO: View all referrals page-->
-                <a class="btn btn-primary pull-right" href="#"><i class="fa fa-eye fa-lg"></i>
-                    View All Referrals
-                </a>
-            </div>
-        </div>
     </div>
 </div>
 
@@ -47,7 +38,7 @@
             </div>
             <div class="modal-body">
                 <button class="btn btn-default" data-dismiss="modal">No</button>
-                <button class="btn btn-primary" ng-click="$scope.deleteReferral">Yes</button>
+                <button class="btn btn-primary">Yes</button>
             </div>
         </div>
     </div>

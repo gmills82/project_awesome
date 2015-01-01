@@ -8,11 +8,11 @@ app.controller('ReferralsByCreatorController', ["$scope", "$http", function ($sc
 	}
 	$scope.deleteReferral = function (refId) {
 		$http({"method": "DELETE", "url": "/json/referral/" + refId}).success(function (data){
-			$scope.referrals.each(function(index, ele, all) {
-				if(ele.id === refId) {
-					$scope.referrals[index] = null;
+			for(var y = 0; y < $scope.referrals.length; y++) {
+				if($scope.referrals[y].id === refId) {
+					$scope.referrals.splice(y, 1);
 				}
-			});
+			}
 		});
 	}
 }]);

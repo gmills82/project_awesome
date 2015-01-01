@@ -78,6 +78,7 @@ public class ReferralCtrl extends Controller {
 
 		if(null != referral) {
 			//Status 200 - Resource succesfully deleted
+			Logger.debug("Referral with id = " + referral.id + "was successfully deleted");
 			referral.delete();
 			return ok();
 		}else {
