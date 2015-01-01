@@ -62,9 +62,11 @@ public class ProfileCtrl extends Controller {
 		long DAY_IN_MS = 1000 * 60 * 60 * 24;
 		int numberOfDaysBack = 5;
 		Date timeLimit = new Date(System.currentTimeMillis() - (numberOfDaysBack * DAY_IN_MS));
+		Logger.debug("Profile list original size: " + profileList.size());
 		if(profileList.size() > 0) {
 			profileList = filter(having(on(Profile.class).createdDate, greaterThanOrEqualTo(timeLimit.getTime())), profileList);
 		}
+		Logger.debug("Profile list size after filtering: " + profileList.size());
 
 		JsonNode profileNode = Json.toJson(profileList);
 
@@ -76,18 +78,26 @@ public class ProfileCtrl extends Controller {
 			Client clientModel = Client.getById(profile.get("clientId").longValue());
 			JsonNode clientNode = Json.toJson(clientModel);
 
+			//Attach client
 			profile.set("client", clientNode);
 
 			//Gather associated referrals that generated the profile
 			Referral refModel = Referral.getById(profile.get("refId").longValue());
-			ObjectNode refNode = (ObjectNode) Json.toJson(refModel);
 
-			//Gather referal creator object
-			UserModel refCreator = UserModel.getById(refNode.get("creatorId").longValue());
-			JsonNode refCreatorNode = Json.toJson(refCreator);
+			//If the referral that generated this profile has been deleted then it will return null
+			if(null != refModel) {
+				ObjectNode refNode = (ObjectNode) Json.toJson(refModel);
 
-			refNode.set("creator", refCreatorNode);
-			profile.set("referral", refNode);
+				//Gather referral creator object
+				//TODO: On profile create should we have referral pass its creatorId to profile?
+				//TODO: Or should I make it so you cannot delete referrals that have been turned into profiles?
+				UserModel refCreator = UserModel.getById(refNode.get("creatorId").longValue());
+				JsonNode refCreatorNode = Json.toJson(refCreator);
+
+				//Attach creator and referral
+				refNode.set("creator", refCreatorNode);
+				profile.set("referral", refNode);
+			}
 		}
 
 		node.put("data", profileNode);

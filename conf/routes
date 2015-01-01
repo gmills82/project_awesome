@@ -25,6 +25,8 @@ PUT           /json/client                            controllers.ClientCtrl.edi
 #Profile CRUD
 POST          /json/profile                           controllers.ProfileCtrl.addProfile()
 GET           /json/profile/:profileId                controllers.ProfileCtrl.getProfile(profileId: Long)
+
+#Profile Aggregation
 GET           /json/recentProfiles/:userId            controllers.ProfileCtrl.getRecentProfiles(userId: Long)
 
 #Referral CRUD
