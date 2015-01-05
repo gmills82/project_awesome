@@ -25,9 +25,9 @@ public class Referral extends Model {
 	public String refType;
 	public Boolean fresh = true;
 	public String status = "OPEN";
-	public double tInsurance = 0.00;
-	public double tPc = 0.0;
-	public double tIps = 0.0;
+	public Integer tInsurance = 0;
+	public Integer tPc = 0;
+	public Integer tIps = 0;
 
 	@ManyToOne(optional = false)
 	@JoinColumn(name="user_id", referencedColumnName = "id")
