@@ -55,6 +55,15 @@ public class Application extends Controller {
         return redirect(routes.Application.login());
     }
 
+	public static Result editReferral(Long refId) {
+		UserModel currentUser = getCurrentUser();
+		if(null != currentUser) {
+			List<UserModel> faUsers = UserModel.getByPermissionLevel(UserModel.Role.FA);
+			return ok(editReferral.render(currentUser, faUsers));
+		}
+		return redirect(routes.Application.login());
+	}
+
     public static Result home() {
         UserModel currentUser = getCurrentUser();
         if(null != currentUser) {

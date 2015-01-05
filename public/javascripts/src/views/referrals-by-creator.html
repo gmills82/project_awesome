@@ -18,8 +18,8 @@
                 <td>{{referral.refType}} Referral</td>
                 <td>{{referral.clientName}}</td>
                 <td>{{referral.nextStepDate}}</td>
-                <td>{{referral.client.phoneNumber}}</td>
-                <td><a href="#">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
+                <td><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber}}</a></td>
+                <td><a href="/editReferral/{{referral.id}}">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
             </tr>
             </tbody>
         </table>

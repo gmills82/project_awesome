@@ -32,6 +32,7 @@ import static org.hamcrest.Matchers.equalTo;
  * Time: 9:04 PM
  */
 public class ReferralCtrl extends Controller {
+
     //Read Referral
 	@BodyParser.Of(BodyParser.Json.class)
     public static Result getReferral(Long referralId) {
@@ -61,7 +62,7 @@ public class ReferralCtrl extends Controller {
 
 	//Update Referral
 	@BodyParser.Of(BodyParser.Json.class)
-	public static Result editReferral() {
+	public static Result updateReferral() {
 		Form<Referral> referralForm = Form.form(Referral.class);
 		Referral referral = referralForm.bindFromRequest().get();
 

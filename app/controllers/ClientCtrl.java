@@ -83,6 +83,15 @@ public class ClientCtrl extends Controller {
 
         //There is no error on the form so it is now safe to get the Client
         Client client = clientForm.get();
+		ObjectNode clientJson = (ObjectNode) Json.toJson(client);
+		String[] goalsArray = client.goalsString.split(" ");
+
+		ObjectNode goalNode = Json.newObject();
+		for(String goal : goalsArray) {
+			goalNode.put(goal, new String("true"));
+		}
+		clientJson.put("goals", goalNode);
+
         client.update();
 
         Logger.debug("Client updated: " + client.name);

@@ -18,7 +18,7 @@
                     <td>{{referral.refType}} Referral</td>
                     <td>{{referral.clientName}}</td>
                     <td>{{referral.nextStepDate}}</td>
-                    <td>{{referral.client.phoneNumber}}</td>
+                    <td><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber}}</a></td>
                     <td><a href="/action/profile?refId={{referral.id}}">Begin Profile</a></td>
                 </tr>
             </tbody>

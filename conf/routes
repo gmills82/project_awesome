@@ -13,6 +13,7 @@ GET           /action/profile                         controllers.Application.pr
 GET           /action/producerScript                  controllers.Application.producerScript()
 GET           /action/referral                        controllers.Application.referral()
 GET           /action/profileReview/:profileId        controllers.Application.profileReview(profileId: Long)
+GET           /editReferral/:referralId               controllers.Application.editReferral(referralId: Long)
 
 ## JSON Endpoints
 GET           /actions/:userId/:category              controllers.UserCtrl.getActions(userId: Long, category: String)
@@ -32,7 +33,7 @@ GET           /json/recentProfiles/:userId            controllers.ProfileCtrl.ge
 #Referral CRUD
 POST          /json/referral                          controllers.ReferralCtrl.addReferral()
 GET           /json/referral/:referralId              controllers.ReferralCtrl.getReferral(referralId: Long)
-PUT           /json/referral                          controllers.ReferralCtrl.editReferral()
+PUT           /json/referral                          controllers.ReferralCtrl.updateReferral()
 DELETE        /json/referral/:referralId              controllers.ReferralCtrl.deleteReferral(referralId: Long)
 
 #Referral aggregation
