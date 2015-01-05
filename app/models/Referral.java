@@ -35,7 +35,7 @@ public class Referral extends Model {
 
     public String reasonForReferral;
     public String refNotes;
-    public Boolean wasProductive;
+    public Boolean wasProductive = false;
 
 
     public static Finder<Long, Referral> finder = new Finder(Long.class, Referral.class);
