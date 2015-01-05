@@ -47,8 +47,6 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 			$scope.referral = data.data;
 			$http.get("/json/client/" + $scope.referral.clientId).success(function ( data, status, headers) {
 				$scope.referral.client = data.data;
-				parseGoalsString($scope.referral.client.goalsString);
-				delete referral.client.goalsString;
 			});
 		});
 	};
@@ -56,28 +54,11 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 	//Have form submit to different method that can run the PUT instead of add (POST)
 	$scope.updateReferral = function (referral) {
 		$http.put("/json/referral", referral).success(function ( data, status, headers) {
-			referral.client.goalsString = "";
-			for(var goal in referral.client.goals) {
-				if(referral.client.goals.hasOwnProperty(goal) && referral.client.goals[goal] === true) {
-					referral.client.goalsString += " " + goal;
-				}
-			}
 			$http.put("/json/client", referral.client).success(function ( data, status, headers) {
 				window.location.href = "/action/referral";
 			});
 		});
 	};
-
-	function parseGoalsString (goalsString) {
-		var goalArray = goalsString.split(" ");
-		for(var x = 0; x < goalArray.length; x++) {
-			var goal = goalArray[x];
-			goal = goal.trim();
-			if(goal !== "" && goal != " ") {
-				$scope.referral.client.goals[goal] = true;
-			}
-		}
-	}
 
 	$scope.init();
 }]);

@@ -41,7 +41,6 @@ app.controller('ProfileController', ["$scope", "$http", function ($scope, $http)
 
 	$scope.addProfile = function (profile) {
 		var referral = $scope.profile.referral;
-		referral.fresh = false;
 		$http.put("/json/referral", referral).success(function (data, status, headers) {
 			console.log("Referral with id " + referral.id + " updated to no longer be fresh");
 

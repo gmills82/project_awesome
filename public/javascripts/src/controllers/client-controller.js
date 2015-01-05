@@ -15,6 +15,7 @@ app.controller('ClientController', ["$scope", "$http", function ($scope, $http) 
 		var failFunc = function(jqxhr, status, error) {
 			console.log("Client was unable to be updated. Server responded with " + status + " error: " + error);
 		}
+
 		if($scope.mode === "add") {
 			$http.post("/json/client", client).success(function (data, status, headers) {
 				//Lookup new resource with a GET
@@ -25,12 +26,9 @@ app.controller('ClientController', ["$scope", "$http", function ($scope, $http) 
 			}).error(failFunc);
 		}else if ($scope.mode === 'edit') {
 			$http.put("/json/client", client).success(function (data, status, headers) {
-				console.log("Successfully updated client: " + client.name);
 				//Lookup new resource with a GET
-				$http.get(headers("Location")).success(function (data){
-					$scope.prepareProfileScope(data.data);
-					$scope.client = data.data;
-				});
+				$scope.prepareProfileScope(client);
+				$scope.client = client;
 			}).error(failFunc);
 		}
 	};

@@ -41,7 +41,9 @@ public class ClientCtrl extends Controller {
 
 		ObjectNode goalNode = Json.newObject();
 		for(String goal : goalsArray) {
-			goalNode.put(goal, new String("true"));
+			if(goal != "false") {
+				goalNode.put(goal, new String("true"));
+			}
 		}
 		clientJson.put("goals", goalNode);
 
@@ -81,16 +83,24 @@ public class ClientCtrl extends Controller {
     public static Result editClientJSON() {
         Form<Client> clientForm = Form.form(Client.class).bindFromRequest();
 
-        //There is no error on the form so it is now safe to get the Client
-        Client client = clientForm.get();
-		ObjectNode clientJson = (ObjectNode) Json.toJson(client);
-		String[] goalsArray = client.goalsString.split(" ");
+		JsonNode data = request().body().asJson();
 
-		ObjectNode goalNode = Json.newObject();
-		for(String goal : goalsArray) {
-			goalNode.put(goal, new String("true"));
+        Client client = clientForm.get();
+
+		if(null != data.findValue("goals")) {
+			JsonNode goalsNode = data.findValue("goals");
+			Iterator<Map.Entry<String, JsonNode>> iterator = goalsNode.fields();
+
+			String tmpStr = "";
+
+			while(iterator.hasNext()) {
+				Map.Entry<String, JsonNode> next = iterator.next();
+				if(!next.getValue().textValue().equals("false")) {
+					tmpStr += next.getKey() + " ";
+				}
+			}
+			client.goalsString = tmpStr;
 		}
-		clientJson.put("goals", goalNode);
 
         client.update();
 
