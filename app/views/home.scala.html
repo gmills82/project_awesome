@@ -6,9 +6,8 @@
             <div class="container">
                 @* Logos *@
                 <a href="@routes.Application.home()" id="logo" class="navbar-brand">
-                    <img src="img/logo.png" alt="" class="normal-logo logo-white"/>
-                    <img src="img/logo-black.png" alt="" class="normal-logo logo-black"/>
-                    <img src="img/logo-small.png" alt="" class="small-logo hidden-xs hidden-sm hidden"/>
+                    <img src="@routes.Assets.at("images/logo.png")" alt="" class="normal-logo logo-white hidden-xs hidden-sm "/>
+                    <img src="@routes.Assets.at("images/logo-small.png")" alt="" class="small-logo hidden-md hidden-lg"/>
                 </a>
 
                 <div class="clearfix">

@@ -101,7 +101,11 @@
 
 	    @media (max-width: $break-xs-max) {
 			height: 25px;
+			margin: 0;
 		}
+        @media (max-width: $break-sm-max) {
+			margin: 0;
+        }
 	}
 	&.navbar-brand > img.normal-logo.logo-white {
 		@media (min-width: $break-sm-min) {

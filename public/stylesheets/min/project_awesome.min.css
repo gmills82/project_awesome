@@ -462,6 +462,12 @@ h3 .small {
 @media (max-width: 767px) {
   #logo.navbar-brand > img {
     height: 25px;
+    margin: 0;
+  }
+}
+@media (max-width: 991px) {
+  #logo.navbar-brand > img {
+    margin: 0;
   }
 }
 @media (min-width: 992px) {
