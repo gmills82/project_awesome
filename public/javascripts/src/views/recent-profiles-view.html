@@ -21,7 +21,7 @@
             <tr ng-repeat="profile in recentProfiles">
                 <td>{{profile.createdDatePretty}}</td>
                 <td>{{profile.client.name}}</td>
-                <td>{{profile.client.phoneNumber}}</td>
+                <td><a href="tel:+1{{profile.client.phoneNumber}}">{{profile.client.phoneNumber | telly}}</a></td>
                 <td>{{profile.referral.tInsurance}}</td>
                 <td>{{profile.referral.tPc}}</td>
                 <td>{{profile.referral.tIps}}</td>

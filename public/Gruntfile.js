@@ -12,6 +12,7 @@ module.exports = function (grunt) {
                     "javascripts/src/app.js",
 					"javascripts/src/controllers/*.js",
 					"javascripts/src/directives/*.js",
+					"javascripts/src/filters/*.js",
 					"javascripts/libs/jquery-ui.custom.js",
 					"javascripts/libs/jquery.nanoscroller.js",
 					"javascripts/libs/jquery.dataTables.js",
