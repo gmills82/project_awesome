@@ -163,7 +163,7 @@ public class Application extends Controller {
         //Save user
         newUser.save();
 
-        return redirect(routes.Application.login());
+        return redirect(routes.Application.home());
     }
 
     public static class Login {
