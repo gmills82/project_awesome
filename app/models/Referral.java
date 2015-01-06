@@ -23,7 +23,6 @@ public class Referral extends Model {
 	public long clientId;
 	public String clientName;
 	public String refType;
-	public Boolean fresh = true;
 	public String status = "OPEN";
 	public Integer tInsurance = 0;
 	public Integer tPc = 0;
