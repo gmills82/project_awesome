@@ -51,6 +51,7 @@ public class ReferralCtrl extends Controller {
 	public static Result addReferral() {
 		Form<Referral> referralForm = Form.form(Referral.class);
 		Referral referral = referralForm.bindFromRequest().get();
+		setWasProductive(referral);
 
 		referral.save();
 		flash().put("success", "Your referral was created successfully");
@@ -65,6 +66,11 @@ public class ReferralCtrl extends Controller {
 	public static Result updateReferral() {
 		Form<Referral> referralForm = Form.form(Referral.class);
 		Referral referral = referralForm.bindFromRequest().get();
+		setWasProductive(referral);
+
+		JsonNode data = request().body().asJson();
+		JsonNode refStatusNode = data.findValue("status");
+		referral.status = refStatusNode.get("status").textValue();
 
 		referral.update();
 		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
@@ -98,7 +104,7 @@ public class ReferralCtrl extends Controller {
 		UserModel currentUser = UserModel.getById(userId);
 
 		//Filter Referrals to only the ones we care about - Fresh Ones
-		List<Referral> freshReferrals = filter(having(on(Referral.class).fresh, equalTo(true)), currentUser.referrals);
+		List<Referral> freshReferrals = filter(having(on(Referral.class).status, equalTo("OPEN")), currentUser.referrals);
 		freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
 
 		//Gather client data for each Referral
@@ -152,5 +158,17 @@ public class ReferralCtrl extends Controller {
 		}
 
 		return referralJson;
+	}
+
+	private static void setWasProductive(Referral referral) {
+		if(referral.tInsurance > 0) {
+			referral.wasProductive = true;
+		}
+		if(referral.tIps > 0) {
+			referral.wasProductive = true;
+		}
+		if(referral.tPc > 0) {
+			referral.wasProductive = true;
+		}
 	}
 }

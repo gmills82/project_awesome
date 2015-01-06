@@ -30,9 +30,10 @@ public class Application extends Controller {
 		if(null != currentUser) {
 			Profile reviewedProfile = Profile.getById(profileId);
 			UserModel agent = UserModel.getById(reviewedProfile.agentId);
+			Referral referral = Referral.getById(reviewedProfile.refId);
 
 			Client client = Client.getById(reviewedProfile.clientId);
-			return ok(profileReview.render(agent, reviewedProfile, client));
+			return ok(profileReview.render(agent, reviewedProfile, client, referral));
 		}
 		return redirect(routes.Application.login());
 	}

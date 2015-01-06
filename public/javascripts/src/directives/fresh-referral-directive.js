@@ -5,7 +5,7 @@ app.directive('freshReferrals', ['$timeout', function(timer) {
 		link: function(scope, element, attrs, FreshReferralController) {
 			function initDataTable() {
 				$(element).find('table').dataTable({
-					columns:[null, null, null, null, {"orderable": false}],
+					columns:[null, null, null, null, {"orderable": false}, {"orderable": false}],
 					order: [[2, "asc"]],
 					paging: false,
 					searching: false,

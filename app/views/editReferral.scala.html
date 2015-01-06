@@ -71,6 +71,25 @@
                             <input class="form-control ng-pristine ng-valid" name="nextStepDate" ng-model="referral.nextStepDate" type="date">
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Status of this referral: </label>
+                        <div class="col-md-1">
+                            <select name="status" id="status" ng-model="referral.status" ng-options="status.status for status in refStatus"></select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">Total Insurance: </label>
+                        <div class="col-md-10">
+                            <input type="number" ng-model="referral.tInsurance" class="col-md-1" />
+                            <label class="col-md-1 control-label">Total PC: </label>
+                            <input type="number" ng-model="referral.tPc" class="col-md-1" />
+                            <label class="col-md-1 control-label">Total IPS: </label>
+                            <input type="number" ng-model="referral.tIps" class="col-md-1" />
+                        </div>
+                    </div>
+
                     <div class="form-group">
                         <label class="col-md-2 control-label" >Assign to Agent:</label>
                         <div class="col-md-10">

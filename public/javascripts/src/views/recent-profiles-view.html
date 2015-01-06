@@ -12,6 +12,7 @@
                 <th>Total Insurance</th>
                 <th>Total PC</th>
                 <th>Total IPS</th>
+                <th>Was Productive?</th>
                 <th>Referred By</th>
                 <th>Action</th>
             </tr>
@@ -21,9 +22,10 @@
                 <td>{{profile.createdDatePretty}}</td>
                 <td>{{profile.client.name}}</td>
                 <td>{{profile.client.phoneNumber}}</td>
-                <td>null</td>
-                <td>null</td>
-                <td>null</td>
+                <td>{{profile.referral.tInsurance}}</td>
+                <td>{{profile.referral.tPc}}</td>
+                <td>{{profile.referral.tIps}}</td>
+                <td>{{profile.referral.wasProductive}}</td>
                 <td>{{profile.referral.creator.firstName}} {{profile.referral.creator.lastName}}</td>
                 <td><a href="/action/profileReview/{{profile.id}}">Profile Review</a></td>
             </tr>

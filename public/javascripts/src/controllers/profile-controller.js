@@ -11,6 +11,8 @@ app.controller('ProfileController', ["$scope", "$http", function ($scope, $http)
 
 			//Set profile's referral for tracking relationship between referral and profile
 			$scope.profile.referral = referral;
+			//Default status in select
+			$scope.profile.referral.status = $scope.refStatus[0];
 
 			//Get Client
 			$http.get("/json/client/" + referral.clientId).success(function (data, status, headers) {
@@ -38,6 +40,18 @@ app.controller('ProfileController', ["$scope", "$http", function ($scope, $http)
 		param = param.slice(param.indexOf("=") + 1);
 		$scope.prefillFromReferral(param);
 	}
+
+	$scope.refStatus = [
+		{
+			"status": "OPEN"
+		},
+		{
+			status: "CLOSED"
+		},
+		{
+			status: "CANCELED"
+		}
+	];
 
 	$scope.addProfile = function (profile) {
 		var referral = $scope.profile.referral;

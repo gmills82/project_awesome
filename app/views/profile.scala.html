@@ -80,6 +80,25 @@
                     <textarea name="nextSteps" class="form-control" ng-model="profile.nextSteps" placeholder="Next steps with this client" required ></textarea>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Status of this referral: </label>
+                <div class="col-md-1">
+                    <select name="status" id="status" ng-model="profile.referral.status" ng-options="status.status for status in refStatus"></select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-md-2 control-label">Total Insurance: </label>
+                <div class="col-md-10">
+                    <input type="number" ng-model="profile.referral.tInsurance" class="col-md-1" />
+                    <label class="col-md-1 control-label">Total PC: </label>
+                    <input type="number" ng-model="profile.referral.tPc" class="col-md-1" />
+                    <label class="col-md-1 control-label">Total IPS: </label>
+                    <input type="number" ng-model="profile.referral.tIps" class="col-md-1" />
+                </div>
+            </div>
+
             <input type="hidden" ng-mode="profile.agentId" value="@user.id" />
 
             <input type="submit" value="Submit Profile" ng-disabled="!profile.clientId" class="btn btn-primary col-md-offset-2"/>

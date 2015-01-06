@@ -32,6 +32,19 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 			});
 		});
 	};
+
+	$scope.refStatus = [
+		{
+			"status": "OPEN"
+		},
+		{
+			status: "CLOSED"
+		},
+		{
+			status: "CANCELED"
+		}
+	];
+
 	$scope.init = function () {
 		//Parse params for refId
 		if(window.location.href.match(/\/editReferral\/\d+$/)){
@@ -45,6 +58,12 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 	$scope.editReferral = function (refId) {
 		$http.get("/json/referral/" + refId).success(function ( data, status, headers) {
 			$scope.referral = data.data;
+			//Set default status to OPEN
+			for(var x = 0; x < $scope.refStatus.length; x++) {
+				if($scope.referral.status == $scope.refStatus[x].status) {
+					$scope.referral.status = $scope.refStatus[x];
+				}
+			}
 			$http.get("/json/client/" + $scope.referral.clientId).success(function ( data, status, headers) {
 				$scope.referral.client = data.data;
 			});

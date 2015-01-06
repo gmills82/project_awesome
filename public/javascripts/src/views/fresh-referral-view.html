@@ -10,6 +10,7 @@
                     <th>Client Name</th>
                     <th>Next Steps Date</th>
                     <th>Phone Number</th>
+                    <th>Status</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -19,6 +20,7 @@
                     <td>{{referral.clientName}}</td>
                     <td>{{referral.nextStepDate}}</td>
                     <td><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber}}</a></td>
+                    <td>{{referral.status}}</td>
                     <td><a href="/editReferral/{{referral.id}}">Edit Referral</a> - <a href="/action/profile?refId={{referral.id}}">Begin Profile</a></td>
                 </tr>
             </tbody>
