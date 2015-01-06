@@ -72,6 +72,12 @@ public class ReferralCtrl extends Controller {
 		JsonNode refStatusNode = data.findValue("status");
 		referral.status = refStatusNode.get("status").textValue();
 
+		//Map agentId to user_id
+		Logger.debug("Check 12 " + Long.parseLong(data.findValue("agentId").textValue()));
+		UserModel agent = UserModel.getById(Long.parseLong(data.findValue("agentId").textValue()));
+		referral.user_id = agent;
+
+		Logger.debug("Referral updated and assigned to " + referral.user_id);
 		referral.update();
 		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
 

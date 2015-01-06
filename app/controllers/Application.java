@@ -50,8 +50,8 @@ public class Application extends Controller {
     public static Result referral() {
         UserModel currentUser = getCurrentUser();
         if(null != currentUser) {
-            List<UserModel> faUsers = UserModel.getByPermissionLevel(UserModel.Role.FA);
-            return ok(referral.render(currentUser, faUsers));
+			List<UserModel> team = gatherAssignableTeamMembers(currentUser);
+            return ok(referral.render(currentUser, team));
         }
         return redirect(routes.Application.login());
     }
@@ -59,8 +59,8 @@ public class Application extends Controller {
 	public static Result editReferral(Long refId) {
 		UserModel currentUser = getCurrentUser();
 		if(null != currentUser) {
-			List<UserModel> faUsers = UserModel.getByPermissionLevel(UserModel.Role.FA);
-			return ok(editReferral.render(currentUser, faUsers));
+			List<UserModel> team = gatherAssignableTeamMembers(currentUser);
+			return ok(editReferral.render(currentUser, team));
 		}
 		return redirect(routes.Application.login());
 	}
@@ -189,5 +189,24 @@ public class Application extends Controller {
         }
         return currentUser;
     }
+
+	private static List<UserModel> gatherAssignableTeamMembers(UserModel currentUser) {
+		//List of agents should contain parent team members (Agents) and their parent team members (FA)
+		List<UserModel> assignableTeamMembers = new ArrayList<UserModel>();
+		//If this gets more complex make it recursive
+		if(null != currentUser.parent_team_member) {
+			assignableTeamMembers.add(currentUser.parent_team_member);
+			if(null != assignableTeamMembers.get(0).parent_team_member) {
+				assignableTeamMembers.add(assignableTeamMembers.get(0).parent_team_member);
+			}
+		}
+
+		//If currentUser is FA of Agent assignable to self
+		if(currentUser.roleType.getPermissionLevel() <= 1) {
+			assignableTeamMembers.add(currentUser);
+		}
+		//TODO: If FA then should be able to assign it to child agents OR any agent
+		return assignableTeamMembers;
+	}
 
 }
