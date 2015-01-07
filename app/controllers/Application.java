@@ -204,8 +204,19 @@ public class Application extends Controller {
 		//If currentUser is FA of Agent assignable to self
 		if(currentUser.roleType.getPermissionLevel() <= 1) {
 			assignableTeamMembers.add(currentUser);
+
+			//If FA then should be able to assign it to any agent
+			if(currentUser.roleType.getPermissionLevel() == 0) {
+				List<UserModel> allAgents = UserModel.getByPermissionLevel(UserModel.Role.Agent);
+
+				//Iterate over all agents and add them to team list
+				Iterator<UserModel> iter = allAgents.iterator();
+				while(iter.hasNext()) {
+					assignableTeamMembers.add(iter.next());
+				}
+			}
 		}
-		//TODO: If FA then should be able to assign it to child agents OR any agent
+
 		return assignableTeamMembers;
 	}
 
