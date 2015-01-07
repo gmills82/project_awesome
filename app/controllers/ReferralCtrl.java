@@ -102,14 +102,13 @@ public class ReferralCtrl extends Controller {
 	//Aggregate Referrals by user Id and filter on freshness Bool
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result getFreshReferrals(Long userId) {
-		Long beginTime = System.currentTimeMillis();
 		//Response Json object
 		ObjectNode result = Json.newObject();
 
 		//Get user from userId - USE HIS ASSIGNED REFERRALS
 		UserModel currentUser = UserModel.getById(userId);
 
-		//Filter Referrals to only the ones we care about - Fresh Ones
+		//Filter Referrals to only the ones we care about - Status = "OPEN"
 		List<Referral> freshReferrals = filter(having(on(Referral.class).status, equalTo("OPEN")), currentUser.referrals);
 		freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
 
@@ -118,7 +117,6 @@ public class ReferralCtrl extends Controller {
 
 		//Put data in the response object
 		result.put("data", referralJson);
-		Logger.debug("Method getFreshReferrals responded in: " + (System.currentTimeMillis() - beginTime) + "ms");
 		return ok(result);
 	}
 
