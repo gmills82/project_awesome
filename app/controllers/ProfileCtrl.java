@@ -34,7 +34,6 @@ public class ProfileCtrl extends Controller {
         
         profile.save();
         flash().put("success", "Your client profile was created successfully");
-        Logger.debug("Profile persisted with id: " + profile.id);
         response().setHeader(LOCATION, routes.ProfileCtrl.getProfile(profile.id).url());
 
         return status(201, "Created");
@@ -62,11 +61,9 @@ public class ProfileCtrl extends Controller {
 		long DAY_IN_MS = 1000 * 60 * 60 * 24;
 		int numberOfDaysBack = 5;
 		Date timeLimit = new Date(System.currentTimeMillis() - (numberOfDaysBack * DAY_IN_MS));
-		Logger.debug("Profile list original size: " + profileList.size());
 		if(profileList.size() > 0) {
 			profileList = filter(having(on(Profile.class).createdDate, greaterThanOrEqualTo(timeLimit.getTime())), profileList);
 		}
-		Logger.debug("Profile list size after filtering: " + profileList.size());
 
 		JsonNode profileNode = Json.toJson(profileList);
 

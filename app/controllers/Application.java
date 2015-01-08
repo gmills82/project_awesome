@@ -82,7 +82,6 @@ public class Application extends Controller {
     public static Result authenticate() {
         Form<Login> loginForm = Form.form(Login.class).bindFromRequest();
         if(loginForm.hasErrors()) {
-			Logger.debug("login has issues");
             return badRequest(login.render(loginForm));
         }else {
             session().clear();
@@ -142,7 +141,6 @@ public class Application extends Controller {
 
 		//Set Roletype
 		Integer originalRoleType = Integer.parseInt(requestMap.get("roleTypeNum")[0]);
-		Logger.debug(originalRoleType.getClass().toString() + originalRoleType);
 		UserModel.setRoleType(newUser, originalRoleType);
 
 		//Set parent team member to the User currently signing them up
@@ -163,6 +161,7 @@ public class Application extends Controller {
         //Save user
         newUser.save();
 
+
         return redirect(routes.Application.home());
     }
 
@@ -172,7 +171,6 @@ public class Application extends Controller {
 
         //Called when we bind a Login from a request
         public String validate() {
-			Logger.debug("userName in validate is: " + userName);
             String errors = UserModel.authenticate(userName, password);
             if(null == errors) {
                 return null;

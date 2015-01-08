@@ -43,7 +43,6 @@ public class UserCtrl extends Controller {
 		UserModel user = userForm.get();
 		user.update();
 
-		Logger.debug("User updated: " + user.userName);
 		response().setHeader(LOCATION, routes.UserCtrl.getUser(user.id).url());
 
 		return ok();

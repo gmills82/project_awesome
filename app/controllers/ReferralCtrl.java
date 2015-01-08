@@ -55,7 +55,6 @@ public class ReferralCtrl extends Controller {
 
 		referral.save();
 		flash().put("success", "Your referral was created successfully");
-		Logger.debug("Referral persisted with id: " + referral.id);
 		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
 
 		return status(201, "Created");
@@ -73,11 +72,9 @@ public class ReferralCtrl extends Controller {
 		referral.status = refStatusNode.get("status").textValue();
 
 		//Map agentId to user_id
-		Logger.debug("Check 12 " + Long.parseLong(data.findValue("agentId").textValue()));
 		UserModel agent = UserModel.getById(Long.parseLong(data.findValue("agentId").textValue()));
 		referral.user_id = agent;
 
-		Logger.debug("Referral updated and assigned to " + referral.user_id);
 		referral.update();
 		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
 
@@ -91,7 +88,6 @@ public class ReferralCtrl extends Controller {
 
 		if(null != referral) {
 			//Status 200 - Resource succesfully deleted
-			Logger.debug("Referral with id = " + referral.id + "was successfully deleted");
 			referral.delete();
 			return ok();
 		}else {
@@ -138,7 +134,6 @@ public class ReferralCtrl extends Controller {
 		//Put data in the response object
 		result.put("data", referralJson);
 
-		Logger.debug("Method getReferralsByCreatorId responded in: " + (System.currentTimeMillis() - beginTime) + "ms");
 		return ok(result);
 	}
 

@@ -115,11 +115,9 @@ public class UserModel extends Model {
         List<UserModel> userList = find.where().eq("userName", userName).findList();
 
         if(userList.size() == 0) {
-			Logger.debug("No user found");
             return "User not found";
         }
         UserModel possibleUser = userList.listIterator().next();
-		Logger.debug("Password: " + password.toString() + " Userpassword: " + possibleUser.password.toString());
 		if(BCrypt.checkpw(password, possibleUser.password)) {
             return null;
         }else {

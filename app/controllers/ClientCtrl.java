@@ -73,7 +73,6 @@ public class ClientCtrl extends Controller {
 		}
 
         client.save();
-        Logger.debug("Client persisted: " + client.name);
         response().setHeader(LOCATION, routes.ClientCtrl.getClientJSON(client.id).url());
 
         return status(201, "Created");
@@ -104,7 +103,6 @@ public class ClientCtrl extends Controller {
 
         client.update();
 
-        Logger.debug("Client updated: " + client.name);
         response().setHeader(LOCATION, routes.ClientCtrl.getClientJSON(client.id).url());
 
         return ok();
