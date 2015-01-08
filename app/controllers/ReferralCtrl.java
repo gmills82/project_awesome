@@ -72,8 +72,10 @@ public class ReferralCtrl extends Controller {
 		referral.status = refStatusNode.get("status").textValue();
 
 		//Map agentId to user_id
-		UserModel agent = UserModel.getById(Long.parseLong(data.findValue("agentId").textValue()));
-		referral.user_id = agent;
+		if(null != data.findValue("agentId")){
+			UserModel agent = UserModel.getById(Long.parseLong(data.findValue("agentId").textValue()));
+			referral.user_id = agent;
+		}
 
 		referral.update();
 		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
