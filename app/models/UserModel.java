@@ -8,7 +8,7 @@ import play.data.validation.Constraints;
 import play.db.ebean.Model;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.*;
 
 /**
  * User: grant.mills
@@ -50,7 +50,7 @@ public class UserModel extends Model {
 	@JsonManagedReference
 	public List<Referral> referrals;
 
-    public enum Role {
+	public enum Role {
         FA(0), Agent(1), Producer(2);
         private Integer permissionLevel;
         Role(Integer permissionLevel) {
@@ -99,6 +99,45 @@ public class UserModel extends Model {
     public static UserModel getById(Long id) {
         return find.where().eq("id", id).findList().listIterator().next();
     }
+
+
+	/**
+	 * Recursively searches for all children and children of children users of the parent UserModel
+	 * @param parent - UserModel which has been assigned as parent UserModel to some child UserModels
+	 * @return team - List of child user models
+	 */
+	public static Set<UserModel> getChildUserModelsByParentAllLevels(UserModel parent) {
+		//Unique set of team members to be returned
+		Set<UserModel> team = new HashSet<UserModel>();
+
+		//1st level children
+		Set<UserModel> firstLevelList = getChildUserModelByParent(parent);
+		Iterator<UserModel> iter = firstLevelList.iterator();
+		while(iter.hasNext()) {
+			//Child
+			UserModel child = iter.next();
+
+			//Gather 2nd level children per 1st child
+			Set<UserModel> secondLevelListPerChild = getChildUserModelByParent(child);
+
+			//Add each to secondLevelList
+			team.addAll(secondLevelListPerChild);
+
+			//Add to return list
+			team.add(child);
+		}
+
+		return team;
+	}
+
+	/**
+	 * Get only 1st level children on parent
+	 * @param parent - UserModel of parent
+	 * @return unique set of 1st level child team members
+	 */
+	public static Set<UserModel> getChildUserModelByParent(UserModel parent) {
+		return find.where().eq("parent_team_member", parent.id).findSet();
+	}
 
     public static UserModel getByEmail(String email) {
         return find.where().eq("userName", email).findList().listIterator().next();

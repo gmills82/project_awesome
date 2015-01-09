@@ -1,24 +1,16 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Client;
 import models.Referral;
 import models.UserModel;
 import play.mvc.Controller;
-import play.*;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
-import scala.util.parsing.json.JSONArray;
-import scala.util.parsing.json.JSONArray$;
-import scala.util.parsing.json.JSONObject$;
-import views.html.*;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 import static ch.lambdaj.Lambda.filter;
 import static ch.lambdaj.Lambda.having;
@@ -121,7 +113,6 @@ public class ReferralCtrl extends Controller {
 	//Aggregate Referrals by their creator
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result getReferralsByCreatorId(Long userId) {
-		Long beginTime = System.currentTimeMillis();
 		//Response Json object
 		ObjectNode result = Json.newObject();
 
@@ -137,6 +128,53 @@ public class ReferralCtrl extends Controller {
 		result.put("data", referralJson);
 
 		return ok(result);
+	}
+
+	//Aggregate Referrals of all team members based on parent team member
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result getTeamReferralsByParentId(Long userId) {
+		//Response object
+		ObjectNode result = Json.newObject();
+
+		UserModel parent = UserModel.getById(userId);
+		//Gather child team memebers
+		Set<UserModel> teamMembers = gatherChildTeamMembers(parent);
+
+		//Add referrals created by each team member
+		Set<Referral> allReferrals = gatherAllReferralsForTeam(teamMembers);
+
+		//Json conversion
+		JsonNode allReferralsNode = Json.toJson(allReferrals);
+
+		//Append to response
+		result.put("data", allReferralsNode);
+
+		return ok(result);
+	}
+
+	private static Set<UserModel> gatherChildTeamMembers(UserModel parent) {
+		//Unique team members collection
+		Set<UserModel> team = UserModel.getChildUserModelsByParentAllLevels(parent);
+		return team;
+	}
+
+	private static Set<Referral> gatherAllReferralsForTeam(Set<UserModel> teamMembers) {
+		//Set to return
+		Set<Referral> referrals = new HashSet<Referral>();
+
+		//Iterate through teamMembers
+		Iterator<UserModel> uIter = teamMembers.iterator();
+		while(uIter.hasNext()) {
+			//Current team member
+			UserModel currentTeamMember = uIter.next();
+
+			//Add list of referrals they created to all referrals
+			List<Referral> createdReferrals = Referral.getByCreatorId(currentTeamMember.id);
+			referrals.addAll(createdReferrals);
+		}
+
+		//HashSet refuses dups
+		return referrals;
 	}
 
 	//Gather client data for each Referral
