@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Client;
 import models.Referral;
@@ -145,6 +146,21 @@ public class ReferralCtrl extends Controller {
 		Set<Referral> allReferrals = gatherAllReferralsForTeam(teamMembers);
 
 		JsonNode allReferralsNode = gatherClientsForReferrals(allReferrals);
+
+		//Match UserModel of the creator of the referral to the referral
+		for(int x = 0; x < allReferralsNode.size(); x++) {
+			//For each referral, iterate through teamMembers and attach them to referral
+			Iterator<UserModel> iter = teamMembers.iterator();
+			while(iter.hasNext()) {
+				UserModel tmp = iter.next();
+				if(allReferralsNode.get(x).get("creator_id").longValue() == tmp.id) {
+					//Convert to Json
+					JsonNode tmpUserNode = Json.toJson(tmp);
+					ObjectNode tmpRefNode = (ObjectNode) allReferralsNode.get(x);
+					tmpRefNode.put("creator", tmpUserNode);
+				}
+			}
+		}
 
 		//Append to response
 		result.put("data", allReferralsNode);
