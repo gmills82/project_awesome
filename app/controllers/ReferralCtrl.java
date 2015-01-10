@@ -137,18 +137,14 @@ public class ReferralCtrl extends Controller {
 		//Response object
 		ObjectNode result = Json.newObject();
 
-		Logger.debug("User id: " + userId);
 		UserModel parent = UserModel.getById(userId);
-		Logger.debug("Got user " + parent.id);
 		//Gather child team memebers
 		Set<UserModel> teamMembers = gatherChildTeamMembers(parent);
-		Logger.debug("get child team members");
 
 		//Add referrals created by each team member
 		Set<Referral> allReferrals = gatherAllReferralsForTeam(teamMembers);
 
-		//Json conversion
-		JsonNode allReferralsNode = Json.toJson(allReferrals);
+		JsonNode allReferralsNode = gatherClientsForReferrals(allReferrals);
 
 		//Append to response
 		result.put("data", allReferralsNode);
@@ -175,7 +171,6 @@ public class ReferralCtrl extends Controller {
 
 			//Add list of referrals they created to all referrals
 			List<Referral> createdReferrals = Referral.getByCreatorId(currentTeamMember.id);
-			Logger.debug(createdReferrals.size() + " for team member " + currentTeamMember.firstName + " " + currentTeamMember.lastName);
 			referrals.addAll(createdReferrals);
 		}
 
@@ -186,7 +181,7 @@ public class ReferralCtrl extends Controller {
 	}
 
 	//Gather client data for each Referral
-	private static JsonNode gatherClientsForReferrals(List<Referral> referralList) {
+	private static JsonNode gatherClientsForReferrals(Collection<Referral> referralList) {
 		//Convert list to Json
 		JsonNode referralJson = Json.toJson(referralList);
 
