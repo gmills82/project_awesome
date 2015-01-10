@@ -165,7 +165,16 @@ public class Application extends Controller {
         return redirect(routes.Application.home());
     }
 
-    public static class Login {
+	public static Result teamReferrals() {
+		UserModel currentUser = getCurrentUser();
+		if(null != currentUser) {
+
+			return ok(teamReferrals.render(currentUser));
+		}
+		return redirect(routes.Application.login());
+	}
+
+	public static class Login {
         public String userName;
         public String password;
 

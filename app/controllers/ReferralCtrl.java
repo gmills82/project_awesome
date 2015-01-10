@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Client;
 import models.Referral;
 import models.UserModel;
+import play.Logger;
 import play.mvc.Controller;
 import play.data.Form;
 import play.libs.Json;
@@ -136,9 +137,12 @@ public class ReferralCtrl extends Controller {
 		//Response object
 		ObjectNode result = Json.newObject();
 
+		Logger.debug("User id: " + userId);
 		UserModel parent = UserModel.getById(userId);
+		Logger.debug("Got user " + parent.id);
 		//Gather child team memebers
 		Set<UserModel> teamMembers = gatherChildTeamMembers(parent);
+		Logger.debug("get child team members");
 
 		//Add referrals created by each team member
 		Set<Referral> allReferrals = gatherAllReferralsForTeam(teamMembers);
@@ -155,6 +159,7 @@ public class ReferralCtrl extends Controller {
 	private static Set<UserModel> gatherChildTeamMembers(UserModel parent) {
 		//Unique team members collection
 		Set<UserModel> team = UserModel.getChildUserModelsByParentAllLevels(parent);
+		team.add(parent);
 		return team;
 	}
 
@@ -170,8 +175,11 @@ public class ReferralCtrl extends Controller {
 
 			//Add list of referrals they created to all referrals
 			List<Referral> createdReferrals = Referral.getByCreatorId(currentTeamMember.id);
+			Logger.debug(createdReferrals.size() + " for team member " + currentTeamMember.firstName + " " + currentTeamMember.lastName);
 			referrals.addAll(createdReferrals);
 		}
+
+		Logger.debug("Total referrals: " + referrals.size());
 
 		//HashSet refuses dups
 		return referrals;
