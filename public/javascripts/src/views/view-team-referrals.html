@@ -8,10 +8,13 @@
             <tr>
                 <th>Type</th>
                 <th>Client Name</th>
-                <th></th>
                 <th>Next Steps Date</th>
                 <th>Phone Number</th>
                 <th>Status</th>
+                <th>Was Productive</th>
+                <th>Total Insurance</th>
+                <th>Total PC</th>
+                <th>Total IPS</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -21,6 +24,11 @@
                 <td>{{referral.clientName}}</td>
                 <td>{{referral.nextStepDate}}</td>
                 <td><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
+                <td>{{referral.status}}</td>
+                <td>{{referral.wasProductive}}</td>
+                <td>{{referral.tInsurance}}</td>
+                <td>{{referral.tPc}}</td>
+                <td>{{referral.tIps}}</td>
                 <td><a href="/editReferral/{{referral.id}}">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
             </tr>
             </tbody>

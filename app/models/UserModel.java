@@ -1,6 +1,7 @@
 package models;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.h2.expression.ExpressionList;
 import org.mindrot.jbcrypt.BCrypt;
@@ -17,6 +18,7 @@ import java.util.*;
  * Time: 9:23 AM
  */
 @Entity
+@JsonFilter("password")
 public class UserModel extends Model {
 
     @Id
