@@ -9,6 +9,8 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
 
+import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -61,6 +63,43 @@ public class UserCtrl extends Controller {
 		JsonNode user = Json.toJson(currentUser);
 		result.put("data", user);
 		
+		return ok(result);
+	}
+
+
+	/**
+	 * Aggregate user's percentages and statistics
+	 * @return
+	 */
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result getUserStats(Long userId) {
+		ObjectNode result = Json.newObject();
+		result.put("status", "OK");
+
+		UserModel currentUser = UserModel.getById(userId);
+		if(null == currentUser) {
+			return badRequest("User not found");
+		}
+
+		//Stats object
+		ObjectNode stats = Json.newObject();
+
+		//Get all closed referrals in time range and check percent wasProductive
+		Date date = new Date();
+		date.setMonth(new Date().getMonth() - 1);
+		Long timeRange = date.getTime();
+
+		List<Referral> referralsCompletedInTimeRange = Referral.getByAssignedIdInRange(userId, timeRange);
+		Float productiveCount = 0.00f;
+		for (Referral aReferralsCompletedInTimeRange : referralsCompletedInTimeRange) {
+			if (aReferralsCompletedInTimeRange.wasProductive) {
+				productiveCount++;
+			}
+		}
+
+		Float percProductiveReferrals = referralsCompletedInTimeRange.size() / productiveCount;
+		stats.set("percProductiveReferrals", Json.toJson(percProductiveReferrals));
+
 		return ok(result);
 	}
 }

@@ -49,6 +49,7 @@ GET           /json/debtTypes                         controllers.ClientCtrl.get
 #UserModel CRUD
 GET           /json/user/:userId                      controllers.UserCtrl.getUser(userId: Long)
 PUT           /json/user                              controllers.UserCtrl.updateUser()
+GET           /json/user/stats                        controllers.UserCtrl.getUserStats(userId: Long)
 
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                           controllers.Assets.at(path="/public", file)

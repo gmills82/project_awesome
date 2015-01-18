@@ -51,4 +51,7 @@ public class Referral extends Model {
     public static List<Referral> getByCreatorId(Long id) {
         return finder.where().eq("creatorId", id).findList();
     }
+	public static List<Referral> getByAssignedIdInRange(Long assigneeId, Long range) {
+		return finder.where().eq("user_id", assigneeId).ge("dateCreated", range).findList();
+	}
 }
