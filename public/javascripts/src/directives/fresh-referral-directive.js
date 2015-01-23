@@ -6,15 +6,12 @@ app.directive('freshReferrals', ['$timeout', function(timer) {
 			function initDataTable() {
 				$(element).find('table').dataTable({
 					columns:[null, null, null, null, {"orderable": false}, {"orderable": false}],
-					order: [[2, "asc"]],
-					paging: false,
-					searching: false,
-					info: false
+					order: [[2, "asc"]]
 				});
 
 				$('#deleteModal').on('show.bs.modal', function (event) {
-					var button = $(event.relatedTarget) // Button that triggered the modal
-					var recipient = button.data('referral') // Extract info from data-*
+					var button = $(event.relatedTarget); // Button that triggered the modal
+					var recipient = button.data('referral'); // Extract info from data-*
 					var modal = $(this);
 					modal.find('.btn-primary').click(function () {
 						scope.deleteReferral(recipient);
