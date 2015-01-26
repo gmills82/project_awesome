@@ -112,17 +112,13 @@ public class UserModel extends Model {
 	public static Set<UserModel> getChildUserModelsByParentAllLevels(UserModel parent) {
 		//Unique set of team members to be returned
 		Set<UserModel> team = new HashSet<UserModel>();
-		Logger.debug("Inside getChildUserModelsByParentAllLevels");
 
 		//1st level children
 		Set<UserModel> firstLevelList = getChildUserModelByParent(parent);
-		Logger.debug("Got 1st level children");
 		Iterator<UserModel> iter = firstLevelList.iterator();
-		Logger.debug("Have iter");
 		while(iter.hasNext()) {
 			//Child
 			UserModel child = iter.next();
-			Logger.debug("Have first 2nd level child");
 
 			//Gather 2nd level children per 1st child
 			Set<UserModel> secondLevelListPerChild = getChildUserModelByParent(child);
@@ -134,7 +130,6 @@ public class UserModel extends Model {
 			team.add(child);
 		}
 
-		Logger.debug("Total team members: " + team.size());
 		return team;
 	}
 
@@ -144,7 +139,6 @@ public class UserModel extends Model {
 	 * @return unique set of 1st level child team members
 	 */
 	public static Set<UserModel> getChildUserModelByParent(UserModel parent) {
-		Logger.debug("Parent with id: " + parent.id);
 		return find.where().isNotNull("parent_team_member").eq("parent_team_member", parent).findSet();
 	}
 
