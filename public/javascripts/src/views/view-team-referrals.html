@@ -24,7 +24,7 @@
                 <td>{{referral.clientName}}</td>
                 <td>{{referral.nextStepDate}}</td>
                 <td><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
-                <td>{{referral.status}}</td>
+                <td><status-label status="referral.status"></status-label></td>
                 <td>{{referral.wasProductive}}</td>
                 <td>{{referral.tInsurance}}</td>
                 <td>{{referral.tPc}}</td>

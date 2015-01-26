@@ -41,7 +41,7 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 			status: "CLOSED"
 		},
 		{
-			status: "CANCELED"
+			status: "CANCELLED"
 		}
 	];
 
