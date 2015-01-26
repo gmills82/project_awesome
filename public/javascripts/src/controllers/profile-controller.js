@@ -49,7 +49,7 @@ app.controller('ProfileController', ["$scope", "$http", function ($scope, $http)
 			status: "CLOSED"
 		},
 		{
-			status: "CANCELED"
+			status: "CANCELLED"
 		}
 	];
 
