@@ -159,14 +159,6 @@ public class ReferralCtrl extends Controller {
 				UserModel tmp = iter.next();
 				if(allReferralsNode.hasNonNull(x) && allReferralsNode.get(x).hasNonNull("creatorId")) {
 					if(allReferralsNode.get(x).get("creatorId").longValue() == tmp.id) {
-						//Create filterProvider which contains a password filter
-						FilterProvider filters = new SimpleFilterProvider().addFilter("password", SimpleBeanPropertyFilter.serializeAllExcept("password"));
-						//Pass filterProvider to object mapper
-						ObjectMapper mapper = new ObjectMapper();
-						mapper.setFilters(filters);
-						//Tell play's helper class to user our object mapper not theirs
-						Json.setObjectMapper(mapper);
-
 						//Convert to Json
 						JsonNode tmpUserNode = Json.toJson(tmp);
 						ObjectNode tmpRefNode = (ObjectNode) allReferralsNode.get(x);
