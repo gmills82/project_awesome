@@ -35,6 +35,7 @@ public class Referral extends Model {
 
     public Long dateCreated = System.currentTimeMillis();
 	public String nextStepDate;
+	public String lastEditedDate;
 
     public String reasonForReferral;
     public String refNotes;

@@ -54,7 +54,8 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 	}
 	var day = today.getDate();
 	$scope.referral.nextStepDate = year + "-" + month + "-" + day;
-	console.log($scope.referral.nextStepDate);
+	//Date last edited was in fact the date of creation
+	$scope.referral.lastEditedDate = $scope.referral.nextStepDate;
 
 	$scope.init = function () {
 		//Parse params for refId
