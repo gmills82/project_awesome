@@ -45,18 +45,8 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 		}
 	];
 
-	//Today's date in yyyy-mm-dd
-	var today = new Date();
-	var year = today.getFullYear();
-	var month = today.getMonth() + 1;
-	if(month.toString().length < 2) {
-		month = "0" + month;
-	}
-	var day = today.getDate();
 	//Defaults add next step date date box to today
-	$scope.referral.nextStepDate = year + "-" + month + "-" + day;
-	//Date last edited will always be today on add/edit
-	$scope.referral.lastEditedDate = year + "-" + month + "-" + day;
+	$scope.referral.nextStepDate = getTodaysDate();
 
 	$scope.init = function () {
 		//Parse params for refId
@@ -71,6 +61,7 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 	$scope.editReferral = function (refId) {
 		$http.get("/json/referral/" + refId).success(function ( data, status, headers) {
 			$scope.referral = data.data;
+			$scope.referral.lastEditedDate = getTodaysDate();
 			//Set default status to OPEN
 			for(var x = 0; x < $scope.refStatus.length; x++) {
 				if($scope.referral.status == $scope.refStatus[x].status) {
@@ -91,6 +82,19 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 			});
 		});
 	};
+
+	//Today's date in yyyy-mm-dd
+	function getTodaysDate() {
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1;
+		if(month.toString().length < 2) {
+			month = "0" + month;
+		}
+		var day = today.getDate();
+
+		return year + "-" + month + "-" + day
+	}
 
 	$scope.init();
 }]);
