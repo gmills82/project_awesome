@@ -14,7 +14,7 @@ app.directive('recentProfiles', ['$timeout', function(timer) {
 			}
 
 			RecentProfilesController.init();
-			timer(initDataTable, 500);
+			timer(initDataTable, 1000);
 		},
 		templateUrl: "assets/javascripts/src/views/recent-profiles-view.html"
 	};
