@@ -31,7 +31,6 @@ public class UserModel extends Model {
     @Constraints.Required
     @Column(unique=true)
     public String userName;
-    @Constraints.Required
     public String password;
 
 	@Constraints.Required
