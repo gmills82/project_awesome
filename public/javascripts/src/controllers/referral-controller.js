@@ -13,7 +13,7 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 				referral.clientName = data.data.name;
 				referral.creatorId = app.data.currentUserId;
 				//Defaults add next step date date box to today
-				referral.nextStepDate = getTodaysDate();
+				referral.lastEditedDate = getTodaysDate();
 
 				//Get fresh user/agent data
 				$http.get("/json/user/" + referral.agentId).success(function (data, status, headers) {
