@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.JsonNodeType;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.*;
 import play.*;
@@ -86,18 +87,25 @@ public class ClientCtrl extends Controller {
 
         Client client = clientForm.get();
 
-		if(null != data.findValue("goals")) {
-			JsonNode goalsNode = data.findValue("goals");
-			Iterator<Map.Entry<String, JsonNode>> iterator = goalsNode.fields();
+		JsonNode goalsNode = data.findPath("goals");
 
-			String tmpStr = "";
+		if(!goalsNode.isMissingNode()) {
+			String tmpStr = client.goalsString;
 
-			while(iterator.hasNext()) {
-				Map.Entry<String, JsonNode> next = iterator.next();
-				if(!next.getValue().textValue().equals("false")) {
-					tmpStr += next.getKey() + " ";
+			//If goals object equals !false add it, if false find it in goal string and remove it
+			Iterator<String> iter = goalsNode.fieldNames();
+			//Iterate over fields of goals
+			while(iter.hasNext()) {
+				String key = iter.next();
+				if(!key.equals(" ") && !goalsNode.findPath(key).isMissingNode()) {
+					if(goalsNode.findPath(key).getNodeType().equals(JsonNodeType.BOOLEAN)) {
+						tmpStr = tmpStr.replaceAll(key, "");
+					}else {
+						tmpStr += key + " ";
+					}
 				}
 			}
+
 			client.goalsString = tmpStr;
 		}
 
