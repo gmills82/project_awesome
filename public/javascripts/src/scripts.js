@@ -24,6 +24,8 @@ $(function($) {
 			$item.children('.submenu').slideUp('fast');
 		}
 	});
+
+	$('form input[name="phoneNumber"]').mask("(999) 999-9999");
 	
 	$('body').on('mouseenter', '#page-wrapper.nav-small #sidebar-nav .dropdown-toggle', function (e) {
 		if ($( document ).width() >= 992) {

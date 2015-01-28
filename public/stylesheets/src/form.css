@@ -51,4 +51,12 @@ ul.nav-pills.nav-stacked li.sub-pill:hover a {
   background-color: #EFEFEF;
   width: 100%;
 }
-
+.required label:before,
+.required span {
+  content: "*";
+  color: #e84e40;
+  padding-right: 3px;
+}
+.required span {
+  padding-right: 0;
+}

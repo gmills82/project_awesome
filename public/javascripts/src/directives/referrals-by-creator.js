@@ -6,7 +6,9 @@ app.directive('referralsByCreator', ['$timeout', function(timer) {
 			function initDataTable() {
 				$(element).find('table').dataTable({
 					columns:[null, null, null, null, {"orderable": false}],
-					order: [[2, "asc"]]
+					order: [[2, "asc"]],
+					"iDisplayLength": 5,
+					"aLengthMenu": [5,10,20,50]
 				});
 
 				$('#deleteModal').on('show.bs.modal', function (event) {

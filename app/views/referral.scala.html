@@ -11,7 +11,11 @@
             </header>
             <div class="panel-body clearfix">
                 <form class="form-horizontal" ng-submit="addReferral(referral)" name="referralForm" novalidate>
-                    <div class="form-group">
+                    <div class="alert alert-info required">
+                        <i class="fa fa-info-circle fa-fw fa-lg"></i>
+                        <span>*</span> denotes required fields
+                    </div>
+                    <div class="form-group required">
                         <label class="col-md-2 control-label" >Referral Type:</label>
                         <div class="col-md-10">
                             <select ng-model="referral.refType" required>
@@ -22,7 +26,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-md-2 control-label">Name:</label>
                         <div class="col-md-10">
                             <input type="text" ng-model="referral.client.name" name="name" placeholder="Client Name" class="form-control" required />
@@ -31,19 +35,19 @@
                     <div class="form-group">
                         <label class="col-md-2 control-label" >E-mail:</label>
                         <div class="col-md-10">
-                            <input type="email" ng-model="referral.client.userName" name="userName" class="form-control" placeholder="Email" required />
+                            <input type="email" ng-model="referral.client.userName" name="userName" class="form-control" placeholder="Email" />
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-md-2 control-label" >Phone Number:</label>
                         <div class="col-md-10">
-                            <input type="number" ng-model="referral.client.phoneNumber" name="phoneNumber" class="form-control" placeholder="(e.g 9041231234 - no symbols) (e.g. 1231234 - if you don't enter a zip 904 is assumed)" required />
+                            <input type="text" ng-model="referral.client.phoneNumber" name="phoneNumber" class="form-control" required />
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-md-2 control-label" >Reason for referral:</label>
                         <div class="col-md-10">
-                            <textarea ng-model="referral.reasonForReferral" name="reasonForReferral" class="form-control" placeholder="Reason you are referring this person to a financial advisor"></textarea>
+                            <textarea ng-model="referral.reasonForReferral" name="reasonForReferral" class="form-control" placeholder="Reason you are referring this person to a financial advisor" required></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -69,13 +73,13 @@
                             <textarea ng-model="referral.refNotes" name="refNotes" class="form-control" placeholder="General Notes"></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-md-2 control-label">Follow up date:</label>
                         <div class="col-md-10">
-                            <input class="form-control ng-pristine ng-valid" name="nextStepDate" ng-model="referral.nextStepDate" type="date">
+                            <input class="form-control ng-pristine ng-valid" name="nextStepDate" ng-model="referral.nextStepDate" type="date" required>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group required">
                         <label class="col-md-2 control-label" >Assign to Agent:</label>
                         <div class="col-md-10">
                             <select ng-model="referral.agentId" required>

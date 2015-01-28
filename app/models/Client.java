@@ -27,12 +27,11 @@ public class Client extends Model {
 
     public String acctNumber;
 
-    @Constraints.Required
     public String name;
 
     @Constraints.Email
     public String userName;
-    public Long phoneNumber;
+    public String phoneNumber;
 
     public Long birthDate;
     public String birthDatePretty;
