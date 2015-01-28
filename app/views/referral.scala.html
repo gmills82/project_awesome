@@ -89,6 +89,7 @@
                             </select>
                         </div>
                     </div>
+                    <input type="hidden" ng-model="creatorId" value="@user.id" />
                     <input type="submit" class="btn btn-primary col-md-offset-2" value="Submit" ng-disabled="(referralForm.$invalid || clientForm.$invalid)"/>
                 </form>
             </div>

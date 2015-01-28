@@ -110,6 +110,11 @@ public class ReferralCtrl extends Controller {
 
 		//Gather client data for each Referral
 		JsonNode referralJson = gatherClientsForReferrals(freshReferrals);
+		for(JsonNode referral : referralJson) {
+			ObjectNode refObj = (ObjectNode) referral;
+			UserModel creator = UserModel.getById(referral.findPath("creatorId").asLong());
+			refObj.set("creatorName", Json.toJson(creator.firstName + " " + creator.lastName));
+		}
 
 		//Put data in the response object
 		result.put("data", referralJson);

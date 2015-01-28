@@ -12,6 +12,7 @@
                     <th>Phone Number</th>
                     <th>Status</th>
                     <th>Actions</th>
+                    <th>Created By</th>
                     <th>Last Edited Date</th>
                 </tr>
             </thead>
@@ -23,6 +24,7 @@
                     <td><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
                     <td><status-label status="referral.status"></status-label></td>
                     <td><a href="/action/profile?refId={{referral.id}}">Begin Profile</a> - <a href="/editReferral/{{referral.id}}">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
+                    <td>{{referral.creatorName}}</td>
                     <td>{{referral.lastEditedDate}}</td>
                 </tr>
             </tbody>
