@@ -16,7 +16,8 @@
   /*.dow {
 		border-top: 1px solid #ddd !important;
 	}*/
-
+  transform: none;
+  opacity: 1;
 }
 .datepicker-inline {
   width: 220px;

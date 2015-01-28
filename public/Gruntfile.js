@@ -18,6 +18,7 @@ module.exports = function (grunt) {
 					"javascripts/libs/jquery.dataTables.js",
 					"javascripts/libs/jquery.dataTables.bootstrap.js",
 					"javascripts/libs/jquery.maskedinput.min.js",
+					"javascripts/libs/bootstrap-datepicker.js",
 					"javascripts/src/scripts.js"
                     ],
                 dest: 'javascripts/min/<%= pkg.name %>.min.js'

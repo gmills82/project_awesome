@@ -25,8 +25,9 @@ $(function($) {
 		}
 	});
 
+	//Mask phone numbers
 	$('form input[name="phoneNumber"]').mask("(999) 999-9999");
-	
+
 	$('body').on('mouseenter', '#page-wrapper.nav-small #sidebar-nav .dropdown-toggle', function (e) {
 		if ($( document ).width() >= 992) {
 			var $item = $(this).parent();
