@@ -23,8 +23,6 @@ public class UserCtrl extends Controller {
     @BodyParser.Of(BodyParser.Json.class)
     public static Result getActions(Long userId, String category) {
         ObjectNode result = Json.newObject();
-		//Cache responses for an hour
-		response().setHeader("Cache-Control", "max-age=3600");
         result.put("status", "OK");
 
         UserModel currentUser = UserModel.getById(userId);
