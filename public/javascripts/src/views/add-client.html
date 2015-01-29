@@ -1,15 +1,13 @@
 <form ng-submit="clientForm.$valid && addClient(client)" name="clientForm" class="form-horizontal" novalidate>
+    <div class="alert alert-info required">
+        <i class="fa fa-info-circle fa-fw fa-lg"></i>
+        <span>*</span> denotes required fields
+    </div>
     <input type="hidden" ng-model="client.id" />
-    <div class="form-group">
+    <div class="form-group required">
         <label class="col-md-2 control-label">Name:</label>
         <div class="col-md-10">
             <input type="text" ng-model="client.name" name="name" placeholder="Client Name" class="form-control" required />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-2 control-label">Acct Number:</label>
-        <div class="col-md-10">
-            <input type="text" ng-model="client.acctNumber" name="acctNumber" class="form-control" placeholder="Account number" required />
         </div>
     </div>
     <div class="form-group">
@@ -47,7 +45,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label" >Referral Notes: </label>
         <div class="col-md-10">
-            <textarea name="refNotes" class="form-control" ng-model="client.refNotes" placeholder="Notes" required ></textarea>
+            <textarea name="refNotes" class="form-control" ng-model="client.refNotes" placeholder="Notes" ></textarea>
         </div>
     </div>
 
