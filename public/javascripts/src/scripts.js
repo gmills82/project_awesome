@@ -4,7 +4,7 @@ $(function($) {
 			opacity: 1
 		});
 	}, 200);
-	
+
 	$('#sidebar-nav,#nav-col-submenu').on('click', '.dropdown-toggle', function (e) {
 		e.preventDefault();
 		
@@ -111,6 +111,7 @@ $(function($) {
 			placement: $(this).data("placement") || 'top'
 		});
 	});
+
 });
 
 $.fn.removeClassPrefix = function(prefix) {

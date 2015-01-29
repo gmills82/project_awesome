@@ -26,47 +26,22 @@
                         </a>
                     </li>
                 </ul>
-                <ul class="nav nav-pills nav-stacked" ng-controller="ActionController" category="tool" ng-show="actions.length">
+                <ul class="nav nav-pills nav-stacked">
                     @*Actions - Tools*@
-                    <li ng-repeat="action in actions">
-                        <a href="{{action.actionURL}}">
-                            <i class="fa fa-edit"></i>
-                            <span>{{action.actionName}}</span>
-                        </a>
+                    <li nav-category="tool" nav-action>
+
                     </li>
                 </ul>
 
                 <ul class="nav nav-pills nav-stacked">
                     @*Actions - Charts*@
-                    <li ng-controller="ActionController" category="tracking" ng-show="actions.length">
-                        <a href="#" class="dropdown-toggle">
-                            <i class="fa fa-bar-chart-o"></i>
-                            <span>Charts & Reports</span>
-                            <i class="fa fa-angle-right drop-icon"></i>
-                        </a>
-                        <ul class="submenu">
-                            <li ng-repeat="action in actions">
-                                <a href="{{action.actionURL}}">
-                                    {{action.actionName}}
-                                </a>
-                            </li>
-                        </ul>
+                    <li nav-category="tracking" nav-action>
+
                     </li>
 
                     @*Actions - Admin*@
-                    <li ng-controller="ActionController" category="admin" ng-show="actions.length">
-                        <a href="#" class="dropdown-toggle">
-                            <i class="fa fa-cog"></i>
-                            <span>Admin</span>
-                            <i class="fa fa-angle-right drop-icon"></i>
-                        </a>
-                        <ul class="submenu">
-                            <li ng-repeat="action in actions">
-                                <a href="{{action.actionURL}}">
-                                    {{action.actionName}}
-                                </a>
-                            </li>
-                        </ul>
+                    <li nav-category="admin" nav-action>
+
                     </li>
                 </ul>
             </div>
