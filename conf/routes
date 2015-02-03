@@ -24,6 +24,8 @@ GET           /actions/:userId/:category              controllers.UserCtrl.getAc
 POST          /json/client                            controllers.ClientCtrl.addClientJSON()
 GET           /json/client/:clientId                  controllers.ClientCtrl.getClientJSON(clientId: Long)
 PUT           /json/client                            controllers.ClientCtrl.editClientJSON()
+#Client Query
+GET           /json/client/query/:query               controllers.ClientCtrl.query(query: String)
 
 #Profile CRUD
 POST          /json/profile                           controllers.ProfileCtrl.addProfile()

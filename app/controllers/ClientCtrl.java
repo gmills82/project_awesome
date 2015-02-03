@@ -17,10 +17,7 @@ import views.html.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -142,43 +139,23 @@ public class ClientCtrl extends Controller {
 		return ok(result);
 	}
 
-//    /* Asset methods */
-//
-//    public static Result enterAsset(Long clientId) {
-//        Client client = Client.getById(clientId);
-//        if(null == client) {
-//            return status(404);
-//        }
-//        Form<FinancialAsset> assetForm = Form.form(FinancialAsset.class);
-//        List<FinancialAsset> assetsList = FinancialAsset.allForClient(client);
-//        return ok(assets.render(assetsList, assetForm, client));
-//    }
-//
-//    public static Result addAsset() {
-//        Form<FinancialAsset> assetForm = Form.form(FinancialAsset.class);
-//        FinancialAsset asset = assetForm.bindFromRequest().get();
-//        asset.setRealAssetType(asset.assetTypeString);
-//        asset.save();
-//        return redirect(routes.ClientCtrl.enterAsset(asset.clientId));
-//    }
-//
-//    /* Debt methods */
-//
-//    public static Result enterDebt(long clientId) {
-//        Client client = Client.getById(clientId);
-//        if(null == client) {
-//            return status(400);
-//        }
-//        Form<Debt> debtForm = Form.form(Debt.class);
-//        List<Debt> debtList = Debt.allForClient(client);
-//        return ok(debts.render(debtList, debtForm, client));
-//    }
-//
-//    public static Result addDebt() {
-//        Form<Debt> debtForm = Form.form(Debt.class);
-//        Debt debt = debtForm.bindFromRequest().get();
-//        debt.setRealDebtType(debt.debtTypeString);
-//        debt.save();
-//        return redirect(routes.ClientCtrl.enterDebt(debt.clientId));
-//    }
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result query(String queryString) {
+		//Response object
+		ObjectNode result = Json.newObject();
+
+		//Check cache for request
+
+		//If in cache attach that to results
+
+		//Else get requested data
+			Set<Client> clientList = Client.query(queryString);
+
+			//Add to result
+			result.set("data", Json.toJson(clientList));
+
+			//Add to cache
+
+		return ok(result);
+	}
 }

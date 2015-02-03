@@ -57,4 +57,12 @@ app.controller('ClientController', ["$scope", "$http", function ($scope, $http) 
 			});
 		});
 	};
+
+	this.queryClients = function (query) {
+		$http.get('/json/client/query/' + query).success(function (data, status, headers) {
+			$scope.clients = data.data;
+		}).error(function () {
+			console.log("Failed to retrieve clients");
+		});
+	}
 }]);

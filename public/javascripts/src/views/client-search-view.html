@@ -1,0 +1,20 @@
+<div class="main-box">
+    <header class="main-box-header clearfix">
+        <h2 class="row">Search for existing clients</h2>
+        <form class="row">
+            <div class="input-group col-md-6">
+                <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                <input type="text" class="form-control" ng-model="search" placeholder="Search...">
+            </div>
+        </form>
+    </header>
+    <div class="main-box-body clearfix">
+        <h3 ng-if="search">Results for "{{search}}"</h3>
+        <ul>
+            <li ng-repeat="client in clients">
+                <strong>Name:</strong> {{client.name}}
+            </li>
+        </ul>
+    </div>
+    <footer class="main-box-footer clearfix"></footer>
+</div>

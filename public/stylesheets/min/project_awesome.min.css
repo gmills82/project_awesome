@@ -1013,7 +1013,7 @@ h3 .small {
 #sidebar-nav .nav li .submenu > li > a {
   display: block;
   font-size: 0.875em;
-  line-height: 32px;
+  line-height: 16px;
   padding-left: 66px;
   padding-right: 10px;
   margin-bottom: 15px;
