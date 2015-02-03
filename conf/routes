@@ -13,6 +13,7 @@ GET           /action/profile                         controllers.Application.pr
 GET           /action/producerScript                  controllers.Application.producerScript()
 GET           /action/referral                        controllers.Application.referral()
 GET           /action/team-referrals                  controllers.Application.teamReferrals()
+GET           /action/clients                         controllers.Application.clients()
 GET           /action/profileReview/:profileId        controllers.Application.profileReview(profileId: Long)
 GET           /editReferral/:referralId               controllers.Application.editReferral(referralId: Long)
 

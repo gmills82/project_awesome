@@ -174,6 +174,14 @@ public class Application extends Controller {
 		return redirect(routes.Application.login());
 	}
 
+	public static Result clients() {
+		UserModel currentUser = getCurrentUser();
+		if(null != currentUser) {
+			return ok(clients.render(currentUser));
+		}
+		return redirect(routes.Application.login());
+	}
+
 	public static class Login {
         public String userName;
         public String password;

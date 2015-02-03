@@ -22,7 +22,6 @@ public class Action extends Model {
     public String actionName;
     public String actionURL;
     public Integer requiredPermissionLevel;
-    public String imageName;
     public String shortDescription;
     public String category;
 
