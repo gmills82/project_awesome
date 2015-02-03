@@ -14,6 +14,8 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 				referral.creatorId = app.data.currentUserId;
 				//Defaults add next step date date box to today
 				referral.lastEditedDate = getTodaysDate();
+				//Append time to nextStepDate
+				referral.nextStepDate += " " + referral.nextStepTime;
 
 				//Get fresh user/agent data
 				$http.get("/json/user/" + referral.agentId).success(function (data, status, headers) {
@@ -63,6 +65,8 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 		$http.get("/json/referral/" + refId).success(function ( data, status, headers) {
 			$scope.referral = data.data;
 			$scope.referral.lastEditedDate = getTodaysDate();
+			//Append time to nextStepDate
+			referral.nextStepDate += " " + referral.nextStepTime;
 			//Set default status to OPEN
 			for(var x = 0; x < $scope.refStatus.length; x++) {
 				if($scope.referral.status == $scope.refStatus[x].status) {
