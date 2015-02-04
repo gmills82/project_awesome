@@ -43,3 +43,9 @@
 .client-search ul li strong:first-child {
 	margin-left: 0;
 }
+
+/* Create Referral */
+.create-referral .nav-pills {
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}

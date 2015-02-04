@@ -399,9 +399,6 @@ h3 .small {
   margin-top: 4px;
 }
 
-.nav-pills > li {
-  float: none;
-}
 .nav-pills > li > a {
   border-radius: 0;
   background-clip: padding-box;
@@ -21884,6 +21881,12 @@ Modules - reusable parts of our design
 }
 .client-search ul li strong:first-child {
 	margin-left: 0;
+}
+
+/* Create Referral */
+.create-referral .nav-pills {
+	padding-bottom: 10px;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 form .btn-group label.btn {
     position: relative;
