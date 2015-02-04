@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.*;
 import play.*;
 
+import play.cache.Cache;
 import play.data.validation.ValidationError;
 import play.data.Form;
 
@@ -143,18 +144,23 @@ public class ClientCtrl extends Controller {
 	public static Result query(String queryString) {
 		//Response object
 		ObjectNode result = Json.newObject();
+		Set<Client> clientList = new HashSet<Client>();
+		Integer MINUTES_TO_CACHE = 10;
 
 		//Check cache for request
-
 		//If in cache attach that to results
-
-		//Else get requested data
-			Set<Client> clientList = Client.query(queryString);
-
-			//Add to result
-			result.set("data", Json.toJson(clientList));
+		if(null != Cache.get(queryString)) {
+			clientList = (Set<Client>) Cache.get(queryString);
+		}else {
+			//Else get requested data
+			clientList = Client.query(queryString);
 
 			//Add to cache
+			Cache.set(queryString, clientList, 60 * MINUTES_TO_CACHE);
+		}
+
+		//Add to result
+		result.set("data", Json.toJson(clientList));
 
 		return ok(result);
 	}

@@ -1,18 +1,21 @@
-<div class="main-box">
+<div class="main-box client-search">
     <header class="main-box-header clearfix">
-        <h2 class="row">Search for existing clients</h2>
-        <form class="row">
+        <h2 class="row">Search Existing Clients</h2>
+        <form>
             <div class="input-group col-md-6">
                 <span class="input-group-addon"><i class="fa fa-search"></i></span>
                 <input type="text" class="form-control" ng-model="search" placeholder="Search...">
             </div>
         </form>
     </header>
-    <div class="main-box-body clearfix">
-        <h3 ng-if="search">Results for "{{search}}"</h3>
+    <div class="main-box-body clearfix ">
+        <h3 ng-if="clients.length">{{clients.length}} Results for "{{search}}"</h3>
         <ul>
             <li ng-repeat="client in clients">
                 <strong>Name:</strong> {{client.name}}
+                <strong>E-mail:</strong> {{client.userName}}
+                <strong>Phone:</strong> {{client.phoneNumber}}
+                <strong>Referral Notes:</strong> {{client.refNotes}}
             </li>
         </ul>
     </div>

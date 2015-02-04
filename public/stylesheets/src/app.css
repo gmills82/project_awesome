@@ -1,18 +1,45 @@
 #baseContainer {
-  margin-bottom: 50px;
+	margin-bottom: 50px;
 }
+
 .closing-text {
-  margin-top: 20px;
+	margin-top: 20px;
 }
+
 .client-review dd, .profile-review dd {
-  padding-left: 2em;
-  padding-top: 0.3em;
-  padding-bottom: .3em;
+	padding-left: 2em;
+	padding-top: 0.3em;
+	padding-bottom: .3em;
 }
+
 .alert li {
-  list-style-type: none;
+	list-style-type: none;
 }
+
 .main-box .main-box-header .badge {
-  top: -2px;
-  position: relative;
+	top: -2px;
+	position: relative;
+}
+
+/* Client Search */
+.client-search form {
+	margin-top: 15px;
+}
+.client-search ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+}
+.client-search ul li {
+	padding: 12px 0 8px 8px;
+	border-top: 1px solid #e7ebee;
+}
+.client-search ul li:first-child {
+	border-top: none;
+}
+.client-search ul li strong {
+	margin-left: 15px;
+}
+.client-search ul li strong:first-child {
+	margin-left: 0;
 }

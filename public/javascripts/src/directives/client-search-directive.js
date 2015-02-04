@@ -3,11 +3,15 @@ app.directive('clientSearchDirective', ['$timeout', function(timer) {
 		restrict: 'A',
 		controller: 'ClientController',
 		link: function(scope, element, attrs, ClientController) {
+			var CHAR_TYPED_BEFORE_SEARCH = 3;
+
 			function init() {
 				var searchBar = $(element).find('form input');
 				scope.$watch("search", function (searchVal) {
-					if(typeof(searchVal) !== 'undefined' && searchVal.length > 3) {
+					if(typeof(searchVal) !== 'undefined' && searchVal.length >= CHAR_TYPED_BEFORE_SEARCH) {
 						ClientController.queryClients(searchVal);
+					}else {
+						scope.clients = [];
 					}
 				});
 			}
