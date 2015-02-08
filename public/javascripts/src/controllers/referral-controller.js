@@ -12,10 +12,11 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 		if(month.toString().length < 2) {
 			month = "0" + month;
 		}
-		if(today.toString().length < 2) {
-			today = "0" + today;
-		}
+
 		var day = today.getDate();
+		if(day.toString().length < 2) {
+			day = "0" + day;
+		}
 
 		return year + "-" + month + "-" + day
 	};
