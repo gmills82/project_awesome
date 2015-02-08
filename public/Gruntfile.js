@@ -10,6 +10,7 @@ module.exports = function (grunt) {
                     "javascripts/libs/angular-route.js",
                     "javascripts/libs/angular-match.js",
                     "javascripts/src/app.js",
+					"javascripts/src/services/*.js",
 					"javascripts/src/controllers/*.js",
 					"javascripts/src/directives/*.js",
 					"javascripts/src/filters/*.js",
