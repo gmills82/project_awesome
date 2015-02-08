@@ -1,5 +1,6 @@
 //Referral controller
 app.controller('ReferralController', ["$scope", "$http", "referralService", function ($scope, $http, referralService) {
+	//Reference to original controller scope
 	var that = this;
 	/**
 	 * Private helper method for getting todays date in the correct format, yyyy-mm-dd
@@ -14,7 +15,7 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 		var day = today.getDate();
 
 		return year + "-" + month + "-" + day
-	}
+	};
 
 	//Scope preperation
 	$scope.referral = {};
