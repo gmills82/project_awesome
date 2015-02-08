@@ -1,6 +1,22 @@
 //Referral controller
-app.controller('ReferralController', ["$scope", "$http", function ($scope, $http) {
+app.controller('ReferralController', ["$scope", "$http", "referralService", function ($scope, $http, referralService) {
 	var that = this;
+	/**
+	 * Private helper method for getting todays date in the correct format, yyyy-mm-dd
+	 */
+	this.getTodaysDate = function() {
+		var today = new Date();
+		var year = today.getFullYear();
+		var month = today.getMonth() + 1;
+		if(month.toString().length < 2) {
+			month = "0" + month;
+		}
+		var day = today.getDate();
+
+		return year + "-" + month + "-" + day
+	}
+
+	//Scope preperation
 	$scope.referral = {};
 	$scope.referral.client = {};
 	$scope.referral.client.goals = {};
@@ -17,6 +33,8 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 	];
 
 	$scope.referral.nextStepDate = this.getTodaysDate();
+
+	referralService.moop();
 
 	//Prepare scope for edit view if the url param refId is present in the url
 	if(window.location.href.match(/\/editReferral\/\d+$/)){
@@ -117,18 +135,5 @@ app.controller('ReferralController', ["$scope", "$http", function ($scope, $http
 		});
 	};
 
-	/**
-	 * Private helper method for getting todays date in the correct format, yyyy-mm-dd
-	 */
-	this.getTodaysDate = function() {
-		var today = new Date();
-		var year = today.getFullYear();
-		var month = today.getMonth() + 1;
-		if(month.toString().length < 2) {
-			month = "0" + month;
-		}
-		var day = today.getDate();
 
-		return year + "-" + month + "-" + day
-	}
 }]);
