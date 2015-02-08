@@ -13,7 +13,7 @@ app.factory('referralService', ['$http', '$log', function($http, $log) {
 			var referral = data.data;
 
 			//Gather client information for referral as well
-			$http.get("/json/client/" + $scope.referral.clientId).success(function ( data, status, headers) {
+			$http.get("/json/client/" + referral.clientId).success(function ( data, status, headers) {
 				referral.client = data.data;
 				callback(referral);
 

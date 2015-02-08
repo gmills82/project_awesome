@@ -7,7 +7,7 @@
                 <h2 class="panel-title">Edit a Client Referral</h2>
             </header>
             <div class="panel-body clearfix">
-                <form class="form-horizontal" ng-submit="updateReferral(referral)" name="referralForm" novalidate>
+                <form class="form-horizontal" ng-submit="editReferralFormSubmission(referral)" name="referralForm" novalidate>
                     <div class="alert alert-info required">
                         <i class="fa fa-info-circle fa-fw fa-lg"></i>
                         <span>*</span> denotes required fields
@@ -72,8 +72,12 @@
                     </div>
                     <div class="form-group required">
                         <label class="col-md-2 control-label">Follow up date:</label>
-                        <div class="col-md-10">
-                            <input class="form-control ng-pristine ng-valid" name="nextStepDate" ng-model="referral.nextStepDate" data-provide="datepicker" data-date-today-highlight="true" data-date-format="yyyy-mm-dd" required>
+                        <div class="col-md-6">
+                            <input class="form-control ng-pristine ng-valid" name="nextStepDate" ng-model="referral.date" data-provide="datepicker" data-date-today-highlight="true" data-date-format="yyyy-mm-dd" required>
+                        </div>
+                        <label class="col-md-1 control-label">Time:</label>
+                        <div class="col-md-1 bootstrap-timepicker">
+                            <input type="text" class="form-control" ng-model="referral.time" id="timepicker" data-default-time="false" data-template="dropdown" data-show-inputs="false" />
                         </div>
                     </div>
 

@@ -12,6 +12,9 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 		if(month.toString().length < 2) {
 			month = "0" + month;
 		}
+		if(today.toString().length < 2) {
+			today = "0" + today;
+		}
 		var day = today.getDate();
 
 		return year + "-" + month + "-" + day
@@ -42,14 +45,6 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 		angular.element(".tabs-wrapper li a[href='#referral']").tab("show");
 	};
 
-	//Prepare scope for edit view if the url param refId is present in the url
-	if(window.location.href.match(/\/editReferral\/\d+$/)){
-		var param = window.location.href.match(/\/editReferral\/\d+$/)[0];
-		param = param.slice(param.indexOf("Referral/") + 9);
-		//Prepares edit form view related business logic
-		$scope.editReferral(param);
-	}
-
 	//Handles add view form submission
 	$scope.addReferralFormSubmission = function (referral) {
 		//Referral data adjustments based on views
@@ -72,8 +67,10 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 			//View related business logic preparing the edit view
 			$scope.referral = referral;
 			$scope.referral.lastEditedDate = that.getTodaysDate();
-			//Append time to nextStepDate
-			referral.nextStepDate += " " + referral.nextStepTime;
+			//Parse nextStepDate for the datepicker
+			referral.date = referral.nextStepDate.split(" ")[0];
+			referral.time = referral.nextStepDate.split(" ")[1];
+
 			//Set default status to OPEN
 			for(var x = 0; x < $scope.refStatus.length; x++) {
 				if($scope.referral.status == $scope.refStatus[x].status) {
@@ -85,9 +82,18 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 
 	//Handles view related edit referral view form submission
 	$scope.editReferralFormSubmission = function (referral) {
+		//Append time to date to remake nextStepDate
+		referral.nextStepDate = referral.date + " " + referral.time;
 		referralService.put(referral, function () {
 			window.location.href = "/action/referral";
 		})
 	};
 
+	//Prepare scope for edit view if the url param refId is present in the url
+	if(window.location.href.match(/\/editReferral\/\d+$/)){
+		var param = window.location.href.match(/\/editReferral\/\d+$/)[0];
+		param = param.slice(param.indexOf("Referral/") + 9);
+		//Prepares edit form view related business logic
+		$scope.prepareEditReferralForm(param);
+	}
 }]);
