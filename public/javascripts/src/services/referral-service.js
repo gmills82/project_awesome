@@ -1,5 +1,5 @@
 /**
- * Service to GET, POST, UPDATE, DELETE referrals
+ * Service to GET, POST, and UPDATE referrals
  */
 app.factory('referralService', ['$http', '$log', function($http, $log) {
 	var service = {};
@@ -22,9 +22,7 @@ app.factory('referralService', ['$http', '$log', function($http, $log) {
 	};
 
 	service.post = function (referral, callback) {
-		//Add client and get ID
-		$http.post("/json/client", referral.client).success(function (data, status, headers) {
-
+		function completeReferralPost() {
 			//Get up to the minute client information and ID
 			$http.get(headers("LOCATION")).success(function (data) {
 
@@ -47,7 +45,18 @@ app.factory('referralService', ['$http', '$log', function($http, $log) {
 					}).error(errorMessaging);
 				}).error(errorMessaging);
 			}).error(errorMessaging);
-		}).error(errorMessaging);
+		}
+
+		//Check flag for existing client and update or add respectively
+		if(referral.updateExistingClientFlag) {
+			$http.put("/json/client", referral.client).success(function(data, status, headers) {
+				completeReferralPost();
+			})
+		}else {
+			$http.post("/json/client", referral.client).success(function (data, status, headers) {
+				completeReferralPost();
+			}).error(errorMessaging);
+		}
 	};
 
 	service.put = function (referral, callback) {
