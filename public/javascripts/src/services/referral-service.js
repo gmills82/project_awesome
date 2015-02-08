@@ -22,7 +22,7 @@ app.factory('referralService', ['$http', '$log', function($http, $log) {
 	};
 
 	service.post = function (referral, callback) {
-		function completeReferralPost() {
+		function completeReferralPost(clientData, status, headers) {
 			//Get up to the minute client information and ID
 			$http.get(headers("LOCATION")).success(function (data) {
 
@@ -50,11 +50,11 @@ app.factory('referralService', ['$http', '$log', function($http, $log) {
 		//Check flag for existing client and update or add respectively
 		if(referral.updateExistingClientFlag) {
 			$http.put("/json/client", referral.client).success(function(data, status, headers) {
-				completeReferralPost();
+				completeReferralPost(data, status, headers);
 			})
 		}else {
 			$http.post("/json/client", referral.client).success(function (data, status, headers) {
-				completeReferralPost();
+				completeReferralPost(data, status, headers);
 			}).error(errorMessaging);
 		}
 	};

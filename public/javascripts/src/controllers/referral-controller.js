@@ -35,7 +35,12 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 
 	$scope.referral.nextStepDate = this.getTodaysDate();
 
-	referralService.moop();
+	//Adds existing client to referral in scope
+	$scope.addClientToReferral = function (client) {
+		$scope.referral.updateExistingClientFlag = true;
+		$scope.referral.client = client;
+		angular.element(".tabs-wrapper li a[href='#referral']").tab("show");
+	};
 
 	//Prepare scope for edit view if the url param refId is present in the url
 	if(window.location.href.match(/\/editReferral\/\d+$/)){
@@ -53,8 +58,6 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 		//Append time to nextStepDate
 		referral.nextStepDate += " " + referral.nextStepTime;
 
-		//TODO: Call referralService with a flag to use an update on the client if this is edit view
-		referral.updateExistingClientFlag = true;
 		referralService.post(referral, function () {
 			window.location = "/home";
 		});
@@ -63,6 +66,8 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 	//Prepares the edit referral form view
 	$scope.prepareEditReferralForm = function (refId) {
 		referralService.get(refId, function (referral) {
+			//Set edit view flag for service to use
+			referral.updateExistingClientFlag = true;
 
 			//View related business logic preparing the edit view
 			$scope.referral = referral;

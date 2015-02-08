@@ -4,6 +4,9 @@ app.directive('clientSearchDirective', ['$timeout', function(timer) {
 		controller: 'ClientController',
 		link: function(scope, element, attrs, ClientController) {
 			var CHAR_TYPED_BEFORE_SEARCH = 3;
+			if(typeof(scope.referral) != 'undefined') {
+				scope.referralView = true;
+			}
 
 			function init() {
 				var searchBar = $(element).find('form input');

@@ -10,12 +10,12 @@
     </header>
     <div class="main-box-body clearfix ">
         <h3 ng-if="clients.length">{{clients.length}} Results for "{{search}}"</h3>
-        <ul>
-            <li ng-repeat="client in clients">
+        <ul class="row">
+            <li ng-repeat="client in clients" class="col-md-12">
                 <strong>Name:</strong> {{client.name}}
                 <strong>E-mail:</strong> {{client.userName}}
                 <strong>Phone:</strong> {{client.phoneNumber}}
-                <strong>Referral Notes:</strong> {{client.refNotes}}
+                <button class="btn btn-primary pull-right col-md-2" ng-if="referralView" ng-click="addClientToReferral(client)">Add To Referral</button>
             </li>
         </ul>
     </div>
