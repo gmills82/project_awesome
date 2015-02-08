@@ -47,7 +47,17 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 
 	//TODO: Form submission function which uses a referral service's methods. All logic involving the page and the form should be in this function. Everything above this line is appropriate for the controller because it is view logic. Everything below addReferralForm is mixed non view business logic and view based business logic and should be refactored to not be mixed, leaving only view based business logic
 	$scope.addReferralFormSubmission = function (referral) {
-		//TODO: IF existing client then use update on client
+		//Referral data adjustments based on views
+		//Defaults add next step date date box to today
+		referral.lastEditedDate = that.getTodaysDate();
+		//Append time to nextStepDate
+		referral.nextStepDate += " " + referral.nextStepTime;
+
+		//TODO: Call referralService with a flag to use an update on the client if this is edit view
+		referral.updateExistingClientFlag = true;
+		referralService.post(referral, function () {
+			window.location = "/home";
+		});
 	};
 
 	$scope.addReferral = function (referral) {
@@ -55,7 +65,6 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 		$http.post("/json/client", referral.client).success(function (data, status, headers) {
 			//Get up to the minute client information and ID
 			$http.get(headers("LOCATION")).success(function (data){
-				//TODO: View related business logic
 				//Prepare client information on referral data
 				referral.clientId = data.data.id;
 				referral.clientName = data.data.name;
@@ -91,19 +100,12 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 		});
 	};
 
-	//TODO: This function should be used to complete view related business logic for the edit referral form view
+	//Prepares the edit referral form view
 	$scope.prepareEditReferralForm = function (refId) {
+		referralService.get(refId, function (referral) {
 
-	};
-
-	//TODO: This method is entirely view related business logic, however it should be refactored to use the new referral service
-	//Gather referral to be updated
-	$scope.editReferral = function (refId) {
-		//Get up to the minute referral information
-		$http.get("/json/referral/" + refId).success(function ( data, status, headers) {
-			$scope.referral = data.data;
-
-			//TODO: View related business logic
+			//View related business logic preparing the edit view
+			$scope.referral = referral;
 			$scope.referral.lastEditedDate = that.getTodaysDate();
 			//Append time to nextStepDate
 			referral.nextStepDate += " " + referral.nextStepTime;
@@ -113,28 +115,14 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 					$scope.referral.status = $scope.refStatus[x];
 				}
 			}
-			//Gather client information for editing as well
-			$http.get("/json/client/" + $scope.referral.clientId).success(function ( data, status, headers) {
-				$scope.referral.client = data.data;
-			});
 		});
 	};
 
-	//TODO: Handle view related edit referral view form submission
+	//Handles view related edit referral view form submission
 	$scope.editReferralFormSubmission = function (referral) {
-
-	}
-
-	//TODO: Refactor into the above function, using referral service
-	//Have form submit to different method that can run the PUT instead of add (POST)
-	$scope.updateReferral = function (referral) {
-		$http.put("/json/referral", referral).success(function ( data, status, headers) {
-			$http.put("/json/client", referral.client).success(function ( data, status, headers) {
-				//TODO: View related redirection
-				window.location.href = "/action/referral";
-			});
-		});
+		referralService.put(referral, function () {
+			window.location.href = "/action/referral";
+		})
 	};
-
 
 }]);
