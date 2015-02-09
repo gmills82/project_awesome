@@ -2,11 +2,12 @@
 
 //TODO: List
 // 1. Create profile service and refactor
-//TODO: 2. Add date picker to date of birth
+// 2. Add date picker to date of birth
 //TODO: 3. Add tabs and directive for tabs for the existing client section
 //TODO: 4. Add existing client directive and have its controller check for $scope.profile
 //TODO: 5. Verify that when profile is prefilled or we select and existing client that we are using PUT and not POST for the client information
 //TODO: 6. Make directive for financial assets and debts to be an accordion
+//TODO:
 
 app.controller('ProfileController', ["$scope", "$http", "profileService", "referralService", function ($scope, $http, profileService, referralService) {
 	$scope.profile = {};

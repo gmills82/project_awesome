@@ -49,3 +49,20 @@
 	padding-bottom: 10px;
 	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
+
+/* Numbers in white circles */
+.counted:before {
+	content: attr(data-step);
+	height: 18px;
+	width: 18px;
+	display: inline-block;
+	text-align: center;
+	font-family: inherit;
+	margin-right: 8px;
+	border-radius: 18px;
+	background-color: white;
+	color: rgb(3, 169, 244);
+}
+.panel-heading h2 {
+	padding-left: 10px;
+}

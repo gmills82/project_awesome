@@ -1,8 +1,4 @@
 <form ng-submit="clientForm.$valid && addClient(client)" name="clientForm" class="form-horizontal" novalidate>
-    <div class="alert alert-info required">
-        <i class="fa fa-info-circle fa-fw fa-lg"></i>
-        <span>*</span> denotes required fields
-    </div>
     <input type="hidden" ng-model="client.id" />
     <div class="form-group required">
         <label class="col-md-2 control-label">Name:</label>
@@ -20,7 +16,7 @@
     <div class="form-group">
         <label class="col-md-2 control-label">Date of birth:</label>
         <div class="col-md-10">
-            <input class="form-control" name="birthDatePretty" ng-model="client.birthDatePretty" type="date" />
+            <input class="form-control" name="birthDatePretty" ng-model="client.birthDatePretty" type="string" data-provide="datepicker" data-date-end-date="{{maxDate}}" data-date-format="yyyy-mm-dd" />
         </div>
     </div>
 

@@ -4,6 +4,20 @@ app.controller('ClientController', ["$scope", "$http", function ($scope, $http) 
 	$scope.client.goals = [];
 	$scope.mode = "add";
 
+	var date = new Date();
+	date.setFullYear(date.getFullYear() - 18);
+	var dateString = date.getFullYear() + "-";
+	var month = date.getMonth() + 1;
+	if(month.toString().length < 2) {
+		month = "0" + month;
+	}
+	var day = date.getDate() + 1;
+	if(day.toString().length < 2) {
+		day = "0" + day;
+	}
+	dateString += month + "-" + day;
+	$scope.maxDate = dateString;
+
 	/**
 	 * Pass updated client information to the profile controller upon client submission
 	 * @param client
