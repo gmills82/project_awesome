@@ -40,26 +40,13 @@ app.controller('ClientController', ["$scope", "$http", "referralService", functi
 		$scope.profile.client.status = "Verifying";
 		$scope.profile.client.statusClass = "info";
 
-		//If new client the post
-		if(profile.client.mode === "add") {
-			$http.post("/json/client", client).success(function (data, status, headers) {
-				//Lookup new resource with a GET
-				$http.get(headers("Location")).success(function (data){
-					//Used to allow profile form to submit
-					$scope.profile.clientId = data.data.id;
-					$scope.profile.client.status = "Verified";
-					$scope.profile.client.statusClass = "success";
-				});
-			});
-		}else if (profile.client.mode === 'edit') {
-			//Used to allow profile form to submit
-			$scope.profile.clientId = client.id;
-			$http.put("/json/client", client).success(function (data, status, headers) {
-				referralService.put(referral);
-				$scope.profile.client.status = "Verified";
-				$scope.profile.client.statusClass = "success";
-			});
-		}
+		//Used to allow profile form to submit
+		$scope.profile.clientId = client.id;
+		$http.put("/json/client", client).success(function (data, status, headers) {
+			referralService.put(referral);
+			$scope.profile.client.status = "Verified";
+			$scope.profile.client.statusClass = "success";
+		});
 	};
 
 	/**

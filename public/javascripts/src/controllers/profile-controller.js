@@ -25,7 +25,7 @@ app.controller('ProfileController', ["$scope", "$http", "profileService", "refer
 	];
 
 	$scope.profile.client.status = "Not Verified";
-	$scope.profile.client.statusClass = "warn";
+	$scope.profile.client.statusClass = "warning";
 
 	/**
 	 * Prepare the form when we prefill from a referral the client info
@@ -43,8 +43,6 @@ app.controller('ProfileController', ["$scope", "$http", "profileService", "refer
 			//Set profile.client to the referral client
 			$scope.profile.client = $scope.profile.referral.client;
 
-			$scope.profile.client.mode = "edit";
-
 			$scope.profile.client.status = "Not Verified";
 			$scope.profile.client.statusClass = "warning";
 		});
@@ -60,15 +58,6 @@ app.controller('ProfileController', ["$scope", "$http", "profileService", "refer
 				window.location="/action/profileReview/" + profileId;
 			});
 		});
-	};
-
-	/**
-	 * Adds existing client to referral in scope
-	 */
-	$scope.addClientToProfile = function (client) {
-		$scope.profile.client = client;
-		$scope.profile.referral = {};
-		angular.element(".nav-tabs li a[href='#display']").tab("show");
 	};
 
 	//Check the profile url for a prefill from a referral
