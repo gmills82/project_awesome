@@ -3,25 +3,25 @@
         <h2>Verify Client Information</h2>
     </header>
     <div class="main-box-body">
-        <form ng-submit="clientForm.$valid && addClient(client)" name="clientForm" class="form-horizontal" novalidate>
+        <form name="clientForm" ng-submit="clientForm.$valid && addClientFormSubmission(profile)" class="form-horizontal" novalidate>
             <input type="hidden" ng-model="client.id" />
             <div class="form-group required">
                 <label class="col-md-2 control-label">Name:</label>
                 <div class="col-md-10">
-                    <input type="text" ng-model="client.name" name="name" placeholder="Client Name" class="form-control" required />
+                    <input type="text" ng-model="profile.client.name" name="name" placeholder="Client Name" class="form-control" required />
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-md-2 control-label" >E-mail:</label>
                 <div class="col-md-10">
-                    <input type="email" ng-model="client.userName" name="userName" class="form-control" placeholder="Email" required />
+                    <input type="email" ng-model="profile.client.userName" name="userName" class="form-control" placeholder="Email" required />
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-md-2 control-label">Date of birth:</label>
                 <div class="col-md-10">
-                    <input class="form-control" name="birthDatePretty" ng-model="client.birthDatePretty" type="string" data-provide="datepicker" data-date-end-date="{{maxDate}}" data-date-format="yyyy-mm-dd" />
+                    <input class="form-control" name="birthDatePretty" ng-model="profile.client.birthDatePretty" type="string" data-provide="datepicker" data-date-end-date="{{maxDate}}" data-date-format="yyyy-mm-dd" />
                 </div>
             </div>
 
@@ -29,24 +29,24 @@
                 <label class="col-md-2 control-label" >Client Goals:</label>
                 <div class="col-md-10">
                     <label class="checkbox-inline">
-                        <input type="checkbox" ng-model="client.goals.death" ng-true-value="death" ng-checked="client.goals.death" name="goals" />In Event of Death</label>
+                        <input type="checkbox" ng-model="profile.client.goals.death" ng-true-value="death" ng-checked="profile.client.goals.death" name="goals" />In Event of Death</label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" ng-model="client.goals.retirement" ng-true-value="retirement" ng-checked="client.goals.retirement" name="goals" />Retirement</label>
+                        <input type="checkbox" ng-model="profile.client.goals.retirement" ng-true-value="retirement" ng-checked="profile.client.goals.retirement" name="goals" />Retirement</label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" ng-model="client.goals.college" ng-true-value="college" ng-checked="client.goals.college" name="goals" />College Savings</label>
+                        <input type="checkbox" ng-model="profile.client.goals.college" ng-true-value="college" ng-checked="profile.client.goals.college" name="goals" />College Savings</label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" ng-model="client.goals.longtermcare" ng-true-value="longtermcare" ng-checked="client.goals.longtermcare" name="goals" />Long Term Care</label>
+                        <input type="checkbox" ng-model="profile.client.goals.longtermcare" ng-true-value="longtermcare" ng-checked="profile.client.goals.longtermcare" name="goals" />Long Term Care</label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" ng-model="client.goals.health" ng-true-value="heath" ng-checked="client.goals.health" name="goals" />Health</label>
+                        <input type="checkbox" ng-model="profile.client.goals.health" ng-true-value="heath" ng-checked="profile.client.goals.health" name="goals" />Health</label>
                     <label class="checkbox-inline">
-                        <input type="checkbox" ng-model="client.goals.benefits" ng-true-value="benefits" ng-checked="client.goals.benefits" name="goals" />Benefits</label>
+                        <input type="checkbox" ng-model="profile.client.goals.benefits" ng-true-value="benefits" ng-checked="profile.client.goals.benefits" name="goals" />Benefits</label>
                 </div>
             </div>
 
             <div class="form-group">
                 <label class="col-md-2 control-label" >Referral Notes: </label>
                 <div class="col-md-10">
-                    <textarea name="refNotes" class="form-control" ng-model="client.refNotes" placeholder="Notes" ></textarea>
+                    <textarea class="form-control" ng-model="profile.referral.refNotes" placeholder="Notes" ></textarea>
                 </div>
             </div>
 

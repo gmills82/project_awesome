@@ -15,7 +15,9 @@ app.factory('referralService', ['$http', '$log', function($http, $log) {
 			//Gather client information for referral as well
 			$http.get("/json/client/" + referral.clientId).success(function ( data, status, headers) {
 				referral.client = data.data;
-				callback(referral);
+				if(typeof(callback) == "function") {
+					callback(referral);
+				}
 
 			}).error(errorMessaging);
 		}).error(errorMessaging);
@@ -41,7 +43,9 @@ app.factory('referralService', ['$http', '$log', function($http, $log) {
 					//Update user/agent with this referral
 					//Referral is actually saved HERE <-------------
 					$http.put("/json/user", user).success(function (data, status, headers) {
-						callback(referral);
+						if(typeof(callback) == "function") {
+							callback(referral);
+						}
 					}).error(errorMessaging);
 				}).error(errorMessaging);
 			}).error(errorMessaging);
@@ -62,7 +66,9 @@ app.factory('referralService', ['$http', '$log', function($http, $log) {
 	service.put = function (referral, callback) {
 		$http.put("/json/referral", referral).success(function ( data, status, headers) {
 			$http.put("/json/client", referral.client).success(function ( data, status, headers) {
-				callback();
+				if(typeof(callback) == "function") {
+					callback();
+				}
 			}).error(errorMessaging);
 		}).error(errorMessaging);
 	};

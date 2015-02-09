@@ -16,7 +16,9 @@ app.factory('profileService', ['$http', '$log', function($http, $log) {
 				profileId = profileId.slice(1);
 
 			}
-			callback(profileId);
+			if(typeof(callback) == "function") {
+				callback(profileId);
+			}
 		}).error(errorMsg);
 	};
 
