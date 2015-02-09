@@ -201,7 +201,6 @@ public class ReferralCtrl extends Controller {
 			referrals.addAll(createdReferrals);
 		}
 
-		Logger.debug("Total referrals: " + referrals.size());
 
 		//HashSet refuses dups
 		return referrals;

@@ -1,8 +1,11 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.*;
 import play.Logger;
+import play.cache.Cached;
 import play.data.Form;
+import play.libs.Json;
 import play.mvc.*;
 
 import views.html.*;
@@ -74,6 +77,7 @@ public class Application extends Controller {
         return redirect(routes.Application.login());
     }
 
+	@Cached(key= "loginPage", duration = 60 * 60)
     public static Result login() {
         Form<Login> loginForm = Form.form(Login.class);
         return ok(login.render(loginForm));
@@ -173,6 +177,15 @@ public class Application extends Controller {
 		}
 		return redirect(routes.Application.login());
 	}
+
+	public static Result clients() {
+		UserModel currentUser = getCurrentUser();
+		if(null != currentUser) {
+			return ok(clients.render(currentUser));
+		}
+		return redirect(routes.Application.login());
+	}
+
 
 	public static class Login {
         public String userName;

@@ -1,5 +1,7 @@
 package models;
 
+import com.avaje.ebean.Expr;
+import com.avaje.ebean.common.BeanSet;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -77,6 +79,16 @@ public class Client extends Model {
     public static Finder<Long,Client> find = new Finder(
         Long.class, Client.class
     );
+
+	public static Set<Client> query(String queryString) {
+		//Break string up by word
+		String[] values = queryString.split(" ");
+		Set<Client> clientList = new HashSet<Client>();
+		for (String value: values) {
+			clientList.addAll(find.where().icontains("name", value).findSet());
+		}
+		return clientList;
+	}
 
     public static List<Client> all() {
         return find.all();

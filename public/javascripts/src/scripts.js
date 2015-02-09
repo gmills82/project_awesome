@@ -5,6 +5,9 @@ $(function($) {
 		});
 	}, 200);
 
+	//Active state setup on sidebar menu
+	var actionPath = window.location.pathname;
+
 	$('#sidebar-nav,#nav-col-submenu').on('click', '.dropdown-toggle', function (e) {
 		e.preventDefault();
 		
