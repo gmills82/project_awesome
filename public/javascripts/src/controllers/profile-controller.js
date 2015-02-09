@@ -1,7 +1,7 @@
 //Profile controller
 
 //TODO: List
-//TODO: 1. Create profile service and refactor
+// 1. Create profile service and refactor
 //TODO: 2. Add date picker to date of birth
 //TODO: 3. Add tabs and directive for tabs for the existing client section
 //TODO: 4. Add existing client directive and have its controller check for $scope.profile
@@ -42,6 +42,7 @@ app.controller('ProfileController', ["$scope", "$http", "profileService", "refer
 
 			//Broadcast client information to child scopes
 			$scope.$broadcast('profileClientSet');
+
 		});
 	};
 

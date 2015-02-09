@@ -3,14 +3,28 @@ app.controller('ClientController', ["$scope", "$http", function ($scope, $http) 
 	$scope.client = {};
 	$scope.client.goals = [];
 	$scope.mode = "add";
+
+	/**
+	 * Pass updated client information to the profile controller upon client submission
+	 * @param client
+	 */
 	$scope.prepareProfileScope = function (client) {
-		$scope.$parent.profile.client = client;
-		$scope.$parent.profile.clientId = client.id;
-		$scope.$parent.profile.agentId = app.data.currentUserId;
+		$scope.profile.client = client;
+		$scope.profile.clientId = client.id;
+		$scope.profile.agentId = app.data.currentUserId;
 		$scope.mode = "edit";
 		//Show client information display tab pane
-		$('#clientTab a[href=#display]').tab('show');
+		angular.element('#clientTab a[href=#display]').tab('show');
 	};
+
+	/**
+	 * Event listener that handles when the client is set in a parent scope
+	 */
+	$scope.$on("profileClientSet", function (client) {
+		$scope.client = $scope.profile.client;
+		$scope.mode = "edit";
+	});
+
 	$scope.addClient = function (client) {
 		var failFunc = function(jqxhr, status, error) {
 			console.log("Client was unable to be updated. Server responded with " + status + " error: " + error);
@@ -33,10 +47,11 @@ app.controller('ClientController', ["$scope", "$http", function ($scope, $http) 
 		}
 	};
 
+	//TODO: ?Is this really necessary or the best way?
 	$scope.preparePanel = function () {
 		//If add mode then land panel on the display tab
 		if($scope.mode === "add") {
-			$('#clientTab a[href=#display]').show();
+			angular.element('#clientTab a[href=#display]').show();
 		}
 	};
 
