@@ -7,8 +7,7 @@ $(function($) {
 
 	//Active state setup on sidebar menu
 	var actionPath = window.location.pathname;
-	console.log(actionPath);
-	
+
 	$('#sidebar-nav,#nav-col-submenu').on('click', '.dropdown-toggle', function (e) {
 		e.preventDefault();
 		
