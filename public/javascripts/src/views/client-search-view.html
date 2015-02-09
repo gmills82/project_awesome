@@ -16,6 +16,7 @@
                 <strong>E-mail:</strong> {{client.userName}}
                 <strong>Phone:</strong> {{client.phoneNumber}}
                 <button class="btn btn-primary pull-right col-md-2" ng-if="referralView" ng-click="addClientToReferral(client)">Add To Referral</button>
+                <button class="btn btn-primary pull-right col-md-2" ng-if="profileView" ng-click="addClientToProfile(client)">Add To Profile</button>
             </li>
         </ul>
     </div>

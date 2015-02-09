@@ -1,23 +1,17 @@
 <div class="currentClient panel panel-default" onload="preparePanel()" >
     <div class="panel-heading">
-        <h2 class="panel-title counted" data-step="1">Verify your client's information</h2>
+        <h2 class="panel-title counted" data-step="1">Verify Client Information</h2>
     </div>
-    <div class="panel-body " id="clientTab">
-        <ul class="nav nav-pills nav-stacked col-md-2 border-right" role="tablist">
-            <li class=""><a href="#display" data-toggle="pill" role="tab">Client Information</a></li>
-            <li class="sub-pill active"><a href="#client" data-toggle="pill" role="pill">Edit information</a></li>
+    <div class="panel-body tabs-wrapper" role="tabpanel">
+        <ul class="nav nav-tabs col-md-12 border-right" role="tablist">
+            <li class="active"><a href="#display" data-toggle="tab" role="tab">Client Information</a></li>
+            <li><a href="#search" data-toggle="tab" role="tab">Edit information</a></li>
         </ul>
-        <div class="tab-content col-md-10">
-            <div class="tab-pane fade" id="display">
-                <dl class="panel-body">
-                    <dt>Name: </dt><dd>{{profile.client.name}}</dd>
-                    <dt>E-mail: </dt><dd>{{profile.client.userName}}</dd>
-                    <dt>Notes: </dt><dd>{{profile.client.refNotes}}</dd>
-                    <dt>Birth Date: </dt><dd>{{profile.client.birthDatePretty}}</dd>
-                </dl>
-            </div>
-            <div class="tab-pane active in fade" id="client" ng-include src="'/assets/javascripts/src/views/add-client.html'" onload="prepareAddClientPanel()"></div>
+        <div class="tab-content col-md-12">
 
+            <div class="tab-pane active in fade" id="display" ng-include src="'/assets/javascripts/src/views/add-client.html'"></div>
+
+            <div role="tabpanel" class="tab-pane" id="search" client-search-directive></div>
         </div>
     </div>
 </div>

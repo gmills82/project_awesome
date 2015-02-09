@@ -4,19 +4,28 @@ app.controller('ClientController', ["$scope", "$http", function ($scope, $http) 
 	$scope.client.goals = [];
 	$scope.mode = "add";
 
-	var date = new Date();
-	date.setFullYear(date.getFullYear() - 18);
-	var dateString = date.getFullYear() + "-";
-	var month = date.getMonth() + 1;
-	if(month.toString().length < 2) {
-		month = "0" + month;
+	/**
+	 * Returns formated date string of 18 years ago from today
+	 * @returns {string}
+	 */
+	function getOfAgeDate() {
+		var date = new Date();
+		date.setFullYear(date.getFullYear() - 18);
+		var dateString = date.getFullYear() + "-";
+		var month = date.getMonth() + 1;
+		if (month.toString().length < 2) {
+			month = "0" + month;
+		}
+		var day = date.getDate() + 1;
+		if (day.toString().length < 2) {
+			day = "0" + day;
+		}
+		dateString += month + "-" + day;
+
+		return dateString;
 	}
-	var day = date.getDate() + 1;
-	if(day.toString().length < 2) {
-		day = "0" + day;
-	}
-	dateString += month + "-" + day;
-	$scope.maxDate = dateString;
+
+	$scope.maxDate = getOfAgeDate();
 
 	/**
 	 * Pass updated client information to the profile controller upon client submission
@@ -39,11 +48,11 @@ app.controller('ClientController', ["$scope", "$http", function ($scope, $http) 
 		$scope.mode = "edit";
 	});
 
+	/**
+	 * Handles client form submission (profile view)
+	 * @param client
+	 */
 	$scope.addClient = function (client) {
-		var failFunc = function(jqxhr, status, error) {
-			console.log("Client was unable to be updated. Server responded with " + status + " error: " + error);
-		}
-
 		if($scope.mode === "add") {
 			$http.post("/json/client", client).success(function (data, status, headers) {
 				//Lookup new resource with a GET
@@ -57,11 +66,14 @@ app.controller('ClientController', ["$scope", "$http", function ($scope, $http) 
 				//Lookup new resource with a GET
 				$scope.prepareProfileScope(client);
 				$scope.client = client;
-			}).error(failFunc);
+			});
 		}
 	};
 
 	//TODO: ?Is this really necessary or the best way?
+	/**
+	 * Sets active tab based on mode (add || edit)
+	 */
 	$scope.preparePanel = function () {
 		//If add mode then land panel on the display tab
 		if($scope.mode === "add") {
@@ -69,29 +81,13 @@ app.controller('ClientController', ["$scope", "$http", function ($scope, $http) 
 		}
 	};
 
-	$scope.prepareAddClientPanel = function () {
-		//Button functionality
-		$('.btn').click(function () {
-			$(this).siblings().removeClass('active');
-			$(this).addClass('active');
-		});
-
-		//Check active buttons on tab show
-		$('a[href=#client]').on("shown", function () {
-			$('input[type="radio"]').each(function (index, ele) {
-				if($(ele).parents("label").hasClass('active')) {
-					$(ele).click();
-					$scope.$apply()
-				}
-			});
-		});
-	};
-
+	/**
+	 * Used to pass clients to the client search view
+	 * @param query
+	 */
 	this.queryClients = function (query) {
 		$http.get('/json/client/query/' + query).success(function (data, status, headers) {
 			$scope.clients = data.data;
-		}).error(function () {
-			console.log("Failed to retrieve clients");
 		});
 	}
 }]);

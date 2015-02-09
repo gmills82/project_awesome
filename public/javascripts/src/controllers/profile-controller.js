@@ -6,8 +6,7 @@
 //TODO: 3. Add tabs and directive for tabs for the existing client section
 //TODO: 4. Add existing client directive and have its controller check for $scope.profile
 //TODO: 5. Verify that when profile is prefilled or we select and existing client that we are using PUT and not POST for the client information
-//TODO: 6. Make directive for financial assets and debts to be an accordion
-//TODO:
+//TODO: 6. Verify that client goals are working properly
 
 app.controller('ProfileController', ["$scope", "$http", "profileService", "referralService", function ($scope, $http, profileService, referralService) {
 	$scope.profile = {};
@@ -59,9 +58,21 @@ app.controller('ProfileController', ["$scope", "$http", "profileService", "refer
 		});
 	};
 
+	/**
+	 * Adds existing client to referral in scope
+	 */
+	$scope.addClientToProfile = function (client) {
+		$scope.profile.client = client;
+		angular.element(".nav-tabs li a[href='#display']").tab("show");
+	};
+
 	//Check the profile url for a prefill from a referral
 	if(window.location.href.match(/\?refId=.*$/)){
 		var param = window.location.href.match(/\?refId=.*$/)[0];
+		//Remove hash from tabs if present
+		if(param.indexOf('#') != -1) {
+			param = param.split("#")[0];
+		}
 		param = param.slice(param.indexOf("=") + 1);
 		$scope.prefillFromReferral(param);
 	}

@@ -4,8 +4,13 @@ app.directive('clientSearchDirective', ['$timeout', function(timer) {
 		controller: 'ClientController',
 		link: function(scope, element, attrs, ClientController) {
 			var CHAR_TYPED_BEFORE_SEARCH = 3;
+			//Referral parent scope
 			if(typeof(scope.referral) != 'undefined') {
 				scope.referralView = true;
+			}
+			//Profile parent scope
+			if(typeof(scope.profile) != 'undefined') {
+				scope.profileView = true;
 			}
 
 			function init() {

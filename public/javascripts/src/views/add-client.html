@@ -1,51 +1,58 @@
-<form ng-submit="clientForm.$valid && addClient(client)" name="clientForm" class="form-horizontal" novalidate>
-    <input type="hidden" ng-model="client.id" />
-    <div class="form-group required">
-        <label class="col-md-2 control-label">Name:</label>
-        <div class="col-md-10">
-            <input type="text" ng-model="client.name" name="name" placeholder="Client Name" class="form-control" required />
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-md-2 control-label" >E-mail:</label>
-        <div class="col-md-10">
-            <input type="email" ng-model="client.userName" name="userName" class="form-control" placeholder="Email" required />
-        </div>
-    </div>
+<div class="main-box">
+    <header class="main-box-header">
+        <h2>Verify Client Information</h2>
+    </header>
+    <div class="main-box-body">
+        <form ng-submit="clientForm.$valid && addClient(client)" name="clientForm" class="form-horizontal" novalidate>
+            <input type="hidden" ng-model="client.id" />
+            <div class="form-group required">
+                <label class="col-md-2 control-label">Name:</label>
+                <div class="col-md-10">
+                    <input type="text" ng-model="client.name" name="name" placeholder="Client Name" class="form-control" required />
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" >E-mail:</label>
+                <div class="col-md-10">
+                    <input type="email" ng-model="client.userName" name="userName" class="form-control" placeholder="Email" required />
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="col-md-2 control-label">Date of birth:</label>
-        <div class="col-md-10">
-            <input class="form-control" name="birthDatePretty" ng-model="client.birthDatePretty" type="string" data-provide="datepicker" data-date-end-date="{{maxDate}}" data-date-format="yyyy-mm-dd" />
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label">Date of birth:</label>
+                <div class="col-md-10">
+                    <input class="form-control" name="birthDatePretty" ng-model="client.birthDatePretty" type="string" data-provide="datepicker" data-date-end-date="{{maxDate}}" data-date-format="yyyy-mm-dd" />
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="col-md-2 control-label" >Client Goals:</label>
-        <div class="col-md-10">
-            <label class="checkbox-inline">
-                <input type="checkbox" ng-model="client.goals.death" ng-true-value="death" ng-checked="client.goals.death" name="goals" />In Event of Death</label>
-            <label class="checkbox-inline">
-                <input type="checkbox" ng-model="client.goals.retirement" ng-true-value="retirement" ng-checked="client.goals.retirement" name="goals" />Retirement</label>
-            <label class="checkbox-inline">
-                <input type="checkbox" ng-model="client.goals.college" ng-true-value="college" ng-checked="client.goals.college" name="goals" />College Savings</label>
-            <label class="checkbox-inline">
-                <input type="checkbox" ng-model="client.goals.longtermcare" ng-true-value="longtermcare" ng-checked="client.goals.longtermcare" name="goals" />Long Term Care</label>
-            <label class="checkbox-inline">
-                <input type="checkbox" ng-model="client.goals.heath" ng-true-value="heath" ng-checked="client.goals.heath" name="goals" />Health</label>
-            <label class="checkbox-inline">
-                <input type="checkbox" ng-model="client.goals.benefits" ng-true-value="benefits" ng-checked="client.goals.benefits" name="goals" />Benefits</label>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" >Client Goals:</label>
+                <div class="col-md-10">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="client.goals.death" ng-true-value="death" ng-checked="client.goals.death" name="goals" />In Event of Death</label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="client.goals.retirement" ng-true-value="retirement" ng-checked="client.goals.retirement" name="goals" />Retirement</label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="client.goals.college" ng-true-value="college" ng-checked="client.goals.college" name="goals" />College Savings</label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="client.goals.longtermcare" ng-true-value="longtermcare" ng-checked="client.goals.longtermcare" name="goals" />Long Term Care</label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="client.goals.heath" ng-true-value="heath" ng-checked="client.goals.heath" name="goals" />Health</label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" ng-model="client.goals.benefits" ng-true-value="benefits" ng-checked="client.goals.benefits" name="goals" />Benefits</label>
+                </div>
+            </div>
 
-    <div class="form-group">
-        <label class="col-md-2 control-label" >Referral Notes: </label>
-        <div class="col-md-10">
-            <textarea name="refNotes" class="form-control" ng-model="client.refNotes" placeholder="Notes" ></textarea>
-        </div>
-    </div>
+            <div class="form-group">
+                <label class="col-md-2 control-label" >Referral Notes: </label>
+                <div class="col-md-10">
+                    <textarea name="refNotes" class="form-control" ng-model="client.refNotes" placeholder="Notes" ></textarea>
+                </div>
+            </div>
 
-    <div class="form-group ">
-        <input type="submit" class="btn btn-primary col-md-offset-2" ng-disabled="clientForm.$invalid" value="Submit" />
+            <div class="form-group">
+                <input type="submit" class="btn btn-primary col-md-offset-2" ng-disabled="clientForm.$invalid" value="Verify" />
+            </div>
+        </form>
     </div>
-</form>
+</div>
