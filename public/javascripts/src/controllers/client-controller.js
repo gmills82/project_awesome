@@ -42,10 +42,13 @@ app.controller('ClientController', ["$scope", "$http", "referralService", functi
 			$http.post("/json/client", client).success(function (data, status, headers) {
 				//Lookup new resource with a GET
 				$http.get(headers("Location")).success(function (data){
+					//Used to allow profile form to submit
 					$scope.profile.clientId = data.data.id;
 				});
 			});
 		}else if (profile.client.mode === 'edit') {
+			//Used to allow profile form to submit
+			$scope.profile.clientId = client.id;
 			$http.put("/json/client", client).success(function (data, status, headers) {
 				referralService.put(referral);
 			});
