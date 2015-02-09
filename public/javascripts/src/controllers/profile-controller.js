@@ -8,48 +8,10 @@
 //TODO: 5. Verify that when profile is prefilled or we select and existing client that we are using PUT and not POST for the client information
 //TODO: 6. Make directive for financial assets and debts to be an accordion
 
-app.controller('ProfileController', ["$scope", "$http", function ($scope, $http) {
+app.controller('ProfileController', ["$scope", "$http", "profileService", "referralService", function ($scope, $http, profileService, referralService) {
 	$scope.profile = {};
 	$scope.profile.referral = {};
 	$scope.profile.client = {};
-	$scope.prefillFromReferral = function (refId) {
-		//Get Referral
-		$http.get("/json/referral/" + refId).success(function (data, status, headers) {
-			var referral = data.data;
-			$scope.profile.refId = refId;
-
-			//Set profile's referral for tracking relationship between referral and profile
-			$scope.profile.referral = referral;
-			//Default status in select
-			$scope.profile.referral.status = $scope.refStatus[0];
-
-			//Get Client
-			$http.get("/json/client/" + referral.clientId).success(function (data, status, headers) {
-				var client = data.data;
-				//Prefill notes
-				client.refNotes = referral.refNotes;
-
-				//Prefill client info
-				$scope.profile.client = client;
-				$scope.$$childHead.client = client;
-				$scope.$$childHead.mode = "edit";
-
-
-			}).error(function (error) {
-				console.log("Client could not be retrieved from the referral with id " + refId);
-			})
-		}).error(function (error) {
-			console.log("Referral with id " + refId + " could not be retrieved.");
-		});
-	};
-
-	//Match referral Id param
-	if(window.location.href.match(/\?refId=.*$/)){
-		var param = window.location.href.match(/\?refId=.*$/)[0];
-		param = param.slice(param.indexOf("=") + 1);
-		$scope.prefillFromReferral(param);
-	}
-
 	$scope.refStatus = [
 		{
 			"status": "OPEN"
@@ -62,26 +24,44 @@ app.controller('ProfileController', ["$scope", "$http", function ($scope, $http)
 		}
 	];
 
-	$scope.addProfile = function (profile) {
-		var referral = $scope.profile.referral;
-		$http.put("/json/referral", referral).success(function (data, status, headers) {
-			console.log("Referral with id " + referral.id + " updated to no longer be fresh");
+	/**
+	 * Prepare the form when we prefill from a referral the client info
+	 * @param refId
+	 */
+	$scope.prefillFromReferral = function (refId) {
+		//Get Referral
+		referralService.get(refId, function (referral) {
+			$scope.profile.refId = refId;
+			//Set profile's referral for tracking relationship between referral and profile
+			$scope.profile.referral = referral;
+			//Default status in select
+			$scope.profile.referral.status = $scope.refStatus[0];
 
-			$http.post("/json/profile", profile).success(function (data, status, headers){
-				var profileId = headers("Location").match(/\/\d*$/);
-				if(profileId.length) {
-					profileId = profileId[0];
-					profileId = profileId.slice(1);
-					window.location="/action/profileReview/" + profileId;
-				}else {
-					console.log(profileId, "Profile id was not pulled from the Location header");
-				}
+			//Set profile.client to the referral client
+			$scope.profile.client = $scope.profile.referral.client;
 
-			}).error(function(jqxhr, status, error){
-				console.log("Could not save profile. Server responsded with " + error);
-			});
-		}).error(function (error) {
-			console.log("Referral could not be updated with id " + referral.id);
+			//TODO: ?What does this do?
+			$scope.$$childHead.client = client;
+			$scope.$$childHead.mode = "edit";
 		});
 	};
+
+	/**
+	 * Handles profile view form submission
+	 * @param profile
+	 */
+	$scope.addProfile = function (profile) {
+		referralService.put($scope.profile.referral, function () {
+			profileService.post(profile, function (profileId){
+				window.location="/action/profileReview/" + profileId;
+			});
+		});
+	};
+
+	//Check the profile url for a prefill from a referral
+	if(window.location.href.match(/\?refId=.*$/)){
+		var param = window.location.href.match(/\?refId=.*$/)[0];
+		param = param.slice(param.indexOf("=") + 1);
+		$scope.prefillFromReferral(param);
+	}
 }]);
