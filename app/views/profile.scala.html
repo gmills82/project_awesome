@@ -1,7 +1,7 @@
 @(user: UserModel)
 @home(user, "Profile a Client") {
 
-    <h1>Profile Tool</h1>
+    <h1>Client Profile Tool</h1>
     <div ng-controller="ProfileController">
 
         @*Client panel in profile tool*@
@@ -77,12 +77,12 @@
             <div class="form-group">
                 <label class="col-md-2 control-label" >Next Steps: </label>
                 <div class="col-md-10">
-                    <textarea name="nextSteps" class="form-control" ng-model="profile.nextSteps" placeholder="Next steps with this client"></textarea>
+                    <textarea name="nextSteps" class="form-control" ng-model="profile.nextSteps" placeholder="Next steps with this client"  ></textarea>
                 </div>
             </div>
 
             <div class="form-group">
-                <label class="col-md-2 control-label">Status of this referral: </label>
+                <label class="col-md-2 control-label">Status of the referral that generated this profile: </label>
                 <div class="col-md-1">
                     <select name="status" id="status" ng-model="profile.referral.status" ng-options="status.status for status in refStatus"></select>
                 </div>

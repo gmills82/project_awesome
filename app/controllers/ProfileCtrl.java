@@ -30,10 +30,11 @@ public class ProfileCtrl extends Controller {
     public static Result addProfile() {
         Form<Profile> profileForm = Form.form(Profile.class);
         Profile profile = profileForm.bindFromRequest().get();
-        profile.adjustedRiskTolerance = profile.riskTolerance + profile.riskToleranceModifier;
-        
+		if(null != profile.riskTolerance && null != profile.riskToleranceModifier) {
+			profile.adjustedRiskTolerance = profile.riskTolerance + profile.riskToleranceModifier;
+		}
+
         profile.save();
-        flash().put("success", "Your client profile was created successfully");
         response().setHeader(LOCATION, routes.ProfileCtrl.getProfile(profile.id).url());
 
         return status(201, "Created");
