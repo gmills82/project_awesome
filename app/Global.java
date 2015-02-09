@@ -3,6 +3,7 @@ import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import play.*;
+import play.api.mvc.Handler;
 import play.api.mvc.RequestHeader;
 import play.libs.*;
 import com.avaje.ebean.Ebean;
@@ -52,5 +53,13 @@ public class Global extends GlobalSettings {
 		return Promise.<Result>pure(ok(
 			views.html.pageError.render()
 		));
+	}
+
+	@Override
+	public Handler onRouteRequest(Http.RequestHeader request) {
+		String[] x = request.headers().get("X-Forwarded-Proto");
+		if (Play.isProd() && (x == null || x.length == 0 || x[0] == null || !x[0].contains("https")))
+			return controllers.Default.redirect("https://" + request.host() + request.uri());
+		return super.onRouteRequest(request);
 	}
 }
