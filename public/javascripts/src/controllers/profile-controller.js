@@ -40,9 +40,8 @@ app.controller('ProfileController', ["$scope", "$http", "profileService", "refer
 			//Set profile.client to the referral client
 			$scope.profile.client = $scope.profile.referral.client;
 
-			//TODO: ?What does this do?
-			$scope.$$childHead.client = client;
-			$scope.$$childHead.mode = "edit";
+			//Broadcast client information to child scopes
+			$scope.$broadcast('profileClientSet');
 		});
 	};
 
