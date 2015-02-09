@@ -51,8 +51,16 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" class="btn btn-primary col-md-offset-2" ng-disabled="clientForm.$invalid" value="Verify" />
+                <input type="submit" class="btn btn-primary col-md-offset-2" ng-disabled="clientForm.$invalid" value="Submit" />
             </div>
         </form>
+    </div>
+    <div class="main-box-footer">
+        <div class="alert alert-{{profile.client.statusClass}}">
+            <i class="fa fa-warning fa-fw fa-lg" ng-if="profile.client.statusClass === 'warning'"></i>
+            <i class="fa fa-info-circle fa-fw fa-lg" ng-if="profile.client.statusClass === 'info'"></i>
+            <i class="fa fa-check-circle fa-fw fa-lg" ng-if="profile.client.statusClass === 'success'"></i>
+            Client Information Status: {{profile.client.status}}
+        </div>
     </div>
 </div>

@@ -3,9 +3,9 @@
 //TODO: List
 // 1. Create profile service and refactor
 // 2. Add date picker to date of birth
-//TODO: 3. Add tabs and directive for tabs for the existing client section
-//TODO: 4. Add existing client directive and have its controller check for $scope.profile
-//TODO: 5. Verify that when profile is prefilled or we select and existing client that we are using PUT and not POST for the client information
+// 3. Add tabs and directive for tabs for the existing client section
+// 4. Add existing client directive and have its controller check for $scope.profile
+// 5. Verify that when profile is prefilled or we select and existing client that we are using PUT and not POST for the client information
 //TODO: 6. Verify that client goals are working properly
 
 app.controller('ProfileController', ["$scope", "$http", "profileService", "referralService", function ($scope, $http, profileService, referralService) {
@@ -24,6 +24,9 @@ app.controller('ProfileController', ["$scope", "$http", "profileService", "refer
 		}
 	];
 
+	$scope.profile.client.status = "Not Verified";
+	$scope.profile.client.statusClass = "warn";
+
 	/**
 	 * Prepare the form when we prefill from a referral the client info
 	 * @param refId
@@ -41,6 +44,9 @@ app.controller('ProfileController', ["$scope", "$http", "profileService", "refer
 			$scope.profile.client = $scope.profile.referral.client;
 
 			$scope.profile.client.mode = "edit";
+
+			$scope.profile.client.status = "Not Verified";
+			$scope.profile.client.statusClass = "warning";
 		});
 	};
 
