@@ -1,0 +1,25 @@
+@()
+@main("Payment page", "false", "pay-page") {
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="panel panel-default payment">
+                <header class="panel-heading">
+                    <h1 class="panel-title">Payment Processing</h1>
+                </header>
+                <div class="panel-body">
+                    <p><strong>Thank you for joining EFSManager.com.</strong></p>
+                    <p>It is my firm belief that you are taking steps now to increase your profits and productivity by signing up for our site.</p>
+                    <p>Please use the paypal button below to pay for your membership.</p>
+                    <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                        <input type="hidden" name="cmd" value="_s-xclick">
+                        <input type="hidden" name="hosted_button_id" value="FWZVMEHK9GBHY">
+                        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_subscribeCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                        <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+}

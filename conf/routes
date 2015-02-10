@@ -4,6 +4,7 @@
 
 # Static pages
 GET           /                                       controllers.Application.login()
+GET           /pay                                    controllers.Application.pay()
 POST          /login                                  controllers.Application.authenticate()
 GET           /logout                                 controllers.Application.logout()
 GET           /signup/:roleType                       controllers.Application.signup(roleType: Integer)

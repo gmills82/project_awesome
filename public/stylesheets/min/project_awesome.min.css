@@ -21906,6 +21906,19 @@ Modules - reusable parts of our design
 	padding-left: 10px;
 }
 
+/* Payment */
+.payment {
+	max-width: 350px;
+	min-width: 280px;
+	margin: 60px auto 20px;
+	overflow: hidden;
+	border-radius: 3px 3px 0 0;
+	background-clip: padding-box;
+}
+.payment form {
+	text-align: center;
+	margin-top: 20px;
+}
 form .btn-group label.btn {
     position: relative;
     overflow: hidden;

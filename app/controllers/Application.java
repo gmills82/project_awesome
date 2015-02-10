@@ -186,6 +186,10 @@ public class Application extends Controller {
 		return redirect(routes.Application.login());
 	}
 
+	public static Result pay() {
+		return ok(pay.render());
+	}
+
 
 	public static class Login {
         public String userName;
