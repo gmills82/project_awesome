@@ -101,24 +101,41 @@ public class ReferralCtrl extends Controller {
 		//Response Json object
 		ObjectNode result = Json.newObject();
 
+		//TODO: Caching cleanup - is there a more elegant way to do this ETagging?
+		response().setHeader("Cache-Control", "private");
+		String previousEtag = null;
+		if(null != request().getHeader("If-None-Match")) {
+			previousEtag = request().getHeader("If-None-Match");
+		}
+
 		//Get user from userId - USE HIS ASSIGNED REFERRALS
 		UserModel currentUser = UserModel.getById(userId);
 
 		//Filter Referrals to only the ones we care about - Status = "OPEN"
 		List<Referral> freshReferrals = filter(having(on(Referral.class).status, equalTo("OPEN")), currentUser.referrals);
-		freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
 
-		//Gather client data for each Referral
-		JsonNode referralJson = gatherClientsForReferrals(freshReferrals);
-		for(JsonNode referral : referralJson) {
-			ObjectNode refObj = (ObjectNode) referral;
-			UserModel creator = UserModel.getById(referral.findPath("creatorId").asLong());
-			refObj.set("creatorName", Json.toJson(creator.firstName + " " + creator.lastName));
+		//TODO: More caching cleanup needed
+		String etag = ((Integer) freshReferrals.hashCode()).toString();
+		if(null != previousEtag && previousEtag.equals(etag)) {
+			return status(304);
+
+		}else {
+			//Continue on since something has changed
+			freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
+
+			//Gather client data for each Referral
+			JsonNode referralJson = gatherClientsForReferrals(freshReferrals);
+			for (JsonNode referral : referralJson) {
+				ObjectNode refObj = (ObjectNode) referral;
+				UserModel creator = UserModel.getById(referral.findPath("creatorId").asLong());
+				refObj.set("creatorName", Json.toJson(creator.firstName + " " + creator.lastName));
+			}
+
+			//Put data in the response object
+			result.put("data", referralJson);
+			response().setHeader("ETag", etag);
+			return ok(result);
 		}
-
-		//Put data in the response object
-		result.put("data", referralJson);
-		return ok(result);
 	}
 
 	//Aggregate Referrals by their creator
