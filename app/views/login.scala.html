@@ -1,0 +1,54 @@
+@(loginForm: Form[Application.Login])
+@main("Login page", "false", "login-page") {
+
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div id="login-box">
+                    <div id="login-box-holder">
+                        <div class="row">
+                            @if(loginForm.hasGlobalErrors) {
+                                <p class="alert alert-danger">
+                                    <i class="fa fa-times-circle fa-fw fa-lg"></i>
+                                    @loginForm.globalError.message
+                                </p>
+                            }
+
+                            @if(flash.contains("success")) {
+                                <p class="alert alert-success">
+                                    <i class="fa fa-check-circle fa-fw fa-lg"></i>
+                                    @flash.get("success")
+                                </p>
+                            }
+                            <div class="col-xs-12">
+                                <header id="login-header">
+                                    <div id="login-logo">
+                                        <img src="@routes.Assets.at("images/logo.png")" alt="" class="normal-logo logo-white hidden-xs hidden-sm "/>
+                                    </div>
+                                </header>
+                                <div id="login-box-inner">
+                                    @helper.form(routes.Application.authenticate, '_class -> "row") {
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                            <input type="email" name="userName" class="form-control" placeholder="E-mail" value="@loginForm("userName").value()" />
+                                        </div>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                            <input type="password" name="password" class="form-control" placeholder="Password" value="@loginForm("password").value()" />
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <input type="submit" value="Login" class="btn btn-success col-xs-12" />
+                                            </div>
+                                        </div>
+                                    }
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}

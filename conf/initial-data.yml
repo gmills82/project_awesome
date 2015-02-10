@@ -1,0 +1,82 @@
+- !!models.Client
+    acctNumber: 1234
+    name: The One
+    userName: gmills82@gmail.com
+
+- !!models.UserModel
+    userName: test@test.com
+    password: $2a$10$RIFSpI/UgdJDdkurk2MbRuVJ/NMeLiTprJjwOPRvA4HVKtC74Kyju
+    roleType: FA
+    firstName: Grant
+    lastName: Mills
+
+- !!models.Action
+    actionName: Profile a Client
+    requiredPermissionLevel: 0
+    actionURL: /action/profile
+    shortDescription: A helpful tool to provide client interaction tracking.
+    imageName: action/clientProfile.jpg
+    category: tool
+
+- !!models.Action
+    actionName: Referral Phone Scripts
+    requiredPermissionLevel: 2
+    actionURL: /action/producerScript
+    shortDescription: Phone scripts that lead to referalls.
+    imageName: action/phone.jpg
+    category: tool
+
+- !!models.Action
+    actionName: Create a producer account
+    requiredPermissionLevel: 1
+    actionURL: /signup/2
+    shortDescription: Create a producer account for a team member
+    imageName: action/phone.jpg
+    category: admin
+
+- !!models.Action
+    actionName: Create an agent account
+    requiredPermissionLevel: 0
+    actionURL: /signup/1
+    shortDescription: Create an agent account for a team member
+    imageName: action/phone.jpg
+    category: admin
+
+- !!models.Action
+    actionName: Manage Client Referrals
+    requiredPermissionLevel: 2
+    actionURL: /action/referral
+    shortDescription: Manage Client Referrals
+    imageName: action/phone.jpg
+    category: tool
+
+- !!models.Action
+    actionName: View Clients
+    requiredPermissionLevel: 1
+    actionURL: /action/clients
+    shortDescription: View your clients and their information
+    imageName: action/viewClient.jpg
+    category: tracking
+
+- !!models.Action
+    actionName: Track Agent efficiency
+    requiredPermissionLevel: 1
+    actionURL: /action/agents
+    shortDescription: Track which agents send you the most profitable referrals
+    imageName: action/viewAgents.jpg
+    category: tracking
+
+- !!models.Script
+    type: normal
+    heading: We're moving
+    body: Please read this script 111
+
+- !!models.Script
+    type: normal
+    heading: My spouse died
+    body: Please read this script 222
+
+- !!models.Script
+    type: normal
+    heading: Inheritance
+    body: Please read this script 333

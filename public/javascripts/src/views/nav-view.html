@@ -1,0 +1,23 @@
+<a href="#" class="dropdown-toggle" ng-if="category == 'tracking'">
+    <i class="fa fa-bar-chart-o"></i>
+    <span>Charts & Reports</span>
+    <i class="fa fa-angle-right drop-icon"></i>
+</a>
+<a href="#" class="dropdown-toggle" ng-if="category == 'admin'">
+    <i class="fa fa-cog"></i>
+    <span>Admin</span>
+    <i class="fa fa-angle-right drop-icon"></i>
+</a>
+<a href="#" class="dropdown-toggle" ng-if="category == 'tool'">
+    <i class="fa fa-edit"></i>
+    <span>EFSTools</span>
+    <i class="fa fa-angle-right drop-icon"></i>
+</a>
+
+<ul class="submenu" >
+    <li ng-repeat="action in actions">
+        <a href="{{action.actionURL}}">
+            {{action.actionName}}
+        </a>
+    </li>
+</ul>

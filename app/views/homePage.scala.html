@@ -1,0 +1,38 @@
+@(user: UserModel)
+@home(user, "Home") {
+
+    <div class="row">
+        <div class="col-lg-12">
+            @*Flash messages*@
+            @if(flash.contains("success")) {
+                <p class="alert alert-success">@flash.get("success")</p>
+            }
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Your Activity</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            @* Fresh Referrals Directive *@
+            <div class="main-box fresh-referral" fresh-referrals></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            @* Recent Profiles Directive *@
+            <div class="main-box recent-profile" recent-profiles></div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h1>Your Team's Activity</h1>
+        </div>
+    </div>
+}

@@ -1,0 +1,60 @@
+<div class="panel-heading">
+    <h2 class="panel-title counted" data-step="3">Debts</h2>
+</div>
+<div class="panel-body debtList">
+    <div class="debtListContainer asset-list" ng-show="$parent.profile.client.debtList.length">
+        <dl ng-repeat="debt in $parent.profile.client.debtList" ng-class-even="'even'">
+            <dt>Type of debt: </dt><dd>{{debt.realDebtType}}</dd>
+            <dt>Value: </dt><dd>{{debt.totalOwed}}</dd>
+            <dt>Financial Institue: </dt><dd>{{debt.financialInstitute}}</dd>
+            <dt>Debt payment (approx): </dt><dd>{{debt.recurringAmount}} / {{debt.frequencyStr}}</dd>
+            <dt>Notes: </dt><dd>{{debt.description}}</dd>
+        </dl>
+    </div>
+    <!--Form to enter an debt-->
+    <form ng-submit="adddebt(current)" class="form-horizontal" name="debtForm">
+        <div class="form-group">
+            <label class="control-label col-md-2">Debt Type:</label>
+            <div class="col-md-10">
+                <select name="debtType" id="debtType" ng-model="current.realDebtType" >
+                    <option value="{{debtType}}" ng-repeat="debtType in debtTypes">{{debtType}}</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class=" control-label col-md-2">Total Owed:</label>
+            <div class="col-md-10">
+                <input type="number" ng-model="current.totalOwed" name="totalOwed" placeholder="Dollar amount" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class=" control-label col-md-2">Payment:</label>
+            <div class="col-md-3">
+                <input type="number" ng-model="current.recurringAmount" name="recurringAmount" placeholder="Dollar amount" class="form-control" />
+            </div>
+            <div class="col-md-7">
+                <select name="frequencyStr" id="frequencyStr" ng-model="current.frequencyStr" >
+                    <option value="Monthly">Monthly</option>
+                    <option value="Annually" >Annually</option>
+                    <option value="Biweekly" >Biweekly</option>
+                    <option value="Daily" >Daily</option>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Financial Institute:</label>
+            <div class="col-md-10">
+                <input type="text" ng-model="current.financialInstitute" name="financialInstitute" placeholder="Financial Institute" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group">
+            <label class=" control-label col-md-2">Description:</label>
+            <div class="col-md-10">
+                <textarea type="text" ng-model="current.description" name="description" placeholder="Brief Description" class="form-control col-md-10"></textarea>
+            </div>
+        </div>
+        <div class="form-group col-xs-1 ">
+            <input type="submit" class="btn btn-primary col-md-offset-2 " ng-disabled="!$parent.profile.clientId" value="Add Debt"/>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,59 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Static pages
+GET           /                                       controllers.Application.login()
+GET           /pay                                    controllers.Application.pay()
+POST          /login                                  controllers.Application.authenticate()
+GET           /logout                                 controllers.Application.logout()
+GET           /signup/:roleType                       controllers.Application.signup(roleType: Integer)
+POST          /signup                                 controllers.Application.addSignup()
+GET           /home                                   controllers.Application.home()
+GET           /action/profile                         controllers.Application.profile()
+GET           /action/producerScript                  controllers.Application.producerScript()
+GET           /action/referral                        controllers.Application.referral()
+GET           /action/team-referrals                  controllers.Application.teamReferrals()
+GET           /action/clients                         controllers.Application.clients()
+GET           /action/profileReview/:profileId        controllers.Application.profileReview(profileId: Long)
+GET           /editReferral/:referralId               controllers.Application.editReferral(referralId: Long)
+
+## JSON Endpoints
+GET           /actions/:userId/:category              controllers.UserCtrl.getActions(userId: Long, category: String)
+
+#Client CRUD
+POST          /json/client                            controllers.ClientCtrl.addClientJSON()
+GET           /json/client/:clientId                  controllers.ClientCtrl.getClientJSON(clientId: Long)
+PUT           /json/client                            controllers.ClientCtrl.editClientJSON()
+#Client Query
+GET           /json/client/query/:query               controllers.ClientCtrl.query(query: String)
+
+#Profile CRUD
+POST          /json/profile                           controllers.ProfileCtrl.addProfile()
+GET           /json/profile/:profileId                controllers.ProfileCtrl.getProfile(profileId: Long)
+
+#Profile Aggregation
+GET           /json/recentProfiles/:userId            controllers.ProfileCtrl.getRecentProfiles(userId: Long)
+
+#Referral CRUD
+POST          /json/referral                          controllers.ReferralCtrl.addReferral()
+GET           /json/referral/:referralId              controllers.ReferralCtrl.getReferral(referralId: Long)
+PUT           /json/referral                          controllers.ReferralCtrl.updateReferral()
+DELETE        /json/referral/:referralId              controllers.ReferralCtrl.deleteReferral(referralId: Long)
+
+#Referral aggregation
+GET           /json/referrals/:userId                 controllers.ReferralCtrl.getFreshReferrals(userId: Long)
+GET           /json/referrals/creator/:userId         controllers.ReferralCtrl.getReferralsByCreatorId(userId: Long)
+GET           /json/referrals/team/:userId            controllers.ReferralCtrl.getTeamReferralsByParentId(userId: Long)
+
+#Assets and Debts CRUD
+GET           /json/assetTypes                        controllers.ClientCtrl.getAssetTypes()
+GET           /json/debtTypes                         controllers.ClientCtrl.getDebtTypes()
+
+#UserModel CRUD
+GET           /json/user/:userId                      controllers.UserCtrl.getUser(userId: Long)
+PUT           /json/user                              controllers.UserCtrl.updateUser()
+GET           /json/user/stats                        controllers.UserCtrl.getUserStats(userId: Long)
+
+# Map static resources from the /public folder to the /assets URL path
+GET           /assets/*file                           controllers.Assets.at(path="/public", file)
