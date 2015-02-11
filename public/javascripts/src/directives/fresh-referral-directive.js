@@ -23,7 +23,7 @@ app.directive('freshReferrals', ['$timeout', function(timer) {
 			}
 
 			FreshReferralController.init();
-			timer(initDataTable, 1000);
+			timer(initDataTable, 1500);
 		},
 		templateUrl: "assets/javascripts/src/views/fresh-referral-view.html"
 	};
