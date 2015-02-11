@@ -23,7 +23,7 @@ app.directive('referralsByCreator', ['$timeout', function(timer) {
 			}
 
 			ReferralsByCreatorController.init();
-			timer(initDataTable, 1000);
+			timer(initDataTable, 1500);
 		},
 		templateUrl: "/assets/javascripts/src/views/referrals-by-creator.html"
 	};

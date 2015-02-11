@@ -21,7 +21,7 @@ app.directive('viewTeamReferrals', ['$timeout', function(timer) {
 			}
 
 			ViewTeamReferralsController.init();
-			timer(initDataTable, 1000);
+			timer(initDataTable, 1500);
 		},
 		templateUrl: "/assets/javascripts/src/views/view-team-referrals.html"
 	};
