@@ -89,7 +89,7 @@
                                     </div>
                                     <label class="col-md-1 control-label">Time:</label>
                                     <div class="col-md-2 bootstrap-timepicker">
-                                        <input type="text" class="form-control" ng-model="referral.nextStepTime" id="timepicker" data-default-time="false" data-template="dropdown" data-show-inputs="false" />
+                                        <input type="text" class="form-control" ng-model="referral.nextStepTime" id="timepicker" data-default-time="false" data-template="dropdown" data-show-inputs="false" required />
                                     </div>
                                 </div>
                                 <div class="form-group required">
@@ -107,7 +107,7 @@
                                     <i class="fa fa-info-circle fa-fw fa-lg"></i>
                                     <span>*</span> denotes required fields
                                 </div>
-                                <input type="submit" class="btn btn-primary col-md-offset-2" value="Submit" ng-disabled="(referralForm.$invalid || clientForm.$invalid)"/>
+                                <input type="submit" class="btn btn-primary col-md-offset-2" value="Submit" ng-disabled="referralForm.$invalid"/>
                             </form>
                                 </div>
                             </div>
