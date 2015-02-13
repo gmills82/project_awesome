@@ -53,7 +53,8 @@ app.factory('referralService', ['$http', '$log', 'clientService', function($http
 			clientService.post(referral.client, function (data, status, headers) {
 				//Prepare client information on referral data
 				//Parse headers for id
-				referral.clientId = headers.slice(headers.indexOf("json/client/"));
+				var locationHeader = headers("LOCATION");
+				referral.clientId = locationHeader.match(/\d*$/)[0];
 				referral.clientName = referral.client.name;
 				referral.creatorId = app.data.currentUserId;
 
@@ -70,7 +71,7 @@ app.factory('referralService', ['$http', '$log', 'clientService', function($http
 						if(typeof(callback) == "function") {
 							callback(referral);
 						}
-					})
+					}).error(errorMessaging)
 				})
 			})
 		}
