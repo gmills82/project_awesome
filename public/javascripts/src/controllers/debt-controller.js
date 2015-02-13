@@ -1,5 +1,5 @@
 //Debt controller
-app.controller('DebtController', ["$scope", "$http", function ($scope, $http) {
+app.controller('DebtController', ["$scope", "$http", "clientService", function ($scope, $http, clientService) {
 	$scope.current = {};
 	$scope.debtTypes = [];
 	$http({"method": "GET", "url": "/json/debtTypes"}).success(function (data){
@@ -7,16 +7,21 @@ app.controller('DebtController', ["$scope", "$http", function ($scope, $http) {
 	});
 	$scope.adddebt = function (debt) {
 		//Get current client
-		$http.get("/json/client/" + $scope.$parent.profile.client.id).success(function (data, status, headers){
+		clientService.get($scope.profile.client.id, function (client){
 			//Add debt to client
-			var client = data.data;
+			if(typeof(client) == 'undefined') {
+				client.debtList = [];
+			}
 			client.debtList.push(debt);
+
+			//Clear current debt form
 			$scope.current = {};
 
+			//Update profile scope to show changes
+			$scope.profile.client.debtList = client.debtList;
+
 			//Call client update which calls profile update
-			$scope.$parent.$$childHead.addClient(client);
-		}).error(function (xhr, status, err) {
-			console.log("Debt unable to be added: " + err);
-		});
+			clientService.put(client);
+		})
 	}
 }]);

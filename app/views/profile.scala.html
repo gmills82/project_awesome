@@ -112,7 +112,14 @@
 
                             <input type="hidden" ng-mode="profile.agentId" value="@user.id" />
 
-                            <input type="submit" value="Submit Profile" ng-disabled="!profile.clientId" class="btn btn-primary col-md-offset-2"/>
+                            <div class="form-group">
+                                <input type="submit" value="Submit Profile" ng-disabled="!profile.clientId" class="btn btn-primary col-md-offset-2"/>
+                            </div>
+
+                            <div class="alert alert-warning col-md-12" ng-if="!profile.clientId">
+                                <i class="fa fa-warning fa-fw fa-lg"></i>
+                                <strong>Warning!</strong> Please verify client information in step 1 first.
+                            </div>
                         </form>
                     </div>
                 </div>

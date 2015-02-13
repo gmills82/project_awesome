@@ -1,5 +1,5 @@
 //Assets controller
-app.controller('AssetController', ["$scope", "$http", function ($scope, $http) {
+app.controller('AssetController', ["$scope", "$http", "clientService", function ($scope, $http, clientService) {
 	$scope.current = {};
 	$scope.assetTypes = [];
 	$http({"method": "GET", "url": "/json/assetTypes"}).success(function (data){
@@ -7,16 +7,21 @@ app.controller('AssetController', ["$scope", "$http", function ($scope, $http) {
 	});
 	$scope.addAsset = function (asset) {
 		//Get current client
-		$http.get("/json/client/" + $scope.$parent.profile.client.id).success(function (data, status, headers){
+		clientService.get($scope.profile.client.id, function (client) {
+
 			//Add asset to client
-			var client = data.data;
+			if(typeof(client.assetList) == 'undefined') {
+				client.assetList = [];
+			}
 			client.assetList.push(asset);
+
+			//Clear current asset form
 			$scope.current = {};
 
-			//Call client update which calls profile update
-			$scope.$parent.$$childHead.addClient(client);
-		}).error(function (xhr, status, err) {
-			console.log("Asset unable to be added: " + err);
+			//Update profile client scope
+			$scope.profile.client.assetList = client.assetList;
+			//Update in database
+			clientService.put(client);
 		});
 	}
 }]);
