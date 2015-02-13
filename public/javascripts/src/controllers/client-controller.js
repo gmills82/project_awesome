@@ -1,5 +1,5 @@
 //Client controller
-app.controller('ClientController', ["$scope", "$http", "referralService", function ($scope, $http, referralService) {
+app.controller('ClientController', ["$scope", "$http", "referralService", "clientService", function ($scope, $http, referralService, clientService) {
 	$scope.client = {};
 	$scope.client.goals = [];
 
@@ -42,8 +42,12 @@ app.controller('ClientController', ["$scope", "$http", "referralService", functi
 
 		//Used to allow profile form to submit
 		$scope.profile.clientId = client.id;
-		$http.put("/json/client", client).success(function (data, status, headers) {
+
+		//Update client information
+		clientService.put(client, function () {
+			//Update referral information
 			referralService.put(referral);
+			//Update view to show saved success
 			$scope.profile.client.status = "Verified";
 			$scope.profile.client.statusClass = "success";
 		});

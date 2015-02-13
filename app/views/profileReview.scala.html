@@ -38,9 +38,9 @@
                 </ul>
             </div>
             <h3>Financial Assets</h3>
-            <div class="assets-review asset-list">
+            <div class="assets-review asset-list col-md-12">
             @for((asset,index) <- client.assetList.zipWithIndex) {
-                <ul class="col-md-6 @if(index % 2 == 0) {even}else {odd}">
+                <ul class=" @if(index % 2 == 0) {even}else {odd}">
                     <li>Type of Asset: @asset.realAssetType</li>
                     <li>Value: @asset.totalValue</li>
                     <li>Financial Institute: @asset.financialInstitute</li>
@@ -50,9 +50,9 @@
             }
             </div>
             <h3>Debts</h3>
-            <div class="debts-review asset-list">
+            <div class="debts-review asset-list col-md-12">
             @for((debt,index) <- client.debtList.zipWithIndex) {
-                <ul class="col-md-6 @if(index % 2 == 0) {even}else {odd}">
+                <ul class=" @if(index % 2 == 0) {even}else {odd}">
                     <li>Type of Asset: @debt.realDebtType</li>
                     <li>Value: @debt.totalOwed</li>
                     <li>Financial Institute: @debt.financialInstitute</li>
