@@ -1,20 +1,9 @@
-app.directive('recentProfiles', ['$timeout', function(timer) {
+app.directive('recentProfiles', [function() {
 	return {
 		restrict: 'A',
 		controller: 'RecentProfilesController',
 		link: function(scope, element, attrs, RecentProfilesController) {
-			function initDataTable() {
-				$(element).find('table').dataTable({
-					columns:[null, null, null, null, null, null, null, null, {"orderable": false}],
-					order: [[0, "asc"]],
-					paging: false,
-					searching: false,
-					info: false
-				});
-			}
-
 			RecentProfilesController.init();
-			timer(initDataTable, 1000);
 		},
 		templateUrl: "assets/javascripts/src/views/recent-profiles-view.html"
 	};

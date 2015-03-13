@@ -4,12 +4,6 @@ app.directive('referralsByCreator', ['$timeout', function(timer) {
 		controller: 'ReferralsByCreatorController',
 		link: function(scope, element, attrs, ReferralsByCreatorController) {
 			function initDataTable() {
-				$(element).find('table').dataTable({
-					columns:[null, null, null, null, {"orderable": false}],
-					order: [[2, "asc"]],
-					"iDisplayLength": 5,
-					"aLengthMenu": [5,10,20,50]
-				});
 
 				$('#deleteModal').on('show.bs.modal', function (event) {
 					var button = $(event.relatedTarget) // Button that triggered the modal
