@@ -1,23 +1,18 @@
 <header class="main-box-header">
-	<h2>Open Referrals Assigned To You <span class="badge badge-info">{{referrals.length}}</span></h2>
+	<h2>Open Referrals Assigned To You <span class="badge badge-info">{{total}}</span></h2>
 </header>
 <div class="main-box-body">
 	<div class="table-responsive">
-        <table class="table dataTable no-footer" ng-table>
+        <table class="table dataTable no-footer" ng-table="freshReferralsTable">
             <thead>
                 <tr>
-                    <th>Type</th>
-                    <th>Client Name</th>
-                    <th>Next Steps Date</th>
-                    <th>Phone Number</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                    <th>Created By</th>
-                    <th>Last Edited Date</th>
+                    <th ng-repeat="column in columns" ng-class="{'sort-asc': tableParams.isSortBy(column.field, 'asc'), 'sort-desc': tableParams.isSortBy(column.field, 'desc')}" ng-click="tableParams.sorting(column.field, tableParams.isSortBy(column.field, 'asc') ? 'desc' : 'asc')">
+                    {{column.title}}
+                    </th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="referral in referrals">
+                <tr ng-repeat="referral in $data">
                     <td>{{referral.refType}} Referral</td>
                     <td>{{referral.clientName}}</td>
                     <td>{{referral.nextStepDate}}</td>
