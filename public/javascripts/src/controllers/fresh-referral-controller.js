@@ -3,27 +3,27 @@ app.controller('FreshReferralController', ["$scope", "$http", "ngTableParams", "
 	$scope.referrals = [];
 	this.init = function () {
 		$scope.columns = [
-			{title: 'Type', field: 'type'},
-			{title: 'Client Name', field: 'name'},
+			{title: 'Type', field: 'refType'},
+			{title: 'Client Name', field: 'clientName'},
 			{title: 'Next Steps Date', field: 'nextStepDate'},
-			{title: 'Phone Number', field: 'phone'},
+			{title: 'Phone Number', field: 'client.phoneNumber'},
 			{title: 'Status', field: 'status'},
 			{title: 'Actions', field: 'actions'},
-			{title: 'Created By', field: 'creator'},
+			{title: 'Created By', field: 'creatorName'},
 			{title: 'Last Edited Date', field: 'lastEditedDate'}
 		];
 		$scope.freshReferralsTable = new ngTableParams({
 			page: 1,            // show first page
 			count: 10,
-			sort: {
-				lastEditedDate: "dsc"
+			sorting: {
+				lastEditedDate: 'asc'
 			}
 		}, {
 			getData: function($defer, params) {
 				$http({"method": "GET", "url": "/json/referrals/" + app.data.currentUserId}).success(function (data){
 					var orderedData = params.sorting() ?
 						$filter('orderBy')(data.data, params.orderBy()) :
-						data;
+						data.data;
 					$scope.total = orderedData.length;
 					params.total(orderedData.length);
 
