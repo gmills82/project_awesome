@@ -3,7 +3,8 @@
 </header>
 <div class="main-box-body">
 	<div class="table-responsive">
-        <table class="table dataTable no-footer" ng-table="freshReferralsTable">
+        <p><strong>Filter:</strong> {{freshReferralsTable.filter()|json}}</p>
+        <table class="table dataTable no-footer" show-filter="true" ng-table="freshReferralsTable">
             <thead>
                 <tr>
                     <th class="sortable" ng-repeat="column in columns" ng-class="{'sort-asc': freshReferralsTable.isSortBy(column.field, 'asc'), 'sort-desc': freshReferralsTable.isSortBy(column.field, 'desc')}" ng-click="freshReferralsTable.sorting(column.field, freshReferralsTable.isSortBy(column.field, 'asc') ? 'desc' : 'asc')">
@@ -14,12 +15,12 @@
             <tbody>
                 <tr ng-repeat="referral in $data">
                     <td sortable="'refType'">{{referral.refType}} Referral</td>
-                    <td sortable="'clientName'">{{referral.clientName}}</td>
+                    <td sortable="'clientName'" filter="{ 'clientName': 'text' }">{{referral.clientName}}</td>
                     <td sortable="'nextStepDate'">{{referral.nextStepDate}}</td>
                     <td sortable="'client.phoneNumber'"><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
                     <td><status-label status="referral.status"></status-label></td>
                     <td><a href="/action/profile?refId={{referral.id}}">Begin Profile</a> - <a href="/editReferral/{{referral.id}}">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
-                    <td sortable="'creatorName'">{{referral.creatorName}}</td>
+                    <td sortable="'creatorName'" filter="{ 'creatorName': 'text' }">{{referral.creatorName}}</td>
                     <td sortable="'lastEditedDate'">{{referral.lastEditedDate}}</td>
                 </tr>
             </tbody>
