@@ -1,35 +1,21 @@
 <header class="main-box-header">
-    <h2>Referrals Your Team Generated <span class="badge badge-primary">{{referrals.length}}</span></h2>
+    <h2>Referrals Your Team Generated <span class="badge badge-primary">{{total}}</span></h2>
 </header>
 <div class="main-box-body">
     <div class="table-responsive">
-        <table class="table dataTable no-footer">
-            <thead>
-            <tr>
-                <th>Type</th>
-                <th>Client Name</th>
-                <th>Next Steps Date</th>
-                <th>Phone Number</th>
-                <th>Status</th>
-                <th>Was Productive</th>
-                <th>Total Insurance</th>
-                <th>Total PC</th>
-                <th>Total IPS</th>
-                <th>Actions</th>
-            </tr>
-            </thead>
+        <table class="table dataTable no-footer" ng-table="viewTeamReferrals" show-filter="true">
             <tbody>
-            <tr ng-repeat="referral in referrals">
-                <td>{{referral.refType}} Referral</td>
-                <td>{{referral.clientName}}</td>
-                <td>{{referral.nextStepDate}}</td>
-                <td><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
-                <td><status-label status="referral.status"></status-label></td>
-                <td>{{referral.wasProductive}}</td>
-                <td>{{referral.tInsurance}}</td>
-                <td>{{referral.tPc}}</td>
-                <td>{{referral.tIps}}</td>
-                <td><a href="/editReferral/{{referral.id}}">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
+            <tr ng-repeat="referral in $data">
+                <td sortable="'refType'" data-title="'Referral Type'" filter="{ 'refType': 'select' }" filter-data="teamRefs">{{referral.refType}} Referral</td>
+                <td sortable="'clientName'" data-title="'Client Name'" filter="{ 'clientName': 'text' }">{{referral.clientName}}</td>
+                <td sortable="'nextStepDate'" data-title="'Next Steps Date'">{{referral.nextStepDate}}</td>
+                <td sortable="'client.phoneNumber'" data-title="'Phone Number'"><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
+                <td data-title="'Status'"><status-label status="referral.status" data-title="'Status'"><status-label status="referral.status"></status-label></td>
+                <td data-title="'Was Productive'">{{referral.wasProductive}}</td>
+                <td sortable="'tInsurance'" data-title="'Total Insurance'">{{referral.tInsurance}}</td>
+                <td sortable="'tPc'" data-title="'Total PCs'">{{referral.tPc}}</td>
+                <td sortable="'tIps'" data-title="'Total IPS'">{{referral.tIps}}</td>
+                <td data-title="'Actions'"><a href="/editReferral/{{referral.id}}">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
             </tr>
             </tbody>
         </table>
