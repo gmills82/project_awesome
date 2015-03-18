@@ -7,7 +7,7 @@
 
             <tbody>
                 <tr ng-repeat="referral in $data">
-                    <td sortable="'refType'" data-title="'Referral Type'">{{referral.refType}} Referral</td>
+                    <td sortable="'refType'" data-title="'Referral Type'" filter="{ 'refType': 'select' }" filter-data="freshRefTypes">{{referral.refType}} Referral</td>
                     <td sortable="'clientName'" data-title="'Client Name'" filter="{ 'clientName': 'text' }">{{referral.clientName}}</td>
                     <td sortable="'nextStepDate'" data-title="'Next Steps Date'">{{referral.nextStepDate}}</td>
                     <td sortable="'client.phoneNumber'" data-title="'Phone Number'"><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
@@ -18,6 +18,17 @@
                 </tr>
             </tbody>
         </table>
+        <script type="text/ng-template" id="ng-table/filters/age.html">
+            <input type="radio" ng-model="params.filter()[name]" name="filter-age" value=""> None
+            <br />
+            <input type="radio" ng-model="params.filter()[name]" name="filter-age" value="Appt"> Appt
+            <br />
+            <input type="radio" ng-model="params.filter()[name]" name="filter-age" value="Callout"> Callout
+            <br />
+            <input type="radio" ng-model="params.filter()[name]" name="filter-age" value="Profiles Review"> Profile
+            <br />
+            <input type="radio" ng-model="params.filter()[name]" name="filter-age" value="Quote"> Quote
+        </script>
 
         <div class="view-all">
             <div class="pull-left">
