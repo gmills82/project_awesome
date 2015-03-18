@@ -1,7 +1,7 @@
 //Fresh Referral Controller
 app.controller('FreshReferralController', ["$scope", "$http", "ngTableParams", "$filter", function ($scope, $http, ngTableParams, $filter){
 	$scope.referrals = [];
-	$scope.freshRefTypes = [];
+	$scope.freshRefTypes = [{'title': 'No Filter', 'id': ''}];
 	$scope.arr=[];
 
 	//Helper function
