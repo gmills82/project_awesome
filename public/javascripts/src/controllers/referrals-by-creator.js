@@ -62,9 +62,9 @@ app.controller('ReferralsByCreatorController', ["$scope", "$http", "ngTableParam
 
 	$scope.deleteReferral = function (refId) {
 		$http({"method": "DELETE", "url": "/json/referral/" + refId}).success(function (data){
-			for(var y = 0; y < $scope.referrals.length; y++) {
-				if($scope.referrals[y].id === refId) {
-					$scope.referrals.splice(y, 1);
+			for(var y = 0; y < $scope.refByCreator.data.length; y++) {
+				if($scope.refByCreator.data[y].id === refId) {
+					$scope.refByCreator.data.splice(y, 1);
 				}
 			}
 		});
