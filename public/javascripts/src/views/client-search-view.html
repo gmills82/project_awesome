@@ -19,8 +19,8 @@
                             <ul class="menu-items">
                                 <li><a href><i class="fa fa-envelope fa-lg"></i> {{client.userName}}</a></li>
                                 <li><a href><i class="fa fa-phone fa-lg"></i> {{client.phoneNumber}}</a></li>
-                                <li ng-if="referralView"><a href class="btn btn-primary" ng-click="addClientToReferral(client)"><i class="fa fa-plus fa-lg"></i> Add To Referral</a></li>
-                                <li ng-if="profileView"><a href class="btn btn-primary" ng-click="addClientToProfile(client)"><i class="fa fa-plus fa-lg"></i> Add To Profile</a></li>
+                                <li ng-if="referralView"><a href ng-click="addClientToReferral(client)"><i class="fa fa-plus fa-lg"></i> Add To Referral</a></li>
+                                <li ng-if="profileView"><a href ng-click="addClientToProfile(client)"><i class="fa fa-plus fa-lg"></i> Add To Profile</a></li>
                                 <li><a href ng-click="requestClientHistory(client)"><i class="fa fa-history fa-lg"></i> View Client History</a></li>
                                 <li ng-repeat="record in history">
                                     {{record.type}},  {{record.lastEditedDate}}, <a href="{{record.id}}">{{record.id}}</a>
