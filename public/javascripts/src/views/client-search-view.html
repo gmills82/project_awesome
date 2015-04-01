@@ -10,15 +10,30 @@
     </header>
     <div class="main-box-body clearfix ">
         <h3>{{clients.length}} Results for "{{search}}"</h3>
-        <ul class="row">
-            <li ng-repeat="client in clients" class="col-md-12">
-                <strong>Name:</strong> {{client.name}}
-                <strong>E-mail:</strong> {{client.userName}}
-                <strong>Phone:</strong> {{client.phoneNumber}}
-                <button class="btn btn-primary pull-right col-md-2" ng-if="referralView" ng-click="addClientToReferral(client)">Add To Referral</button>
-                <button class="btn btn-primary pull-right col-md-2" ng-if="profileView" ng-click="addClientToProfile(client)">Add To Profile</button>
-            </li>
-        </ul>
+        <div class="row">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12" ng-repeat="client in clients">
+                <div class="main-box project-box profile-box-menu green-box" >
+                    <div class="main-box-body clearfix ">
+                        <div class="project-box-header green-bg clearfix"><div class="name"><a href><i class="fa fa-user fa-lg"></i> {{client.name}}</a></div></div>
+                        <div class="profile-box-content clearfix">
+                            <ul class="menu-items">
+                                <li><a href><i class="fa fa-envelope fa-lg"></i> {{client.userName}}</a></li>
+                                <li><a href><i class="fa fa-phone fa-lg"></i> {{client.phoneNumber}}</a></li>
+                                <li ng-if="referralView"><a href class="btn btn-primary" ng-click="addClientToReferral(client)"><i class="fa fa-plus fa-lg"></i> Add To Referral</a></li>
+                                <li ng-if="profileView"><a href class="btn btn-primary" ng-click="addClientToProfile(client)"><i class="fa fa-plus fa-lg"></i> Add To Profile</a></li>
+                                <li><a href ng-click="requestClientHistory(client)"><i class="fa fa-history fa-lg"></i> View Client History</a></li>
+                                <li ng-repeat="record in history">
+                                    {{record.type}},  {{record.lastEditedDate}}, <a href="{{record.id}}">{{record.id}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="project-box-footer clearfix">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <footer class="main-box-footer clearfix"></footer>
 </div>

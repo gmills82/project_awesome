@@ -21,29 +21,6 @@
 	position: relative;
 }
 
-/* Client Search */
-.client-search form {
-	margin-top: 15px;
-}
-.client-search ul {
-	list-style-type: none;
-	margin: 0;
-	padding: 0;
-}
-.client-search ul li {
-	padding: 12px 0 8px 8px;
-	border-top: 1px solid #e7ebee;
-}
-.client-search ul li:first-child {
-	border-top: none;
-}
-.client-search ul li strong {
-	margin-left: 15px;
-}
-.client-search ul li strong:first-child {
-	margin-left: 0;
-}
-
 /* Create Referral */
 .create-referral .nav-pills {
 	padding-bottom: 10px;
