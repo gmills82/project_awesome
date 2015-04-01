@@ -20,7 +20,10 @@
 	top: -2px;
 	position: relative;
 }
-
+/* Client Search */
+.client-search .main-box {
+	border: 1px solid #e7ebee;
+}
 /* Create Referral */
 .create-referral .nav-pills {
 	padding-bottom: 10px;
