@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.OrderBy;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -13,7 +14,8 @@ import java.util.List;
  * Time: 1:56 PM
  */
 @Entity
-public class Profile extends Model {
+public class Profile extends HistoryRecord {
+
     @Id
     public long id;
     public long agentId;
@@ -39,4 +41,16 @@ public class Profile extends Model {
     public static List<Profile> getByAgentId(Long id) {
         return finder.where().eq("agentId", id).findList();
     }
+	public static List<Profile> getByClientId(Long id) {
+		return finder.where().eq("clientId", id).findList();
+	}
+
+	public Long getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Long createdDate) {
+		super.setDateOfLastInteraction(createdDate);
+		this.createdDate = createdDate;
+	}
 }

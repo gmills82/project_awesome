@@ -12,6 +12,7 @@ import play.data.validation.ValidationError;
 import play.data.Form;
 
 
+import play.db.ebean.Model;
 import play.libs.Json;
 import play.mvc.*;
 import views.html.*;
@@ -163,5 +164,15 @@ public class ClientCtrl extends Controller {
 		result.set("data", Json.toJson(clientList));
 
 		return ok(result);
+	}
+
+	private static List<HistoryRecord> gatherClientHistory(Long id) {
+		List<HistoryRecord> historyModels = new ArrayList<HistoryRecord>();
+		historyModels.addAll(Referral.getByClientId(id));
+		historyModels.addAll(Profile.getByClientId(id));
+
+		Collections.sort(historyModels);
+
+		return historyModels;
 	}
 }
