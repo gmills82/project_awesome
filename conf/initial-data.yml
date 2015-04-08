@@ -15,7 +15,6 @@
     requiredPermissionLevel: 0
     actionURL: /action/profile
     shortDescription: A helpful tool to provide client interaction tracking.
-    imageName: action/clientProfile.jpg
     category: tool
 
 - !!models.Action
@@ -23,7 +22,6 @@
     requiredPermissionLevel: 2
     actionURL: /action/producerScript
     shortDescription: Phone scripts that lead to referalls.
-    imageName: action/phone.jpg
     category: tool
 
 - !!models.Action
@@ -31,7 +29,6 @@
     requiredPermissionLevel: 1
     actionURL: /signup/2
     shortDescription: Create a producer account for a team member
-    imageName: action/phone.jpg
     category: admin
 
 - !!models.Action
@@ -39,7 +36,6 @@
     requiredPermissionLevel: 0
     actionURL: /signup/1
     shortDescription: Create an agent account for a team member
-    imageName: action/phone.jpg
     category: admin
 
 - !!models.Action
@@ -47,7 +43,6 @@
     requiredPermissionLevel: 2
     actionURL: /action/referral
     shortDescription: Manage Client Referrals
-    imageName: action/phone.jpg
     category: tool
 
 - !!models.Action
@@ -55,7 +50,6 @@
     requiredPermissionLevel: 1
     actionURL: /action/clients
     shortDescription: View your clients and their information
-    imageName: action/viewClient.jpg
     category: tracking
 
 - !!models.Action
@@ -63,7 +57,6 @@
     requiredPermissionLevel: 1
     actionURL: /action/agents
     shortDescription: Track which agents send you the most profitable referrals
-    imageName: action/viewAgents.jpg
     category: tracking
 
 - !!models.Script
