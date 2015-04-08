@@ -41,6 +41,7 @@ public class UserCtrl extends Controller {
 
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result updateUser() {
+		Logger.debug(request().body().asJson().toString());
 		Form<UserModel> userForm = Form.form(UserModel.class).bindFromRequest();
 
 		//There is no error on the form so it is now safe to get the User
