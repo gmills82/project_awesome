@@ -71,7 +71,7 @@ public class ReferralCtrl extends Controller {
 
 		//Map agentId to user_id
 		if(null != data.findValue("agentId")){
-			UserModel agent = UserModel.getById(Long.parseLong(data.findValue("agentId").textValue()));
+			Long agent = Long.parseLong(data.findValue("agentId").textValue());
 			referral.user_id = agent;
 		}
 
@@ -110,9 +110,10 @@ public class ReferralCtrl extends Controller {
 
 		//Get user from userId - USE HIS ASSIGNED REFERRALS
 		UserModel currentUser = UserModel.getById(userId);
+		List<Referral> currentUsersRefs = Referral.getByUserId(currentUser.id);
 
 		//Filter Referrals to only the ones we care about - Status = "OPEN"
-		List<Referral> freshReferrals = filter(having(on(Referral.class).status, equalTo("OPEN")), currentUser.referrals);
+		List<Referral> freshReferrals = filter(having(on(Referral.class).status, equalTo("OPEN")), currentUsersRefs);
 
 		//TODO: More caching cleanup needed
 		String etag = ((Integer) freshReferrals.hashCode()).toString();

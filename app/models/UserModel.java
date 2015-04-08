@@ -48,10 +48,6 @@ public class UserModel extends Model {
 	@JsonBackReference
 	public UserModel parent_team_member;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "user_id")
-	@JsonManagedReference
-	public List<Referral> referrals;
-
 	public enum Role {
         FA(0), Agent(1), Producer(2);
         private Integer permissionLevel;

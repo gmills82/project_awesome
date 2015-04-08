@@ -57,23 +57,15 @@ app.factory('referralService', ['$http', '$log', 'clientService', function($http
 				referral.clientId = locationHeader.match(/\d*$/)[0];
 				referral.clientName = referral.client.name;
 				referral.creatorId = app.data.currentUserId;
+				referral.user_id = referral.agentId;
 
-				//Add referral to user
-				$http.get("/json/user/" + referral.agentId).success(function (data, status, headers) {
-					var user = data.data;
-
-					//Add referral to the user
-					user.referrals.push(referral);
-
-					//Update user/agent with this referral
-					//Referral is actually saved HERE <-------------
-					$http.put("/json/user", user).success(function (data, status, headers) {
-						if(typeof(callback) == "function") {
-							callback(referral);
-						}
-					}).error(errorMessaging)
-				})
-			})
+				//Save the referral
+				$http.post("/json/referral", referral).success(function (data, status, headers){
+					if(typeof(callback) == "function") {
+						callback(referral);
+					}
+				}).error(errorMessaging);
+			});
 		}
 	};
 
