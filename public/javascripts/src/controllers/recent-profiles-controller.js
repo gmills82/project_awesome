@@ -25,7 +25,7 @@ app.controller('RecentProfilesController', ["$scope", "$http", "ngTableParams", 
 						profiles;
 
 					//Pass out total to larger scope
-					$scope.total = orderedData.length;
+					$scope.recentProfilesTotal = orderedData.length;
 					params.total(orderedData.length);
 
 					//Resolve data gathering
