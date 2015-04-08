@@ -6842,9 +6842,6 @@ svg {
   /* IE6-9 */
 }
 
-.theme-blue-gradient .panel .main-box {
-  border: 1px solid #e7ebee;
-}
 .theme-blue-gradient .navbar > .container .navbar-brand {
   background: transparent;
 }
