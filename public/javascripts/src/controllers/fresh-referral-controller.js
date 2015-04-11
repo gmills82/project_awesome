@@ -37,7 +37,7 @@ app.controller('FreshReferralController', ["$scope", "$http", "ngTableParams", "
 						filteredData;
 
 					//Pass out total to larger scope
-					$scope.total = orderedData.length;
+					$scope.freshReferraltotal = orderedData.length;
 					params.total(orderedData.length);
 
 					//Create scope for RefType filter

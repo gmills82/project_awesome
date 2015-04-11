@@ -32,10 +32,7 @@ public class Referral extends HistoryRecord {
 	public Integer tPc = 0;
 	public Integer tIps = 0;
 
-	@ManyToOne(optional = false)
-	@JoinColumn(name="user_id", referencedColumnName = "id")
-	@JsonBackReference
-    public UserModel user_id;
+    public long user_id;
 
     public Long dateCreated = System.currentTimeMillis();
 	public String nextStepDate;
@@ -58,6 +55,9 @@ public class Referral extends HistoryRecord {
     }
 	public static List<Referral> getByAssignedIdInRange(Long assigneeId, Long range) {
 		return finder.where().eq("user_id", assigneeId).ge("dateCreated", range).findList();
+	}
+	public static List<Referral> getByUserId(Long assignedUserId) {
+		return finder.where().eq("user_id", assignedUserId).findList();
 	}
 	public static List<Referral> getByClientId(Long id) {
 		return finder.where().eq("clientId", id).findList();
