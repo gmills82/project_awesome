@@ -1,13 +1,9 @@
 package models;
 
-import com.avaje.ebean.OrderBy;
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -19,7 +15,7 @@ import java.util.List;
  * Time: 1:53 PM
  */
 @Entity
-public class Referral extends HistoryRecord {
+public class Referral extends Model implements HistoryRecord {
     @Id
     public long id;
 
@@ -43,7 +39,7 @@ public class Referral extends HistoryRecord {
     public Boolean wasProductive = false;
 
 
-    public static Finder<Long, Referral> finder = new Finder(Long.class, Referral.class);
+    public static Model.Finder<Long, Referral> finder = new Model.Finder(Long.class, Referral.class);
     public static Referral getById(Long id) {
         return finder.byId(id);
     }
@@ -63,16 +59,26 @@ public class Referral extends HistoryRecord {
 		return finder.where().eq("clientId", id).findList();
 	}
 
-	public String getLastEditedDate() {
-		return lastEditedDate;
+	@Override
+	public Long getDateOfLastInteraction() {
+		SimpleDateFormat f = new SimpleDateFormat("dd-MMM-yyyy");
+		Date d = null;
+		try {
+			d = f.parse(this.lastEditedDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		return d.getTime();
 	}
 
-	public void setLastEditedDate(String lastEditedDate) throws ParseException {
-		SimpleDateFormat f = new SimpleDateFormat("dd-MMM-yyyy");
-		Date d = f.parse(lastEditedDate);
-		long milliseconds = d.getTime();
-
-		super.setDateOfLastInteraction(milliseconds);
-		this.lastEditedDate = lastEditedDate;
+	@Override
+	public int compareTo(HistoryRecord historyRecord) {
+		if (historyRecord.getDateOfLastInteraction() > this.getDateOfLastInteraction()) {
+			return 1;
+		} else if (historyRecord.getDateOfLastInteraction() > this.getDateOfLastInteraction()) {
+			return -1;
+		}
+		return 0;
 	}
 }

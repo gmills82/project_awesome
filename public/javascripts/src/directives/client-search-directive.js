@@ -13,6 +13,7 @@ app.directive('clientSearchDirective', ['$timeout', function(timer) {
 				scope.profileView = true;
 			}
 
+			//TODO: Call ajax endpoint to get
 			scope.requestClientHistory = function (client) {
 				console.log("history requested");
 				//Call ajax endpoint for history

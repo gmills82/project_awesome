@@ -1,11 +1,9 @@
 package models;
 
-import com.avaje.ebean.OrderBy;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,7 +12,7 @@ import java.util.List;
  * Time: 1:56 PM
  */
 @Entity
-public class Profile extends HistoryRecord {
+public class Profile extends Model implements HistoryRecord {
 
     @Id
     public long id;
@@ -34,7 +32,7 @@ public class Profile extends HistoryRecord {
     public String advisorRecommendation;
     public String nextSteps;
 
-    public static Finder<Long, Profile> finder = new Finder(Long.class, Profile.class);
+    public static Model.Finder<Long, Profile> finder = new Model.Finder(Long.class, Profile.class);
     public static Profile getById(Long id) {
         return finder.byId(id);
     }
@@ -45,12 +43,18 @@ public class Profile extends HistoryRecord {
 		return finder.where().eq("clientId", id).findList();
 	}
 
-	public Long getCreatedDate() {
-		return createdDate;
+	@Override
+	public Long getDateOfLastInteraction() {
+		return this.createdDate;
 	}
 
-	public void setCreatedDate(Long createdDate) {
-		super.setDateOfLastInteraction(createdDate);
-		this.createdDate = createdDate;
+	@Override
+	public int compareTo(HistoryRecord historyRecord) {
+		if (historyRecord.getDateOfLastInteraction() > this.getDateOfLastInteraction()) {
+			return 1;
+		} else if (historyRecord.getDateOfLastInteraction() > this.getDateOfLastInteraction()) {
+			return -1;
+		}
+		return 0;
 	}
 }
