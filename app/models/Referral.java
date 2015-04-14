@@ -4,6 +4,7 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -27,6 +28,9 @@ public class Referral extends Model implements HistoryRecord {
 	public Integer tInsurance = 0;
 	public Integer tPc = 0;
 	public Integer tIps = 0;
+
+	@Transient
+	public String link;
 
     public long user_id;
 
@@ -61,7 +65,7 @@ public class Referral extends Model implements HistoryRecord {
 
 	@Override
 	public Long getDateOfLastInteraction() {
-		SimpleDateFormat f = new SimpleDateFormat("dd-MMM-yyyy");
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
 		Date d = null;
 		try {
 			d = f.parse(this.lastEditedDate);
@@ -73,6 +77,16 @@ public class Referral extends Model implements HistoryRecord {
 	}
 
 	@Override
+	public String getDateOfLastInteractionString() {
+		return this.lastEditedDate;
+	}
+
+	@Override
+	public String getRecordType() {
+		return "Referral";
+	}
+
+	@Override
 	public int compareTo(HistoryRecord historyRecord) {
 		if (historyRecord.getDateOfLastInteraction() > this.getDateOfLastInteraction()) {
 			return 1;
@@ -80,5 +94,19 @@ public class Referral extends Model implements HistoryRecord {
 			return -1;
 		}
 		return 0;
+	}
+
+	@Override
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	@Override
+	public String getLink() {
+		return link;
 	}
 }

@@ -10,5 +10,13 @@ import java.util.Comparator;
 public interface HistoryRecord extends Comparable<HistoryRecord> {
 	public Long getDateOfLastInteraction();
 
+	public String getDateOfLastInteractionString();
+
+	public String getRecordType();
+
+	public String getStatus();
+
+	public String getLink();
+
 	public int compareTo(HistoryRecord o);
 }

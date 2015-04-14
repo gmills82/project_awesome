@@ -4,6 +4,10 @@ import play.db.ebean.Model;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,6 +24,9 @@ public class Profile extends Model implements HistoryRecord {
     public long clientId;
     public Long createdDate = System.currentTimeMillis();
 	public Long refId;
+
+	@Transient
+	public String link;
 
     public Integer riskTolerance;
     public Integer riskToleranceModifier;
@@ -49,6 +56,19 @@ public class Profile extends Model implements HistoryRecord {
 	}
 
 	@Override
+	public String getDateOfLastInteractionString() {
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
+		Date d = new Date(this.createdDate);
+
+		return f.format(d);
+	}
+
+	@Override
+	public String getRecordType() {
+		return "Profile";
+	}
+
+	@Override
 	public int compareTo(HistoryRecord historyRecord) {
 		if (historyRecord.getDateOfLastInteraction() > this.getDateOfLastInteraction()) {
 			return 1;
@@ -56,5 +76,19 @@ public class Profile extends Model implements HistoryRecord {
 			return -1;
 		}
 		return 0;
+	}
+
+	@Override
+	public String getStatus() {
+		return "Completed";
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	@Override
+	public String getLink() {
+		return link;
 	}
 }

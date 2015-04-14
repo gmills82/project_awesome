@@ -186,6 +186,18 @@ public class Application extends Controller {
 		return redirect(routes.Application.login());
 	}
 
+
+	public static Result clientHistory(Long clientId) {
+		Client client = Client.getById(clientId);
+		List<HistoryRecord> clientHistoryRecords = ClientCtrl.gatherClientHistory(clientId);
+
+		UserModel currentUser = getCurrentUser();
+		if(null != currentUser) {
+			return ok(clientHistory.render(currentUser, client, clientHistoryRecords));
+		}
+		return redirect(routes.Application.login());
+	}
+
 	public static Result pay() {
 		return ok(pay.render());
 	}
@@ -243,5 +255,4 @@ public class Application extends Controller {
 
 		return assignableTeamMembers;
 	}
-
 }

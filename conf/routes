@@ -17,6 +17,7 @@ GET           /action/team-referrals                  controllers.Application.te
 GET           /action/clients                         controllers.Application.clients()
 GET           /action/profileReview/:profileId        controllers.Application.profileReview(profileId: Long)
 GET           /editReferral/:referralId               controllers.Application.editReferral(referralId: Long)
+GET           /client/history/:clientId               controllers.Application.clientHistory(clientId: Long)
 
 ## JSON Endpoints
 GET           /actions/:userId/:category              controllers.UserCtrl.getActions(userId: Long, category: String)

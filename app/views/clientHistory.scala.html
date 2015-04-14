@@ -1,36 +1,98 @@
-@(user: UserModel, client: Client)
+@(user: UserModel, client: Client, historyRecords: List[HistoryRecord])
 @home(user, "Manage Clients") {
-    <h1>Client History</h1>
+    <h1>Client Information</h1>
+    <div class="main-box-body clearfix ">
+        <div class="row">
+            @* Client Basic Info *@
+            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+                <div class="main-box project-box profile-box-menu green-box clearfix" >
+                    <div class="main-box-body clearfix ">
+                        <div class="project-box-header green-bg clearfix"><div class="name"><a href><i class="fa fa-user fa-lg"></i> @client.name</a></div></div>
+                        <div class="profile-box-content clearfix">
+                            <ul class="menu-items">
+                                <li><a href><i class="fa fa-envelope fa-lg"></i> @client.userName</a></li>
+                                <li><a href><i class="fa fa-phone fa-lg"></i> @client.phoneNumber</a></li>
+                            </ul>
+                        </div>
+                        <div class="project-box-footer clearfix">
 
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @* Client totals *@
+            <div class="col-lg-9 col-md-8 col-sm-6 col-xs-12">
+                <div class="col-lg-4 col-md-12">
+                    <div class="main-box infographic-box colored green-bg">
+                        <i class="fa fa-money"></i>
+                        <span class="headline">Total Insurance</span>
+                        <span class="value">77001</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="main-box infographic-box colored purple-bg ">
+                        <i class="fa fa-money"></i>
+                        <span class="headline">Total PC</span>
+                        <span class="value">22.631</span>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-12">
+                    <div class="main-box infographic-box colored emerald-bg">
+                        <i class="fa fa-money"></i>
+                        <span class="headline">Total IPS</span>
+                        <span class="value">6.631</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    @* Client Interaction History *@
     <div class="row">
         <div class="col-lg-9">
             <div class="main-box">
                 <div class="main-box-header">
-                    <h2>Client: @client.name</h2>
+                    <h2>Client History</h2>
                 </div>
                 <div class="main-box-body">
-                    <ul>
-
-                    </ul>
+                    <div class="table">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Type of Interaction</th>
+                                    <th>Date of Last Interaction</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            @for(index <- 0 until historyRecords.size) {
+                                <tr>
+                                    <td>@historyRecords(index).getRecordType</td>
+                                    <td>@historyRecords(index).getDateOfLastInteractionString</td>
+                                    <td><span class="label label-success">@historyRecords(index).getStatus</span></td>
+                                    <td>
+                                        @if(historyRecords(index).getLink != null) {
+                                            <a href="@historyRecords(index).getLink">
+                                                @if(historyRecords(index).getRecordType == "Referral") {
+                                                    Edit this @historyRecords(index).getRecordType
+                                                }else {
+                                                    @if(historyRecords(index).getRecordType == "Profile") {
+                                                        View this @historyRecords(index).getRecordType Summary
+                                                    }
+                                                }
+                                            </a>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-lg-3">
-            <div class="main-box infographic-box colored green-bg">
-                <i class="fa fa-money"></i>
-                <span class="headline">Total PC</span>
-                <span class="value">22.631</span>
-            </div>
-            <div class="main-box infographic-box colored green-bg">
-                <i class="fa fa-money"></i>
-                <span class="headline">Total IPS</span>
-                <span class="value">6.631</span>
-            </div>
-            <div class="main-box infographic-box colored green-bg">
-                <i class="fa fa-money"></i>
-                <span class="headline">Total Insurance</span>
-                <span class="value">77001</span>
-            </div>
-        </div>
+
     </div>
 }

@@ -15,6 +15,7 @@ import play.data.Form;
 import play.db.ebean.Model;
 import play.libs.Json;
 import play.mvc.*;
+import scala.concurrent.stm.ccstm.Stats;
 import views.html.*;
 
 import java.text.ParseException;
@@ -166,12 +167,22 @@ public class ClientCtrl extends Controller {
 		return ok(result);
 	}
 
-	private static List<HistoryRecord> gatherClientHistory(Long id) {
+	public static List<HistoryRecord> gatherClientHistory(Long id) {
 		List<HistoryRecord> historyModels = new ArrayList<HistoryRecord>();
 		historyModels.addAll(Referral.getByClientId(id));
 		historyModels.addAll(Profile.getByClientId(id));
 
 		Collections.sort(historyModels);
+
+		for(HistoryRecord record: historyModels) {
+			if(record instanceof Referral) {
+				Referral rRecord = (Referral) record;
+				rRecord.setLink(routes.Application.editReferral(rRecord.id).url());
+			}else if(record instanceof Profile) {
+				Profile pRecord = (Profile) record;
+				pRecord.setLink(routes.Application.profileReview(pRecord.id).url());
+			}
+		}
 
 		return historyModels;
 	}
