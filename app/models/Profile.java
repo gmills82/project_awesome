@@ -79,8 +79,8 @@ public class Profile extends Model implements HistoryRecord {
 	}
 
 	@Override
-	public String getStatus() {
-		return "Completed";
+	public String getRecordStatus() {
+		return "CLOSED";
 	}
 
 	public void setLink(String link) {

@@ -1,4 +1,7 @@
-@(user: UserModel, client: Client, historyRecords: List[HistoryRecord], sums: Map[String, Integer])
+@import utils.StatTotals
+
+@(user: UserModel, client: Client, historyRecords: List[HistoryRecord], sums: StatTotals)
+
 @home(user, "Manage Clients") {
     <h1>Client Information</h1>
     <div class="main-box-body clearfix ">
@@ -26,21 +29,21 @@
                     <div class="main-box infographic-box colored green-bg">
                         <i class="fa fa-money"></i>
                         <span class="headline">Total Insurance</span>
-                        <span class="value">@sums.get(ClientCtrl.INSURANCE)</span>
+                        <span class="value">@sums.getSumInsurance</span>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <div class="main-box infographic-box colored purple-bg ">
                         <i class="fa fa-money"></i>
                         <span class="headline">Total PC</span>
-                        <span class="value">@sums.get(ClientCtrl.PCS)</span>
+                        <span class="value">@sums.getSumPcs</span>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <div class="main-box infographic-box colored emerald-bg">
                         <i class="fa fa-money"></i>
                         <span class="headline">Total IPS</span>
-                        <span class="value">@sums.get(ClientCtrl.IPS)</span>
+                        <span class="value">@sums.getSumIps</span>
                     </div>
                 </div>
             </div>
@@ -71,7 +74,7 @@
                                 <tr>
                                     <td>@historyRecords(index).getRecordType</td>
                                     <td>@historyRecords(index).getDateOfLastInteractionString</td>
-                                    <td><span class="label label-success">@historyRecords(index).getStatus</span></td>
+                                    <td><status-label status="'@historyRecords(index).getRecordStatus'"></status-label></td>
                                     <td>
                                         @if(historyRecords(index).getLink != null) {
                                             <a href="@historyRecords(index).getLink">

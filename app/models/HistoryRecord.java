@@ -14,7 +14,7 @@ public interface HistoryRecord extends Comparable<HistoryRecord> {
 
 	public String getRecordType();
 
-	public String getStatus();
+	public String getRecordStatus();
 
 	public String getLink();
 

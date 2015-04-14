@@ -16,6 +16,7 @@ import play.db.ebean.Model;
 import play.libs.Json;
 import play.mvc.*;
 import scala.concurrent.stm.ccstm.Stats;
+import utils.StatTotals;
 import views.html.*;
 
 import java.text.ParseException;
@@ -29,9 +30,6 @@ import java.util.*;
  * Time: 9:09 AM
  */
 public class ClientCtrl extends Controller {
-	public static final String INSURANCE = "insurance";
-	public static final String IPS = "ips";
-	public static final String PCS = "pcs";
 	public static final String CREATED = "Created";
 	public static final String GOALS = "goals";
 	public static final String YYYY_MM_DD = "yyyy-mm-dd";
@@ -197,7 +195,7 @@ public class ClientCtrl extends Controller {
 		return historyModels;
 	}
 
-	public static HashMap<String, Integer> sumRefferalStats(List<HistoryRecord> records) {
+	public static StatTotals sumRefferalStats(List<HistoryRecord> records) {
 		Integer insuranceSum = 0;
 		Integer ipsSum = 0;
 		Integer pcSum = 0;
@@ -210,11 +208,7 @@ public class ClientCtrl extends Controller {
 				pcSum += rRecord.tPc;
 			}
 		}
-		HashMap<String, Integer> sumMap = new HashMap<String, Integer>();
-		sumMap.put(INSURANCE, insuranceSum);
-		sumMap.put(IPS, ipsSum);
-		sumMap.put(PCS, ipsSum);
-
-		return sumMap;
+		StatTotals stats = new StatTotals(insuranceSum, ipsSum, pcSum);
+		return stats;
 	}
 }

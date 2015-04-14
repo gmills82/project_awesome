@@ -97,7 +97,7 @@ public class Referral extends Model implements HistoryRecord {
 	}
 
 	@Override
-	public String getStatus() {
+	public String getRecordStatus() {
 		return this.status;
 	}
 

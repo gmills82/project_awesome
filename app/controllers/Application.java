@@ -8,6 +8,7 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
 
+import utils.StatTotals;
 import views.html.*;
 
 import java.util.*;
@@ -190,7 +191,7 @@ public class Application extends Controller {
 	public static Result clientHistory(Long clientId) {
 		Client client = Client.getById(clientId);
 		List<HistoryRecord> clientHistoryRecords = ClientCtrl.gatherClientHistory(clientId);
-		HashMap<String, Integer> clientSums = ClientCtrl.sumRefferalStats(clientHistoryRecords);
+		StatTotals clientSums = ClientCtrl.sumRefferalStats(clientHistoryRecords);
 
 		UserModel currentUser = getCurrentUser();
 		if(null != currentUser) {
