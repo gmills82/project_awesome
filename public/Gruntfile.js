@@ -20,6 +20,7 @@ module.exports = function (grunt) {
 					"javascripts/libs/jquery.maskedinput.min.js",
 					"javascripts/libs/bootstrap-datepicker.js",
 					"javascripts/libs/bootstrap-timepicker.js",
+					"javascripts/libs/ui-bootstrap-custom-tpls-0.12.1.min.js",
 					"javascripts/src/scripts.js"
                     ],
                 dest: 'javascripts/min/<%= pkg.name %>.min.js'
