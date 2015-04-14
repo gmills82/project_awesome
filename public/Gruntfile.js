@@ -75,7 +75,15 @@ module.exports = function (grunt) {
         watch: {
             files: ['<%= jshint.files %>', '<%= concat.css.src %>'],
             tasks: ['concat']
-        }
+        },
+		cssmin: {
+			target: {
+				files: {
+					'<%= concat.css.dest %>': ['<%= concat.css.dest %>'],
+					'<%= concat.bootstrap.dest %>': ['<%= concat.bootstrap.dest %>']
+				}
+			}
+		}
     });
 
     grunt.loadNpmTasks('grunt-contrib-uglify');
@@ -84,10 +92,11 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-sass');
+	grunt.loadNpmTasks('grunt-contrib-cssmin');
 
     grunt.registerTask('test', ['jshint', 'qunit']);
 
     grunt.registerTask('default', ['sass','concat']);
-    grunt.registerTask('min', ['sass', 'concat', 'uglify']);
+    grunt.registerTask('min', ['sass', 'concat', 'uglify', 'cssmin']);
 
 };
