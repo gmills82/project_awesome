@@ -29,7 +29,17 @@ import java.util.*;
  * Time: 9:09 AM
  */
 public class ClientCtrl extends Controller {
-    /* JSON CRUD methods for Clients */
+	public static final String INSURANCE = "insurance";
+	public static final String IPS = "ips";
+	public static final String PCS = "pcs";
+	public static final String CREATED = "Created";
+	public static final String GOALS = "goals";
+	public static final String YYYY_MM_DD = "yyyy-mm-dd";
+	public static final String BIRTH_DATE_PRETTY = "birthDatePretty";
+	public static final String STATUS = "status";
+	public static final String OK = "OK";
+	public static final String DATA = "data";
+	/* JSON CRUD methods for Clients */
 
     @BodyParser.Of(BodyParser.Json.class)
     public static Result getClientJSON(Long clientId) {
@@ -60,11 +70,11 @@ public class ClientCtrl extends Controller {
         JsonNode data = request().body().asJson();
 
         //Convert string date to java date
-        if(null != data.findPath("birthDatePretty").textValue()) {
-            client.birthDate = new SimpleDateFormat("yyyy-mm-dd").parse(data.findPath("birthDatePretty").textValue()).getTime();
+        if(null != data.findPath(BIRTH_DATE_PRETTY).textValue()) {
+            client.birthDate = new SimpleDateFormat(YYYY_MM_DD).parse(data.findPath(BIRTH_DATE_PRETTY).textValue()).getTime();
         }
-		if(null != data.findValue("goals")) {
-			JsonNode goalsNode = data.findValue("goals");
+		if(null != data.findValue(GOALS)) {
+			JsonNode goalsNode = data.findValue(GOALS);
 			Iterator<Map.Entry<String, JsonNode>> iterator = goalsNode.fields();
 			String tmpStr = "";
 			while(iterator.hasNext()) {
@@ -76,7 +86,7 @@ public class ClientCtrl extends Controller {
         client.save();
         response().setHeader(LOCATION, routes.ClientCtrl.getClientJSON(client.id).url());
 
-        return status(201, "Created");
+        return status(201, CREATED);
     }
 
     @BodyParser.Of(play.mvc.BodyParser.Json.class)
@@ -87,7 +97,7 @@ public class ClientCtrl extends Controller {
 
         Client client = clientForm.get();
 
-		JsonNode goalsNode = data.findPath("goals");
+		JsonNode goalsNode = data.findPath(GOALS);
 
 		if(!goalsNode.isMissingNode()) {
 			String tmpStr = client.goalsString;
@@ -119,12 +129,12 @@ public class ClientCtrl extends Controller {
     @BodyParser.Of(BodyParser.Json.class)
     public static Result getAssetTypes() {
         ObjectNode result = Json.newObject();
-        result.put("status", "OK");
+        result.put(STATUS, OK);
 
         List<FinancialAsset.AssetType> assetTypes = FinancialAsset.getAllAssetTypes();
         JsonNode types = Json.toJson(assetTypes);
 
-        result.put("data", types);
+        result.put(DATA, types);
 
         return ok(result);
     }
@@ -132,12 +142,12 @@ public class ClientCtrl extends Controller {
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result getDebtTypes() {
 		ObjectNode result = Json.newObject();
-		result.put("status", "OK");
+		result.put(STATUS, OK);
 
 		List<Debt.DebtType> debtTypes = Debt.getAllDebtTypes();
 		JsonNode types = Json.toJson(debtTypes);
 
-		result.put("data", types);
+		result.put(DATA, types);
 
 		return ok(result);
 	}
@@ -162,7 +172,7 @@ public class ClientCtrl extends Controller {
 		}
 
 		//Add to result
-		result.set("data", Json.toJson(clientList));
+		result.set(DATA, Json.toJson(clientList));
 
 		return ok(result);
 	}
@@ -185,5 +195,26 @@ public class ClientCtrl extends Controller {
 		}
 
 		return historyModels;
+	}
+
+	public static HashMap<String, Integer> sumRefferalStats(List<HistoryRecord> records) {
+		Integer insuranceSum = 0;
+		Integer ipsSum = 0;
+		Integer pcSum = 0;
+
+		for(HistoryRecord record: records) {
+			if(record instanceof Referral) {
+				Referral rRecord = ((Referral) record);
+				insuranceSum += rRecord.tInsurance;
+				ipsSum += rRecord.tIps;
+				pcSum += rRecord.tPc;
+			}
+		}
+		HashMap<String, Integer> sumMap = new HashMap<String, Integer>();
+		sumMap.put(INSURANCE, insuranceSum);
+		sumMap.put(IPS, ipsSum);
+		sumMap.put(PCS, ipsSum);
+
+		return sumMap;
 	}
 }

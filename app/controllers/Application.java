@@ -190,10 +190,11 @@ public class Application extends Controller {
 	public static Result clientHistory(Long clientId) {
 		Client client = Client.getById(clientId);
 		List<HistoryRecord> clientHistoryRecords = ClientCtrl.gatherClientHistory(clientId);
+		HashMap<String, Integer> clientSums = ClientCtrl.sumRefferalStats(clientHistoryRecords);
 
 		UserModel currentUser = getCurrentUser();
 		if(null != currentUser) {
-			return ok(clientHistory.render(currentUser, client, clientHistoryRecords));
+			return ok(clientHistory.render(currentUser, client, clientHistoryRecords, clientSums));
 		}
 		return redirect(routes.Application.login());
 	}

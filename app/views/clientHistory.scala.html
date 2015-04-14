@@ -1,4 +1,4 @@
-@(user: UserModel, client: Client, historyRecords: List[HistoryRecord])
+@(user: UserModel, client: Client, historyRecords: List[HistoryRecord], sums: Map[String, Integer])
 @home(user, "Manage Clients") {
     <h1>Client Information</h1>
     <div class="main-box-body clearfix ">
@@ -26,21 +26,21 @@
                     <div class="main-box infographic-box colored green-bg">
                         <i class="fa fa-money"></i>
                         <span class="headline">Total Insurance</span>
-                        <span class="value">77001</span>
+                        <span class="value">@sums.get(ClientCtrl.INSURANCE)</span>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <div class="main-box infographic-box colored purple-bg ">
                         <i class="fa fa-money"></i>
                         <span class="headline">Total PC</span>
-                        <span class="value">22.631</span>
+                        <span class="value">@sums.get(ClientCtrl.PCS)</span>
                     </div>
                 </div>
                 <div class="col-lg-4 col-md-12">
                     <div class="main-box infographic-box colored emerald-bg">
                         <i class="fa fa-money"></i>
                         <span class="headline">Total IPS</span>
-                        <span class="value">6.631</span>
+                        <span class="value">@sums.get(ClientCtrl.IPS)</span>
                     </div>
                 </div>
             </div>
