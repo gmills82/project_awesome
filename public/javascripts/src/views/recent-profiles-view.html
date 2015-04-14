@@ -21,7 +21,7 @@
             <tbody>
             <tr ng-repeat="profile in $data">
                 <td>{{profile.createdDatePretty}}</td>
-                <td>{{profile.client.name}}</td>
+                <td><a href="/client/history/{{profile.client.id}}">{{profile.client.name}}</a></td>
                 <td><a href="tel:+1{{profile.client.phoneNumber}}">{{profile.client.phoneNumber | telly}}</a></td>
                 <td>{{profile.referral.tInsurance}}</td>
                 <td>{{profile.referral.tPc}}</td>
