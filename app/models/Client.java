@@ -34,6 +34,11 @@ public class Client extends Model {
     @Constraints.Email
     public String userName;
     public String phoneNumber;
+	public String address1;
+	public String address2;
+	public String city;
+	public String state;
+	public String zipcode;
 
     public Long birthDate;
     public String birthDatePretty;
