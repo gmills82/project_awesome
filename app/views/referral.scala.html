@@ -43,16 +43,38 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="col-md-2 control-label" >E-mail:</label>
-                                    <div class="col-md-10">
+                                    <div class="col-md-4">
                                         <input type="email" ng-model="referral.client.userName" name="userName" class="form-control" placeholder="Email" />
                                     </div>
-                                </div>
-                                <div class="form-group required">
                                     <label class="col-md-2 control-label" >Phone Number:</label>
-                                    <div class="col-md-10">
+                                    <div class="col-md-2">
                                         <input type="text" ng-model="referral.client.phoneNumber" name="phoneNumber" class="form-control" required />
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label" >Street Address:</label>
+                                    <div class="col-md-10">
+                                        <input type="text" ng-model="referral.client.address1" name="address1" class="form-control" required />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="col-md-2 control-label" >City:</label>
+                                    <div class="col-md-3">
+                                        <input type="text" ng-model="referral.client.city" name="city" class="form-control" required />
+                                    </div>
+                                    <label class="col-md-1 control-label" >State:</label>
+                                    <div class="col-md-2">
+                                        <input type="text" ng-model="referral.client.state" name="state" class="form-control" required />
+                                    </div>
+                                    <label class="col-md-1 control-label" >Zip:</label>
+                                    <div class="col-md-2">
+                                        <input type="text" ng-model="referral.client.zipcode" name="zipcode" class="form-control" required />
+                                    </div>
+                                </div>
+
+
                                 <div class="form-group required">
                                     <label class="col-md-2 control-label" >Reason for referral:</label>
                                     <div class="col-md-10">

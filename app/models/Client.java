@@ -35,7 +35,6 @@ public class Client extends Model {
     public String userName;
     public String phoneNumber;
 	public String address1;
-	public String address2;
 	public String city;
 	public String state;
 	public String zipcode;
