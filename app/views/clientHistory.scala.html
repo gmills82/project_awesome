@@ -23,37 +23,22 @@
                     </div>
                 </div>
             </div>
-            @* Client totals *@
             <div class="col-lg-9 col-md-8 col-sm-6 col-xs-12">
-                <div class="col-lg-4 col-md-12">
-                    <div class="main-box infographic-box colored green-bg">
-                        <i class="fa fa-money"></i>
-                        <span class="headline">Total Insurance</span>
-                        <span class="value">@sums.getSumInsurance</span>
+                <div class="main-box">
+                    <div class="main-box-header">
+                        <h2>Home Address:</h2>
                     </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="main-box infographic-box colored purple-bg ">
-                        <i class="fa fa-money"></i>
-                        <span class="headline">Total PC</span>
-                        <span class="value">@sums.getSumPcs</span>
-                    </div>
-                </div>
-                <div class="col-lg-4 col-md-12">
-                    <div class="main-box infographic-box colored emerald-bg">
-                        <i class="fa fa-money"></i>
-                        <span class="headline">Total IPS</span>
-                        <span class="value">@sums.getSumIps</span>
+                    <div class="main-box-body">
+                        <div map data-address="@client.address1 + ', ' + @client.city + ', ' + @client.state + ' ' + @client.zipcode" data-height="300"></div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     @* Client Interaction History *@
     <div class="row">
-        <div class="col-lg-9">
+        <div class="col-lg-8">
             <div class="main-box">
                 <div class="main-box-header">
                     <h2>Client History</h2>
@@ -94,6 +79,24 @@
                         </table>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            @* Client totals *@
+            <div class="main-box infographic-box colored green-bg">
+                <i class="fa fa-money"></i>
+                <span class="headline">Total Insurance</span>
+                <span class="value">@sums.getSumInsurance</span>
+            </div>
+            <div class="main-box infographic-box colored purple-bg ">
+                <i class="fa fa-money"></i>
+                <span class="headline">Total PC</span>
+                <span class="value">@sums.getSumPcs</span>
+            </div>
+            <div class="main-box infographic-box colored emerald-bg">
+                <i class="fa fa-money"></i>
+                <span class="headline">Total IPS</span>
+                <span class="value">@sums.getSumIps</span>
             </div>
         </div>
 
