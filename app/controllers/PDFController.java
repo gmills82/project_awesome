@@ -2,7 +2,6 @@ package controllers;
 
 import play.mvc.Controller;
 import play.mvc.Result;
-
 /**
  * User: grant.mills
  * Date: 4/24/15
@@ -10,7 +9,6 @@ import play.mvc.Result;
  */
 public class PDFController extends Controller {
 	public static Result newAccount(Long clientId) {
-
-		return redirect(Application.login());
+		return redirect(routes.Application.login());
 	}
 }
