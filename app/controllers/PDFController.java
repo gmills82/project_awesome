@@ -31,11 +31,13 @@ public class PDFController extends Controller {
 
 			for(Object field : fields) {
 				PDField pdfield = (PDField) field;
-				Logger.debug(pdfield.getFullyQualifiedName() + " - " + pdfield.getFieldType());
+				Logger.debug(pdfield.getFullyQualifiedName() + " - " + pdfield.getFieldType() + " - " + pdfield.getActions().toString());
 			}
 
-			PDField testField = form.getField("inittran1");
-			((PDCheckbox) testField).check();
+			PDField btnField = form.getField("inittran1");
+			((PDCheckbox) btnField).check();
+
+			PDField textField = form.getField("other");
 
 			document.save(output);
 			document.close();
