@@ -19,6 +19,9 @@ GET           /action/profileReview/:profileId        controllers.Application.pr
 GET           /editReferral/:referralId               controllers.Application.editReferral(referralId: Long)
 GET           /client/history/:clientId               controllers.Application.clientHistory(clientId: Long)
 
+## PDF Endpoints
+GET           /pdf/newAccount/:clientId               controllers.PDFController.newAccount(clientId: Long)
+
 ## JSON Endpoints
 GET           /actions/:userId/:category              controllers.UserCtrl.getActions(userId: Long, category: String)
 
