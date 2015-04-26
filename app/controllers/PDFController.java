@@ -1,6 +1,8 @@
 package controllers;
 
 import org.apache.pdfbox.PDFReader;
+import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.cos.COSString;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -37,8 +39,11 @@ public class PDFController extends Controller {
 			PDField btnField = form.getField("inittran1");
 			((PDCheckbox) btnField).check();
 
-			PDField textField = form.getField("paolegcity");
-//			textField.setValue("big ole dicks");
+			PDField textField = form.getField("other");
+			
+			//Workaround because of zero font size bug in PDFBox
+			COSString fieldValue = new COSString("Big Ole Dicks");
+			textField.getDictionary().setItem(COSName.V, fieldValue);
 
 			document.save(output);
 			document.close();
