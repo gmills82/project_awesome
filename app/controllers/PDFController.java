@@ -4,10 +4,15 @@ import org.apache.pdfbox.PDFReader;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdfparser.PDFParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.apache.pdfbox.pdmodel.interactive.form.PDCheckbox;
+import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 
 import java.io.*;
+import java.util.List;
 
 /**
  * User: grant.mills
@@ -17,11 +22,21 @@ import java.io.*;
 public class PDFController extends Controller {
 	public static Result newAccount(Long clientId) {
 		try {
-			InputStream fileStream = new FileInputStream("pdf/new-account.pdf");
-			PDFParser parser = new PDFParser(fileStream);
+			PDDocument document = PDDocument.load("pdf/new-account.pdf");
 			ByteArrayOutputStream output = new ByteArrayOutputStream();
-			parser.parse();
-			PDDocument document = parser.getPDDocument();
+
+			//View parts of document
+			PDAcroForm form = document.getDocumentCatalog().getAcroForm();
+			List fields = form.getFields();
+
+			for(Object field : fields) {
+				PDField pdfield = (PDField) field;
+				Logger.debug(pdfield.getFullyQualifiedName() + " - " + pdfield.getFieldType());
+			}
+
+			PDField testField = form.getField("inittran1");
+			((PDCheckbox) testField).check();
+
 			document.save(output);
 			document.close();
 			response().setContentType("application/pdf");
