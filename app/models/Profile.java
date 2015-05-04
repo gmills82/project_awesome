@@ -72,7 +72,7 @@ public class Profile extends Model implements HistoryRecord {
 	public int compareTo(HistoryRecord historyRecord) {
 		if (historyRecord.getDateOfLastInteraction() > this.getDateOfLastInteraction()) {
 			return 1;
-		} else if (historyRecord.getDateOfLastInteraction() > this.getDateOfLastInteraction()) {
+		} else if (historyRecord.getDateOfLastInteraction() < this.getDateOfLastInteraction()) {
 			return -1;
 		}
 		return 0;
