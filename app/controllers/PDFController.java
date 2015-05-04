@@ -39,6 +39,9 @@ public class PDFController extends Controller {
 	public static final String PAOMAILZIP = "paomailzip";
 	public static final String PAOHOMEPH = "paohomeph";
 	public static final String PAODOB = "paodob";
+	public static final String PAOEMAILADDR = "paoemailaddr";
+	public static final String FSLPFRNAME = "fslpfrname";
+	public static final String PAONAME = "paoname";
 
 	public static Result newAccount(Long clientId) {
 		Client client = Client.getById(clientId);
@@ -72,16 +75,16 @@ public class PDFController extends Controller {
 		PDAcroForm form = document.getDocumentCatalog().getAcroForm();
 
 		//Debug to list all fields in form
-		List fields = null;
-		try {
-			fields = form.getFields();
-			for(Object field : fields) {
-				PDField pdfield = (PDField) field;
-				Logger.debug(pdfield.getFullyQualifiedName() + " - " + pdfield.getFieldType() + " - " + pdfield.findFieldType());
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		List fields = null;
+//		try {
+//			fields = form.getFields();
+//			for(Object field : fields) {
+//				PDField pdfield = (PDField) field;
+//				Logger.debug(pdfield.getFullyQualifiedName() + " - " + pdfield.getFieldType() + " - " + pdfield.findFieldType());
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 		//Insert info into fields
 		Iterator it = clientFieldMap.entrySet().iterator();
@@ -111,8 +114,10 @@ public class PDFController extends Controller {
 		String stateNameAbbrev = convertToStateAbbrev(client.state);
 
 		//Name
-		clientFieldMap.put("paoname", client.name);
-		clientFieldMap.put("fslpfrname", client.name);
+		clientFieldMap.put(PAONAME, client.name);
+		clientFieldMap.put(FSLPFRNAME, client.name);
+		//Email
+		clientFieldMap.put(PAOEMAILADDR, client.userName);
 		//Legal Address
 		clientFieldMap.put(PAOLEGADD, client.address1);
 		clientFieldMap.put(PAOLEGST, stateNameAbbrev);
