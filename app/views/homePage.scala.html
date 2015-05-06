@@ -16,8 +16,14 @@
         </div>
     </div>
 
-    @*TODO: Break into seperate views based on user roleType*@
+    @*TODO: Break into separate views based on user roleType*@
     @if(user.roleType.getPermissionLevel.equals(0)) {
+        @efsDashboard()
+    }
+    @if(user.roleType.getPermissionLevel.equals(1)) {
         @agentDashboard()
+    }
+    @if(user.roleType.getPermissionLevel.equals(2)) {
+        @producerDashboard()
     }
 }
