@@ -7,8 +7,10 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * User: grant.mills
@@ -17,7 +19,8 @@ import java.util.List;
  */
 @Entity
 public class Referral extends Model implements HistoryRecord {
-    @Id
+	public static final int MILLISECONDS_IN_A_DAY = 86400000;
+	@Id
     public long id;
 
     public long creatorId;
@@ -62,6 +65,11 @@ public class Referral extends Model implements HistoryRecord {
 	}
 	public static List<Referral> getByClientId(Long id) {
 		return finder.where().eq("clientId", id).findList();
+	}
+	public static List<Referral> getByDate(Date date) {
+		//If referral is from that date
+		Long endOfDay = date.getTime() + MILLISECONDS_IN_A_DAY;
+		return finder.where().between("date_created", date.getTime(), endOfDay).findList();
 	}
 
 	@Override

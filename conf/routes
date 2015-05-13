@@ -18,6 +18,7 @@ GET           /action/clients                         controllers.Application.cl
 GET           /action/profileReview/:profileId        controllers.Application.profileReview(profileId: Long)
 GET           /editReferral/:referralId               controllers.Application.editReferral(referralId: Long)
 GET           /client/history/:clientId               controllers.Application.clientHistory(clientId: Long)
+GET           /reports/daily-referrals         controllers.Reports.dailyReferrals()
 
 ## PDF Endpoints
 GET           /pdf/newAccount/:clientId               controllers.PDFController.newAccount(clientId: Long)

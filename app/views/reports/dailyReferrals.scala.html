@@ -1,0 +1,32 @@
+@import java.util
+@(user: UserModel, date: String, referrals: List[util.Map[String, String]])
+@home(user, "Daily Referrals Report") {
+    <h1>Daily Referrals Report - @date</h1>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="main-box clearfix">
+                <header class="main-box-header">
+                    <h2 class="pull-left">Referrals Created <span class="badge badge-info">@referrals.size</span></h2>
+                </header>
+                <div class="main-box-body clearfix">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <th>Date created</th>
+                                <th>Client Name</th>
+                                <th>Creator Name</th>
+                            </tr>
+                            @for(referral <- referrals) {
+                                <tr>
+                                    <td>@date</td>
+                                    <td>@referral.get("clientName")</td>
+                                    <td>@referral.get("creatorName")</td>
+                                </tr>
+                            }
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
