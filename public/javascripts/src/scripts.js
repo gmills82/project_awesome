@@ -28,6 +28,29 @@ $(function($) {
 		}
 	});
 
+	//Export as csv
+	$('.csv-export').click(function (e) {
+		var tableId = $(this).attr("href");
+		var table = $(tableId);
+		var csvData = table.table2CSV({
+			separator: ',',
+			header: [],
+			delivery: 'data'
+		});
+
+		//Create another a tag with a download attr and click it
+		var pom = document.createElement('a');
+		pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(csvData));
+		pom.setAttribute('download', $(this).data("filename") + ".csv");
+
+		pom.style.display = 'none';
+		document.body.appendChild(pom);
+
+		pom.click();
+
+		document.body.removeChild(pom);
+	});
+
 	//Mask phone numbers
 	$('form input[name="phoneNumber"]').mask("(999) 999-9999");
 	$('#timepicker').timepicker();

@@ -24,7 +24,7 @@ public class UserCtrl extends Controller {
     public static Result getActions(Long userId, String category) {
         ObjectNode result = Json.newObject();
 		//Cache responses for an hour
-		response().setHeader("Cache-Control", "max-age=3600");
+		response().setHeader("Cache-Control", "max-age=300");
         result.put("status", "OK");
 
         UserModel currentUser = UserModel.getById(userId);

@@ -101,8 +101,7 @@ public class ReferralCtrl extends Controller {
 		//Response Json object
 		ObjectNode result = Json.newObject();
 
-		//TODO: Caching cleanup - is there a more elegant way to do this ETagging?
-		response().setHeader("Cache-Control", "private");
+		response().setHeader("Cache-Control", "max-age=180");
 		String previousEtag = null;
 		if(null != request().getHeader("If-None-Match")) {
 			previousEtag = request().getHeader("If-None-Match");
