@@ -110,6 +110,11 @@ public class Referral extends Model implements HistoryRecord {
 		return this.status;
 	}
 
+	@Override
+	public String getNotes() {
+		return this.refNotes;
+	}
+
 	public void setLink(String link) {
 		this.link = link;
 	}

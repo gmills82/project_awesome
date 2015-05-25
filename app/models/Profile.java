@@ -79,6 +79,11 @@ public class Profile extends Model implements HistoryRecord {
 	}
 
 	@Override
+	public String getNotes() {
+		return "";
+	}
+
+	@Override
 	public String getRecordStatus() {
 		return "CLOSED";
 	}

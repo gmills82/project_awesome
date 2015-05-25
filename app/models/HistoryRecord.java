@@ -18,5 +18,7 @@ public interface HistoryRecord extends Comparable<HistoryRecord> {
 
 	public String getLink();
 
+	public String getNotes();
+
 	public int compareTo(HistoryRecord o);
 }
