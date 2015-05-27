@@ -53,6 +53,11 @@ $(function($) {
 
 	//Mask phone numbers
 	$('form input[name="phoneNumber"]').mask("(999) 999-9999");
+	$('#daily-report-datepicker').datepicker().on("changeDate", function(e) {
+		var url = "/reports/daily-referrals?date=";
+		url += e.date.getTime();
+		window.location.href = url;
+	});
 	$('#timepicker').timepicker();
 
 	$('body').on('mouseenter', '#page-wrapper.nav-small #sidebar-nav .dropdown-toggle', function (e) {
