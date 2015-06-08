@@ -14,7 +14,7 @@ public class MailUtilities {
 
 
 	static {
-		fMailServerConfig.setProperty("mail.debug", "true");
+//		fMailServerConfig.setProperty("mail.debug", "true");
 		fMailServerConfig.setProperty("mail.smtp.host", "smtp.1and1.com");
 		fMailServerConfig.setProperty("mail.smtp.port", "587");
 		fMailServerConfig.setProperty("mail.smtp.starttls.enable", "true");
