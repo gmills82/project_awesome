@@ -205,6 +205,10 @@ public class Application extends Controller {
 		return ok(pay.render());
 	}
 
+    /**
+     * Dummy function that shows how to use the email utilities
+     * @return
+     */
 	public static Result email() {
 		MailUtilities mail = new MailUtilities();
 		mail.sendEmail("admin@efsmanager.com", "gmills82@gmail.com", "Test from javax", "hello email world");
