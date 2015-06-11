@@ -53,6 +53,10 @@ public class Referral extends Model implements HistoryRecord {
     public static List<Referral> getAll() {
         return finder.all();
     }
+    public static List<Referral> getRecentByCreatorId(Long id) {
+		int MAX_RECENT_REFERRALS = 25;
+        return finder.where().eq("creatorId", id).orderBy("date_created DESC").setMaxRows(MAX_RECENT_REFERRALS).findList();
+    }
     public static List<Referral> getByCreatorId(Long id) {
 		int MAX_RECENT_REFERRALS = 25;
         return finder.where().eq("creatorId", id).orderBy("id").setMaxRows(MAX_RECENT_REFERRALS).findList();
