@@ -8,6 +8,7 @@ import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
 
+import utils.MailUtilities;
 import utils.StatTotals;
 import views.html.*;
 
@@ -202,6 +203,16 @@ public class Application extends Controller {
 
 	public static Result pay() {
 		return ok(pay.render());
+	}
+
+    /**
+     * Dummy function that shows how to use the email utilities
+     * @return
+     */
+	public static Result email() {
+		MailUtilities mail = new MailUtilities();
+		mail.sendEmail("admin@efsmanager.com", "gmills82@gmail.com", "Test from javax", "hello email world");
+		return ok();
 	}
 
 

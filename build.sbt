@@ -15,5 +15,6 @@ libraryDependencies ++= Seq(
   "com.googlecode.lambdaj" % "lambdaj" % "2.3.3",
   "org.hamcrest" % "hamcrest-core" % "1.2.1",
   "org.apache.pdfbox" % "pdfbox" % "1.8.9",
-  "org.apache.commons" % "commons-lang3" % "3.4"
+  "org.apache.commons" % "commons-lang3" % "3.4",
+  "javax.mail" % "mail" % "1.4.1"
 )
