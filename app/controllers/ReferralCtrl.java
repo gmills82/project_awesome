@@ -144,10 +144,8 @@ public class ReferralCtrl extends Controller {
 		//Response Json object
 		ObjectNode result = Json.newObject();
 
-		//Get list of referrals created by User - NOT ASSIGNED TO USER
+		//Get list of referrals created by User - NOT THOSE ASSIGNED TO USER
 		List<Referral> referralsCreatedByUser = Referral.getRecentByCreatorId(userId);
-		//Sort by date created
-//		referralsCreatedByUser = sort(referralsCreatedByUser, on(Referral.class).dateCreated);
 
 		//Gather client data for each Referral
 		JsonNode referralJson = gatherClientsForReferrals(referralsCreatedByUser);
