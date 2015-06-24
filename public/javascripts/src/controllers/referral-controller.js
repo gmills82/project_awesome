@@ -86,7 +86,7 @@ app.controller('ReferralController', ["$scope", "$http", "referralService", func
 		//Append time to date to remake nextStepDate
 		referral.nextStepDate = referral.date + " " + referral.time;
 		referralService.put(referral, function () {
-			window.location.href = "/action/referral";
+			window.location.href = "/home";
 		})
 	};
 

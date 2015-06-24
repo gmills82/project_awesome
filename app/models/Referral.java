@@ -77,6 +77,10 @@ public class Referral extends Model implements HistoryRecord {
 		return finder.where().eq("user_id", userId).ge("nextStepDate", startDate).le("nextStepDate", endDate).findList();
 	}
 
+	public static List<Referral> getApptsByIdInRange(Long userId, String startDate, String endDate) {
+		return finder.where().eq("user_id", userId).eq("ref_type", "Appt").ge("nextStepDate", startDate).le("nextStepDate", endDate).findList();
+	}
+
 	public static List<Referral> getByUserId(Long assignedUserId) {
 		return finder.where().eq("user_id", assignedUserId).findList();
 	}

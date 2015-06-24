@@ -194,6 +194,56 @@ public class ReferralCtrl extends Controller {
 		}
 	}
 
+
+	@BodyParser.Of(BodyParser.Json.class)
+	public static Result getUpcomingAppts(long userId) {
+		//Response Json object
+		ObjectNode result = Json.newObject();
+
+		response().setHeader("Cache-Control", "max-age=180");
+		String previousEtag = null;
+		if(null != request().getHeader("If-None-Match")) {
+			previousEtag = request().getHeader("If-None-Match");
+		}
+
+		//Get user from userId - USE HIS ASSIGNED REFERRALS
+		UserModel currentUser = UserModel.getById(userId);
+
+		//Create date string 7 days in future
+		SimpleDateFormat sdf = DateUtilities.getDateFormat();
+		Calendar cal = new GregorianCalendar();
+		String startDate = sdf.format(cal.getTime());
+		cal.add(Calendar.DATE, 7);
+		String endDate = sdf.format(cal.getTime());
+		List<Referral> currentUsersRefs = Referral.getApptsByIdInRange(currentUser.id, startDate, endDate);
+
+		//Filter Referrals to only the ones we care about - Status = "OPEN"
+		List<Referral> freshReferrals = filter(having(on(Referral.class).status, equalTo("OPEN")), currentUsersRefs);
+
+		//Etag caching
+		String etag = ((Integer) freshReferrals.hashCode()).toString();
+		if(null != previousEtag && previousEtag.equals(etag)) {
+			return status(304);
+
+		}else {
+			//Continue on since something has changed
+			freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
+
+			//Gather client data for each Referral
+			JsonNode referralJson = gatherClientsForReferrals(freshReferrals);
+			for (JsonNode referral : referralJson) {
+				ObjectNode refObj = (ObjectNode) referral;
+				UserModel creator = UserModel.getById(referral.findPath("creatorId").asLong());
+				refObj.set("creatorName", Json.toJson(creator.firstName + " " + creator.lastName));
+			}
+
+			//Put data in the response object
+			result.put("data", referralJson);
+			response().setHeader("ETag", etag);
+			return ok(result);
+		}
+	}
+
 	//Aggregate Referrals by their creator
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result getReferralsByCreatorId(Long userId) {

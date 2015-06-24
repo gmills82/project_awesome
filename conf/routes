@@ -49,6 +49,7 @@ DELETE        /json/referral/:referralId              controllers.ReferralCtrl.d
 #Referral aggregation
 GET           /json/referrals/:userId                 controllers.ReferralCtrl.getFreshReferrals(userId: Long)
 GET           /json/referrals/upcoming/:userId        controllers.ReferralCtrl.getUpcomingReferrals(userId: Long)
+GET           /json/appts/upcoming/:userId            controllers.ReferralCtrl.getUpcomingAppts(userId: Long)
 GET           /json/referrals/creator/:userId         controllers.ReferralCtrl.getReferralsByCreatorId(userId: Long)
 GET           /json/referrals/team/:userId            controllers.ReferralCtrl.getTeamReferralsByParentId(userId: Long)
 

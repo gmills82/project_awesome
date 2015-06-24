@@ -1,8 +1,8 @@
-app.directive('upcomingReferrals', ['$timeout', function(timer) {
+app.directive('upcomingAppts', ['$timeout', function(timer) {
 	return {
 		restrict: 'A',
-		controller: 'UpcomingReferralsController',
-		link: function(scope, element, attrs, UpcomingReferralsController) {
+		controller: 'UpcomingApptsController',
+		link: function(scope, element, attrs, UpcomingApptsController) {
 			function initDataTable() {
 
 				$('#deleteModal').on('show.bs.modal', function (event) {
@@ -16,9 +16,9 @@ app.directive('upcomingReferrals', ['$timeout', function(timer) {
 				});
 			}
 
-			UpcomingReferralsController.init();
+			UpcomingApptsController.init();
 			timer(initDataTable, 1500);
 		},
-		templateUrl: "/assets/javascripts/src/views/upcoming-referrals-view.html"
+		templateUrl: "/assets/javascripts/src/views/upcoming-appts-view.html"
 	};
 }]);
