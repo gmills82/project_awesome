@@ -89,7 +89,12 @@ public class Client extends Model {
 		String[] values = queryString.split(" ");
 		Set<Client> clientList = new HashSet<Client>();
 		for (String value: values) {
-			clientList.addAll(find.where().icontains("name", value).findSet());
+			clientList.addAll(find.where().disjunction()
+				.add(Expr.icontains("name", value))
+				.add(Expr.icontains("phone_number", value))
+				.add(Expr.icontains("address1", value))
+				.add(Expr.icontains("zipcode", value))
+				.findSet());
 		}
 		return clientList;
 	}

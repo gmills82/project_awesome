@@ -155,7 +155,7 @@ public class ClientCtrl extends Controller {
 		//Response object
 		ObjectNode result = Json.newObject();
 		Set<Client> clientList = new HashSet<Client>();
-		Integer MINUTES_TO_CACHE = 10;
+		Integer MINUTES_TO_CACHE = 1;
 
 		//Check cache for request
 		//If in cache attach that to results

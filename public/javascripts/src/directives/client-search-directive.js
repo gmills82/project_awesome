@@ -14,6 +14,7 @@ app.directive('clientSearchDirective', ['$timeout', function(timer) {
 			}
 
 			//TODO: Call ajax endpoint to get
+			//TODO: Is this still needed?
 			scope.requestClientHistory = function (client) {
 				console.log("history requested");
 				//Call ajax endpoint for history
