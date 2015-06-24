@@ -1,22 +1,7 @@
 //Fresh Referral Controller
 app.controller('UpcomingApptsController', ["$scope", "$http", "ngTableParams", "$filter", function ($scope, $http, ngTableParams, $filter){
 	$scope.referrals = [];
-	$scope.refTypes = [{'title': 'No Filter', 'id': ''}];
-	$scope.arr=[];
-
-	//Helper function
-	var inArray = Array.prototype.indexOf ?
-		function (val, arr) {
-			return arr.indexOf(val)
-		} :
-		function (val, arr) {
-			var i = arr.length;
-			while (i--) {
-				if (arr[i] === val) return i;
-			}
-			return -1;
-		};
-
+	
 	this.init = function () {
 		$scope.upcomingApptsTable = new ngTableParams({
 			page: 1,            // show first page
@@ -39,17 +24,6 @@ app.controller('UpcomingApptsController', ["$scope", "$http", "ngTableParams", "
 					//Pass out total to larger scope
 					$scope.upcomingApptsTotal = orderedData.length;
 					params.total(orderedData.length);
-
-					//Create scope for RefType filter
-					angular.forEach(orderedData, function(item){
-						if (inArray(item.refType, $scope.arr) === -1) {
-							$scope.arr.push(item.refType);
-							$scope.refTypes.push({
-								'id': item.refType,
-								'title': item.refType
-							});
-						}
-					});
 
 					//Resolve data gathering
 					$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));

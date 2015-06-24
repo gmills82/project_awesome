@@ -2,7 +2,7 @@
 app.controller('UpcomingReferralsController', ["$scope", "$http", "ngTableParams", "$filter", function ($scope, $http, ngTableParams, $filter){
 	$scope.referrals = [];
 	$scope.refTypes = [{'title': 'No Filter', 'id': ''}];
-	$scope.arr=[];
+	$scope.arr2=[];
 
 	//Helper function
 	var inArray = Array.prototype.indexOf ?
@@ -42,8 +42,8 @@ app.controller('UpcomingReferralsController', ["$scope", "$http", "ngTableParams
 
 					//Create scope for RefType filter
 					angular.forEach(orderedData, function(item){
-						if (inArray(item.refType, $scope.arr) === -1) {
-							$scope.arr.push(item.refType);
+						if (inArray(item.refType, $scope.arr2) === -1) {
+							$scope.arr2.push(item.refType);
 							$scope.refTypes.push({
 								'id': item.refType,
 								'title': item.refType

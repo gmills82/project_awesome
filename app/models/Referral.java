@@ -67,16 +67,23 @@ public class Referral extends Model implements HistoryRecord {
 	}
 
 	/**
-	 * Used to find referrals assigned to a user that have next step dates within a specified date range
+	 * Used to find referrals assigned to a user that have next step dates within a specified date range. Filters out Appts
 	 * @param userId
 	 * @param startDate
 	 * @param endDate
 	 * @return
 	 */
 	public static List<Referral> getReferralsByIdInRange(Long userId, String startDate, String endDate) {
-		return finder.where().eq("user_id", userId).ge("nextStepDate", startDate).le("nextStepDate", endDate).findList();
+		return finder.where().eq("user_id", userId).ne("ref_type", "Appt").ge("nextStepDate", startDate).le("nextStepDate", endDate).findList();
 	}
 
+	/**
+	 * Get only appts for the specified user within the date range
+	 * @param userId
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
 	public static List<Referral> getApptsByIdInRange(Long userId, String startDate, String endDate) {
 		return finder.where().eq("user_id", userId).eq("ref_type", "Appt").ge("nextStepDate", startDate).le("nextStepDate", endDate).findList();
 	}
