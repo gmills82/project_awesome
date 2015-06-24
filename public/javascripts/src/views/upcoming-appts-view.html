@@ -11,8 +11,22 @@
                 <td sortable="'clientName'" data-title="'Client Name'" filter="{ 'clientName': 'text' }"><a href="/client/history/{{referral.client.id}}">{{referral.clientName}}</a></td>
                 <td sortable="'nextStepDate'" data-title="'Next Steps Date'"><span tooltip="{{referral.refNotes}}" tooltip-trigger="mouseenter">{{referral.nextStepDate}}</span></td>
                 <td data-title="'Phone Number'"><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
-                <td data-title="'Address'">{{referral.client.address}}</td>
-                <td data-title="'Actions'"><a href="/action/profile?refId={{referral.id}}">Begin Profile</a> - <a href="/editReferral/{{referral.id}}">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
+                <td data-title="'Address'"><a href="/client/history/{{referral.client.id}}">{{referral.client.address}}</a></td>
+
+                <td data-title="'Actions'" class="table-actions" header-class="'header-center'">
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-default">Actions</button>
+                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li><a href="/action/profile?refId={{referral.id}}">Begin Profile</a></li>
+                            <li><a href="/editReferral/{{referral.id}}">Edit Referral</a></li>
+                            <li class="divider"></li>
+                            <li><a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></li>
+                        </ul>
+                    </div>
+                </td>
             </tr>
             </tbody>
         </table>

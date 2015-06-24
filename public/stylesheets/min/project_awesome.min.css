@@ -22041,6 +22041,13 @@ Modules - reusable parts of our design
 	text-align: center;
 	margin-top: 20px;
 }
+.table-actions {
+  text-align: center;
+  width: 17%;
+}
+.dataTable .header-center {
+  text-align: center;
+}
 form .btn-group label.btn {
     position: relative;
     overflow: hidden;

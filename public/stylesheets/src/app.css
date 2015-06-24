@@ -60,3 +60,10 @@
 	text-align: center;
 	margin-top: 20px;
 }
+.table-actions {
+  text-align: center;
+  width: 17%;
+}
+.dataTable .header-center {
+  text-align: center;
+}
