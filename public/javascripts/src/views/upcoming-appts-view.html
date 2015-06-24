@@ -11,7 +11,7 @@
                 <td sortable="'clientName'" data-title="'Client Name'" filter="{ 'clientName': 'text' }"><a href="/client/history/{{referral.client.id}}">{{referral.clientName}}</a></td>
                 <td sortable="'nextStepDate'" data-title="'Next Steps Date'"><span tooltip="{{referral.refNotes}}" tooltip-trigger="mouseenter">{{referral.nextStepDate}}</span></td>
                 <td data-title="'Phone Number'"><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
-                <td data-title="'Address'"><status-label status="referral.address1" data-title="'Status'"></status-label></td>
+                <td data-title="'Address'">{{referral.client.address}}</td>
                 <td data-title="'Actions'"><a href="/action/profile?refId={{referral.id}}">Begin Profile</a> - <a href="/editReferral/{{referral.id}}">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
             </tr>
             </tbody>
