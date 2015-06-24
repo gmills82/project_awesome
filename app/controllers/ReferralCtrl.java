@@ -111,7 +111,12 @@ public class ReferralCtrl extends Controller {
 
 		//Get user from userId - USE HIS ASSIGNED REFERRALS
 		UserModel currentUser = UserModel.getById(userId);
-		List<Referral> currentUsersRefs = Referral.getByUserId(currentUser.id);
+
+		//Today's date
+		SimpleDateFormat sdf = DateUtilities.getDateFormat();
+		Calendar cal = new GregorianCalendar();
+		String startDate = sdf.format(cal.getTime());
+		List<Referral> currentUsersRefs = Referral.getByUserIdNotInFuture(currentUser.id, startDate);
 
 		//Filter Referrals to only the ones we care about - Status = "OPEN"
 		List<Referral> freshReferrals = filter(having(on(Referral.class).status, equalTo("OPEN")), currentUsersRefs);

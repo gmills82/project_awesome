@@ -1,5 +1,6 @@
 package models;
 
+import com.avaje.ebean.Expr;
 import play.db.ebean.Model;
 
 import javax.persistence.Entity;
@@ -78,6 +79,13 @@ public class Referral extends Model implements HistoryRecord {
 
 	public static List<Referral> getByUserId(Long assignedUserId) {
 		return finder.where().eq("user_id", assignedUserId).findList();
+	}
+
+	public static List<Referral> getByUserIdNotInFuture(Long assignedUserId, String today) {
+		return finder.where().eq("user_id", assignedUserId).disjunction()
+			.add(Expr.le("nextStepDate", today))
+			.add(Expr.icontains("nextStepDate", "undefined"))
+			.findList();
 	}
 
 	public static List<Referral> getByClientId(Long id) {
