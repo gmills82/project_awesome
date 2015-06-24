@@ -64,9 +64,22 @@ public class Referral extends Model implements HistoryRecord {
 	public static List<Referral> getByAssignedIdInRange(Long assigneeId, Long range) {
 		return finder.where().eq("user_id", assigneeId).ge("dateCreated", range).findList();
 	}
+
+	/**
+	 * Used to find referrals assigned to a user that have next step dates within a specified date range
+	 * @param userId
+	 * @param startDate
+	 * @param endDate
+	 * @return
+	 */
+	public static List<Referral> getReferralsByIdInRange(Long userId, String startDate, String endDate) {
+		return finder.where().eq("user_id", userId).ge("nextStepDate", startDate).le("nextStepDate", endDate).findList();
+	}
+
 	public static List<Referral> getByUserId(Long assignedUserId) {
 		return finder.where().eq("user_id", assignedUserId).findList();
 	}
+
 	public static List<Referral> getByClientId(Long id) {
 		return finder.where().eq("clientId", id).findList();
 	}
@@ -127,4 +140,5 @@ public class Referral extends Model implements HistoryRecord {
 	public String getLink() {
 		return link;
 	}
+
 }

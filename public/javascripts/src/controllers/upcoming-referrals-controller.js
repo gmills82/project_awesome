@@ -1,7 +1,7 @@
 //Fresh Referral Controller
-app.controller('FreshReferralController', ["$scope", "$http", "ngTableParams", "$filter", function ($scope, $http, ngTableParams, $filter){
+app.controller('UpcomingReferralsController', ["$scope", "$http", "ngTableParams", "$filter", function ($scope, $http, ngTableParams, $filter){
 	$scope.referrals = [];
-	$scope.freshRefTypes = [{'title': 'No Filter', 'id': ''}];
+	$scope.refTypes = [{'title': 'No Filter', 'id': ''}];
 	$scope.arr=[];
 
 	//Helper function
@@ -18,15 +18,15 @@ app.controller('FreshReferralController', ["$scope", "$http", "ngTableParams", "
 		};
 
 	this.init = function () {
-		$scope.freshReferralsTable = new ngTableParams({
+		$scope.upcomingReferralsTable = new ngTableParams({
 			page: 1,            // show first page
 			count: 10,
 			sorting: {
-				nextStepDate: 'desc'
+				nextStepDate: 'asc'
 			}
 		}, {
 			getData: function($defer, params) {
-				$http({"method": "GET", "url": "/json/referrals/" + app.data.currentUserId}).success(function (data){
+				$http({"method": "GET", "url": "/json/referrals/upcoming/" + app.data.currentUserId}).success(function (data){
 					//Filter
 					var filteredData = params.filter() ?
 						$filter('filter')(data.data, params.filter()) :
@@ -37,14 +37,14 @@ app.controller('FreshReferralController', ["$scope", "$http", "ngTableParams", "
 						filteredData;
 
 					//Pass out total to larger scope
-					$scope.freshReferraltotal = orderedData.length;
+					$scope.refTotal = orderedData.length;
 					params.total(orderedData.length);
 
 					//Create scope for RefType filter
 					angular.forEach(orderedData, function(item){
 						if (inArray(item.refType, $scope.arr) === -1) {
 							$scope.arr.push(item.refType);
-							$scope.freshRefTypes.push({
+							$scope.refTypes.push({
 								'id': item.refType,
 								'title': item.refType
 							});
@@ -61,9 +61,9 @@ app.controller('FreshReferralController', ["$scope", "$http", "ngTableParams", "
 
 	$scope.deleteReferral = function (refId) {
 		$http({"method": "DELETE", "url": "/json/referral/" + refId}).success(function (data){
-			for(var y = 0; y < $scope.freshReferralsTable.data.length; y++) {
-				if($scope.freshReferralsTable.data[y].id === refId) {
-					$scope.freshReferralsTable.data.splice(y, 1);
+			for(var y = 0; y < $scope.upcomingReferralsTable.data.length; y++) {
+				if($scope.upcomingReferralsTable.data[y].id === refId) {
+					$scope.upcomingReferralsTable.data.splice(y, 1);
 				}
 			}
 		});
