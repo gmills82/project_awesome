@@ -108,6 +108,13 @@ public class Referral extends Model implements HistoryRecord {
 		return finder.where().between("date_created", date.getTime(), endOfDay).findList();
 	}
 
+	/**
+	 * Used in nightly cleanup of referrals
+	 */
+	public static List<Referral> getOpenDeclinedReferrals() {
+		return finder.where().eq("ref_type", "Declined").conjunction().add(Expr.eq("status", "OPEN")).findList();
+	}
+
 	@Override
 	public Long getDateOfLastInteraction() {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");

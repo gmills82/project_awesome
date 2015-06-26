@@ -1,3 +1,5 @@
+import actors.DeclinedReferralActor;
+import akka.actor.Props;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
@@ -19,6 +21,8 @@ import java.util.*;
 public class Global extends GlobalSettings {
     @Override
     public void onStart(Application app) {
+	    Akka.system().actorOf(DeclinedReferralActor.props);
+
         // Check if the database is empty
         if (UserModel.find.findRowCount() == 0) {
             Ebean.save((List) Yaml.load("initial-data.yml"));

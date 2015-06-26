@@ -361,4 +361,14 @@ public class ReferralCtrl extends Controller {
 		}
 	}
 
+	/**
+	 * Update Open Declined Referrals to Closed. Used nightly
+	 */
+	public static void cleanOpenDeclinedReferrals() {
+		List<Referral> decRefs = Referral.getOpenDeclinedReferrals();
+		for(Referral ref: decRefs) {
+			ref.status = "CLOSED";
+			ref.save();
+		}
+	}
 }
