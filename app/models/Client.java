@@ -26,9 +26,6 @@ public class Client extends Model {
 
     @Id
     public long id;
-
-    public String acctNumber;
-
     public String name;
 
     @Constraints.Email
@@ -41,27 +38,16 @@ public class Client extends Model {
 
     public Long birthDate;
     public String birthDatePretty;
-	public String refNotes;
 
 	public String goalsString;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
-	@JsonManagedReference
-    public List<Income> incomeList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
 	@JsonManagedReference
     public List<FinancialAsset> assetList;
+
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "client")
 	@JsonManagedReference
     public List<Debt> debtList;
-
-    public static void addIncome(Client client, Income income) {
-        client.incomeList.add(income);
-    }
-    public static void removeIncome(Client client, Income income) {
-        client.incomeList.remove(income);
-        income.delete();
-    }
 
     public static void addDebt(Client client, Debt debt) {
         client.debtList.add(debt);
@@ -70,7 +56,6 @@ public class Client extends Model {
         client.debtList.remove(debt);
         debt.delete();
     }
-
 
     public static void addAsset(Client client, FinancialAsset asset) {
         client.assetList.add(asset);

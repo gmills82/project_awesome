@@ -10,12 +10,10 @@ GET           /logout                                 controllers.Application.lo
 GET           /signup/:roleType                       controllers.Application.signup(roleType: Integer)
 POST          /signup                                 controllers.Application.addSignup()
 GET           /home                                   controllers.Application.home()
-GET           /action/profile                         controllers.Application.profile()
 GET           /action/producerScript                  controllers.Application.producerScript()
 GET           /action/referral                        controllers.Application.referral()
 GET           /action/team-referrals                  controllers.Application.teamReferrals()
 GET           /action/clients                         controllers.Application.clients()
-GET           /action/profileReview/:profileId        controllers.Application.profileReview(profileId: Long)
 GET           /editReferral/:referralId               controllers.Application.editReferral(referralId: Long)
 GET           /client/history/:clientId               controllers.Application.clientHistory(clientId: Long)
 GET           /reports/daily-referrals                controllers.Reports.dailyReferrals(date: Long ?= 0)
@@ -32,13 +30,6 @@ GET           /json/client/:clientId                  controllers.ClientCtrl.get
 PUT           /json/client                            controllers.ClientCtrl.editClientJSON()
 #Client Query
 GET           /json/client/query/:query               controllers.ClientCtrl.query(query: String)
-
-#Profile CRUD
-POST          /json/profile                           controllers.ProfileCtrl.addProfile()
-GET           /json/profile/:profileId                controllers.ProfileCtrl.getProfile(profileId: Long)
-
-#Profile Aggregation
-GET           /json/recentProfiles/:userId            controllers.ProfileCtrl.getRecentProfiles(userId: Long)
 
 #Referral CRUD
 POST          /json/referral                          controllers.ReferralCtrl.addReferral()

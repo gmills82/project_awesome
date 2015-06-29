@@ -177,18 +177,16 @@ public class ClientCtrl extends Controller {
 
 	public static List<HistoryRecord> gatherClientHistory(Long id) {
 		List<HistoryRecord> historyModels = new ArrayList<HistoryRecord>();
+		//Client history currently only includes Referrals
 		historyModels.addAll(Referral.getByClientId(id));
-		historyModels.addAll(Profile.getByClientId(id));
 
 		Collections.sort(historyModels);
 
 		for(HistoryRecord record: historyModels) {
+			//TODO: This was an if leftover from when records could be profiles
 			if(record instanceof Referral) {
 				Referral rRecord = (Referral) record;
 				rRecord.setLink(routes.Application.editReferral(rRecord.id).url());
-			}else if(record instanceof Profile) {
-				Profile pRecord = (Profile) record;
-				pRecord.setLink(routes.Application.profileReview(pRecord.id).url());
 			}
 		}
 

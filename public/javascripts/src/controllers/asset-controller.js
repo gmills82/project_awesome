@@ -7,7 +7,7 @@ app.controller('AssetController', ["$scope", "$http", "clientService", function 
 	});
 	$scope.addAsset = function (asset) {
 		//Get current client
-		clientService.get($scope.profile.client.id, function (client) {
+		clientService.get($scope.referral.client.id, function (client) {
 
 			//Add asset to client
 			if(typeof(client.assetList) == 'undefined') {
@@ -18,8 +18,8 @@ app.controller('AssetController', ["$scope", "$http", "clientService", function 
 			//Clear current asset form
 			$scope.current = {};
 
-			//Update profile client scope
-			$scope.profile.client.assetList = client.assetList;
+			//Update referral client scope
+			$scope.referral.client.assetList = client.assetList;
 			//Update in database
 			clientService.put(client);
 		});

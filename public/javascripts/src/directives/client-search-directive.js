@@ -8,10 +8,6 @@ app.directive('clientSearchDirective', ['$timeout', function(timer) {
 			if(typeof(scope.referral) != 'undefined') {
 				scope.referralView = true;
 			}
-			//Profile parent scope
-			if(typeof(scope.profile) != 'undefined') {
-				scope.profileView = true;
-			}
 
 			//TODO: Call ajax endpoint to get
 			//TODO: Is this still needed?

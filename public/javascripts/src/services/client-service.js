@@ -1,5 +1,5 @@
 /**
- * Profile service providing a POST method
+ * Client service providing a POST method
  */
 app.factory('clientService', ['$http', '$log', function($http, $log) {
 	var service = {};
