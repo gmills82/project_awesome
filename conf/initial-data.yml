@@ -11,13 +11,6 @@
     lastName: Mills
 
 - !!models.Action
-    actionName: Profile a Client
-    requiredPermissionLevel: 0
-    actionURL: /action/profile
-    shortDescription: A helpful tool to provide client interaction tracking.
-    category: tool
-
-- !!models.Action
     actionName: Referral Phone Scripts
     requiredPermissionLevel: 2
     actionURL: /action/producerScript

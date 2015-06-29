@@ -22,27 +22,6 @@ public class Application extends Controller {
         return ok(index.render());
     }
 
-    public static Result profile() {
-        UserModel currentUser = getCurrentUser();
-        if(null != currentUser) {
-            return ok(profile.render(currentUser));
-        }
-        return redirect(routes.Application.login());
-    }
-
-	public static Result profileReview(Long profileId) {
-		UserModel currentUser = getCurrentUser();
-		if(null != currentUser) {
-			Profile reviewedProfile = Profile.getById(profileId);
-			UserModel agent = UserModel.getById(reviewedProfile.agentId);
-			Referral referral = Referral.getById(reviewedProfile.refId);
-
-			Client client = Client.getById(reviewedProfile.clientId);
-			return ok(profileReview.render(agent, reviewedProfile, client, referral));
-		}
-		return redirect(routes.Application.login());
-	}
-
     public static Result producerScript() {
         UserModel currentUser = getCurrentUser();
         if(null != currentUser) {

@@ -27,33 +27,6 @@ app.controller('ClientController', ["$scope", "$http", "referralService", "clien
 	$scope.maxDate = this.getOfAgeDate();
 
 	/**
-	 * Handles client profile view form submission
-	 * @param client
-	 */
-	$scope.addClientFormSubmission = function (profile) {
-		var client = profile.client;
-		var referral = profile.referral;
-
-		//Set profile agentId on form submission
-		$scope.profile.agentId = app.data.currentUserId;
-
-		$scope.profile.client.status = "Verifying";
-		$scope.profile.client.statusClass = "info";
-
-		//Used to allow profile form to submit
-		$scope.profile.clientId = client.id;
-
-		//Update client information
-		clientService.put(client, function () {
-			//Update referral information
-			referralService.put(referral);
-			//Update view to show saved success
-			$scope.profile.client.status = "Verified";
-			$scope.profile.client.statusClass = "success";
-		});
-	};
-
-	/**
 	 * Used to pass clients to the client search view
 	 * @param query
 	 */
