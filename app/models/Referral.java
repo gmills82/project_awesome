@@ -44,6 +44,7 @@ public class Referral extends Model implements HistoryRecord {
 
     public String reasonForReferral;
     public String refNotes;
+	public String advisorRecommendation;
     public Boolean wasProductive = false;
 
 
