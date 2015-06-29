@@ -7,7 +7,7 @@ app.controller('DebtController', ["$scope", "$http", "clientService", function (
 	});
 	$scope.adddebt = function (debt) {
 		//Get current client
-		clientService.get($scope.profile.client.id, function (client){
+		clientService.get($scope.referral.client.id, function (client){
 			//Add debt to client
 			if(typeof(client) == 'undefined') {
 				client.debtList = [];
@@ -17,10 +17,9 @@ app.controller('DebtController', ["$scope", "$http", "clientService", function (
 			//Clear current debt form
 			$scope.current = {};
 
-			//Update profile scope to show changes
-			$scope.profile.client.debtList = client.debtList;
+			//Update referral scope to show changes
+			$scope.referral.client.debtList = client.debtList;
 
-			//Call client update which calls profile update
 			clientService.put(client);
 		})
 	}

@@ -2,8 +2,8 @@
     <h2 class="panel-title counted" data-step="3">Debts</h2>
 </div>
 <div class="panel-body debtList">
-    <div class="debtListContainer asset-list" ng-show="profile.client.debtList.length">
-        <dl ng-repeat="debt in profile.client.debtList" ng-class-even="'even'">
+    <div class="debtListContainer asset-list" ng-show="referral.client.debtList.length">
+        <dl ng-repeat="debt in referral.client.debtList" ng-class-even="'even'">
             <dt>Type of debt: </dt><dd>{{debt.realDebtType}}</dd>
             <dt>Value: </dt><dd>{{debt.totalOwed}}</dd>
             <dt>Financial Institue: </dt><dd>{{debt.financialInstitute}}</dd>
@@ -54,9 +54,9 @@
             </div>
         </div>
         <div class="form-group col-xs-1 ">
-            <input type="submit" class="btn btn-primary col-md-offset-2 " ng-disabled="!profile.clientId" value="Add Debt"/>
+            <input type="submit" class="btn btn-primary col-md-offset-2 " ng-disabled="!referral.clientId" value="Add Debt"/>
         </div>
-        <div class="alert alert-warning col-md-12" ng-if="!profile.clientId">
+        <div class="alert alert-warning col-md-12" ng-if="!referral.clientId">
             <i class="fa fa-warning fa-fw fa-lg"></i>
             <strong>Warning!</strong> Please verify client information in step 1 first.
         </div>

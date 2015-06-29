@@ -2,8 +2,8 @@
     <h2 class="panel-title counted" data-step="2">Financial Assets</h2>
 </div>
 <div class="panel-body assetList">
-    <div class="assetListContainer asset-list" ng-show="profile.client.assetList.length">
-        <dl ng-repeat="asset in profile.client.assetList" ng-class-even="'even'">
+    <div class="assetListContainer asset-list" ng-show="referral.client.assetList.length">
+        <dl ng-repeat="asset in referral.client.assetList" ng-class-even="'even'">
             <dt>Type of asset: </dt><dd>{{asset.realAssetType}}</dd>
             <dt>Value: </dt><dd>{{asset.totalValue}}</dd>
             <dt>Financial Institue: </dt><dd>{{asset.financialInstitute}}</dd>
@@ -54,9 +54,9 @@
             </div>
         </div>
         <div class="form-group col-xs-1 ">
-            <input type="submit" class="btn btn-primary col-md-offset-2 " ng-disabled="!profile.clientId" value="Add Asset"/>
+            <input type="submit" class="btn btn-primary col-md-offset-2 " ng-disabled="!referral.clientId" value="Add Asset"/>
         </div>
-        <div class="alert alert-warning col-md-12" ng-if="!profile.clientId">
+        <div class="alert alert-warning col-md-12" ng-if="!referral.clientId">
             <i class="fa fa-warning fa-fw fa-lg"></i>
             <strong>Warning!</strong> Please verify client information in step 1 first.
         </div>
