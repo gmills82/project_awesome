@@ -1,5 +1,5 @@
 <div class="panel-heading">
-    <h2 class="panel-title counted" data-step="3">Debts</h2>
+    <h2 class="panel-title">Update Client's Debts</h2>
 </div>
 <div class="panel-body debtList">
     <div class="debtListContainer asset-list" ng-show="referral.client.debtList.length">
@@ -55,10 +55,6 @@
         </div>
         <div class="form-group col-xs-1 ">
             <input type="submit" class="btn btn-primary col-md-offset-2 " ng-disabled="!referral.clientId" value="Add Debt"/>
-        </div>
-        <div class="alert alert-warning col-md-12" ng-if="!referral.clientId">
-            <i class="fa fa-warning fa-fw fa-lg"></i>
-            <strong>Warning!</strong> Please verify client information in step 1 first.
         </div>
     </form>
 </div>
