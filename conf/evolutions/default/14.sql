@@ -1,6 +1,7 @@
 # --- !Ups
 ALTER TABLE referral ADD COLUMN advisor_recommendation text;
 Alter table client drop column acct_number;
+Alter table client drop column ref_notes;
 Drop table income;
 Update referral as r
 set advisor_recommendation = p.advisor_recommendation
@@ -12,6 +13,7 @@ drop table profile;
 # --- !Downs
 Alter table referral drop column advisor_recommendation;
 alter table client add column acct_number varchar(255);
+alter table client add column ref_notes text;
 create table income (
   id                        bigint not null,
   client                    bigint not null,
@@ -19,7 +21,7 @@ create table income (
   value                     float,
   frequency                 integer,
   income_type               integer,
-  description               varchar(255),
+  description               text,
   constraint ck_income_frequency check (frequency in (0,1,2,3,4)),
   constraint ck_income_income_type check (income_type in (0,1,2,3,4)),
   constraint pk_income primary key (id))

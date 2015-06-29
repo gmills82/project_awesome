@@ -38,7 +38,6 @@ public class Client extends Model {
 
     public Long birthDate;
     public String birthDatePretty;
-	public String refNotes;
 
 	public String goalsString;
 
