@@ -128,6 +128,16 @@ public class Referral extends Model implements HistoryRecord {
 		return finder.where().eq("ref_type", "Declined").conjunction().add(Expr.eq("status", "OPEN")).findList();
 	}
 
+    /**
+     Returns the referrals matching the next step date provided
+
+     @param date Date
+     @return List of referrals
+     */
+    public static List<Referral> getByNextStepDate(Date date) {
+        return finder.where().eq("next_step_timestamp", date).findList();
+    }
+
 	@Override
 	public Long getDateOfLastInteraction() {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");

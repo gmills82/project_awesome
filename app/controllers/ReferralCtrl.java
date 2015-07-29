@@ -50,9 +50,6 @@ public class ReferralCtrl extends Controller {
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result addReferral() {
 
-        String testNextStepsDate = "2015-07-28 01:00 AM";
-
-
 		Form<Referral> referralForm = Form.form(Referral.class);
 		Referral referral = referralForm.bindFromRequest().get();
 
@@ -304,6 +301,23 @@ public class ReferralCtrl extends Controller {
 
 		return ok(result);
 	}
+
+    /**
+     Short lived endpoint used to normalize the data in the referral table.
+     */
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result patchReferrals() {
+
+        ObjectNode result = Json.newObject();
+        List<Referral> referrals = Referral.getByNextStepDate(null);
+
+        for (Referral referral : referrals) {
+            referral.setNextStepDate(referral.getNextStepDate());
+            referral.update();
+        }
+
+        return ok(result);
+    }
 
 	private static Set<UserModel> gatherChildTeamMembers(UserModel parent) {
 		//Unique team members collection

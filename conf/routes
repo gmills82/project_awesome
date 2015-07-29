@@ -37,6 +37,9 @@ GET           /json/referral/:referralId              controllers.ReferralCtrl.g
 PUT           /json/referral                          controllers.ReferralCtrl.updateReferral()
 DELETE        /json/referral/:referralId              controllers.ReferralCtrl.deleteReferral(referralId: Long)
 
+# Referral migration endpoints
+PUT           /json/referral/patch                    controllers.ReferralCtrl.patchReferrals()
+
 #Referral aggregation
 GET           /json/referrals/:userId                 controllers.ReferralCtrl.getFreshReferrals(userId: Long)
 GET           /json/referrals/upcoming/:userId        controllers.ReferralCtrl.getUpcomingReferrals(userId: Long)
