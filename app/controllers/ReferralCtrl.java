@@ -130,7 +130,7 @@ public class ReferralCtrl extends Controller {
 
 		}else {
 			//Continue on since something has changed
-			freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
+			freshReferrals = sort(freshReferrals, on(Referral.class).getNextStepTimestamp());
 
 			//Gather client data for each Referral
 			JsonNode referralJson = gatherClientsForReferrals(freshReferrals);
@@ -179,7 +179,7 @@ public class ReferralCtrl extends Controller {
 
 		}else {
 			//Continue on since something has changed
-			freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
+			freshReferrals = sort(freshReferrals, on(Referral.class).getNextStepTimestamp());
 
 			//Gather client data for each Referral
 			JsonNode referralJson = gatherClientsForReferrals(freshReferrals);
@@ -229,7 +229,7 @@ public class ReferralCtrl extends Controller {
 
 		}else {
 			//Continue on since something has changed
-			freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
+			freshReferrals = sort(freshReferrals, on(Referral.class).getNextStepTimestamp());
 
 			//Gather client data for each Referral
 			JsonNode referralJson = gatherClientsForReferrals(freshReferrals);

@@ -51,7 +51,7 @@ public class Referral extends Model implements HistoryRecord {
     @Deprecated
 	public String nextStepDate;
 
-	public Date nextStepTimestamp;
+	private Date nextStepTimestamp;
 	public String lastEditedDate;
 
     public String reasonForReferral;
@@ -198,4 +198,8 @@ public class Referral extends Model implements HistoryRecord {
 		this.nextStepDate = nextStepDate;
         this.nextStepTimestamp = DateUtilities.normalizeDateString(nextStepDate);
 	}
+
+    public Date getNextStepTimestamp() {
+        return nextStepTimestamp;
+    }
 }
