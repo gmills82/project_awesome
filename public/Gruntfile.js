@@ -5,6 +5,7 @@ module.exports = function (grunt) {
         concat: {
             main: {
                 src: [
+                    "javascripts/libs/moment.js",
                     "javascripts/libs/bootstrap.js",
                     "javascripts/libs/angular.js",
                     "javascripts/libs/angular-route.js",
