@@ -1,7 +1,10 @@
 package models;
 
 import com.avaje.ebean.Expr;
+import org.joda.time.DateTime;
+import play.Logger;
 import play.db.ebean.Model;
+import utils.DateUtilities;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -21,6 +24,7 @@ import java.util.Set;
 @Entity
 public class Referral extends Model implements HistoryRecord {
 	public static final int MILLISECONDS_IN_A_DAY = 86400000;
+
 	@Id
     public long id;
 
@@ -39,7 +43,15 @@ public class Referral extends Model implements HistoryRecord {
     public long user_id;
 
     public Long dateCreated = System.currentTimeMillis();
+
+    /**
+     @deprecated
+     The nextStepDate yields un-normalized results. Use nextStepTimestamp instead and format in the client.
+     */
+    @Deprecated
 	public String nextStepDate;
+
+	public Date nextStepTimestamp;
 	public String lastEditedDate;
 
     public String reasonForReferral;
@@ -168,4 +180,12 @@ public class Referral extends Model implements HistoryRecord {
 		return link;
 	}
 
+	public String getNextStepDate() {
+		return nextStepDate;
+	}
+
+	public void setNextStepDate(String nextStepDate) {
+		this.nextStepDate = nextStepDate;
+        this.nextStepTimestamp = DateUtilities.normalizeDateString(nextStepDate);
+	}
 }

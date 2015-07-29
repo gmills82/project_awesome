@@ -49,8 +49,13 @@ public class ReferralCtrl extends Controller {
 	//Create Referral
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result addReferral() {
+
+        String testNextStepsDate = "2015-07-28 01:00 AM";
+
+
 		Form<Referral> referralForm = Form.form(Referral.class);
 		Referral referral = referralForm.bindFromRequest().get();
+
 		setWasProductive(referral);
 
 		referral.save();
