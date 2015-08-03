@@ -138,6 +138,16 @@ public class Referral extends Model implements HistoryRecord {
         return finder.where().eq("next_step_timestamp", date).findList();
     }
 
+	/**
+	 Returns a list of referrals whose creator ID is found in the provided list
+
+	 @param creatorIds List of creator IDs
+	 @return List of referrals
+	 */
+	public static List<Referral> getByCreatorIds(List<Long> creatorIds) {
+		return finder.where().in("creator_id", creatorIds).findList();
+	}
+
 	@Override
 	public Long getDateOfLastInteraction() {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
