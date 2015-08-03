@@ -22,7 +22,7 @@ app.controller('FreshReferralController', ["$scope", "$http", "ngTableParams", "
 			page: 1,            // show first page
 			count: 10,
 			sorting: {
-				nextStepDate: 'desc'
+				nextStepTimestamp: 'desc'
 			}
 		}, {
 			getData: function($defer, params) {
