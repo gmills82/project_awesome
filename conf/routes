@@ -56,7 +56,8 @@ GET           /json/user/stats                        controllers.UserCtrl.getUs
 # Map static resources from the /public folder to the /assets URL path
 GET           /assets/*file                           controllers.Assets.at(path="/public", file)
 
-GET			  /agent/:agentId/referrals/:format		  controllers.AgentController.getReferralsByAgentId(agentId: Long, format: String)
+# Agent controller (You can't have optional named parameters? What kind of nonsense is this?)
+GET			  /agent/:agentId/referrals	  			  controllers.AgentController.getReferralsByAgentId(agentId: Long, producerId: Long ?= 0)
 
 # NOTE: This method should be called once and removed. Although calling it multiple times won't do anything, it's an unnecessary method after the initial migration.
 PUT           /json/referral/patch                    controllers.ReferralCtrl.patchReferrals()

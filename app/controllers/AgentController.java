@@ -24,12 +24,7 @@ import java.util.stream.Collectors;
 public class AgentController extends Controller {
 
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result getReferralsByAgentId(Long agentId, String type) {
-
-        // Make sure the request is a supported format.
-        if (FileFormat.getFormat(type) == null) {
-            return badRequest(String.format("Invalid format provided as %s", type));
-        }
+    public static Result getReferralsByAgentId(Long agentId, Long producerId) {
 
         // Look up the agent to verify that the provided ID exists. If found, make sure the ID belongs to a user set to
         // the "agent" role type.
@@ -38,12 +33,16 @@ public class AgentController extends Controller {
             return notFound(String.format("No agent found matching the id %s", agentId));
         }
 
-        // Generate a list of user IDs for each of the child producers, as well as the agent. This will be used to look
-        // up all referrals created by them.
+        // If the provided producer ID is null, look up the referrals for all of the producers. If not, only use that ID
+        // to look up the referrals. In both cases, look up the referrals for the provided user agent as well.
         List<Long> producerIds = new ArrayList<>();
         producerIds.add(agent.id);
-        if (agent.childTeamMembers != null) {
-            producerIds.addAll(agent.childTeamMembers.stream().map(producer -> producer.id).collect(Collectors.toList()));
+        if (producerId == null || producerId == 0) {
+            if (agent.childTeamMembers != null) {
+                producerIds.addAll(agent.childTeamMembers.stream().map(producer -> producer.id).collect(Collectors.toList()));
+            }
+        } else {
+            producerIds.add(producerId);
         }
 
         // Get the list of referrals for all of the producers.
@@ -93,11 +92,5 @@ public class AgentController extends Controller {
 // ...
 
         return ok(output.toByteArray());
-
-//        workbook.write(response().getOutputStream()); // Write workbook to response.
-//        workbook.close();
-
-
-//        return ok();
     }
 }
