@@ -212,4 +212,49 @@ public class Referral extends Model implements HistoryRecord {
     public Date getNextStepTimestamp() {
         return nextStepTimestamp;
     }
+
+	/**
+	 Returns the client name
+
+	 @return Client name
+	 */
+	public String getClientName() {
+		return clientName;
+	}
+
+	/**
+	 Returns the client status
+
+	 @return Client status
+	 */
+	public String getStatus() {
+		return status;
+	}
+
+	/**
+	 Returns the reason for referral
+
+	 @return Reason for referral
+	 */
+	public String getReasonForReferral() {
+		return reasonForReferral;
+	}
+
+	/**
+	 Returns the referral notes
+
+	 @return Referral notes
+	 */
+	public String getRefNotes() {
+		return refNotes;
+	}
+
+	/**
+	 Returns the created date
+
+	 @return Created date
+	 */
+	public Date getCreatedDate() {
+		return new Date(this.dateCreated);
+	}
 }

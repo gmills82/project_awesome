@@ -25,6 +25,16 @@ public class DateUtilities {
 	}
 
     /**
+     Formats a date into a common string pattern
+
+     @param date Date to format
+     @return Formatted date
+     */
+    public static String getFormattedDate(Date date) {
+        return getDateFormat().format(date);
+    }
+
+    /**
      There are a few different date string formats out in the wild. This attempts to parse the bad, and return the closest
      equal value in a valid date object. If unable to convert, today's date will be provided.
 

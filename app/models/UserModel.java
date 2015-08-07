@@ -94,8 +94,28 @@ public class UserModel extends Model {
 
     public static Finder<Long, UserModel> find = new Finder(Long.class, UserModel.class);
 
+    /**
+     Find a user by ID
+
+     @param id     User ID
+     @return User
+     */
     public static UserModel getById(Long id) {
-        return find.where().eq("id", id).findList().listIterator().next();
+        List<UserModel> users = find.where().eq("id", id).findList();
+        if (users == null || users.size() == 0) {
+            return null;
+        }
+        return users.get(0);
+    }
+
+    /**
+     Returns a list of users matching the provided IDs
+
+     @param userIds List of user IDs
+     @return List of users
+     */
+    public static List<UserModel> getByUserIds(List<Long> userIds) {
+        return find.where().in("id", userIds).findList();
     }
 
 
@@ -160,5 +180,16 @@ public class UserModel extends Model {
         }else {
             return "Invalid Login";
         }
+    }
+
+    /**
+     Returns a concatenation of the first and last name
+
+     @return User's full name
+     */
+    public String getFullName() {
+        String firstName = (this.firstName != null) ? this.firstName : "";
+        String lastName = (this.lastName != null) ? this.lastName : "";
+        return String.format("%s %s", firstName, lastName);
     }
 }
