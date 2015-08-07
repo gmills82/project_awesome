@@ -36,7 +36,7 @@ public class AgentController extends Controller {
         // Look up the agent to verify that the provided ID exists. If found, make sure the ID belongs to a user set to
         // the "agent" role type.
         UserModel agent = UserModel.getById(agentId);
-        if (agent == null || agent.roleType != UserModel.Role.Agent) {
+        if (agent == null || (agent.roleType != UserModel.Role.Agent && agent.roleType != UserModel.Role.FA)) {
             return notFound(String.format("No agent found matching the id %s", agentId));
         }
 
