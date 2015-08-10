@@ -50,6 +50,53 @@
 					</span>
 				</div>
 			</div>
+			<div class="col-lg-12">
+				<div class="main-box clearfix">
+					<header class="main-box-header clearfix">
+						<h2>Most Productive Producers</h2>
+					</header>
+					<div class="main-box-body clearfix">
+						<ul class="widget-users row">
+							<li class="col-md-4">
+								<div class="img">
+									@*<img src="img/samples/scarlet.png" alt="">*@
+								</div>
+								<div class="details">
+									<div class="name">
+										Most Total Clients
+									</div>
+									{{mostTotalClients.user.fullName}}<br />
+									{{mostTotalClients.callout}} Clients
+								</div>
+							</li>
+							<li class="col-md-4">
+								<div class="img">
+									@*<img src="img/samples/kunis.png" alt="">*@
+								</div>
+								<div class="details">
+									<div class="name">
+										Most Productive Referrals
+									</div>
+									{{mostProductiveReferrals.user.fullName}}<br />
+									{{mostProductiveReferrals.callout}} Referrals
+								</div>
+							</li>
+							<li class="col-md-4">
+								<div class="img">
+									@*<img src="img/samples/ryan.png" alt="">*@
+								</div>
+								<div class="details">
+									<div class="name">
+										Highest Percentage of Productive Referrals
+									</div>
+									{{highestPercentageProductiveReferrals.user.fullName}}<br />
+									{{highestPercentageProductiveReferrals.callout | number : 2}}%
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 </div>

@@ -174,11 +174,17 @@ public class Referral extends Model implements HistoryRecord {
         return referral;
     }
 
-    public static ProducerCallout getByMostTotalClients() {
+    public static ProducerCallout getByMostTotalClients(Date fromDate, Date toDate) {
 
         // Execute the SQL
-        String sql = "SELECT user_id, COUNT(*) FROM referral GROUP BY user_id ORDER BY COUNT(*) DESC;";
-        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
+        String sql = "SELECT user_id, COUNT(*) FROM referral WHERE date_created BETWEEN :fromDate AND :toDate GROUP BY user_id ORDER BY COUNT(*) DESC;";
+        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql)
+                .setParameter("fromDate", fromDate.getTime())
+                .setParameter("toDate", toDate.getTime())
+                .findList();
+        if (sqlRows == null || sqlRows.size() == 0) {
+            return null;
+        }
         SqlRow sqlRow = sqlRows.get(0);
 
         // Parse out the fields we care about
@@ -199,11 +205,19 @@ public class Referral extends Model implements HistoryRecord {
         return callout;
     }
 
-    public static ProducerCallout getByMostProductiveClients() {
+    public static ProducerCallout getByMostProductiveClients(Date fromDate, Date toDate) {
 
         // Execute the SQL
-        String sql = "SELECT user_id, COUNT(*) FROM referral WHERE was_productive = TRUE GROUP BY user_id ORDER BY COUNT(*) DESC;";
-        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
+        String sql = "SELECT user_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate GROUP BY user_id ORDER BY COUNT(*) DESC;";
+        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql)
+                .setParameter("fromDate", fromDate.getTime())
+                .setParameter("toDate", toDate.getTime())
+                .findList();
+
+        if (sqlRows == null || sqlRows.size() == 0) {
+            return null;
+        }
+
         SqlRow sqlRow = sqlRows.get(0);
 
         // Parse out the fields we care about
@@ -224,11 +238,18 @@ public class Referral extends Model implements HistoryRecord {
         return callout;
     }
 
-    public static ProducerCallout getByMostProductiveClientsPercentage() {
+    public static ProducerCallout getByMostProductiveClientsPercentage(Date fromDate, Date toDate) {
 
         // Execute the SQL
-        String sql = "SELECT user_id, COUNT(*) FROM referral WHERE was_productive = TRUE GROUP BY user_id ORDER BY COUNT(*) DESC;";
-        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).findList();
+        String sql = "SELECT user_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate GROUP BY user_id ORDER BY COUNT(*) DESC;";
+        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql)
+                .setParameter("fromDate", fromDate.getTime())
+                .setParameter("toDate", toDate.getTime())
+                .findList();
+
+        if (sqlRows == null || sqlRows.size() == 0) {
+            return null;
+        }
 
         // Extract the user IDs from the list
         List<ProducerCallout> callouts = new ArrayList<>();
