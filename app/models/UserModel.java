@@ -182,6 +182,14 @@ public class UserModel extends Model {
         }
     }
 
+    public List<UserModel> getChildTeamMembers() {
+        return childTeamMembers;
+    }
+
+    public void setChildTeamMembers(List<UserModel> childTeamMembers) {
+        this.childTeamMembers = childTeamMembers;
+    }
+
     /**
      Returns a concatenation of the first and last name
 
