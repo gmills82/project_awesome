@@ -4644,6 +4644,14 @@ input[type="radio"] {
   height: 5px;
 }
 
+.stat-time-toggles {
+  padding: 0 0 20px 8px;
+}
+
+.small-graph-box.efs-referrals-box {
+  padding: 15px 20px;
+}
+
 /* GRAPH BOX */
 .graph-box {
   padding: 15px 15px;
