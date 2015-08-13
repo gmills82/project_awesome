@@ -22,7 +22,7 @@ WHERE  id IN (SELECT client.id
                      AND client.NAME IN (SELECT client.NAME
                                          FROM   client
                                          GROUP  BY client.NAME
-                                         HAVING Count(*) > 1)) 
+                                         HAVING Count(*) > 1))
 
 ## Run the migration endpoint to normalize the referral data
 

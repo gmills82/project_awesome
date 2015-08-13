@@ -61,6 +61,8 @@ GET           /agent/:agentId/referrals               controllers.AgentControlle
 
 # Stats controller
 GET           /stats/efs/:from/:to                    controllers.StatsController.getEFSStats(from: Long, to: Long)
+GET           /stats/producer/:from/:to               controllers.StatsController.getProducerStats(from: Long, to: Long)
+GET           /stats/agent/:agentid/:from/:to         controllers.StatsController.getAgentStats(agentid: Long, from: Long, to: Long)
 
 # NOTE: This method should be called once and removed. Although calling it multiple times won't do anything, it's an unnecessary method after the initial migration.
 PUT           /json/referral/patch                    controllers.ReferralCtrl.patchReferrals()

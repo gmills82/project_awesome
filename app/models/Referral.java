@@ -309,6 +309,13 @@ public class Referral extends Model implements HistoryRecord {
         return dataMap;
     }
 
+    public static List<Referral> getByUserIdsBetweenDates(List<Long> userIds, Date fromDate, Date toDate) {
+        return finder.where()
+                .in("user_id", userIds)
+                .between("date_created", fromDate.getTime(), toDate.getTime())
+                .findList();
+    }
+
 	@Override
 	public Long getDateOfLastInteraction() {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");

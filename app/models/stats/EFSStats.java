@@ -1,9 +1,12 @@
 package models.stats;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+
 /**
  User: justin.podzimek
  Date: 8/10/15
  */
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class EFSStats {
 
     private Integer totalReferrals;

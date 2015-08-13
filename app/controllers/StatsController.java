@@ -2,6 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import models.UserModel;
 import models.stats.EFSStats;
 import models.Referral;
 import play.libs.Json;
@@ -9,7 +10,10 @@ import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  User: justin.podzimek
@@ -51,6 +55,55 @@ public class StatsController extends Controller {
         stats.setMostTotalClients(Referral.getByMostTotalClients(fromDate, toDate));
         stats.setMostProductiveReferrals(Referral.getByMostProductiveClients(fromDate, toDate));
         stats.setHighestPercentageProductiveReferrals(Referral.getByMostProductiveClientsPercentage(fromDate, toDate));
+
+        // Fill the return data and send it back
+        JsonNode referralJson = Json.toJson(stats);
+        ObjectNode result = Json.newObject();
+        result.put("data", referralJson);
+        return ok(result);
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result getProducerStats(Long fromTimestamp, Long toTimestamp) {
+
+        // Generate dates from the provided timestamps
+        Date fromDate = new Date(fromTimestamp);
+        Date toDate = new Date(toTimestamp);
+
+        // Populate the data
+        EFSStats stats = new EFSStats();
+        stats.setTotalReferrals(Referral.getCountBetweenDates(fromDate, toDate));
+        stats.setTotalProductiveReferrals(Referral.getProductiveCountBetweenDates(fromDate, toDate));
+
+        // Fill the return data and send it back
+        JsonNode referralJson = Json.toJson(stats);
+        ObjectNode result = Json.newObject();
+        result.put("data", referralJson);
+        return ok(result);
+    }
+
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result getAgentStats(Long agentId, Long fromTimestamp, Long toTimestamp) {
+
+        // Generate dates from the provided timestamps
+        Date fromDate = new Date(fromTimestamp);
+        Date toDate = new Date(toTimestamp);
+
+        // Get the user and make sure they're an agent.
+        UserModel agent = UserModel.getById(agentId);
+        if (agent == null || agent.roleType != UserModel.Role.Agent) {
+            return notFound(String.format("No agent found matching ID %s", agentId));
+        }
+
+        // Get the agent's team members
+        List<Long> userIds = agent.getChildTeamMembers().stream().map(childMember -> childMember.id).collect(Collectors.toList());
+        List<Referral> referrals = Referral.getByUserIdsBetweenDates(userIds, fromDate, toDate);
+        List<Referral> productiveReferrals = referrals.stream().filter(referral -> referral.wasProductive).collect(Collectors.toList());
+
+        // Populate the data
+        EFSStats stats = new EFSStats();
+        stats.setTotalReferrals(referrals.size());
+        stats.setTotalProductiveReferrals(productiveReferrals.size());
 
         // Fill the return data and send it back
         JsonNode referralJson = Json.toJson(stats);
