@@ -3,12 +3,15 @@
 </header>
 <div class="main-box-body">
     <div class="table-responsive">
+        <p>
+            <i class="fa fa-file-excel-o"></i> <a ng-href="{{downloadReportUrl}}">Download Referral Report</a>
+        </p>
         <table class="table dataTable no-footer" ng-table="viewTeamReferrals" show-filter="true">
             <tbody>
             <tr ng-repeat="referral in $data">
                 <td sortable="'refType'" data-title="'Referral Type'" filter="{ 'refType': 'select' }" filter-data="teamRefs">{{referral.refType}} Referral</td>
                 <td sortable="'clientName'" data-title="'Client Name'" filter="{ 'clientName': 'text' }">{{referral.clientName}}</td>
-                <td sortable="'nextStepDate'" data-title="'Next Steps Date'">{{referral.nextStepDate}}</td>
+                <td sortable="'nextStepDate'" data-title="'Next Steps Date'">{{referral.nextStepTimestamp | formatDate}}</td>
                 <td sortable="'client.phoneNumber'" data-title="'Phone Number'"><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
                 <td data-title="'Status'"><status-label status="referral.status" data-title="'Status'"><status-label status="referral.status"></status-label></td>
                 <td data-title="'Was Productive'">{{referral.wasProductive}}</td>

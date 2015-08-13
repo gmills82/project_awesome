@@ -92,4 +92,25 @@ public class Client extends Model {
         return find.byId(id);
     }
 
+    /**
+     Returns the last client that was added
+
+     @return Last client
+     */
+    public static Client getLastInsertedClient() {
+        return find.orderBy("id DESC").setMaxRows(1).findUnique();
+    }
+
+    /**
+     Removes a client with the provided ID
+
+     @param id Client ID
+     */
+    public static void removeById(Long id) {
+        Client client = getById(id);
+        if (client != null) {
+            client.delete();
+        }
+    }
+
 }

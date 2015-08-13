@@ -8,7 +8,7 @@
             <tr ng-repeat="referral in $data">
                 <td sortable="'refType'" data-title="'Referral Type'" filter="{ 'refType': 'select' }" filter-data="recentRefTypes">{{referral.refType}} Referral</td>
                 <td sortable="'clientName'" data-title="'Client Name'" filter="{ 'clientName': 'text' }"><a href="/client/history/{{referral.client.id}}">{{referral.clientName}}</a></td>
-                <td sortable="'nextStepDate'" data-title="'Next Steps Date'">{{referral.nextStepDate}}</td>
+                <td sortable="'nextStepDate'" data-title="'Next Steps Date'">{{referral.nextStepTimestamp | formatDate}}</td>
                 <td sortable="'client.phoneNumber'" data-title="'Phone Number'"><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
                 <td data-title="'Actions'"><a href="/editReferral/{{referral.id}}">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
                 <td sortable="'lastEditedDate'" data-title="'Last Edited Date'">{{referral.lastEditedDate}}</td>

@@ -65,6 +65,16 @@ public class ClientCtrl extends Controller {
         Form<Client> clientForm = Form.form(Client.class);
         Client client = clientForm.bindFromRequest().get();
 
+        // Safeguard. Look up the last inserted client and check to see if the names match. If they do, there's a good
+        // chance that the data was duplicated, so bail out of the request.
+        // TODO - Better duplicate detection (Add timestamps and if multiple with same name within certain period of time)
+		Client latestInsert = Client.getLastInsertedClient();
+        if (latestInsert != null && latestInsert.name != null) {
+            if (client.name != null && latestInsert.name.equalsIgnoreCase(client.name)) {
+                return status(CONFLICT, "Duplicate client");
+            }
+        }
+
         JsonNode data = request().body().asJson();
 
         //Convert string date to java date

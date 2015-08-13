@@ -49,8 +49,10 @@ public class ReferralCtrl extends Controller {
 	//Create Referral
 	@BodyParser.Of(BodyParser.Json.class)
 	public static Result addReferral() {
+
 		Form<Referral> referralForm = Form.form(Referral.class);
 		Referral referral = referralForm.bindFromRequest().get();
+
 		setWasProductive(referral);
 
 		referral.save();
@@ -128,7 +130,7 @@ public class ReferralCtrl extends Controller {
 
 		}else {
 			//Continue on since something has changed
-			freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
+			freshReferrals = sort(freshReferrals, on(Referral.class).getNextStepTimestamp());
 
 			//Gather client data for each Referral
 			JsonNode referralJson = gatherClientsForReferrals(freshReferrals);
@@ -177,7 +179,7 @@ public class ReferralCtrl extends Controller {
 
 		}else {
 			//Continue on since something has changed
-			freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
+			freshReferrals = sort(freshReferrals, on(Referral.class).getNextStepTimestamp());
 
 			//Gather client data for each Referral
 			JsonNode referralJson = gatherClientsForReferrals(freshReferrals);
@@ -227,7 +229,7 @@ public class ReferralCtrl extends Controller {
 
 		}else {
 			//Continue on since something has changed
-			freshReferrals = sort(freshReferrals, on(Referral.class).nextStepDate);
+			freshReferrals = sort(freshReferrals, on(Referral.class).getNextStepTimestamp());
 
 			//Gather client data for each Referral
 			JsonNode referralJson = gatherClientsForReferrals(freshReferrals);
@@ -299,6 +301,25 @@ public class ReferralCtrl extends Controller {
 
 		return ok(result);
 	}
+
+
+
+    /**
+     Short lived endpoint used to normalize the data in the referral table.
+     */
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result patchReferrals() {
+
+        ObjectNode result = Json.newObject();
+        List<Referral> referrals = Referral.getByNextStepDate(null);
+
+        for (Referral referral : referrals) {
+            referral.setNextStepDate(referral.getNextStepDate());
+            referral.update();
+        }
+
+        return ok(result);
+    }
 
 	private static Set<UserModel> gatherChildTeamMembers(UserModel parent) {
 		//Unique team members collection

@@ -56,7 +56,8 @@ public class PDFController extends Controller {
 			document.save(output);
 			document.close();
 			response().setContentType("application/pdf");
-			return ok(output.toByteArray());
+			response().setHeader("Content-Disposition", "attachment; filename=new-account.pdf");
+            return ok(output.toByteArray());
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 			return internalServerError();
