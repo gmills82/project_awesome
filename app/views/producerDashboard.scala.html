@@ -1,12 +1,7 @@
 <div class="row">
 	<div ng-controller="StatsController">
 
-		<div class="btn-group stat-time-toggles">
-			<button type="button" class="btn btn-default" ng-click="toggleDate(7)">Last Week</button>
-			<button type="button" class="btn btn-default" ng-click="toggleDate(31)">Last Month</button>
-			<button type="button" class="btn btn-default" ng-click="toggleDate(365)">Last Year</button>
-			<button type="button" class="btn btn-default" ng-click="toggleDate()">All Time</button>
-		</div>
+		<div stat-time-directive></div>
 
 		<div ng-controller="ProducerStatsController" ng-cloak>
 			<div class="col-lg-3 col-sm-6 col-xs-12">
