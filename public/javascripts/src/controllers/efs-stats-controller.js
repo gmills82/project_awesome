@@ -12,9 +12,10 @@ app.controller('EfsStatsController', ["$scope", "$http", function($scope, $http)
             totalProductiveReferrals = parseFloat(data.data.totalProductiveReferrals || 0),
             totalIPS = parseFloat(data.data.totalIPS || 0),
             totalPC = parseFloat(data.data.totalPC || 0),
-            totalInsurance = parseFloat(data.data.totalInsurance || 0);
+            totalInsurance = parseFloat(data.data.totalInsurance || 0),
+            percentageProductiveReferrals = Math.round((totalProductiveReferrals / totalReferrals) * 100);
         $scope.totalReferrals = totalReferrals;
-        $scope.percentageProductiveReferrals = (totalProductiveReferrals / totalReferrals) * 100;
+        $scope.percentageProductiveReferrals = percentageProductiveReferrals;
         $scope.totalIPS = totalIPS;
         $scope.totalPC = totalPC;
         $scope.totalInsurance = totalInsurance;
@@ -27,6 +28,15 @@ app.controller('EfsStatsController', ["$scope", "$http", function($scope, $http)
         if (data.data.highestPercentageProductiveReferrals) {
             $scope.highestPercentageProductiveReferrals = data.data.highestPercentageProductiveReferrals;
         }
+
+        $scope.getProductiveReferrals = function () {
+            var desc = (totalProductiveReferrals === 1) ? "Productive Referral" : "Productive Referrals";
+            return totalProductiveReferrals + " " + desc;
+        };
+
+        $scope.getProductiveReferralsPercentage = function () {
+            return percentageProductiveReferrals + "% of referrals were productive";
+        };
     };
 
     // Populate the data right away to minimize height jumping
