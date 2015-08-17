@@ -14,20 +14,19 @@ app.controller('EfsStatsController', ["$scope", "$http", function($scope, $http)
             totalPC = parseFloat(data.data.totalPC || 0),
             totalInsurance = parseFloat(data.data.totalInsurance || 0),
             percentageProductiveReferrals = Math.round((totalProductiveReferrals / totalReferrals) * 100);
+        if (isNaN(percentageProductiveReferrals)) {
+            percentageProductiveReferrals = 0;
+        }
         $scope.totalReferrals = totalReferrals;
         $scope.percentageProductiveReferrals = percentageProductiveReferrals;
         $scope.totalIPS = totalIPS;
         $scope.totalPC = totalPC;
         $scope.totalInsurance = totalInsurance;
-        if (data.data.mostTotalClients) {
-            $scope.mostTotalClients = data.data.mostTotalClients;
-        }
-        if (data.data.mostProductiveReferrals) {
-            $scope.mostProductiveReferrals = data.data.mostProductiveReferrals;
-        }
-        if (data.data.highestPercentageProductiveReferrals) {
-            $scope.highestPercentageProductiveReferrals = data.data.highestPercentageProductiveReferrals;
-        }
+
+        $scope.mostTotalClients = data.data.mostTotalClients;
+        $scope.mostProductiveReferrals = data.data.mostProductiveReferrals;
+        $scope.highestPercentageProductiveReferrals = data.data.highestPercentageProductiveReferrals;
+
 
         $scope.getProductiveReferrals = function () {
             var desc = (totalProductiveReferrals === 1) ? "Productive Referral" : "Productive Referrals";

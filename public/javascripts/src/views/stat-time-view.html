@@ -1,6 +1,8 @@
 <div class="btn-group stat-time-toggles">
-    <button type="button" class="btn btn-default stat-button" ng-click="toggleDate($event, 7)">Last Week</button>
-    <button type="button" class="btn btn-default stat-button" ng-click="toggleDate($event, 31)">Last Month</button>
-    <button type="button" class="btn btn-default stat-button" ng-click="toggleDate($event, 365)">Last Year</button>
-    <button type="button" class="btn btn-default stat-button" ng-click="toggleDate($event)">All Time</button>
+    <button type="button" class="btn btn-default stat-button" ng-click="toggleDate($event, 'week')">Last Week</button>
+    <button type="button" class="btn btn-default stat-button" ng-click="toggleDate($event, 'month')">Last Month</button>
+    <button type="button" class="btn btn-default stat-button" ng-click="toggleDate($event, 'year')">Last Year</button>
+    <button type="button" class="btn btn-default stat-button" ng-click="toggleDate($event, 'all')">All Time</button>
+    <div class="clearfix"></div>
+    <h4 class="time-display">{{timeDisplay}}</h4>
 </div>

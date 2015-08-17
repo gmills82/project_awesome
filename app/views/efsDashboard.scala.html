@@ -52,40 +52,31 @@
 				</div>
 			</div>
 		</div>
-		<div class="row">
+		<div class="row" ng-show="mostTotalClients && mostProductiveReferrals && highestPercentageProductiveReferrals">
 			<div class="col-lg-12">
-				<div class="main-box clearfix">
+				<div class="main-box clearfix productive-referrals-callout">
 					<header class="main-box-header clearfix">
 						<h2>Most Productive Producers</h2>
 					</header>
 					<div class="main-box-body clearfix">
 						<ul class="widget-users row">
 							<li class="col-md-4">
-								<div class="details">
-									<div class="name">
-										Most Total Clients
-									</div>
-									{{mostTotalClients.user.fullName}}<br />
-									{{mostTotalClients.callout}} Clients
-								</div>
+								<strong>Most Total Clients</strong><br />
+								{{mostTotalClients.user.fullName}}<br />
+								{{mostTotalClients.callout}} Clients<br />
+								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
 							</li>
 							<li class="col-md-4">
-								<div class="details">
-									<div class="name">
-										Most Productive Referrals
-									</div>
-									{{mostProductiveReferrals.user.fullName}}<br />
-									{{mostProductiveReferrals.callout}} Referrals
-								</div>
+								<strong>Most Productive Referrals</strong><br />
+								{{mostProductiveReferrals.user.fullName}}<br />
+								{{mostProductiveReferrals.callout}} Referrals<br />
+								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
 							</li>
 							<li class="col-md-4">
-								<div class="details">
-									<div class="name">
-										Highest Percentage of Productive Referrals
-									</div>
-									{{highestPercentageProductiveReferrals.user.fullName}}<br />
-									{{highestPercentageProductiveReferrals.callout | number : 2}}%
-								</div>
+								<strong>Highest Percentage of Productive Referrals</strong><br />
+								{{highestPercentageProductiveReferrals.user.fullName}}<br />
+								{{highestPercentageProductiveReferrals.callout | number : 2}}%<br />
+								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
 							</li>
 						</ul>
 					</div>

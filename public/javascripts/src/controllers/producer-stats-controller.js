@@ -11,8 +11,11 @@ app.controller('ProducerStatsController', ["$scope", "$http", function($scope, $
         var totalReferrals = parseFloat(data.data.totalReferrals || 0),
             totalProductiveReferrals = parseFloat(data.data.totalProductiveReferrals || 0),
             percentageProductiveReferrals = Math.round((totalProductiveReferrals / totalReferrals) * 100);
+        if (isNaN(percentageProductiveReferrals)) {
+            percentageProductiveReferrals = 0;
+        }
         $scope.totalReferrals = totalReferrals;
-        $scope.percentageProductiveReferrals = (totalProductiveReferrals / totalReferrals) * 100;
+        $scope.percentageProductiveReferrals = percentageProductiveReferrals;
 
         $scope.getProductiveReferrals = function () {
             var desc = (totalProductiveReferrals === 1) ? "Productive Referral" : "Productive Referrals";
@@ -31,7 +34,7 @@ app.controller('ProducerStatsController', ["$scope", "$http", function($scope, $
     $scope.$watch('fromDate', function() {
         var fromDate = parseFloat($scope.fromDate),
             toDate = parseFloat($scope.toDate);
-        $http({"method": "GET", "url": "/stats/producer/" + fromDate + "/" +  toDate})
+        $http({"method": "GET", "url": "/stats/producer/" + app.data.currentUserId + "/" + fromDate + "/" +  toDate})
             .success(function (data) {
                 _populateData(data);
             });

@@ -11,8 +11,11 @@ app.controller('AgentStatsController', ["$scope", "$http", function($scope, $htt
         var totalReferrals = parseFloat(data.data.totalReferrals || 0),
             totalProductiveReferrals = parseFloat(data.data.totalProductiveReferrals || 0),
             percentageProductiveReferrals = Math.round((totalProductiveReferrals / totalReferrals) * 100);
+        if (isNaN(percentageProductiveReferrals)) {
+            percentageProductiveReferrals = 0;
+        }
         $scope.totalReferrals = totalReferrals;
-        $scope.percentageProductiveReferrals = (totalProductiveReferrals / totalReferrals) * 100;
+        $scope.percentageProductiveReferrals = percentageProductiveReferrals;
 
         $scope.getProductiveReferrals = function () {
             var desc = (totalProductiveReferrals === 1) ? "Productive Referral" : "Productive Referrals";

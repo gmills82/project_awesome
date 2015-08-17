@@ -14,6 +14,7 @@ public class ProducerCallout {
     }
 
     private UserModel user;
+    private UserModel supervisor;
     private Float callout;
     private CalloutType calloutType = CalloutType.TOTAL;
 
@@ -23,6 +24,14 @@ public class ProducerCallout {
 
     public void setUser(UserModel user) {
         this.user = user;
+    }
+
+    public UserModel getSupervisor() {
+        return supervisor;
+    }
+
+    public void setSupervisor(UserModel supervisor) {
+        this.supervisor = supervisor;
     }
 
     public Float getCallout() {

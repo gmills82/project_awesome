@@ -64,7 +64,7 @@ public class StatsController extends Controller {
     }
 
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result getProducerStats(Long fromTimestamp, Long toTimestamp) {
+    public static Result getProducerStats(Long producerId, Long fromTimestamp, Long toTimestamp) {
 
         // Generate dates from the provided timestamps
         Date fromDate = new Date(fromTimestamp);
@@ -72,8 +72,8 @@ public class StatsController extends Controller {
 
         // Populate the data
         EFSStats stats = new EFSStats();
-        stats.setTotalReferrals(Referral.getCountBetweenDates(fromDate, toDate));
-        stats.setTotalProductiveReferrals(Referral.getProductiveCountBetweenDates(fromDate, toDate));
+        stats.setTotalReferrals(Referral.getCountBetweenDates(producerId, fromDate, toDate));
+        stats.setTotalProductiveReferrals(Referral.getProductiveCountBetweenDates(producerId, fromDate, toDate));
 
         // Fill the return data and send it back
         JsonNode referralJson = Json.toJson(stats);

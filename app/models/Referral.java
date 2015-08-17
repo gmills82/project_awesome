@@ -148,12 +148,35 @@ public class Referral extends Model implements HistoryRecord {
 	}
 
 	public static Integer getCountBetweenDates(Date fromDate, Date toDate) {
-        return finder.where().between("date_created", fromDate.getTime(), toDate.getTime()).findRowCount();
+        return getCountBetweenDates(null, fromDate, toDate);
     }
 
     public static Integer getProductiveCountBetweenDates(Date fromDate, Date toDate) {
-        return finder.where().eq("was_productive", true).disjunction()
-                .add(Expr.between("date_created", fromDate.getTime(), toDate.getTime())).findRowCount();
+        return getProductiveCountBetweenDates(null, fromDate, toDate);
+    }
+
+    public static Integer getCountBetweenDates(Long userId, Date fromDate, Date toDate) {
+        if (userId != null) {
+            return finder.where()
+                    .between("date_created", fromDate.getTime(), toDate.getTime())
+                    .eq("creator_id", userId)
+                    .findRowCount();
+        }
+        return finder.where().between("date_created", fromDate.getTime(), toDate.getTime()).findRowCount();
+    }
+
+    public static Integer getProductiveCountBetweenDates(Long userId, Date fromDate, Date toDate) {
+        if (userId != null) {
+            return finder.where()
+                    .eq("was_productive", true)
+                    .eq("creator_id", userId)
+                    .between("date_created", fromDate.getTime(), toDate.getTime())
+                    .findRowCount();
+        }
+        return finder.where()
+                .eq("was_productive", true)
+                .between("date_created", fromDate.getTime(), toDate.getTime())
+                .findRowCount();
     }
 
     public static Referral getTotalsBetweenDates(Date fromDate, Date toDate) {
@@ -177,7 +200,7 @@ public class Referral extends Model implements HistoryRecord {
     public static ProducerCallout getByMostTotalClients(Date fromDate, Date toDate) {
 
         // Execute the SQL
-        String sql = "SELECT user_id, COUNT(*) FROM referral WHERE date_created BETWEEN :fromDate AND :toDate GROUP BY user_id ORDER BY COUNT(*) DESC;";
+        String sql = "SELECT referral.creator_id, COUNT(referral.*) FROM referral LEFT JOIN user_model ON referral.creator_id = user_model.id WHERE referral.date_created BETWEEN :fromDate AND :toDate AND user_model.role_type = 2 GROUP BY referral.creator_id ORDER BY COUNT(referral.*) DESC;";
         List<SqlRow> sqlRows = Ebean.createSqlQuery(sql)
                 .setParameter("fromDate", fromDate.getTime())
                 .setParameter("toDate", toDate.getTime())
@@ -188,10 +211,10 @@ public class Referral extends Model implements HistoryRecord {
         SqlRow sqlRow = sqlRows.get(0);
 
         // Parse out the fields we care about
-        Long userId = sqlRow.getLong("user_id");
+        Long userId = sqlRow.getLong("creator_id");
         Integer count = sqlRow.getInteger("count");
 
-        // Look up the user and remove the child team members. Their not needed for this call.
+        // Look up the user and remove the child team members. They're not needed for this call.
         UserModel user = UserModel.getById(userId);
         if (user == null) {
             return null;
@@ -202,13 +225,16 @@ public class Referral extends Model implements HistoryRecord {
         ProducerCallout callout = new ProducerCallout();
         callout.setUser(user);
         callout.setCallout(count.floatValue());
+        if (user.parent_team_member != null) {
+            callout.setSupervisor(UserModel.getById(user.parent_team_member.id));
+        }
         return callout;
     }
 
     public static ProducerCallout getByMostProductiveClients(Date fromDate, Date toDate) {
 
         // Execute the SQL
-        String sql = "SELECT user_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate GROUP BY user_id ORDER BY COUNT(*) DESC;";
+        String sql = "SELECT creator_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate GROUP BY creator_id ORDER BY COUNT(*) DESC;";
         List<SqlRow> sqlRows = Ebean.createSqlQuery(sql)
                 .setParameter("fromDate", fromDate.getTime())
                 .setParameter("toDate", toDate.getTime())
@@ -221,10 +247,10 @@ public class Referral extends Model implements HistoryRecord {
         SqlRow sqlRow = sqlRows.get(0);
 
         // Parse out the fields we care about
-        Long userId = sqlRow.getLong("user_id");
+        Long userId = sqlRow.getLong("creator_id");
         Integer count = sqlRow.getInteger("count");
 
-        // Look up the user and remove the child team members. Their not needed for this call.
+        // Look up the user and remove the child team members. They're not needed for this call.
         UserModel user = UserModel.getById(userId);
         if (user == null) {
             return null;
@@ -241,7 +267,7 @@ public class Referral extends Model implements HistoryRecord {
     public static ProducerCallout getByMostProductiveClientsPercentage(Date fromDate, Date toDate) {
 
         // Execute the SQL
-        String sql = "SELECT user_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate GROUP BY user_id ORDER BY COUNT(*) DESC;";
+        String sql = "SELECT creator_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate GROUP BY creator_id ORDER BY COUNT(*) DESC;";
         List<SqlRow> sqlRows = Ebean.createSqlQuery(sql)
                 .setParameter("fromDate", fromDate.getTime())
                 .setParameter("toDate", toDate.getTime())
@@ -255,7 +281,7 @@ public class Referral extends Model implements HistoryRecord {
         List<ProducerCallout> callouts = new ArrayList<>();
         List<Long> userIds = new ArrayList<>();
         for (SqlRow row : sqlRows) {
-            userIds.add(row.getLong("user_id"));
+            userIds.add(row.getLong("creator_id"));
         }
 
         // Look up the users from the extracted user IDs and map them for easier lookup
@@ -274,7 +300,7 @@ public class Referral extends Model implements HistoryRecord {
         // If the user wasn't found in the map, we'll assume that the user doesn't actually exist and some sort of voodoo
         // happened and ignore it.
         for (SqlRow row : sqlRows) {
-            Long userId = row.getLong("user_id");
+            Long userId = row.getLong("creator_id");
             Integer count = row.getInteger("count");
             if (userModelMap.get(userId) != null && totalReferalMap.get(userId) != null) {
                 Float percentage = (count.floatValue() / totalReferalMap.get(userId).floatValue()) * 100;
@@ -295,14 +321,14 @@ public class Referral extends Model implements HistoryRecord {
     private static Map<Long, Integer> getTotalReferralsByUserIds(List<Long> userIds) {
 
         // Execute the SQL
-        String sql = "SELECT user_id, COUNT(*) FROM referral WHERE user_id IN (:userIds) GROUP BY user_id ORDER BY COUNT(*) DESC;";
+        String sql = "SELECT creator_id, COUNT(*) FROM referral WHERE creator_id IN (:userIds) GROUP BY creator_id ORDER BY COUNT(*) DESC;";
         List<SqlRow> sqlRows = Ebean.createSqlQuery(sql)
                 .setParameter("userIds", userIds)
                 .findList();
 
         Map<Long, Integer> dataMap = new HashMap<>();
         for (SqlRow row : sqlRows) {
-            Long userId = row.getLong("user_id");
+            Long userId = row.getLong("creator_id");
             Integer count = row.getInteger("count");
             dataMap.put(userId, count);
         }
@@ -311,7 +337,7 @@ public class Referral extends Model implements HistoryRecord {
 
     public static List<Referral> getByUserIdsBetweenDates(List<Long> userIds, Date fromDate, Date toDate) {
         return finder.where()
-                .in("user_id", userIds)
+                .in("creator_id", userIds)
                 .between("date_created", fromDate.getTime(), toDate.getTime())
                 .findList();
     }
