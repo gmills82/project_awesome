@@ -197,14 +197,30 @@ public class Referral extends Model implements HistoryRecord {
         return referral;
     }
 
-    public static ProducerCallout getByMostTotalClients(Date fromDate, Date toDate) {
+    public static ProducerCallout getByMostTotalClients(List<Long> creatorIds, Date fromDate, Date toDate) {
 
-        // Execute the SQL
-        String sql = "SELECT referral.creator_id, COUNT(referral.*) FROM referral LEFT JOIN user_model ON referral.creator_id = user_model.id WHERE referral.date_created BETWEEN :fromDate AND :toDate AND user_model.role_type = 2 GROUP BY referral.creator_id ORDER BY COUNT(referral.*) DESC;";
-        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql)
-                .setParameter("fromDate", fromDate.getTime())
-                .setParameter("toDate", toDate.getTime())
-                .findList();
+        List<SqlRow> sqlRows;
+
+        if (creatorIds == null) {
+
+            String sql = "SELECT referral.creator_id, COUNT(referral.*) FROM referral LEFT JOIN user_model ON referral.creator_id = user_model.id WHERE referral.date_created BETWEEN :fromDate AND :toDate AND user_model.role_type = 2 GROUP BY referral.creator_id ORDER BY COUNT(referral.*) DESC;";
+
+            sqlRows = Ebean.createSqlQuery(sql)
+                    .setParameter("fromDate", fromDate.getTime())
+                    .setParameter("toDate", toDate.getTime())
+                    .findList();
+        } else {
+
+            String sql = "SELECT referral.creator_id, COUNT(referral.*) FROM referral LEFT JOIN user_model ON referral.creator_id = user_model.id WHERE referral.date_created BETWEEN :fromDate AND :toDate AND user_model.role_type = 2 AND referral.creator_id IN (:creatorIds) GROUP BY referral.creator_id ORDER BY COUNT(referral.*) DESC;";
+
+            sqlRows = Ebean.createSqlQuery(sql)
+                    .setParameter("fromDate", fromDate.getTime())
+                    .setParameter("toDate", toDate.getTime())
+                    .setParameter("creatorIds", creatorIds)
+                    .findList();
+
+        }
+
         if (sqlRows == null || sqlRows.size() == 0) {
             return null;
         }
@@ -231,14 +247,24 @@ public class Referral extends Model implements HistoryRecord {
         return callout;
     }
 
-    public static ProducerCallout getByMostProductiveClients(Date fromDate, Date toDate) {
+    public static ProducerCallout getByMostProductiveClients(List<Long> creatorIds, Date fromDate, Date toDate) {
 
-        // Execute the SQL
-        String sql = "SELECT creator_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate GROUP BY creator_id ORDER BY COUNT(*) DESC;";
-        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql)
-                .setParameter("fromDate", fromDate.getTime())
-                .setParameter("toDate", toDate.getTime())
-                .findList();
+        List<SqlRow> sqlRows;
+
+        if (creatorIds == null) {
+            String sql = "SELECT creator_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate GROUP BY creator_id ORDER BY COUNT(*) DESC;";
+            sqlRows = Ebean.createSqlQuery(sql)
+                    .setParameter("fromDate", fromDate.getTime())
+                    .setParameter("toDate", toDate.getTime())
+                    .findList();
+        } else {
+            String sql = "SELECT creator_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate AND creator_id IN (:creatorIds) GROUP BY creator_id ORDER BY COUNT(*) DESC;";
+            sqlRows = Ebean.createSqlQuery(sql)
+                    .setParameter("fromDate", fromDate.getTime())
+                    .setParameter("toDate", toDate.getTime())
+                    .setParameter("creatorIds", creatorIds)
+                    .findList();
+        }
 
         if (sqlRows == null || sqlRows.size() == 0) {
             return null;
@@ -264,14 +290,26 @@ public class Referral extends Model implements HistoryRecord {
         return callout;
     }
 
-    public static ProducerCallout getByMostProductiveClientsPercentage(Date fromDate, Date toDate) {
+    public static ProducerCallout getByMostProductiveClientsPercentage(List<Long> creatorIds, Date fromDate, Date toDate) {
 
-        // Execute the SQL
-        String sql = "SELECT creator_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate GROUP BY creator_id ORDER BY COUNT(*) DESC;";
-        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql)
-                .setParameter("fromDate", fromDate.getTime())
-                .setParameter("toDate", toDate.getTime())
-                .findList();
+        List<SqlRow> sqlRows;
+
+        if (creatorIds == null) {
+            String sql = "SELECT creator_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate GROUP BY creator_id ORDER BY COUNT(*) DESC;";
+            sqlRows = Ebean.createSqlQuery(sql)
+                    .setParameter("fromDate", fromDate.getTime())
+                    .setParameter("toDate", toDate.getTime())
+                    .findList();
+        } else {
+            String sql = "SELECT creator_id, COUNT(*) FROM referral WHERE was_productive = TRUE AND date_created BETWEEN :fromDate AND :toDate AND creator_id IN (:creatorIds) GROUP BY creator_id ORDER BY COUNT(*) DESC;";
+            sqlRows = Ebean.createSqlQuery(sql)
+                    .setParameter("fromDate", fromDate.getTime())
+                    .setParameter("toDate", toDate.getTime())
+                    .setParameter("creatorIds", creatorIds)
+                    .findList();
+        }
+
+
 
         if (sqlRows == null || sqlRows.size() == 0) {
             return null;

@@ -16,6 +16,9 @@ app.controller('AgentStatsController', ["$scope", "$http", function($scope, $htt
         }
         $scope.totalReferrals = totalReferrals;
         $scope.percentageProductiveReferrals = percentageProductiveReferrals;
+        $scope.mostTotalClients = data.data.mostTotalClients;
+        $scope.mostProductiveReferrals = data.data.mostProductiveReferrals;
+        $scope.highestPercentageProductiveReferrals = data.data.highestPercentageProductiveReferrals;
 
         $scope.getProductiveReferrals = function () {
             var desc = (totalProductiveReferrals === 1) ? "Productive Referral" : "Productive Referrals";

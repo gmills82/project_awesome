@@ -1,9 +1,10 @@
-<div class="row">
-	<div ng-controller="StatsController">
 
-		<div stat-time-directive></div>
+<div ng-controller="StatsController">
 
-		<div ng-controller="AgentStatsController" ng-cloak>
+	<div stat-time-directive></div>
+
+	<div ng-controller="AgentStatsController" ng-cloak>
+		<div class="row">
 			<div class="col-lg-3 col-sm-6 col-xs-12">
 				<div class="main-box small-graph-box emerald-bg efs-referrals-box">
 					<span class="value">{{totalReferrals}}</span>
@@ -17,6 +18,37 @@
 					<span class="subinfo">
 						{{getProductiveReferralsPercentage()}}
 					</span>
+				</div>
+			</div>
+		</div>
+		<div class="row" ng-show="mostTotalClients && mostProductiveReferrals && highestPercentageProductiveReferrals">
+			<div class="col-lg-12">
+				<div class="main-box clearfix productive-referrals-callout">
+					<header class="main-box-header clearfix">
+						<h2>Most Productive Producers</h2>
+					</header>
+					<div class="main-box-body clearfix">
+						<ul class="widget-users row">
+							<li class="col-md-4">
+								<strong>Most Total Clients</strong><br />
+								{{mostTotalClients.user.fullName}}<br />
+								{{mostTotalClients.callout}} Clients<br />
+								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
+							</li>
+							<li class="col-md-4">
+								<strong>Most Productive Referrals</strong><br />
+								{{mostProductiveReferrals.user.fullName}}<br />
+								{{mostProductiveReferrals.callout}} Referrals<br />
+								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
+							</li>
+							<li class="col-md-4">
+								<strong>Highest Percentage of Productive Referrals</strong><br />
+								{{highestPercentageProductiveReferrals.user.fullName}}<br />
+								{{highestPercentageProductiveReferrals.callout | number : 2}}%<br />
+								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
+							</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 		</div>

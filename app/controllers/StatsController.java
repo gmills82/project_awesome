@@ -52,9 +52,9 @@ public class StatsController extends Controller {
         stats.setTotalInsurance(totals.gettInsurance());
         stats.setTotalIPS(totals.gettIps());
         stats.setTotalPC(totals.gettPc());
-        stats.setMostTotalClients(Referral.getByMostTotalClients(fromDate, toDate));
-        stats.setMostProductiveReferrals(Referral.getByMostProductiveClients(fromDate, toDate));
-        stats.setHighestPercentageProductiveReferrals(Referral.getByMostProductiveClientsPercentage(fromDate, toDate));
+        stats.setMostTotalClients(Referral.getByMostTotalClients(null, fromDate, toDate));
+        stats.setMostProductiveReferrals(Referral.getByMostProductiveClients(null, fromDate, toDate));
+        stats.setHighestPercentageProductiveReferrals(Referral.getByMostProductiveClientsPercentage(null, fromDate, toDate));
 
         // Fill the return data and send it back
         JsonNode referralJson = Json.toJson(stats);
@@ -104,6 +104,10 @@ public class StatsController extends Controller {
         EFSStats stats = new EFSStats();
         stats.setTotalReferrals(referrals.size());
         stats.setTotalProductiveReferrals(productiveReferrals.size());
+
+        stats.setMostTotalClients(Referral.getByMostTotalClients(userIds, fromDate, toDate));
+        stats.setMostProductiveReferrals(Referral.getByMostProductiveClients(userIds, fromDate, toDate));
+        stats.setHighestPercentageProductiveReferrals(Referral.getByMostProductiveClientsPercentage(userIds, fromDate, toDate));
 
         // Fill the return data and send it back
         JsonNode referralJson = Json.toJson(stats);
