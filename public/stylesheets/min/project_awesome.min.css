@@ -4334,6 +4334,10 @@ input[type="radio"] {
   color: #8bc34a;
 }
 
+.productive-referrals-callout li {
+  border-bottom-width: 0;
+}
+
 /* INFOGRAPHIC BOX */
 .infographic-box {
   padding: 20px;
@@ -4644,12 +4648,13 @@ input[type="radio"] {
   height: 5px;
 }
 
-.stat-time-toggles {
-  padding: 0 0 20px 8px;
+.stat-time-toggles .time-display {
+  min-height: 20px;
+  margin: 20px 0;
 }
 
-.small-graph-box.efs-referrals-box {
-  padding: 15px 20px;
+.infographic-box.efs-infographic {
+  padding: 45px 20px;
 }
 
 /* GRAPH BOX */

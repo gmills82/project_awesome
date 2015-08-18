@@ -1,25 +1,26 @@
-<div class="row">
-	<div ng-controller="StatsController">
+<div ng-controller="StatsController">
 
-		<div class="btn-group stat-time-toggles">
-			<button type="button" class="btn btn-default" ng-click="toggleDate(7)">Last Week</button>
-			<button type="button" class="btn btn-default" ng-click="toggleDate(31)">Last Month</button>
-			<button type="button" class="btn btn-default" ng-click="toggleDate(365)">Last Year</button>
-			<button type="button" class="btn btn-default" ng-click="toggleDate()">All Time</button>
-		</div>
+	<div stat-time-directive></div>
 
-		<div ng-controller="EfsStatsController" ng-cloak>
-			<div class="col-lg-3 col-sm-6 col-xs-12">
+	<div ng-controller="EfsStatsController" ng-cloak>
+		<div class="row">
+			<div class="col-md-3">
 				<div class="main-box small-graph-box emerald-bg efs-referrals-box">
 					<span class="value">{{totalReferrals}}</span>
 					<span class="headline">Total Referrals</span>
 					<div class="progress">
 						<div style="width: {{percentageProductiveReferrals}}%;" aria-valuemax="100" aria-valuemin="0" aria-valuenow="84" role="progressbar" class="progress-bar"></div>
 					</div>
+					<span class="subinfo">
+						{{getProductiveReferrals()}}
+					</span>
+					<span class="subinfo">
+						{{getProductiveReferralsPercentage()}}
+					</span>
 				</div>
 			</div>
-			<div class="col-lg-3 col-sm-6 col-xs-12">
-				<div class="main-box infographic-box">
+			<div class="col-md-3">
+				<div class="main-box infographic-box efs-infographic">
 					<i class="fa fa-user red-bg"></i>
 					<span class="headline">Total IPS</span>
 					<span class="value">
@@ -29,8 +30,8 @@
 					</span>
 				</div>
 			</div>
-			<div class="col-lg-3 col-sm-6 col-xs-12">
-				<div class="main-box infographic-box">
+			<div class="col-md-3">
+				<div class="main-box infographic-box efs-infographic">
 					<i class="fa fa-shopping-cart emerald-bg"></i>
 					<span class="headline">Total PC</span>
 					<span class="value">
@@ -40,8 +41,8 @@
 					</span>
 				</div>
 			</div>
-			<div class="col-lg-3 col-sm-6 col-xs-12">
-				<div class="main-box infographic-box">
+			<div class="col-md-3">
+				<div class="main-box infographic-box efs-infographic">
 					<i class="fa fa-money green-bg"></i>
 					<span class="headline">Total Insurance</span>
 					<span class="value">
@@ -50,39 +51,32 @@
 					</span>
 				</div>
 			</div>
+		</div>
+		<div class="row" ng-show="mostTotalClients && mostProductiveReferrals && highestPercentageProductiveReferrals">
 			<div class="col-lg-12">
-				<div class="main-box clearfix">
+				<div class="main-box clearfix productive-referrals-callout">
 					<header class="main-box-header clearfix">
 						<h2>All-Star Team Members</h2>
 					</header>
 					<div class="main-box-body clearfix">
 						<ul class="widget-users row">
 							<li class="col-md-4">
-								<div class="details">
-									<div class="name">
-										Most Total Clients
-									</div>
-									{{mostTotalClients.user.fullName}}<br />
-									{{mostTotalClients.callout}} Clients
-								</div>
+								<strong>Most Total Clients</strong><br />
+								{{mostTotalClients.user.fullName}}<br />
+								{{mostTotalClients.callout}} Clients<br />
+								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
 							</li>
 							<li class="col-md-4">
-								<div class="details">
-									<div class="name">
-										Most Productive Referrals
-									</div>
-									{{mostProductiveReferrals.user.fullName}}<br />
-									{{mostProductiveReferrals.callout}} Referrals
-								</div>
+								<strong>Most Productive Referrals</strong><br />
+								{{mostProductiveReferrals.user.fullName}}<br />
+								{{mostProductiveReferrals.callout}} Referrals<br />
+								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
 							</li>
 							<li class="col-md-4">
-								<div class="details">
-									<div class="name">
-										Highest Percentage of Productive Referrals
-									</div>
-									{{highestPercentageProductiveReferrals.user.fullName}}<br />
-									{{highestPercentageProductiveReferrals.callout | number : 2}}%
-								</div>
+								<strong>Highest Percentage of Productive Referrals</strong><br />
+								{{highestPercentageProductiveReferrals.user.fullName}}<br />
+								{{highestPercentageProductiveReferrals.callout | number : 2}}%<br />
+								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
 							</li>
 						</ul>
 					</div>
