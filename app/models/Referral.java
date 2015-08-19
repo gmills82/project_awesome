@@ -78,6 +78,7 @@ public class Referral extends Model implements HistoryRecord {
 		return finder.where().eq("user_id", assigneeId).ge("dateCreated", range).findList();
 	}
 
+
 	/**
 	 * Used to find referrals assigned to a user that have next step dates within a specified date range. Filters out Appts
 	 * @param userId

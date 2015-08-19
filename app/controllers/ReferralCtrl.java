@@ -121,7 +121,7 @@ public class ReferralCtrl extends Controller {
 		List<Referral> currentUsersRefs = Referral.getByUserIdNotInFuture(currentUser.id, startDate);
 
 		//Filter Referrals to only the ones we care about - Status = "OPEN"
-		List<Referral> freshReferrals = filter(having(on(Referral.class).status, equalTo("OPEN")), currentUsersRefs);
+		List<Referral> freshReferrals = filter(having(on(Referral.class).getRecordStatus(), equalTo("OPEN")), currentUsersRefs);
 
 		//TODO: More caching cleanup needed
 		String etag = ((Integer) freshReferrals.hashCode()).toString();
@@ -170,7 +170,7 @@ public class ReferralCtrl extends Controller {
 		List<Referral> currentUsersRefs = Referral.getReferralsByIdInRange(currentUser.id, startDate, endDate);
 
 		//Filter Referrals to only the ones we care about - Status = "OPEN"
-		List<Referral> freshReferrals = filter(having(on(Referral.class).status, equalTo("OPEN")), currentUsersRefs);
+		List<Referral> freshReferrals = filter(having(on(Referral.class).getRecordStatus(), equalTo("OPEN")), currentUsersRefs);
 
 		//Etag caching
 		String etag = ((Integer) freshReferrals.hashCode()).toString();
@@ -220,7 +220,7 @@ public class ReferralCtrl extends Controller {
 		List<Referral> currentUsersRefs = Referral.getApptsByIdInRange(currentUser.id, startDate, endDate);
 
 		//Filter Referrals to only the ones we care about - Status = "OPEN"
-		List<Referral> freshReferrals = filter(having(on(Referral.class).status, equalTo("OPEN")), currentUsersRefs);
+		List<Referral> freshReferrals = filter(having(on(Referral.class).getRecordStatus(), equalTo("OPEN")), currentUsersRefs);
 
 		//Etag caching
 		String etag = ((Integer) freshReferrals.hashCode()).toString();
