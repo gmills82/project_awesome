@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-9">
         <div ng-controller="StatsController" class="main-box">
             <div stat-time-directive class="main-box-header clearfix main-box-header"></div>
 
@@ -21,6 +21,19 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="main-box quick-links">
+            <div class="main-box-header">
+                <h2>Quick Links</h2>
+            </div>
+            <div class="main-box-body">
+                <ul class="">
+                    <li><a class="btn btn-primary" href="@routes.Application.referral()">Create Client Referral</a></li>
+                    <li><a class="btn btn-primary" href="@routes.Application.clients()">Search Existing Clients</a></li>
+                </ul>
             </div>
         </div>
     </div>
