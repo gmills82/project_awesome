@@ -12,11 +12,13 @@
 
     <div class="row">
         <div class="col-lg-12">
-            <h1>Your Dashboard</h1>
+            <div id="content-header" class="clearfix">
+                <h1>Your Dashboard</h1>
+            </div>
         </div>
     </div>
 
-    @*TODO: Break into separate views based on user roleType*@
+    @*Break into separate views based on user roleType*@
     @if(user.roleType.getPermissionLevel.equals(0)) {
         @efsDashboard()
     }
