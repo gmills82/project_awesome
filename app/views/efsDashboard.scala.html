@@ -52,7 +52,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="row" ng-show="mostTotalClients && mostProductiveReferrals && highestPercentageProductiveReferrals">
+		<div class="row" ng-show="mostTotalClients">
 			<div class="col-lg-12">
 				<div class="main-box clearfix productive-referrals-callout">
 					<header class="main-box-header clearfix">
@@ -66,13 +66,13 @@
 								{{mostTotalClients.callout}} Clients<br />
 								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
 							</li>
-							<li class="col-md-4">
+							<li class="col-md-4" ng-show="mostProductiveReferrals.callout">
 								<strong>Most Productive Referrals</strong><br />
 								{{mostProductiveReferrals.user.fullName}}<br />
 								{{mostProductiveReferrals.callout}} Referrals<br />
 								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
 							</li>
-							<li class="col-md-4">
+							<li class="col-md-4" ng-show="highestPercentageProductiveReferrals.callout">
 								<strong>Highest Percentage of Productive Referrals</strong><br />
 								{{highestPercentageProductiveReferrals.user.fullName}}<br />
 								{{highestPercentageProductiveReferrals.callout | number : 2}}%<br />
