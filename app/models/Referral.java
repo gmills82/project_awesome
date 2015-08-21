@@ -148,6 +148,19 @@ public class Referral extends Model implements HistoryRecord {
 		return finder.where().in("creator_id", creatorIds).findList();
 	}
 
+    /**
+     Returns a list of referrals whose creator ID is found in the provided list
+
+     @param creatorIds List of creator IDs
+     @return List of referrals
+     */
+    public static List<Referral> getByCreatorIdsBetweenDates(List<Long> creatorIds, Date fromDate, Date toDate) {
+        return finder.where()
+                .in("creator_id", creatorIds)
+                .between("date_created", fromDate.getTime(), toDate.getTime())
+                .findList();
+    }
+
 	public static Integer getCountBetweenDates(Date fromDate, Date toDate) {
         return getCountBetweenDates(null, fromDate, toDate);
     }
