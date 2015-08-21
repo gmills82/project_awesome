@@ -7,7 +7,7 @@ app.controller('AgentStatsController', ["$scope", "$http", function($scope, $htt
      @param     {Object}    [data]      The data to populate the modules with
      */
     var _populateData = function (data) {
-        data = data || {data: {}};
+        data = (data && data.data) ? data : {data: {}};
         var totalReferrals = parseFloat(data.data.totalReferrals || 0),
             totalProductiveReferrals = parseFloat(data.data.totalProductiveReferrals || 0),
             percentageProductiveReferrals = Math.round((totalProductiveReferrals / totalReferrals) * 100);

@@ -7,7 +7,7 @@ app.controller('EfsStatsController', ["$scope", "$http", function($scope, $http)
      @param     {Object}    [data]      The data to populate the modules with
      */
     var _populateData = function (data) {
-        data = data || {data: {}};
+        data = (data && data.data) ? data : {data: {}};
         var totalReferrals = parseFloat(data.data.totalReferrals || 0),
             totalProductiveReferrals = parseFloat(data.data.totalProductiveReferrals || 0),
             totalIPS = parseFloat(data.data.totalIPS || 0),
