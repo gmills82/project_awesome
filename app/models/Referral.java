@@ -381,7 +381,7 @@ public class Referral extends Model implements HistoryRecord {
 
     public static List<Referral> getByUserIdsBetweenDates(List<Long> userIds, Date fromDate, Date toDate) {
         return finder.where()
-                .in("creator_id", userIds)
+                .in("user_id", userIds)
                 .between("date_created", fromDate.getTime(), toDate.getTime())
                 .findList();
     }
