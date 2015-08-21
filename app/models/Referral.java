@@ -287,6 +287,9 @@ public class Referral extends Model implements HistoryRecord {
         ProducerCallout callout = new ProducerCallout();
         callout.setUser(user);
         callout.setCallout(count.floatValue());
+        if (user.parent_team_member != null) {
+            callout.setSupervisor(UserModel.getById(user.parent_team_member.id));
+        }
         return callout;
     }
 
@@ -352,6 +355,9 @@ public class Referral extends Model implements HistoryRecord {
                     callout.setUser(user);
                 }
             }
+        }
+        if (callout.getUser() != null && callout.getUser().parent_team_member != null) {
+            callout.setSupervisor(UserModel.getById(callout.getUser().parent_team_member.id));
         }
         return callout;
     }

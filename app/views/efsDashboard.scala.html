@@ -61,22 +61,31 @@
 					<div class="main-box-body clearfix">
 						<ul class="widget-users row">
 							<li class="col-md-4">
-								<strong>Most Total Clients</strong><br />
-								{{mostTotalClients.user.fullName}}<br />
-								{{mostTotalClients.callout}} Clients<br />
-								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
+								<i class="fa fa-users" style="color: #e7ebee;font-size: 35px;float: left;"></i>
+								<div class="details">
+									<strong>Most Total Clients</strong><br />
+									{{mostTotalClients.user.fullName}}<br />
+									{{mostTotalClients.callout}} Clients<br />
+									Supervising Agent: {{mostTotalClients.supervisor.fullName}}
+								</div>
 							</li>
 							<li class="col-md-4" ng-show="mostProductiveReferrals.callout">
-								<strong>Most Productive Referrals</strong><br />
-								{{mostProductiveReferrals.user.fullName}}<br />
-								{{mostProductiveReferrals.callout}} Referrals<br />
-								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
+								<i class="fa fa-cogs" style="color: #e7ebee;font-size: 35px;float: left;"></i>
+								<div class="details">
+									<strong>Most Productive Referrals</strong><br />
+									{{mostProductiveReferrals.user.fullName}}<br />
+									{{mostProductiveReferrals.callout}} Referrals<br />
+									Supervising Agent: {{mostProductiveReferrals.supervisor.fullName}}
+								</div>
 							</li>
 							<li class="col-md-4" ng-show="highestPercentageProductiveReferrals.callout">
-								<strong>Highest Percentage of Productive Referrals</strong><br />
-								{{highestPercentageProductiveReferrals.user.fullName}}<br />
-								{{highestPercentageProductiveReferrals.callout | number : 2}}%<br />
-								Supervising Agent: {{mostTotalClients.supervisor.fullName}}
+								<i class="fa fa-trophy" style="color: #e7ebee;font-size: 35px;float: left;"></i>
+								<div class="details">
+									<strong>Highest Percentage of Productive Referrals</strong><br />
+									{{highestPercentageProductiveReferrals.user.fullName}}<br />
+									{{highestPercentageProductiveReferrals.callout | number : 2}}%<br />
+									Supervising Agent: {{highestPercentageProductiveReferrals.supervisor.fullName}}
+								</div>
 							</li>
 						</ul>
 					</div>
