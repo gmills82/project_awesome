@@ -288,6 +288,9 @@ public class Referral extends Model implements HistoryRecord {
         ProducerCallout callout = new ProducerCallout();
         callout.setUser(user);
         callout.setCallout(count.floatValue());
+        if (user.parent_team_member != null) {
+            callout.setSupervisor(UserModel.getById(user.parent_team_member.id));
+        }
         return callout;
     }
 
@@ -354,6 +357,9 @@ public class Referral extends Model implements HistoryRecord {
                 }
             }
         }
+        if (callout.getUser() != null && callout.getUser().parent_team_member != null) {
+            callout.setSupervisor(UserModel.getById(callout.getUser().parent_team_member.id));
+        }
         return callout;
     }
 
@@ -376,7 +382,7 @@ public class Referral extends Model implements HistoryRecord {
 
     public static List<Referral> getByUserIdsBetweenDates(List<Long> userIds, Date fromDate, Date toDate) {
         return finder.where()
-                .in("creator_id", userIds)
+                .in("user_id", userIds)
                 .between("date_created", fromDate.getTime(), toDate.getTime())
                 .findList();
     }

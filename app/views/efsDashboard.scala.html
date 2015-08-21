@@ -52,7 +52,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="row" ng-show="mostTotalClients && mostProductiveReferrals && highestPercentageProductiveReferrals">
+                <div class="row" ng-show="mostTotalClients">
                     <div class="mid-box-header">
                         <h2 class="col-lg-12">All-Star Team Members</h2>
                     </div>
@@ -77,7 +77,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" ng-show="mostProductiveReferrals.callout">
                         <div class=" clearfix">
                             <div class=" clearfix profile-box-contact">
                                 <div class=" clearfix">
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" ng-show="highestPercentageProductiveReferrals.callout">
                         <div class=" clearfix">
                             <div class=" clearfix profile-box-contact">
                                 <div class=" clearfix">

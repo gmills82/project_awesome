@@ -97,6 +97,10 @@ public class StatsController extends Controller {
 
         // Get the agent's team members
         List<Long> userIds = agent.getChildTeamMembers().stream().map(childMember -> childMember.id).collect(Collectors.toList());
+        if (userIds == null) {
+            userIds = new ArrayList<>();
+        }
+        userIds.add(agentId);
         List<Referral> referrals = Referral.getByUserIdsBetweenDates(userIds, fromDate, toDate);
         List<Referral> productiveReferrals = referrals.stream().filter(referral -> referral.wasProductive).collect(Collectors.toList());
 

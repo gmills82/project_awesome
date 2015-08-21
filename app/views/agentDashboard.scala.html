@@ -36,17 +36,17 @@
                                     {{mostTotalClients.callout}} Clients<br />
                                     Supervising Agent: {{mostTotalClients.supervisor.fullName}}
                                 </li>
-                                <li class="col-md-4">
+                                <li class="col-md-4" ng-show="mostProductiveReferrals.callout">
                                     <strong>Most Productive Referrals</strong><br />
                                     {{mostProductiveReferrals.user.fullName}}<br />
                                     {{mostProductiveReferrals.callout}} Referrals<br />
-                                    Supervising Agent: {{mostTotalClients.supervisor.fullName}}
+                                    Supervising Agent: {{mostProductiveReferrals.supervisor.fullName}}
                                 </li>
-                                <li class="col-md-4">
+                                <li class="col-md-4" ng-show="highestPercentageProductiveReferrals.callout">
                                     <strong>Highest Percentage of Productive Referrals</strong><br />
                                     {{highestPercentageProductiveReferrals.user.fullName}}<br />
                                     {{highestPercentageProductiveReferrals.callout | number : 2}}%<br />
-                                    Supervising Agent: {{mostTotalClients.supervisor.fullName}}
+                                    Supervising Agent: {{highestPercentageProductiveReferrals.supervisor.fullName}}
                                 </li>
                             </ul>
                         </div>
