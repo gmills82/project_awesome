@@ -20,5 +20,7 @@ public interface HistoryRecord extends Comparable<HistoryRecord> {
 
 	public String getNotes();
 
+	public String getCreatorName();
+
 	public int compareTo(HistoryRecord o);
 }

@@ -52,6 +52,7 @@
                                     <th>Type of Interaction</th>
                                     <th>Date of Last Interaction</th>
                                     <th>Status</th>
+                                    <th>Referrer</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -61,6 +62,7 @@
                                     <td>@historyRecords(index).getRecordType</td>
                                     <td>@historyRecords(index).getDateOfLastInteractionString</td>
                                     <td><status-label status="'@historyRecords(index).getRecordStatus'"></status-label></td>
+                                    <td>@historyRecords(index).getCreatorName</td>
                                     <td>
                                         @if(historyRecords(index).getLink != null) {
                                             <a href="@historyRecords(index).getLink">

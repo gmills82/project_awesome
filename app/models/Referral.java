@@ -520,4 +520,10 @@ public class Referral extends Model implements HistoryRecord {
     public void settIps(Integer tIps) {
         this.tIps = tIps;
     }
+
+	@Override
+	public String getCreatorName() {
+		UserModel creator = UserModel.getById(this.creatorId);
+		return creator.getFullName();
+	}
 }
