@@ -18,7 +18,7 @@ app.controller('ProducerStatsController', ["$scope", "$http", function($scope, $
         $scope.percentageProductiveReferrals = percentageProductiveReferrals;
 
         $scope.getProductiveReferrals = function () {
-            var desc = (totalProductiveReferrals === 1) ? "Productive Referral" : "Productive Referrals";
+            var desc = (totalProductiveReferrals === 1) ? "Referrals Were Productive" : "Referrals Were Productive";
             return totalProductiveReferrals + " " + desc;
         };
 
