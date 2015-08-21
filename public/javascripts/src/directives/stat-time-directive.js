@@ -23,6 +23,7 @@ app.directive('statTimeDirective', ['$timeout', function($timeout) {
     return {
         restrict: 'A',
         controller: 'StatsController',
+        transclude: true,
         templateUrl: "/assets/javascripts/src/views/stat-time-view.html",
         link: function(scope, element, attrs, StatsController) {
 

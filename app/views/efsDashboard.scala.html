@@ -1,7 +1,9 @@
 <div class="row">
     <div class="col-lg-12">
         <div ng-controller="StatsController" class="main-box">
-            <div stat-time-directive class="main-box-header clearfix"></div>
+            <div stat-time-directive class="main-box-header clearfix">
+				Your Team's Metrics for {{timeDisplay}}
+			</div>
             <div ng-controller="EfsStatsController" ng-cloak class="main-box-body clearfix">
                 <div class="row">
                     <div class="col-md-3">
