@@ -1,4 +1,6 @@
-<h2 class="pull-left">Metrics for {{timeDisplay}}</h2>
+<h2 class="pull-left">
+    <div ng-transclude></div>
+</h2>
 <div class="btn-group stat-time-toggles pull-right">
     <button type="button" class="btn btn-default stat-button" ng-click="toggleDate($event, 'week')">Last Week</button>
     <button type="button" class="btn btn-default stat-button" ng-click="toggleDate($event, 'month')">Last Month</button>

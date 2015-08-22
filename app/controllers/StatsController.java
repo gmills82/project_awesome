@@ -101,7 +101,7 @@ public class StatsController extends Controller {
             userIds = new ArrayList<>();
         }
         userIds.add(agentId);
-        List<Referral> referrals = Referral.getByUserIdsBetweenDates(userIds, fromDate, toDate);
+        List<Referral> referrals = Referral.getByCreatorIdsBetweenDates(userIds, fromDate, toDate);
         List<Referral> productiveReferrals = referrals.stream().filter(referral -> referral.wasProductive).collect(Collectors.toList());
 
         // Populate the data

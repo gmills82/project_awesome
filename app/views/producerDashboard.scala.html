@@ -1,8 +1,9 @@
 <div class="row">
     <div class="col-lg-9">
         <div ng-controller="StatsController" class="main-box">
-            <div stat-time-directive class="main-box-header clearfix main-box-header"></div>
-
+            <div stat-time-directive class="main-box-header clearfix main-box-header">
+				Your Metrics for {{timeDisplay}}
+			</div>
             <div ng-controller="ProducerStatsController" ng-cloak class="main-box-body">
                 <div class="row">
                     <div class="col-lg-3 col-sm-6 col-xs-12">

@@ -2,7 +2,9 @@
     <div class="col-lg-12">
         <div ng-controller="StatsController" class="col-lg-12 main-box">
 
-        <div stat-time-directive class="main-box-header"></div>
+        <div stat-time-directive class="main-box-header">
+			Agency Metrics for {{timeDisplay}}
+		</div>
 
         <div ng-controller="AgentStatsController" ng-cloak class="main-box-body">
             <div class="row">
