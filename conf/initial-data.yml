@@ -51,18 +51,3 @@
     actionURL: /action/agents
     shortDescription: Track which agents send you the most profitable referrals
     category: tracking
-
-- !!models.Script
-    type: normal
-    heading: We're moving
-    body: Please read this script 111
-
-- !!models.Script
-    type: normal
-    heading: My spouse died
-    body: Please read this script 222
-
-- !!models.Script
-    type: normal
-    heading: Inheritance
-    body: Please read this script 333
