@@ -107,3 +107,7 @@
   padding-left: 0;
   margin-top: 4px;
 }
+.panel-collapse .refer-btn {
+  padding: 0 15px 10px;
+  text-align: right;
+}
