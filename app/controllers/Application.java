@@ -193,6 +193,14 @@ public class Application extends Controller {
 		return ok();
 	}
 
+	public static Result passwordChange() {
+		UserModel currentUser = getCurrentUser();
+		if(null != currentUser) {
+			return ok(passwordChange.render(currentUser));
+		}
+		return redirect(routes.Application.login());
+	}
+
 
 	public static class Login {
         public String userName;
