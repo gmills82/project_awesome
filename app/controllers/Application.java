@@ -25,8 +25,7 @@ public class Application extends Controller {
     public static Result producerScript() {
         UserModel currentUser = getCurrentUser();
         if(null != currentUser) {
-            List<Script> scriptList = Script.getAll();
-            return ok(producerScript.render(currentUser, scriptList));
+            return ok(producerScript.render(currentUser));
         }
         return redirect(routes.Application.login());
     }
