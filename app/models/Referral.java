@@ -179,6 +179,13 @@ public class Referral extends Model implements HistoryRecord {
         return finder.where().between("date_created", fromDate.getTime(), toDate.getTime()).findRowCount();
     }
 
+    public static Integer getCountBetweenDatesByCreatorIds(List<Long> creatorIds, Date fromDate, Date toDate) {
+        return finder.where()
+                .between("date_created", fromDate.getTime(), toDate.getTime())
+                .in("creator_id", creatorIds)
+                .findRowCount();
+    }
+
     public static Integer getProductiveCountBetweenDates(Long userId, Date fromDate, Date toDate) {
         if (userId != null) {
             return finder.where()
@@ -211,13 +218,32 @@ public class Referral extends Model implements HistoryRecord {
         return referral;
     }
 
+    public static Referral getTotalsBetweenDatesByCreatorIds(List<Long> creatorIds, Date fromDate, Date toDate) {
+        String sql = "SELECT SUM(t_ips) AS totalIPS, SUM(t_pc) AS totalPC, SUM(t_insurance) AS totalInsurance FROM referral WHERE creator_id IN (:creatorIds) AND date_created BETWEEN :fromDate AND :toDate;";
+
+        List<SqlRow> sqlRows = Ebean.createSqlQuery(sql)
+                .setParameter("creatorIds", creatorIds)
+                .setParameter("fromDate", fromDate.getTime())
+                .setParameter("toDate", toDate.getTime())
+                .findList();
+
+        SqlRow sqlRow = sqlRows.get(0);
+
+        Referral referral = new Referral();
+        referral.settInsurance(sqlRow.getInteger("totalInsurance"));
+        referral.settIps(sqlRow.getInteger("totalIPS"));
+        referral.settPc(sqlRow.getInteger("totalPC"));
+
+        return referral;
+    }
+
     public static ProducerCallout getByMostTotalClients(List<Long> creatorIds, Date fromDate, Date toDate) {
 
         List<SqlRow> sqlRows;
 
         if (creatorIds == null) {
 
-            String sql = "SELECT referral.creator_id, COUNT(referral.*) FROM referral LEFT JOIN user_model ON referral.creator_id = user_model.id WHERE referral.date_created BETWEEN :fromDate AND :toDate AND user_model.role_type = 2 GROUP BY referral.creator_id ORDER BY COUNT(referral.*) DESC;";
+            String sql = "SELECT referral.creator_id, COUNT(referral.*) FROM referral LEFT JOIN user_model ON referral.creator_id = user_model.id WHERE referral.date_created BETWEEN :fromDate AND :toDate GROUP BY referral.creator_id ORDER BY COUNT(referral.*) DESC;";
 
             sqlRows = Ebean.createSqlQuery(sql)
                     .setParameter("fromDate", fromDate.getTime())
@@ -225,7 +251,7 @@ public class Referral extends Model implements HistoryRecord {
                     .findList();
         } else {
 
-            String sql = "SELECT referral.creator_id, COUNT(referral.*) FROM referral LEFT JOIN user_model ON referral.creator_id = user_model.id WHERE referral.date_created BETWEEN :fromDate AND :toDate AND user_model.role_type = 2 AND referral.creator_id IN (:creatorIds) GROUP BY referral.creator_id ORDER BY COUNT(referral.*) DESC;";
+            String sql = "SELECT referral.creator_id, COUNT(referral.*) FROM referral LEFT JOIN user_model ON referral.creator_id = user_model.id WHERE referral.date_created BETWEEN :fromDate AND :toDate AND referral.creator_id IN (:creatorIds) GROUP BY referral.creator_id ORDER BY COUNT(referral.*) DESC;";
 
             sqlRows = Ebean.createSqlQuery(sql)
                     .setParameter("fromDate", fromDate.getTime())

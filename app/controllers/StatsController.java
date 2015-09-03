@@ -36,25 +36,39 @@ public class StatsController extends Controller {
      @return EFS stats
      */
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result getEFSStats(Long fromTimestamp, Long toTimestamp) {
+    public static Result getEFSStats(Long efsId, Long fromTimestamp, Long toTimestamp) {
 
         // Generate dates from the provided timestamps
         Date fromDate = new Date(fromTimestamp);
         Date toDate = new Date(toTimestamp);
 
+        UserModel efs = UserModel.getById(efsId);
+        if (efs == null || efs.roleType != UserModel.Role.FA) {
+            return notFound(String.format("No EFS found matching ID %s", efsId));
+        }
+
+        List<Long> userIds = efs.getChildTeamMembers().stream().map(childMember -> childMember.id).collect(Collectors.toList());
+        if (userIds == null) {
+            userIds = new ArrayList<>();
+        }
+        userIds.add(efsId);
+        List<Referral> referrals = Referral.getByCreatorIdsBetweenDates(userIds, fromDate, toDate);
+        List<Referral> productiveReferrals = referrals.stream().filter(referral -> referral.wasProductive).collect(Collectors.toList());
+
         // Generate the models
-        Referral totals = Referral.getTotalsBetweenDates(fromDate, toDate);
+        Referral totals = Referral.getTotalsBetweenDatesByCreatorIds(userIds, fromDate, toDate);
         EFSStats stats = new EFSStats();
 
         // Populate the data
-        stats.setTotalReferrals(Referral.getCountBetweenDates(fromDate, toDate));
-        stats.setTotalProductiveReferrals(Referral.getProductiveCountBetweenDates(fromDate, toDate));
+        stats.setTotalReferrals(referrals.size());
+        stats.setTotalProductiveReferrals(productiveReferrals.size());
         stats.setTotalInsurance(totals.gettInsurance());
         stats.setTotalIPS(totals.gettIps());
         stats.setTotalPC(totals.gettPc());
-        stats.setMostTotalClients(Referral.getByMostTotalClients(null, fromDate, toDate));
-        stats.setMostProductiveReferrals(Referral.getByMostProductiveClients(null, fromDate, toDate));
-        stats.setHighestPercentageProductiveReferrals(Referral.getByMostProductiveClientsPercentage(null, fromDate, toDate));
+
+        stats.setMostTotalClients(Referral.getByMostTotalClients(userIds, fromDate, toDate));
+        stats.setMostProductiveReferrals(Referral.getByMostProductiveClients(userIds, fromDate, toDate));
+        stats.setHighestPercentageProductiveReferrals(Referral.getByMostProductiveClientsPercentage(userIds, fromDate, toDate));
 
         // Fill the return data and send it back
         JsonNode referralJson = Json.toJson(stats);

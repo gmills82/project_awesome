@@ -45,7 +45,7 @@ app.controller('EfsStatsController', ["$scope", "$http", function($scope, $http)
     $scope.$watch('fromDate', function() {
         var fromDate = parseFloat($scope.fromDate),
             toDate = parseFloat($scope.toDate);
-        $http({"method": "GET", "url": "/stats/efs/" + fromDate + "/" +  toDate})
+        $http({"method": "GET", "url": "/stats/efs/" + app.data.currentUserId + "/" + fromDate + "/" +  toDate})
             .success(function (data) {
                 _populateData(data);
             });
