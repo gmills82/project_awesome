@@ -47,10 +47,12 @@ public class StatsController extends Controller {
             return notFound(String.format("No EFS found matching ID %s", efsId));
         }
 
-        List<Long> userIds = efs.getChildTeamMembers().stream().map(childMember -> childMember.id).collect(Collectors.toList());
-        if (userIds == null) {
-            userIds = new ArrayList<>();
+        List<Long> userIds = new ArrayList<>();
+
+        for (UserModel model : UserModel.getChildUserModelsByParentAllLevels(efs)) {
+            userIds.add(model.id);
         }
+        
         userIds.add(efsId);
         List<Referral> referrals = Referral.getByCreatorIdsBetweenDates(userIds, fromDate, toDate);
         List<Referral> productiveReferrals = referrals.stream().filter(referral -> referral.wasProductive).collect(Collectors.toList());
