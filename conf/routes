@@ -18,6 +18,7 @@ GET           /editReferral/:referralId                    controllers.Applicati
 GET           /client/history/:clientId                    controllers.Application.clientHistory(clientId: Long)
 GET           /reports/daily-referrals                     controllers.Reports.dailyReferrals(date: Long ?= 0)
 GET           /action/password/change                      controllers.Application.passwordChange()
+POST          /action/password/change                      controllers.Application.passwordChangeSubmit()
 
 ## PDF Endpoints
 GET           /pdf/newAccount/:clientId                    controllers.PDFController.newAccount(clientId: Long)

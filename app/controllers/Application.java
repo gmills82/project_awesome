@@ -4,9 +4,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.*;
 import play.Logger;
 import play.cache.Cached;
+import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
 import play.mvc.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 import utils.MailUtilities;
 import utils.StatTotals;
@@ -197,6 +199,27 @@ public class Application extends Controller {
 		UserModel currentUser = getCurrentUser();
 		if(null != currentUser) {
 			return ok(passwordChange.render(currentUser));
+		}
+		return redirect(routes.Application.login());
+	}
+
+	public static Result passwordChangeSubmit() {
+		UserModel currentUser = getCurrentUser();
+		if(null != currentUser) {
+			DynamicForm dynamicForm = Form.form().bindFromRequest();
+			if(BCrypt.checkpw(dynamicForm.get("oldPassword"), currentUser.password)) {
+				//if oldPassword matches - change the password
+				String saltedPass = UserModel.saltPassword(dynamicForm.get("password"));
+				currentUser.password = saltedPass;
+				currentUser.update();
+				//Flash success message and return to dashboard
+				flash("success", "You password has been successfully changed.");
+				return redirect(routes.Application.home());
+			}else {
+				//else - return to old page with a flash error message
+				flash("error", "The password you entered was incorrect");
+				return ok(passwordChange.render(currentUser));
+			}
 		}
 		return redirect(routes.Application.login());
 	}
