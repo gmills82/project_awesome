@@ -122,7 +122,7 @@ public class UserModel extends Model {
 		if(null == user.parent_team_member) {
 			return user;
 		}else {
-			return UserModel.getTopParentUser(user);
+			return UserModel.getTopParentUser(user.parent_team_member);
 		}
 	}
 
