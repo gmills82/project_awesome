@@ -118,6 +118,13 @@ public class UserModel extends Model {
         return find.where().in("id", userIds).findList();
     }
 
+	public static UserModel getTopParentUser(UserModel user) {
+		if(null == user.parent_team_member) {
+			return user;
+		}else {
+			return UserModel.getTopParentUser(user);
+		}
+	}
 
 	/**
 	 * Recursively searches for all children and children of children users of the parent UserModel
@@ -163,6 +170,10 @@ public class UserModel extends Model {
     public static List<UserModel> getByPermissionLevel(Role roleType) {
         return find.where().eq("roleType", roleType.getPermissionLevel()).findList();
     }
+
+	public Integer getUserPermissionLevel() {
+		return this.roleType.getPermissionLevel();
+	}
 
     public static List<UserModel> getAll() {
         return find.all();
