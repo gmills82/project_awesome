@@ -251,18 +251,21 @@ public class Application extends Controller {
 	private static List<UserModel> gatherAssignableTeamMembers(UserModel currentUser) {
 		//List of agents should contain parent team members (Agents) and their parent team members (FA)
 		List<UserModel> assignableTeamMembers = new ArrayList<UserModel>();
-
-		//EFS and Agents are only assignable users, currently
-		//TODO: Eventually gather these by groupId
-		UserModel topParent = UserModel.getTopParentUser(currentUser);
-		if(null != topParent) {
-			assignableTeamMembers.add(topParent);
-			Set<UserModel> children = UserModel.getChildUserModelsByParentAllLevels(topParent);
-			if(null != children) {
-				//Filter by role level
-				List<UserModel> agentsAndEFS = filter(having(on(UserModel.class).getUserPermissionLevel(), lessThanOrEqualTo(1)), children);
-				assignableTeamMembers.addAll(agentsAndEFS);
+		//If this gets more complex make it recursive
+		if(null != currentUser.parent_team_member) {
+			assignableTeamMembers.add(currentUser.parent_team_member);
+			if(null != assignableTeamMembers.get(0).parent_team_member) {
+				assignableTeamMembers.add(assignableTeamMembers.get(0).parent_team_member);
 			}
+		}
+
+		//If currentUser is FA of Agent assignable to self
+		if(currentUser.roleType.getPermissionLevel() <= 1) {
+			assignableTeamMembers.add(currentUser);
+
+			//Get all descendant users
+			Set<UserModel> allAgents = UserModel.getChildUserModelsByParentAllLevels(currentUser);
+			assignableTeamMembers.addAll(allAgents);
 		}
 
 		return assignableTeamMembers;
