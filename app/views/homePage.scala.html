@@ -3,20 +3,20 @@
 
     <div class="row">
         <div class="col-lg-12">
-            @*Flash messages*@
-            @if(flash.contains("success")) {
-                <p class="alert alert-success">@flash.get("success")</p>
-            }
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12">
             <div id="content-header" class="clearfix">
                 <h1>Your Dashboard</h1>
             </div>
         </div>
     </div>
+
+	<div class="row">
+		<div class="col-lg-12">
+			@*Flash messages*@
+			@if(flash.contains("success")) {
+				<p class="alert alert-success">@flash.get("success")</p>
+			}
+		</div>
+	</div>
 
     @*Break into separate views based on user roleType*@
     @if(user.roleType.getPermissionLevel.equals(0)) {
