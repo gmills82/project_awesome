@@ -29,22 +29,33 @@ app.controller('ViewTeamReferralsController', ["$scope", "$http", "ngTableParams
 			}
 		}, {
 			getData: function($defer, params) {
-				$http({"method": "GET", "url": "/json/referrals/team/" + app.data.currentUserId}).success(function (data){
-					//Filter
-					var filteredData = params.filter() ?
-						$filter('filter')(data.data, params.filter()) :
-						data.data;
-					//Then sort
-					var orderedData = params.sorting() ?
-						$filter('orderBy')(filteredData, params.orderBy()) :
-						filteredData;
+
+                var requestParameters = {},
+                    filter = params.filter();
+                for (var key in filter) {
+                    if (filter.hasOwnProperty(key)) {
+                        requestParameters[key] = filter[key];
+                    }
+                }
+                requestParameters.sort = params.orderBy();
+                requestParameters.offset = (params.page() - 1) * params.count();
+                requestParameters.limit = params.count();
+
+				$http({
+                    "method": "GET",
+                    "url": "/json/referrals/team/" + app.data.currentUserId,
+                    params: requestParameters
+                }).success(function (data){
+
+                    var referrals = data.data.referrals,
+                        total = data.data.total;
 
 					//Pass out total to larger scope
-					$scope.total = orderedData.length;
-					params.total(orderedData.length);
+					$scope.total = total;
+					params.total(total);
 
 					//Create scope for RefType filter
-					angular.forEach(orderedData, function(item){
+					angular.forEach(referrals, function(item){
 						if (inArray(item.refType, $scope.arr) === -1) {
 							$scope.arr.push(item.refType);
 							$scope.teamRefs.push({
@@ -55,7 +66,7 @@ app.controller('ViewTeamReferralsController', ["$scope", "$http", "ngTableParams
 					});
 
 					//Resolve data gathering
-					$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
+					$defer.resolve(referrals);
 				});
 			}
 		});

@@ -49,6 +49,22 @@ public class Client extends Model {
 	@JsonManagedReference
     public List<Debt> debtList;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public static void addDebt(Client client, Debt debt) {
         client.debtList.add(debt);
     }
@@ -90,6 +106,16 @@ public class Client extends Model {
 
     public static Client getById(long id) {
         return find.byId(id);
+    }
+
+    /**
+     Returns the list of clients matching the provided IDs
+
+     @param ids Client ID list
+     @return Client list
+     */
+    public static List<Client> getByIds(List<Long> ids) {
+        return find.where().in("id", ids).findList();
     }
 
     /**

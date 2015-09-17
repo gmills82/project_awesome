@@ -58,6 +58,8 @@ public class Referral extends Model implements HistoryRecord {
 	public String advisorRecommendation;
     public Boolean wasProductive = false;
 
+    private Client client;
+
 
     public static Model.Finder<Long, Referral> finder = new Model.Finder(Long.class, Referral.class);
     public static Referral getById(Long id) {
@@ -428,15 +430,11 @@ public class Referral extends Model implements HistoryRecord {
 
 	@Override
 	public Long getDateOfLastInteraction() {
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-		Date d = null;
-		try {
-			d = f.parse(this.lastEditedDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
+        Date date = DateUtilities.normalizeDateString(this.lastEditedDate);
+        if (date == null) {
+            return null;
         }
-
-		return d.getTime();
+        return date.getTime();
 	}
 
 	@Override
@@ -451,6 +449,9 @@ public class Referral extends Model implements HistoryRecord {
 
 	@Override
 	public int compareTo(HistoryRecord historyRecord) {
+        if (historyRecord.getDateOfLastInteraction() == null) {
+            return 0;
+        }
 		if (historyRecord.getDateOfLastInteraction() > this.getDateOfLastInteraction()) {
 			return 1;
 		} else if (historyRecord.getDateOfLastInteraction() < this.getDateOfLastInteraction()) {
@@ -536,6 +537,15 @@ public class Referral extends Model implements HistoryRecord {
 		return new Date(this.dateCreated);
 	}
 
+    /**
+     Returns the referral type
+
+     @return Referral type
+     */
+    public String getRefType() {
+        return refType;
+    }
+
     public Integer gettInsurance() {
         return tInsurance;
     }
@@ -560,7 +570,23 @@ public class Referral extends Model implements HistoryRecord {
         this.tIps = tIps;
     }
 
-	@Override
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    @Override
 	public String getCreatorName() {
 		UserModel creator = UserModel.getById(this.creatorId);
 		return creator.getFullName();

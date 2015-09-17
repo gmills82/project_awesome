@@ -30,7 +30,6 @@ angular.module('project_awesome').filter('telly', function () {
 				break;
 			case 7: //####### -> (904) ###-####
 				country = "";
-				city = 904;
 				number = value;
 				break;
 			default:
@@ -42,7 +41,9 @@ angular.module('project_awesome').filter('telly', function () {
 		}
 
 		number = number.slice(0, 3) + '-' + number.slice(3);
-
-		return (country + " (" + city + ") " + number).trim();
+        if (city) {
+            return (country + " (" + city + ") " + number).trim();
+        }
+		return (country + number).trim();
 	};
 });

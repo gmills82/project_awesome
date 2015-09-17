@@ -9,7 +9,9 @@ import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import models.Client;
 import models.Referral;
+import models.ReferralList;
 import models.UserModel;
+import org.apache.commons.lang3.StringUtils;
 import play.Logger;
 import play.mvc.Controller;
 import play.data.Form;
@@ -17,14 +19,14 @@ import play.libs.Json;
 import play.mvc.*;
 import utils.DateUtilities;
 
+import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.stream.Collectors;
 
-import static ch.lambdaj.Lambda.filter;
-import static ch.lambdaj.Lambda.having;
-import static ch.lambdaj.Lambda.sort;
-import static ch.lambdaj.Lambda.on;
+import static ch.lambdaj.Lambda.*;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.startsWith;
 
 /**
  * User: grant.mills
@@ -277,27 +279,132 @@ public class ReferralCtrl extends Controller {
 		//Add referrals created by each team member
 		Set<Referral> allReferrals = gatherAllReferralsForTeam(teamMembers);
 
-		JsonNode allReferralsNode = gatherClientsForReferrals(allReferrals);
+        List<Referral> returnReferrals = new ArrayList<>(allReferrals);
+        Integer totalReferrals = returnReferrals.size();
 
-		//Match UserModel of the creator of the referral to the referral
-		for(int x = 0; x < allReferralsNode.size(); x++) {
-			//For each referral, iterate through teamMembers and attach them to referral
-			Iterator<UserModel> iter = teamMembers.iterator();
-			while(iter.hasNext()) {
-				UserModel tmp = iter.next();
-				if(allReferralsNode.hasNonNull(x) && allReferralsNode.get(x).hasNonNull("creatorId")) {
-					if(allReferralsNode.get(x).get("creatorId").longValue() == tmp.id) {
-						//Convert to Json
-						JsonNode tmpUserNode = Json.toJson(tmp);
-						ObjectNode tmpRefNode = (ObjectNode) allReferralsNode.get(x);
-						tmpRefNode.put("creator", tmpUserNode);
-					}
-				}
-			}
-		}
+        // Get all the clients for each of the referrals and put them into a map to be looked up and assigned to the
+        // appropriate referral.
+        Map<Long, Client> clientMap = new HashMap<>();
+        List<Client> clients = Client.getByIds(
+                allReferrals.stream().map(Referral::getClientId).collect(Collectors.toList())
+        );
+        for (Client client : clients) {
+            clientMap.put(client.getId(), client);
+        }
+        for (Referral referral : returnReferrals) {
+            referral.setClient(clientMap.get(referral.getClientId()));
+        }
+
+        // Filtering by client name...
+        String clientName = StringUtils.trimToNull(request().getQueryString("clientName"));
+        if (clientName != null) {
+
+            //  I <3 Java 8
+            returnReferrals = returnReferrals
+                    .stream()
+                    .filter(p -> p.getClientName().startsWith(clientName))
+                    .collect(Collectors.toList());
+        }
+
+        // Filtering by referral type...
+        String referralType = StringUtils.trimToNull(request().getQueryString("refType"));
+        if (referralType != null) {
+            returnReferrals = returnReferrals
+                    .stream()
+                    .filter(p -> p.getRefType().equalsIgnoreCase(referralType))
+                    .collect(Collectors.toList());
+        }
+
+        // Sorting...
+        // FIXME There has to be a better way to do this. Maybe with reflection?
+        String sort = StringUtils.trimToNull(request().getQueryString("sort"));
+        if (sort != null) {
+            Collections.sort(returnReferrals, (o1, o2) -> {
+
+                // Sort ascending if the first character is a '+'
+                Boolean asc = sort.substring(0, 1).equals("+");
+                String sortValue = sort.substring(1);
+
+                String property1 = null;
+                String property2 = null;
+
+                if (sortValue.equalsIgnoreCase("clientName")) {
+                    property1 = o1.getClientName().toLowerCase();
+                    property2 = o2.getClientName().toLowerCase();
+                }
+                else if (sortValue.equalsIgnoreCase("refType")) {
+                    property1 = o1.getRefType().toLowerCase();
+                    property2 = o2.getRefType().toLowerCase();
+                }
+
+                // String comparitors...
+                if (StringUtils.trimToNull(property1) != null && StringUtils.trimToNull(property2) != null) {
+                    if (asc) {
+                        return property1.compareTo(property2);
+                    }
+                    return property2.compareTo(property1);
+                }
+
+                Long long1 = null;
+                Long long2 = null;
+                if (sortValue.equalsIgnoreCase("nextStepDate")) {
+                    long1 = DateUtilities.normalizeDateString(o1.getNextStepDate()).getTime();
+                    long2 = DateUtilities.normalizeDateString(o2.getNextStepDate()).getTime();
+                }
+                else if (sortValue.equalsIgnoreCase("client.phoneNumber")) {
+                    if (o1.getClient() != null && StringUtils.trimToNull(o1.getClient().getPhoneNumber()) != null) {
+                        long1 = Long.valueOf(o1.getClient().getPhoneNumber().replaceAll("\\D+", ""));
+                    }
+                    if (o2.getClient() != null && StringUtils.trimToNull(o2.getClient().getPhoneNumber()) != null) {
+                        long2 = Long.valueOf(o2.getClient().getPhoneNumber().replaceAll("\\D+", ""));
+                    }
+                }
+                else if (sortValue.equalsIgnoreCase("tInsurance")) {
+                    long1 = Long.valueOf(o1.gettInsurance());
+                    long2 = Long.valueOf(o2.gettInsurance());
+                }
+                else if (sortValue.equalsIgnoreCase("tPc")) {
+                    long1 = Long.valueOf(o1.gettPc());
+                    long2 = Long.valueOf(o2.gettPc());
+                }
+                else if (sortValue.equalsIgnoreCase("tIps")) {
+                    long1 = Long.valueOf(o1.gettIps());
+                    long2 = Long.valueOf(o2.gettIps());
+                }
+
+                // Number comparitors
+                if (long1 != null && long2 != null) {
+                    if (asc) {
+                        return long1.compareTo(long2);
+                    }
+                    return long2.compareTo(long1);
+                }
+                return 0;
+            });
+        }
+
+        // Offset & limit
+        String offset = StringUtils.trimToNull(request().getQueryString("offset"));
+        String limit = StringUtils.trimToNull(request().getQueryString("limit"));
+        if (offset == null) {
+            offset = "0";
+        }
+        if (limit == null) {
+            limit = "10";
+        }
+
+        returnReferrals = returnReferrals
+                .stream()
+                .skip(Long.valueOf(offset))
+                .limit(Long.valueOf(limit))
+                .collect(Collectors.toList());
+
+        ReferralList referralList = new ReferralList();
+        referralList.setReferrals(returnReferrals);
+        referralList.setTotal(totalReferrals);
 
 		//Append to response
-		result.put("data", allReferralsNode);
+		result.put("data", new ObjectMapper().convertValue(referralList, JsonNode.class));
 
 		return ok(result);
 	}
