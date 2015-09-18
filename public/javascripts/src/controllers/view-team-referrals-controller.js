@@ -1,5 +1,5 @@
 //Referrals By Creator Controller
-app.controller('ViewTeamReferralsController', ["$scope", "$http", "ngTableParams", "$filter", function ($scope, $http, ngTableParams, $filter){
+app.controller('ViewTeamReferralsController', ["$scope", "$http", '$log', "ngTableParams", 'referralService', function ($scope, $http, $log, ngTableParams, referralService){
 	$scope.referrals = [];
 	$scope.teamRefs = [{'title': 'No Filter', 'id': ''}];
 	$scope.arr=[];
@@ -54,16 +54,22 @@ app.controller('ViewTeamReferralsController', ["$scope", "$http", "ngTableParams
 					$scope.total = total;
 					params.total(total);
 
-					//Create scope for RefType filter
-					angular.forEach(referrals, function(item){
-						if (inArray(item.refType, $scope.arr) === -1) {
-							$scope.arr.push(item.refType);
-							$scope.teamRefs.push({
-								'id': item.refType,
-								'title': item.refType
-							});
-						}
-					});
+                    // Look up the referral types from the service to populate the filter dropdown
+                    referralService.getReferralTypes(function (error, data) {
+                        if (error || !data) {
+                            $log.error("Error getting referral types.", error || "No data returned from the service.");
+                            return;
+                        }
+
+                        // Why do we have to loop through each referral type and push it into the array here? Concatting
+                        // the teamRefs array with the data object didn't work.
+                        angular.forEach(data, function (type) {
+                            $scope.teamRefs.push({
+                                'id': type.id,
+                                'title': type.title
+                            });
+                        });
+                    });
 
 					//Resolve data gathering
 					$defer.resolve(referrals);

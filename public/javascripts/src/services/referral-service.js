@@ -71,5 +71,46 @@ app.factory('referralService', ['$http', '$log', 'clientService', function($http
 		}).error(errorMessaging);
 	};
 
+    /**
+     Returns the possible referral types. This list is small right now, so making it static isn't a big deal. However,
+     if it starts becoming difficult to maintain, we can move the list to the server so it can be managed in a single place.
+
+     @param {Function} [callback] Callback method
+     */
+    service.getReferralTypes = function (callback) {
+        if (typeof callback === 'function') {
+            callback(null, [
+                {
+                    'id': 'Callout',
+                    'title': 'Callout'
+                },
+                {
+                    'id': 'Appt',
+                    'title': 'Appointment'
+                },
+                {
+                    'id': 'Quote',
+                    'title': 'Quote'
+                },
+                {
+                    'id': 'Profiles Review',
+                    'title': 'Profiles Review'
+                },
+                {
+                    'id': 'Declined',
+                    'title': 'Declined'
+                },
+                {
+                    'id': 'Follow Up',
+                    'title': 'Follow Up'
+                },
+                {
+                    'id': 'Seminar',
+                    'title': 'Seminar'
+                }
+            ]);
+        }
+    };
+
 	return service;
 }]);

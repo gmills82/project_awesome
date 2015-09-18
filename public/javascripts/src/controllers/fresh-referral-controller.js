@@ -1,5 +1,5 @@
 //Fresh Referral Controller
-app.controller('FreshReferralController', ["$scope", "$http", "ngTableParams", "$filter", function ($scope, $http, ngTableParams, $filter){
+app.controller('FreshReferralController', ["$scope", "$http", '$log', "ngTableParams", "$filter", 'referralService', function ($scope, $http, $log, ngTableParams, $filter, referralService){
 	$scope.referrals = [];
 	$scope.freshRefTypes = [{'title': 'No Filter', 'id': ''}];
 	$scope.arr=[];
@@ -40,16 +40,19 @@ app.controller('FreshReferralController', ["$scope", "$http", "ngTableParams", "
 					$scope.freshReferraltotal = orderedData.length;
 					params.total(orderedData.length);
 
-					//Create scope for RefType filter
-					angular.forEach(orderedData, function(item){
-						if (inArray(item.refType, $scope.arr) === -1) {
-							$scope.arr.push(item.refType);
-							$scope.freshRefTypes.push({
-								'id': item.refType,
-								'title': item.refType
-							});
-						}
-					});
+                    // Look up the referral types from the service to populate the filter dropdown
+                    referralService.getReferralTypes(function (error, data) {
+                        if (error || !data) {
+                            $log.error("Error getting referral types.", error || "No data returned from the service.");
+                            return;
+                        }
+                        angular.forEach(data, function (type) {
+                            $scope.freshRefTypes.push({
+                                'id': type.id,
+                                'title': type.title
+                            });
+                        });
+                    });
 
 					//Resolve data gathering
 					$defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
