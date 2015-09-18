@@ -7,6 +7,7 @@ import play.Logger;
 import play.db.ebean.Model;
 import utils.DateUtilities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
@@ -58,7 +59,15 @@ public class Referral extends Model implements HistoryRecord {
 	public String advisorRecommendation;
     public Boolean wasProductive = false;
 
+    /**
+     Reference to the full client.
+     */
     private Client client;
+
+    /**
+     Whether or not the client kept their appointment
+     */
+    private Boolean apptKept;
 
 
     public static Model.Finder<Long, Referral> finder = new Model.Finder(Long.class, Referral.class);
@@ -428,6 +437,22 @@ public class Referral extends Model implements HistoryRecord {
                 .findList();
     }
 
+    public static void setApptKeptById(Long id, Boolean apptKept) {
+        if (apptKept == null) {
+            Ebean
+                    .createUpdate(Referral.class, "UPDATE referral SET apptKept = null WHERE id=:id")
+                    .setParameter("id", id)
+                    .execute();
+        }
+        else {
+            Ebean
+                    .createUpdate(Referral.class, "UPDATE referral SET apptKept = :apptKept WHERE id=:id")
+                    .setParameter("apptKept", apptKept)
+                    .setParameter("id", id)
+                    .execute();
+        }
+    }
+
 	@Override
 	public Long getDateOfLastInteraction() {
         Date date = DateUtilities.normalizeDateString(this.lastEditedDate);
@@ -584,6 +609,14 @@ public class Referral extends Model implements HistoryRecord {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Boolean getApptKept() {
+        return apptKept;
+    }
+
+    public void setApptKept(Boolean apptKept) {
+        this.apptKept = apptKept;
     }
 
     @Override

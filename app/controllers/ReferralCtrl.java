@@ -82,6 +82,13 @@ public class ReferralCtrl extends Controller {
 		}
 
 		referral.update();
+
+        // EBeans treat null values as "unloaded" as a protection against unset fields in updates. In this case, we want
+        // to watch for a null value, so we'll make an extra query if that's the case.
+        if (referral.getApptKept() == null) {
+            Referral.setApptKeptById(referral.id, referral.getApptKept());
+        }
+
 		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
 
 		return ok();
