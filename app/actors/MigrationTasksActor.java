@@ -59,22 +59,22 @@ public class MigrationTasksActor extends UntypedActor {
         for (Referral referral : Referral.getAll()) {
 
             // If the referral has no notes, we don't need to migrate anything
-            if (StringUtils.trimToNull(referral.getNotes()) == null) {
+            if (StringUtils.trimToNull(referral.getRefNotes()) == null) {
                 continue;
             }
 
             ReferralNote note = new ReferralNote();
             note.setCreatedDate(DateUtilities.normalizeDateString(referral.getDateOfLastInteractionString()));
             note.setReferralId(referral.id);
-            note.setNote(referral.getNotes());
+            note.setNote(referral.getRefNotes());
             note.save();
 
             referral.setRefNotes(null);
-            referral.update();
+//            referral.update();
         }
     }
 
-    
+
     private void runNextStepsTimestampMigration() {
         for (Referral referral : Referral.getAll()) {
             referral.setNextStepDate(referral.getNextStepDate());

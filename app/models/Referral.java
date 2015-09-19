@@ -129,7 +129,7 @@ public class Referral extends Model implements HistoryRecord {
 	}
 
 	public static List<Referral> getByClientId(Long id) {
-		return finder.where().eq("clientId", id).findList();
+		return populateReferralData(finder.where().eq("clientId", id).findList());
 	}
 	public static List<Referral> getByDate(Date date) {
 		//If referral is from that date
@@ -495,10 +495,10 @@ public class Referral extends Model implements HistoryRecord {
 		return this.status;
 	}
 
-	@Override
-	public String getNotes() {
-		return this.refNotes;
-	}
+    @Override
+    public List<ReferralNote> getNotes() {
+        return this.referralNotes;
+    }
 
     public void setRefNotes(String refNotes) {
         this.refNotes = refNotes;
@@ -641,4 +641,25 @@ public class Referral extends Model implements HistoryRecord {
 		UserModel creator = UserModel.getById(this.creatorId);
 		return creator.getFullName();
 	}
+
+    private static List<Referral> populateReferralData(List<Referral> referrals) {
+        if (referrals == null || referrals.size() == 0) {
+            return referrals;
+        }
+
+        // Loop through each of the referrals and set their respective referral notes
+        for (Referral referral : referrals) {
+            referral.setReferralNotes(ReferralNote.getByReferralId(referral.id));
+
+            // If there are referral notes, loop through each one and populate the user model that made the note
+            if (referral.getReferralNotes() != null) {
+                for (ReferralNote referralNote : referral.getReferralNotes()) {
+                    if (referralNote.getUserModelId() != null) {
+                        referralNote.setUserModel(UserModel.getById(referralNote.getUserModelId()));
+                    }
+                }
+            }
+        }
+        return referrals;
+    }
 }

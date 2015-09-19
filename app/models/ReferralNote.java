@@ -1,6 +1,7 @@
 package models;
 
 import play.db.ebean.Model;
+import utils.DateUtilities;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -35,6 +36,10 @@ public class ReferralNote extends Model {
 
     /** Date the note was created */
     private Date createdDate;
+
+    /** The user who made the note. This can be null if there is no userModelId */
+    @Transient
+    private UserModel userModel;
 
     /** Persistence finder */
     public static Model.Finder<Long, ReferralNote> finder = new Model.Finder<>(Long.class, ReferralNote.class);
@@ -83,6 +88,26 @@ public class ReferralNote extends Model {
         this.createdDate = createdDate;
     }
 
+    public UserModel getUserModel() {
+        return userModel;
+    }
+
+    public void setUserModel(UserModel userModel) {
+        this.userModel = userModel;
+    }
+
+    /**
+     Returns the created date in the commonly formatted string pattern
+
+     @return String formatted created date
+     */
+    public String getFormattedCreatedDate() {
+        if (this.createdDate == null) {
+            return null;
+        }
+        return DateUtilities.getFormattedDateWithTime(this.createdDate);
+    }
+
     /*************************************************************
      PERSISTENCE
      ************************************************************/
@@ -97,7 +122,7 @@ public class ReferralNote extends Model {
         return finder
                 .where()
                 .eq("referral_id", referralId)
-                .orderBy("created_date ASC")
+                .orderBy("created_date DESC")
                 .findList();
     }
 }

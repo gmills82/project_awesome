@@ -192,7 +192,8 @@ public class ClientCtrl extends Controller {
 
 		Collections.sort(historyModels);
 
-		for(HistoryRecord record: historyModels) {
+		for(HistoryRecord record : historyModels) {
+
 			//TODO: This was an if leftover from when records could be profiles
 			if(record instanceof Referral) {
 				Referral rRecord = (Referral) record;

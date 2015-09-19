@@ -91,20 +91,24 @@
                 <div class="main-box-body">
                     <div class="table">
                         <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Date of Last Interaction</th>
-                                    <th>Notes</th>
-                                </tr>
-                            </thead>
                             <tbody>
                             @for(index <- 0 until historyRecords.size) {
-                                @if(historyRecords(index).getNotes != "") {
-                                    <tr>
-                                        <td>@historyRecords(index).getDateOfLastInteractionString</td>
-                                        <td>@historyRecords(index).getNotes</td>
-                                    </tr>
-                                }
+								@for(noteIndex <- 0 until historyRecords(index).getNotes.size) {
+									<tr>
+										<td>
+											@*
+												Legacy records don't include the user that created the note. Although they
+												do have the date, it's likely that the original note has it included, so
+												we'll just leave that out as well.
+											*@
+											@if(historyRecords(index).getNotes.get(noteIndex).getUserModel != null) {
+												@historyRecords(index).getNotes.get(noteIndex).getUserModel.getFullName,
+												@historyRecords(index).getNotes.get(noteIndex).getFormattedCreatedDate -
+											}
+											@historyRecords(index).getNotes.get(noteIndex).getNote
+										</td>
+									</tr>
+								}
                             }
                             </tbody>
                         </table>

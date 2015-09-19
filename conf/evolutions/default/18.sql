@@ -5,7 +5,7 @@ create table referral_notes (
   referral_id               bigint,
   user_model_id             bigint,
   note                      text,
-  created_date              date,
+  created_date              timestamp without time zone,
   constraint pk_referral_notes primary key (id))
 ;
 
