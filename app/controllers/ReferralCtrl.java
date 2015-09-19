@@ -7,10 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
-import models.Client;
-import models.Referral;
-import models.ReferralList;
-import models.UserModel;
+import models.*;
 import org.apache.commons.lang3.StringUtils;
 import play.Logger;
 import play.mvc.Controller;
@@ -42,6 +39,14 @@ public class ReferralCtrl extends Controller {
         result.put("status", "OK");
 
         Referral currentReferral = Referral.getById(referralId);
+
+        if (currentReferral == null) {
+            return notFound();
+        }
+
+        // Look up any notes for this referral and add them to the return data
+        currentReferral.setReferralNotes(ReferralNote.getByReferralId(referralId));
+
         JsonNode referralJson = Json.toJson(currentReferral);
 
         result.put("data", referralJson);
@@ -425,11 +430,25 @@ public class ReferralCtrl extends Controller {
     public static Result patchReferrals() {
 
         ObjectNode result = Json.newObject();
-        List<Referral> referrals = Referral.getByNextStepDate(null);
+        List<Referral> referrals = Referral.getAll();
 
         for (Referral referral : referrals) {
-            referral.setNextStepDate(referral.getNextStepDate());
-            referral.update();
+
+            if (StringUtils.trimToNull(referral.getNotes()) == null) {
+                continue;
+            }
+
+            // We don't know who the user is that made the note for legacy notes, so we'll just leave that blank.
+            ReferralNote note = new ReferralNote();
+            note.setCreatedDate(DateUtilities.normalizeDateString(referral.getDateOfLastInteractionString()));
+            note.setReferralId(referral.id);
+            note.setNote(referral.getNotes());
+            try {
+                note.save();
+            } catch (Exception e) {
+                System.out.println(e);
+            }
+
         }
 
         return ok(result);

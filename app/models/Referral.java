@@ -69,6 +69,11 @@ public class Referral extends Model implements HistoryRecord {
      */
     private Boolean apptKept;
 
+    @Transient
+    private List<ReferralNote> referralNotes;
+
+
+
 
     public static Model.Finder<Long, Referral> finder = new Model.Finder(Long.class, Referral.class);
     public static Referral getById(Long id) {
@@ -617,6 +622,14 @@ public class Referral extends Model implements HistoryRecord {
 
     public void setApptKept(Boolean apptKept) {
         this.apptKept = apptKept;
+    }
+
+    public List<ReferralNote> getReferralNotes() {
+        return referralNotes;
+    }
+
+    public void setReferralNotes(List<ReferralNote> referralNotes) {
+        this.referralNotes = referralNotes;
     }
 
     @Override
