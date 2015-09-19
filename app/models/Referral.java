@@ -500,7 +500,11 @@ public class Referral extends Model implements HistoryRecord {
 		return this.refNotes;
 	}
 
-	public void setLink(String link) {
+    public void setRefNotes(String refNotes) {
+        this.refNotes = refNotes;
+    }
+
+    public void setLink(String link) {
 		this.link = link;
 	}
 

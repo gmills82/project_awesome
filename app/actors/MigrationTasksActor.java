@@ -17,6 +17,7 @@ import utils.DateUtilities;
  */
 public class MigrationTasksActor extends UntypedActor {
 
+    private static final String REFERRAL_NEXT_STEPS_TASK = "next-steps-migration";
     private static final String REFERRAL_NOTES_TASK = "referral-notes-migration";
 
     public static Props props = Props.create(MigrationTasksActor.class);
@@ -36,6 +37,15 @@ public class MigrationTasksActor extends UntypedActor {
                 new MigrationTask(REFERRAL_NOTES_TASK).save();
             } catch (Exception e) {
                 Logger.error("Error migrating referral notes: " + e);
+            }
+        }
+
+        if (MigrationTask.getByTaskName(REFERRAL_NEXT_STEPS_TASK) == null) {
+            try {
+                runNextStepsTimestampMigration();
+                new MigrationTask(REFERRAL_NEXT_STEPS_TASK).save();
+            } catch (Exception e) {
+                Logger.error("Error migrating next steps timestamp: " + e);
             }
         }
     }
@@ -58,6 +68,17 @@ public class MigrationTasksActor extends UntypedActor {
             note.setReferralId(referral.id);
             note.setNote(referral.getNotes());
             note.save();
+
+            referral.setRefNotes(null);
+            referral.update();
+        }
+    }
+
+    
+    private void runNextStepsTimestampMigration() {
+        for (Referral referral : Referral.getAll()) {
+            referral.setNextStepDate(referral.getNextStepDate());
+            referral.update();
         }
     }
 }

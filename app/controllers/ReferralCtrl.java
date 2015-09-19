@@ -434,20 +434,8 @@ public class ReferralCtrl extends Controller {
 
         for (Referral referral : referrals) {
 
-            if (StringUtils.trimToNull(referral.getNotes()) == null) {
-                continue;
-            }
-
             // We don't know who the user is that made the note for legacy notes, so we'll just leave that blank.
-            ReferralNote note = new ReferralNote();
-            note.setCreatedDate(DateUtilities.normalizeDateString(referral.getDateOfLastInteractionString()));
-            note.setReferralId(referral.id);
-            note.setNote(referral.getNotes());
-            try {
-                note.save();
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+
 
         }
 
