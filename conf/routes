@@ -3,66 +3,65 @@
 # ~~~~
 
 # Static pages
-GET           /                                       controllers.Application.login()
-GET           /pay                                    controllers.Application.pay()
-POST          /login                                  controllers.Application.authenticate()
-GET           /logout                                 controllers.Application.logout()
-GET           /signup/:roleType                       controllers.Application.signup(roleType: Integer)
-POST          /signup                                 controllers.Application.addSignup()
-GET           /home                                   controllers.Application.home()
-GET           /action/producerScript                  controllers.Application.producerScript()
-GET           /action/referral                        controllers.Application.referral()
-GET           /action/team-referrals                  controllers.Application.teamReferrals()
-GET           /action/clients                         controllers.Application.clients()
-GET           /editReferral/:referralId               controllers.Application.editReferral(referralId: Long)
-GET           /client/history/:clientId               controllers.Application.clientHistory(clientId: Long)
-GET           /reports/daily-referrals                controllers.Reports.dailyReferrals(date: Long ?= 0)
+GET           /                                            controllers.Application.login()
+GET           /pay                                         controllers.Application.pay()
+POST          /login                                       controllers.Application.authenticate()
+GET           /logout                                      controllers.Application.logout()
+GET           /signup/:roleType                            controllers.Application.signup(roleType: Integer)
+POST          /signup                                      controllers.Application.addSignup()
+GET           /home                                        controllers.Application.home()
+GET           /action/producerScript                       controllers.Application.producerScript()
+GET           /action/referral                             controllers.Application.referral()
+GET           /action/team-referrals                       controllers.Application.teamReferrals()
+GET           /action/clients                              controllers.Application.clients()
+GET           /editReferral/:referralId                    controllers.Application.editReferral(referralId: Long)
+GET           /client/history/:clientId                    controllers.Application.clientHistory(clientId: Long)
+GET           /reports/daily-referrals                     controllers.Reports.dailyReferrals(date: Long ?= 0)
 
 ## PDF Endpoints
-GET           /pdf/newAccount/:clientId               controllers.PDFController.newAccount(clientId: Long)
+GET           /pdf/newAccount/:clientId                    controllers.PDFController.newAccount(clientId: Long)
 
 ## JSON Endpoints
-GET           /actions/:userId/:category              controllers.UserCtrl.getActions(userId: Long, category: String)
+GET           /actions/:userId/:category                   controllers.UserCtrl.getActions(userId: Long, category: String)
 
 #Client CRUD
-POST          /json/client                            controllers.ClientCtrl.addClientJSON()
-GET           /json/client/:clientId                  controllers.ClientCtrl.getClientJSON(clientId: Long)
-PUT           /json/client                            controllers.ClientCtrl.editClientJSON()
+POST          /json/client                                 controllers.ClientCtrl.addClientJSON()
+GET           /json/client/:clientId                       controllers.ClientCtrl.getClientJSON(clientId: Long)
+GET           /json/client/history/:clientId               controllers.ClientCtrl.getClientHistoryRecords(clientId: Long)
+PUT           /json/client                                 controllers.ClientCtrl.editClientJSON()
 #Client Query
-GET           /json/client/query/:query               controllers.ClientCtrl.query(query: String)
+GET           /json/client/query/:query                    controllers.ClientCtrl.query(query: String)
 
 #Referral CRUD
-POST          /json/referral                          controllers.ReferralCtrl.addReferral()
-GET           /json/referral/:referralId              controllers.ReferralCtrl.getReferral(referralId: Long)
-PUT           /json/referral                          controllers.ReferralCtrl.updateReferral()
-DELETE        /json/referral/:referralId              controllers.ReferralCtrl.deleteReferral(referralId: Long)
+POST          /json/referral                               controllers.ReferralCtrl.addReferral()
+POST          /json/referral/note                          controllers.ReferralCtrl.addNoteToReferral()
+GET           /json/referral/:referralId                   controllers.ReferralCtrl.getReferral(referralId: Long)
+PUT           /json/referral                               controllers.ReferralCtrl.updateReferral()
+DELETE        /json/referral/:referralId                   controllers.ReferralCtrl.deleteReferral(referralId: Long)
 
 #Referral aggregation
-GET           /json/referrals/:userId                 controllers.ReferralCtrl.getFreshReferrals(userId: Long)
-GET           /json/referrals/upcoming/:userId        controllers.ReferralCtrl.getUpcomingReferrals(userId: Long)
-GET           /json/appts/upcoming/:userId            controllers.ReferralCtrl.getUpcomingAppts(userId: Long)
-GET           /json/referrals/creator/:userId         controllers.ReferralCtrl.getReferralsByCreatorId(userId: Long)
-GET           /json/referrals/team/:userId            controllers.ReferralCtrl.getTeamReferralsByParentId(userId: Long)
+GET           /json/referrals/:userId                      controllers.ReferralCtrl.getFreshReferrals(userId: Long)
+GET           /json/referrals/upcoming/:userId             controllers.ReferralCtrl.getUpcomingReferrals(userId: Long)
+GET           /json/appts/upcoming/:userId                 controllers.ReferralCtrl.getUpcomingAppts(userId: Long)
+GET           /json/referrals/creator/:userId              controllers.ReferralCtrl.getReferralsByCreatorId(userId: Long)
+GET           /json/referrals/team/:userId                 controllers.ReferralCtrl.getTeamReferralsByParentId(userId: Long)
 
 #Assets and Debts CRUD
-GET           /json/assetTypes                        controllers.ClientCtrl.getAssetTypes()
-GET           /json/debtTypes                         controllers.ClientCtrl.getDebtTypes()
+GET           /json/assetTypes                             controllers.ClientCtrl.getAssetTypes()
+GET           /json/debtTypes                              controllers.ClientCtrl.getDebtTypes()
 
 #UserModel CRUD
-GET           /json/user/:userId                      controllers.UserCtrl.getUser(userId: Long)
-PUT           /json/user                              controllers.UserCtrl.updateUser()
-GET           /json/user/stats                        controllers.UserCtrl.getUserStats(userId: Long)
+GET           /json/user/:userId                           controllers.UserCtrl.getUser(userId: Long)
+PUT           /json/user                                   controllers.UserCtrl.updateUser()
+GET           /json/user/stats                             controllers.UserCtrl.getUserStats(userId: Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET           /assets/*file                           controllers.Assets.at(path="/public", file)
+GET           /assets/*file                                controllers.Assets.at(path="/public", file)
 
 # Agent controller (You can't have optional named parameters? What kind of nonsense is this?)
-GET           /agent/:agentId/referrals               controllers.AgentController.getReferralsByAgentId(agentId: Long, producerId: Long ?= 0)
+GET           /agent/:agentId/referrals                    controllers.AgentController.getReferralsByAgentId(agentId: Long, producerId: Long ?= 0)
 
 # Stats controller
-GET           /stats/efs/:efsid/:from/:to                    controllers.StatsController.getEFSStats(efsid: Long, from: Long, to: Long)
-GET           /stats/producer/:producerid/:from/:to   controllers.StatsController.getProducerStats(producerid: Long, from: Long, to: Long)
-GET           /stats/agent/:agentid/:from/:to         controllers.StatsController.getAgentStats(agentid: Long, from: Long, to: Long)
-
-# NOTE: This method should be called once and removed. Although calling it multiple times won't do anything, it's an unnecessary method after the initial migration.
-PUT           /json/referral/patch                    controllers.ReferralCtrl.patchReferrals()
+GET           /stats/efs/:efsid/:from/:to                  controllers.StatsController.getEFSStats(efsid: Long, from: Long, to: Long)
+GET           /stats/producer/:producerid/:from/:to        controllers.StatsController.getProducerStats(producerid: Long, from: Long, to: Long)
+GET           /stats/agent/:agentid/:from/:to              controllers.StatsController.getAgentStats(agentid: Long, from: Long, to: Long)

@@ -13,7 +13,8 @@ app.filter('formatDate', function () {
 });
 
 app.constant('events', {
-    'REFERRAL_DELETED': 'referralDeleted'
+    'REFERRAL_DELETED': 'referralDeleted',
+    'REFERRAL_NOTE_ADDED': 'referralNoteAdded'
 });
 
 if(document.getElementById("baseContainer")){

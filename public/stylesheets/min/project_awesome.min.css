@@ -2190,6 +2190,20 @@ blockquote.pull-right:before {
   transition: all 0.14s linear;
 }
 
+.dropdown-menu > li a.default-link {
+  color: #707070;
+  font-size: 0.875em;
+  line-height: 1.7;
+  padding-left: 35px;
+  display: block;
+  transition: border-color 0.1s ease-in-out 0s, background-color 0.1s ease-in-out 0s;
+}
+
+.dropdown-menu > li a.default-link:hover, .dropdown-menu > li a.default-link:focus {
+  background-color: #f6f6f6;
+  color: #707070;
+}
+
 /* TABLES */
 .table-hover > tbody > tr:hover > td,
 .table-hover > tbody > tr:hover > th {

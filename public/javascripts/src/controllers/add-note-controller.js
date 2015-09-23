@@ -1,28 +1,36 @@
-app.controller('AddNoteController', ["$scope", "$modal", function ($scope, $modal) {
+app.controller('AddNoteController', [
+    "$scope",
+    "$modal",
+    "referralService",
+    "events",
+    function ($scope, $modal, referralService, events) {
 
-    //$('#addNoteModal').on('show.bs.modal', function (event) {
+        /**
+         Presents the modal allowing the user to add a note to the referral
 
-        //console.log(button);
-        //var recipient = button.data('referral'); // Extract info from data-*
-        //var modal = $(this);
-        //modal.find('.btn-primary').click(function () {
-        //    scope.deleteReferral(recipient);
-        //    modal.modal('hide');
-        //});
-    //});
+         @param     {Object}    $event      Click event
+         */
+        $scope.showAddNoteModal = function ($event) {
+            $event.preventDefault();
+            var instance = $modal.open({
+                animation: true,
+                controller: 'AddNoteModalController',
+                templateUrl: '/assets/javascripts/src/views/add-note-modal.html',
+                resolve: {
+                    referral: function () {
+                        return $scope.referral;
+                    }
+                }
+            });
 
-    //console.log($scope.referral);
-    //$('#addNoteModal').on('show.bs.modal', function (event) {
-
-        //console.log($scope.referral.id);
-
-
-        //var button = $(event.relatedTarget); // Button that triggered the modal
-        //var recipient = button.data('referral'); // Extract info from data-*
-        //var modal = $(this);
-        //modal.find('.btn-primary').click(function () {
-        //    scope.deleteReferral(recipient);
-        //    modal.modal('hide');
-        //});
-    //});
-}]);
+            // Submits the note to the referral and closes the modal.
+            instance.result.then(function (data) {
+                if (data) {
+                    referralService.addNoteToReferral(data.note, data.referral.id, function (data) {
+                        $scope.$emit(events.REFERRAL_NOTE_ADDED, data.data);
+                    });
+                }
+            });
+        }
+    }
+]);

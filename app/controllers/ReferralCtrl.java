@@ -421,25 +421,22 @@ public class ReferralCtrl extends Controller {
 		return ok(result);
 	}
 
-
-
-    /**
-     Short lived endpoint used to normalize the data in the referral table.
-     */
     @BodyParser.Of(BodyParser.Json.class)
-    public static Result patchReferrals() {
+    public static Result addNoteToReferral() {
 
+        Form<ReferralNote> referralNoteForm = Form.form(ReferralNote.class);
+        ReferralNote referralNote = referralNoteForm.bindFromRequest().get();
+
+        // Why won't this get set automatically?
+        referralNote.setCreatedDate(new Date());
+        referralNote.save();
+
+        // Get the last inserted note to return
         ObjectNode result = Json.newObject();
-        List<Referral> referrals = Referral.getAll();
-
-        for (Referral referral : referrals) {
-
-            // We don't know who the user is that made the note for legacy notes, so we'll just leave that blank.
-
-
-        }
-
-        return ok(result);
+        ReferralNote addedNote = ReferralNote.getById(referralNote.getId());
+        addedNote.setUserModel(UserModel.getById(addedNote.getUserModelId()));
+        result.put("data", Json.toJson(addedNote));
+        return status(201, result);
     }
 
 	private static Set<UserModel> gatherChildTeamMembers(UserModel parent) {

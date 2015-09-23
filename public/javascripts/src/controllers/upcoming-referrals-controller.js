@@ -6,7 +6,8 @@ app.controller('UpcomingReferralsController', [
     "ngTableParams",
     "$filter",
     'referralService',
-    function ($scope, $http, $log, ngTableParams, $filter, referralService) {
+    'events',
+    function ($scope, $http, $log, ngTableParams, $filter, referralService, events) {
         $scope.referrals = [];
         $scope.refTypes = [{'title': 'No Filter', 'id': ''}];
         $scope.arr2=[];

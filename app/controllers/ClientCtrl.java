@@ -60,6 +60,17 @@ public class ClientCtrl extends Controller {
         return ok(result);
     }
 
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result getClientHistoryRecords(Long clientId) {
+        List<HistoryRecord> recordList = gatherClientHistory(clientId);
+        HistoryRecords records = new HistoryRecords();
+        records.setRecords(recordList);
+
+        ObjectNode result = Json.newObject();
+        result.put("data", Json.toJson(records));
+        return ok(result);
+    }
+
     @BodyParser.Of(play.mvc.BodyParser.Json.class)
      public static Result addClientJSON() throws ParseException {
         Form<Client> clientForm = Form.form(Client.class);

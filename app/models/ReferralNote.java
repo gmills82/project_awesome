@@ -125,4 +125,14 @@ public class ReferralNote extends Model {
                 .orderBy("created_date DESC")
                 .findList();
     }
+
+    /**
+     Returns the note for the provided ID
+
+     @param id Note ID
+     @return Note
+     */
+    public static ReferralNote getById(Long id) {
+        return finder.byId(id);
+    }
 }

@@ -23,8 +23,14 @@ app.controller('DeleteReferralController', [
                 }
             });
 
+            // Send the request to delete the referral. Also, in parallel, emit the notification that the referral has
+            // been deleted so other listeners can update immediately without having to wait for the response from the
+            // service.
             instance.result.then(function (referral) {
-                $scope.$emit(events.REFERRAL_DELETED, {referral: referral});
+                if (referral) {
+                    referralService.deleteById(referral.id);
+                    $scope.$emit(events.REFERRAL_DELETED, {referral: referral});
+                }
             });
         }
     }

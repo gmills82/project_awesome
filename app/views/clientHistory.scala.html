@@ -85,35 +85,7 @@
             </div>
             @*Client Notes Summary*@
             <div class="main-box">
-                <div class="main-box-header">
-                    <h2>Client Notes Summary</h2>
-                </div>
-                <div class="main-box-body">
-                    <div class="table">
-                        <table class="table">
-                            <tbody>
-                            @for(index <- 0 until historyRecords.size) {
-								@for(noteIndex <- 0 until historyRecords(index).getNotes.size) {
-									<tr>
-										<td>
-											@*
-												Legacy records don't include the user that created the note. Although they
-												do have the date, it's likely that the original note has it included, so
-												we'll just leave that out as well.
-											*@
-											@if(historyRecords(index).getNotes.get(noteIndex).getUserModel != null) {
-												@historyRecords(index).getNotes.get(noteIndex).getUserModel.getFullName,
-												@historyRecords(index).getNotes.get(noteIndex).getFormattedCreatedDate -
-											}
-											@historyRecords(index).getNotes.get(noteIndex).getNote
-										</td>
-									</tr>
-								}
-                            }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+				<div client-notes clientId="@client.id"></div>
             </div>
         </div>
         <div class="col-lg-4">
