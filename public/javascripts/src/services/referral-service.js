@@ -72,10 +72,24 @@ app.factory('referralService', ['$http', '$log', 'clientService', function($http
 	};
 
     /**
+     Deletes a referral by the provided ID
+
+     @param     {Number}        id              Referral ID
+     @param     {Function}      [callback]      Callback method
+     */
+    service.deleteById = function (id, callback) {
+        $http({"method": "DELETE", "url": "/json/referral/" + id}).success(function (data){
+            if (typeof callback === "function") {
+                callback(data);
+            }
+        });
+    };
+
+    /**
      Returns the possible referral types. This list is small right now, so making it static isn't a big deal. However,
      if it starts becoming difficult to maintain, we can move the list to the server so it can be managed in a single place.
 
-     @param {Function} [callback] Callback method
+     @param     {Function}      [callback]      Callback method
      */
     service.getReferralTypes = function (callback) {
         if (typeof callback === 'function') {

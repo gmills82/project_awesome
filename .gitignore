@@ -5,6 +5,7 @@ target
 tmp
 .history
 public/node_modules
+public/bower_components
 .idea
 *.iml
 out

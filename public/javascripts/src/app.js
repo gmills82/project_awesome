@@ -11,6 +11,11 @@ app.filter('formatDate', function () {
         return moment(item).format("YYYY-MM-DD h:mm a");
     };
 });
+
+app.constant('events', {
+    'REFERRAL_DELETED': 'referralDeleted'
+});
+
 if(document.getElementById("baseContainer")){
 	app.data.currentUserId = document.getElementById("baseContainer").getAttribute("data-user");
 }
