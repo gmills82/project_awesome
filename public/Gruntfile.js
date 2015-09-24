@@ -41,7 +41,7 @@ module.exports = function (grunt) {
 			},
 
             css: {
-				src: [ "scss/compiled/theme.css", "stylesheets/libs/*.css", "stylesheets/src/*.css"],
+				src: [ "scss/compiled/theme.css", "stylesheets/libs/*.css", "stylesheets/src/*.css", "scss/compiled/custom.css"],
 				dest: "stylesheets/min/<%= pkg.name %>.min.css"
             },
 			bootstrap: {
@@ -56,7 +56,8 @@ module.exports = function (grunt) {
 				},
 				files: {                         // Dictionary of files
 					'scss/compiled/theme.css': 'scss/theme/theme_styles.scss',
-					'scss/compiled/bootstrap.css': 'scss/bootstrap.scss'
+					'scss/compiled/bootstrap.css': 'scss/bootstrap.scss',
+                    'scss/compiled/custom.css': 'scss/custom/custom.scss'
 				}
 			}
 		},

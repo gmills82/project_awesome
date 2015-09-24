@@ -13,19 +13,7 @@
                     <td sortable="'client.phoneNumber'" data-title="'Phone Number'"><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
                     <td data-title="'Status'"><status-label status="referral.status" data-title="'Status'"></status-label></td>
                     <td data-title="'Actions'" class="table-actions" header-class="'header-center'">
-                        <div class="btn-group" dropdown>
-                            <button type="button" class="btn btn-default">Actions</button>
-                            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" dropdown-toggle>
-                                <span class="caret"></span>
-                            </button>
-                            <ul class="dropdown-menu" role="menu">
-                                <li><a href="/editReferral/{{referral.id}}">Edit Referral</a></li>
-                                <li class="divider"></li>
-                                <li delete-referral-button referral="referral"></li>
-                                <li class="divider"></li>
-                                <li add-note-button referral="referral"></li>
-                            </ul>
-                        </div>
+                        <div action-dropdown referral="referral"></div>
                     </td>
                     <td sortable="'creatorName'" data-title="'Creator'" filter="{ 'creatorName': 'text' }">{{referral.creatorName}}</td>
                     <td sortable="'lastEditedDate'" data-title="'Last Edited Date'">{{referral.lastEditedDate}}</td>

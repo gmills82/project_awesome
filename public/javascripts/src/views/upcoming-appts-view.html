@@ -14,17 +14,7 @@
                 <td data-title="'Address'"><a href="/client/history/{{referral.client.id}}">{{referral.client.address}}</a></td>
 
                 <td data-title="'Actions'" class="table-actions" header-class="'header-center'">
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-default">Actions</button>
-                        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/editReferral/{{referral.id}}">Edit Referral</a></li>
-                            <li class="divider"></li>
-                            <li delete-referral-button referral="referral"></li>
-                        </ul>
-                    </div>
+                    <div action-dropdown referral="referral"></div>
                 </td>
             </tr>
             </tbody>

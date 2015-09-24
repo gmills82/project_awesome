@@ -97,7 +97,8 @@
                         <div class="form-group">
                             <label class="col-md-2 control-label" >Notes:</label>
                             <div class="col-md-10">
-                                <textarea ng-model="referral.refNotes" name="refNotes" class="form-control"></textarea>
+								<div class="col-md-2 client-notes-button" add-note-button referral="referral" type="button"></div>
+								<div class="col-md-2" view-notes-button referral="referral" type="button"></div>
                             </div>
                         </div>
                         <div class="form-group">

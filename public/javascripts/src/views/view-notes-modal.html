@@ -1,0 +1,16 @@
+<div class="modal-header">
+    <h4>Notes for {{referral.clientName}}</h4>
+</div>
+<div class="modal-body">
+    <div ng-repeat="note in referral.notes">
+        <p>
+            <span ng-if="note.userModel">
+                {{note.userModel.fullName}}, {{note.formattedCreatedDate}}
+            </span>
+            {{note.note}}
+        </p>
+    </div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-default" ng-click="done()">Done</button>
+</div>

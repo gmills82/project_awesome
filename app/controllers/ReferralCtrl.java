@@ -46,6 +46,14 @@ public class ReferralCtrl extends Controller {
 
         // Look up any notes for this referral and add them to the return data
         currentReferral.setReferralNotes(ReferralNote.getByReferralId(referralId));
+        if (currentReferral.getReferralNotes() != null) {
+            for (ReferralNote note : currentReferral.getReferralNotes()) {
+                if (note.getUserModelId() == null || note.getUserModel() != null) {
+                    continue;
+                }
+                note.setUserModel(UserModel.getById(note.getUserModelId()));
+            }
+        }
 
         JsonNode referralJson = Json.toJson(currentReferral);
 
@@ -62,7 +70,27 @@ public class ReferralCtrl extends Controller {
 
 		setWasProductive(referral);
 
+        // If the referral has a note assigned, save it off and remove it from the referral so it doesn't get persisted
+        // with the referral row.
+        String referralNote = null;
+        if (StringUtils.trimToNull(referral.getRefNotes()) != null) {
+            referralNote = referral.getRefNotes();
+            referral.setRefNotes(null);
+        }
+
 		referral.save();
+
+        // After the referral has been saved, check to see if we have a note that was pulled. If so, save it off and
+        // assign the referral ID to it.
+        if (referralNote != null) {
+            ReferralNote note = new ReferralNote();
+            note.setNote(referralNote);
+            note.setCreatedDate(new Date());
+            note.setUserModelId(referral.getCreatorId());
+            note.setReferralId(referral.id);
+            note.save();
+        }
+
 		flash().put("success", "Your referral was created successfully");
 		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
 

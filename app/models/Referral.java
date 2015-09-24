@@ -636,6 +636,14 @@ public class Referral extends Model implements HistoryRecord {
         this.referralNotes = referralNotes;
     }
 
+    public long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(long creatorId) {
+        this.creatorId = creatorId;
+    }
+
     @Override
 	public String getCreatorName() {
 		UserModel creator = UserModel.getById(this.creatorId);

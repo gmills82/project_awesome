@@ -6,9 +6,6 @@ app.directive('addNoteButton', [function() {
         scope: {
             referral: '=',
             type: '@'
-        },
-        link: function (scope) {
-            console.log(scope);
         }
     }
 }]);
