@@ -22185,4 +22185,8 @@ ul.nav-pills.nav-stacked li.sub-pill:hover a {
   margin-right: 5px;
 }
 
+.action-dropdown {
+  min-width: 120px;
+}
+
 /*# sourceMappingURL=custom.css.map */

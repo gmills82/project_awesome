@@ -16,11 +16,6 @@ app.controller('ClientNotesController', [
             $scope.records = data.records;
         });
 
-        // In the background, we need to get some data for the current logged in user
-        //userService.getById(app.data.currentUserId, function (data) {
-        //    $scope.currentUser = data.data;
-        //});
-
         $scope.$on(events.REFERRAL_NOTE_ADDED, function (event, args) {
             if (!$scope.records) {
                 $scope.records = [];

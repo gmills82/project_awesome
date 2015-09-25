@@ -411,6 +411,10 @@ public class ReferralCtrl extends Controller {
                     long1 = Long.valueOf(o1.gettIps());
                     long2 = Long.valueOf(o2.gettIps());
                 }
+                else if (sortValue.equalsIgnoreCase("dateOfLastInteraction")) {
+                    long1 = o1.getDateOfLastInteraction();
+                    long2 = o2.getDateOfLastInteraction();
+                }
 
                 // Number comparitors
                 if (long1 != null && long2 != null) {
@@ -458,6 +462,15 @@ public class ReferralCtrl extends Controller {
         // Why won't this get set automatically?
         referralNote.setCreatedDate(new Date());
         referralNote.save();
+
+        // Updated the latest interaction date for the referral
+        Referral referral = Referral.getById(referralNote.getReferralId());
+        if (referral != null) {
+
+            // Why is this a string?
+            referral.setLastEditedDate(String.valueOf(new Date().getTime()));
+            referral.save();
+        }
 
         // Get the last inserted note to return
         ObjectNode result = Json.newObject();

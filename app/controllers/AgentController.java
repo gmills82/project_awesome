@@ -58,7 +58,7 @@ public class AgentController extends Controller {
             producerIds.add(producerId);
             UserModel producer = UserModel.getById(producerId);
             if (producer == null) {
-                return notFound(String.format("No producer found matching id %s", producerId));
+                return notFound(String.format("No LSP found matching id %s", producerId));
             }
             producerMap.put(producerId, producer);
         }

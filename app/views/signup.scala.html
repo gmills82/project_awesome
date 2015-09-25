@@ -5,7 +5,7 @@
         <h1 >Agent Signup</h1>
         }
     @if(roleType == 2) {
-        <h1 >Producer Signup</h1>
+        <h1 >LSP Signup</h1>
         }
     <div class="main-box">
         <header class="main-box-header">
@@ -13,7 +13,7 @@
             <h2 >Sign your team member up as an agent</h2>
         }
         @if(roleType == 2) {
-            <h2 >Sign your team member up as a producer</h2>
+            <h2 >Sign your team member up as an LSP</h2>
         }
         </header>
         <div class="main-box-body clearfix">
@@ -26,7 +26,7 @@
             <p class="alert alert-info col-lg-12"><i class="fa fa-info-circle fa-fw fa-lg"></i> This team member will be assigned to your account. If you would like this team member assigned to a different account please log in as that team member.</p>
 
             @helper.form(routes.Application.addSignup(), 'role -> "form", 'name -> "signupForm") {
-                <input type="number" name="userId" class="form-control form-group" placeholder="@if(roleType == 1) {Agent Id}@if(roleType == 2) {Producer Id}" ng-model="user.userId" value="@signupForm("userId").value()" />
+                <input type="number" name="userId" class="form-control form-group" placeholder="@if(roleType == 1) {Agent Id}@if(roleType == 2) {LSP Id}" ng-model="user.userId" value="@signupForm("userId").value()" />
                 <input type="email" name="userName" class="form-control form-group" placeholder="E-mail address" ng-model="user.userName" value="@signupForm("userName").value()"required />
                 <input type="text" name="firstName" class="form-control form-group" placeholder="First Name" ng-model="user.firstName" value="@signupForm("firstName").value()" required />
                 <input type="text" name="lastName" class="form-control form-group" placeholder="Last Name" ng-model="user.lastName" value="@signupForm("lastName").value()" required />
