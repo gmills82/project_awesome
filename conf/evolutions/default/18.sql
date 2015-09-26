@@ -19,6 +19,8 @@ create sequence referral_notes_seq;
 
 create sequence migration_tasks_seq;
 
+UPDATE action SET action_name = 'Create an LSP account' WHERE id = 7;
+
 # --- !Downs
 
 drop table if exists referral_notes cascade;

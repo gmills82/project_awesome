@@ -35,6 +35,9 @@ app.controller('ReferralController', [
                 "status": "OPEN"
             },
             {
+                status: "PROCESSING",
+            },
+            {
                 status: "CLOSED"
             },
             {
