@@ -48,35 +48,8 @@ public class UserModel extends Model {
 	@JsonBackReference
 	public UserModel parent_team_member;
 
-	public enum Role {
-        FA(0), Agent(1), Producer(2);
-        private Integer permissionLevel;
-        Role(Integer permissionLevel) {
-            this.permissionLevel = permissionLevel;
-        }
-        public Integer getPermissionLevel() {
-            return permissionLevel;
-        }
-    }
-
-    public Role roleType;
-
-    public static void setRoleType(UserModel user, String roleType) {
-        user.roleType = Role.valueOf(roleType);
-    }
-    public static void setRoleType(UserModel user, Integer roleTypeNum) {
-		switch(roleTypeNum) {
-			case 0: user.roleType = Role.FA;
-				break;
-			case 1: user.roleType = Role.Agent;
-				break;
-			case 2: user.roleType = Role.Producer;
-				break;
-			default:
-				user.roleType = null;
-				break;
-		}
-    }
+    @Column(name = "role_type")
+    private UserRole role;
 
     //Unique name check
     public static Boolean isUserNameTaken(String name) {
@@ -160,9 +133,6 @@ public class UserModel extends Model {
     public static UserModel getByEmail(String email) {
         return find.where().eq("userName", email).findList().listIterator().next();
     }
-    public static List<UserModel> getByPermissionLevel(Role roleType) {
-        return find.where().eq("roleType", roleType.getPermissionLevel()).findList();
-    }
 
     public static List<UserModel> getAll() {
         return find.all();
@@ -199,5 +169,17 @@ public class UserModel extends Model {
         String firstName = (this.firstName != null) ? this.firstName : "";
         String lastName = (this.lastName != null) ? this.lastName : "";
         return String.format("%s %s", firstName, lastName);
+    }
+
+    /*************************************************************
+     GETTERS & SETTERS
+     ************************************************************/
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 }

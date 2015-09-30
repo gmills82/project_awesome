@@ -2,6 +2,7 @@ package controllers;
 
 import models.Referral;
 import models.UserModel;
+import models.UserRole;
 import org.apache.poi.hssf.usermodel.*;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
@@ -36,7 +37,7 @@ public class AgentController extends Controller {
         // Look up the agent to verify that the provided ID exists. If found, make sure the ID belongs to a user set to
         // the "agent" role type.
         UserModel agent = UserModel.getById(agentId);
-        if (agent == null || (agent.roleType != UserModel.Role.Agent && agent.roleType != UserModel.Role.FA)) {
+        if (agent == null || (agent.getRole() != UserRole.AGENT && agent.getRole() != UserRole.FA)) {
             return notFound(String.format("No agent found matching the id %s", agentId));
         }
 

@@ -652,6 +652,14 @@ public class Referral extends Model implements HistoryRecord {
         this.lastEditedDate = lastEditedDate;
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     @Override
 	public String getCreatorName() {
 		UserModel creator = UserModel.getById(this.creatorId);

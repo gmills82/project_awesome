@@ -2,12 +2,16 @@ package actors;
 
 import akka.actor.Props;
 import akka.actor.UntypedActor;
+import models.Client;
 import models.MigrationTask;
 import models.Referral;
 import models.ReferralNote;
 import org.apache.commons.lang3.StringUtils;
 import play.Logger;
 import utils.DateUtilities;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  An actor that runs on startup to perform any migration tasks that are waiting in the queue
@@ -19,6 +23,7 @@ public class MigrationTasksActor extends UntypedActor {
 
     private static final String REFERRAL_NEXT_STEPS_TASK = "next-steps-migration";
     private static final String REFERRAL_NOTES_TASK = "referral-notes-migration";
+    private static final String CLIENT_GROUP_TASK = "client-group";
 
     public static Props props = Props.create(MigrationTasksActor.class);
 
@@ -47,6 +52,15 @@ public class MigrationTasksActor extends UntypedActor {
             } catch (Exception e) {
                 Logger.error("Error migrating next steps timestamp: " + e);
             }
+        }
+
+        if (MigrationTask.getByTaskName(CLIENT_GROUP_TASK) == null) {
+            try {
+                runClientGroupMigration();
+            } catch (Exception e) {
+                Logger.error("Error migrating client groups: " + e);
+            }
+
         }
     }
 
@@ -79,6 +93,25 @@ public class MigrationTasksActor extends UntypedActor {
         for (Referral referral : Referral.getAll()) {
             referral.setNextStepDate(referral.getNextStepDate());
             referral.update();
+        }
+    }
+
+    /**
+
+     */
+    private void runClientGroupMigration() {
+
+        for (Client client : Client.all()) {
+
+            // Looks like these are unique, why return a list?
+            List<Referral> referrals = Referral.getByClientId(client.getId());
+            if (referrals == null || referrals.size() == 0) {
+                continue;
+            }
+
+            Referral referral = referrals.get(0);
+            client.setGroup(referral.getCreatorId());
+            client.save();
         }
     }
 }

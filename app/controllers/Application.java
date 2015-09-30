@@ -91,7 +91,7 @@ public class Application extends Controller {
 				return badRequest(pageError.render());
 			} else {
 				//If currentUser is allowed to use signup action
-				if(currentUser.roleType.getPermissionLevel() < roleType) {
+                if (currentUser.getRole().isPassingPermissionLevel(roleType)) {
 					return ok(signup.render(currentUser, signupForm, roleType));
 				}else {
 					return badRequest(pageError.render());
@@ -125,7 +125,7 @@ public class Application extends Controller {
 
 		//Set Roletype
 		Integer originalRoleType = Integer.parseInt(requestMap.get("roleTypeNum")[0]);
-		UserModel.setRoleType(newUser, originalRoleType);
+        newUser.setRole(UserRole.getUserRoleForPermissionLevel(originalRoleType));
 
 		//Set parent team member to the User currently signing them up
 		UserModel currentUser = getCurrentUser();
@@ -229,7 +229,7 @@ public class Application extends Controller {
 		}
 
 		//If currentUser is FA of Agent assignable to self
-		if(currentUser.roleType.getPermissionLevel() <= 1) {
+        if (currentUser.getRole().isPassingPermissionLevel(UserRole.AGENT)) {
 			assignableTeamMembers.add(currentUser);
 
 			//Get all descendant users

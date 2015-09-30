@@ -49,6 +49,8 @@ public class Client extends Model {
 	@JsonManagedReference
     public List<Debt> debtList;
 
+    public Long group;
+
     public long getId() {
         return id;
     }
@@ -139,4 +141,11 @@ public class Client extends Model {
         }
     }
 
+    public Long getGroup() {
+        return group;
+    }
+
+    public void setGroup(Long group) {
+        this.group = group;
+    }
 }

@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.UserModel;
+import models.UserRole;
 import models.stats.EFSStats;
 import models.Referral;
 import play.libs.Json;
@@ -43,7 +44,7 @@ public class StatsController extends Controller {
         Date toDate = new Date(toTimestamp);
 
         UserModel efs = UserModel.getById(efsId);
-        if (efs == null || efs.roleType != UserModel.Role.FA) {
+        if (efs == null || efs.getRole() != UserRole.FA) {
             return notFound(String.format("No EFS found matching ID %s", efsId));
         }
 
@@ -107,7 +108,7 @@ public class StatsController extends Controller {
 
         // Get the user and make sure they're an agent.
         UserModel agent = UserModel.getById(agentId);
-        if (agent == null || agent.roleType != UserModel.Role.Agent) {
+        if (agent == null || agent.getRole() != UserRole.AGENT) {
             return notFound(String.format("No agent found matching ID %s", agentId));
         }
 

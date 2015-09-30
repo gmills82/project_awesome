@@ -21,6 +21,8 @@ create sequence migration_tasks_seq;
 
 UPDATE action SET action_name = 'Create an LSP account' WHERE id = 7;
 
+ALTER TABLE "public"."client" ADD COLUMN "group" BIGINT;
+
 # --- !Downs
 
 drop table if exists referral_notes cascade;
@@ -30,3 +32,5 @@ drop table if exists migration_tasks cascade;
 drop sequence if exists referral_notes_seq;
 
 drop sequence if exists migration_tasks_seq;
+
+ALTER TABLE "public"."client" DROP COLUMN "group";
