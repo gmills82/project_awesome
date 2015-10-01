@@ -87,7 +87,7 @@ public class Application extends Controller {
 		if(null != currentUser) {
 
 			Form<UserModel> signupForm = Form.form(UserModel.class);
-			if (roleType < 0 || roleType > 2) {
+			if (UserRole.getUserRoleForPermissionLevel(roleType) == null) {
 				return badRequest(pageError.render());
 			} else {
 				//If currentUser is allowed to use signup action
@@ -125,7 +125,7 @@ public class Application extends Controller {
 
 		//Set Roletype
 		Integer originalRoleType = Integer.parseInt(requestMap.get("roleTypeNum")[0]);
-        newUser.setRole(UserRole.getUserRoleForPermissionLevel(originalRoleType));
+        newUser.setRoleType(originalRoleType);
 
 		//Set parent team member to the User currently signing them up
 		UserModel currentUser = getCurrentUser();

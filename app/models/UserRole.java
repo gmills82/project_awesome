@@ -9,12 +9,13 @@ package models;
  */
 public enum UserRole {
 
-    FA(0),
-    ASSISTANT(1),
-    AGENT(100),
-    PRODUCER(200);
+    FA(0, "EFA"),
+    EFA_ASSISTANT(1, "EFA Assistant"),
+    AGENT(100, "Agent"),
+    PRODUCER(200, "LSP");
 
     private Integer permissionLevel;
+    private String declaration;
 
     /**
      Constructor with a provided permission level
@@ -23,6 +24,17 @@ public enum UserRole {
      */
     UserRole(Integer permissionLevel) {
         this.permissionLevel = permissionLevel;
+    }
+
+    /**
+     Constructor with a provided permission level
+
+     @param permissionLevel Permission level
+     @param declaration Role declaration
+     */
+    UserRole(Integer permissionLevel, String declaration) {
+        this.permissionLevel = permissionLevel;
+        this.declaration = declaration;
     }
 
     /**
@@ -35,12 +47,12 @@ public enum UserRole {
     }
 
     /**
-     Sets the permission level
+     Returns the user role declaration
 
-     @param permissionLevel Permission level
+     @return Declaration
      */
-    public void setPermissionLevel(Integer permissionLevel) {
-        this.permissionLevel = permissionLevel;
+    public String getDeclaration() {
+        return declaration;
     }
 
     /**

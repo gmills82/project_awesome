@@ -27,6 +27,8 @@ app.controller('UpcomingApptsController', [
                             $filter('orderBy')(filteredData, params.orderBy()) :
                             filteredData;
 
+                        orderedData = orderedData || [];
+
                         //Loop over appts and prepare combined address
                         angular.forEach(orderedData, function (value, key){
                             var address = "";

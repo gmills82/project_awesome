@@ -44,16 +44,12 @@ public class StatsController extends Controller {
         Date toDate = new Date(toTimestamp);
 
         UserModel efs = UserModel.getById(efsId);
-        if (efs == null || efs.getRole() != UserRole.FA) {
+        if (efs == null || !efs.getRole().isPassingPermissionLevel(UserRole.EFA_ASSISTANT)) {
             return notFound(String.format("No EFS found matching ID %s", efsId));
         }
 
-        List<Long> userIds = new ArrayList<>();
+        List<Long> userIds = UserModel.getChildUserModelsByParentAllLevels(efs).stream().map(model -> model.id).collect(Collectors.toList());
 
-        for (UserModel model : UserModel.getChildUserModelsByParentAllLevels(efs)) {
-            userIds.add(model.id);
-        }
-        
         userIds.add(efsId);
         List<Referral> referrals = Referral.getByCreatorIdsBetweenDates(userIds, fromDate, toDate);
         List<Referral> productiveReferrals = referrals.stream().filter(referral -> referral.wasProductive).collect(Collectors.toList());
@@ -108,7 +104,7 @@ public class StatsController extends Controller {
 
         // Get the user and make sure they're an agent.
         UserModel agent = UserModel.getById(agentId);
-        if (agent == null || agent.getRole() != UserRole.AGENT) {
+        if (agent == null || !agent.getRole().isPassingPermissionLevel(UserRole.AGENT)) {
             return notFound(String.format("No agent found matching ID %s", agentId));
         }
 

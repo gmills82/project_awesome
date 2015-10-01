@@ -44,6 +44,8 @@ app.controller('UpcomingReferralsController', [
                             $filter('orderBy')(filteredData, params.orderBy()) :
                             filteredData;
 
+                        orderedData = orderedData || [];
+
                         //Pass out total to larger scope
                         $scope.refTotal = orderedData.length;
                         params.total(orderedData.length);

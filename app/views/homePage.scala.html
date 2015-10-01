@@ -19,13 +19,13 @@
 	</div>
 
     @*Break into separate views based on user roleType*@
-    @if(user.roleType.getPermissionLevel.equals(0)) {
+	@if(user.getRole.isPassingPermissionLevel(UserRole.EFA_ASSISTANT)) {
         @efsDashboard()
     }
-    @if(user.roleType.getPermissionLevel.equals(1)) {
+	@if(user.getRole == UserRole.AGENT) {
         @agentDashboard()
     }
-    @if(user.roleType.getPermissionLevel.equals(2)) {
+	@if(user.getRole == UserRole.PRODUCER) {
         @producerDashboard()
     }
 }

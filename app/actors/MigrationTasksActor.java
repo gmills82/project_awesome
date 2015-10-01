@@ -36,32 +36,32 @@ public class MigrationTasksActor extends UntypedActor {
     public void preStart() throws Exception {
         super.preStart();
 
-        if (MigrationTask.getByTaskName(REFERRAL_NOTES_TASK) == null) {
-            try {
-                runReferralNotesMigration();
-                new MigrationTask(REFERRAL_NOTES_TASK).save();
-            } catch (Exception e) {
-                Logger.error("Error migrating referral notes: " + e);
-            }
-        }
-
-        if (MigrationTask.getByTaskName(REFERRAL_NEXT_STEPS_TASK) == null) {
-            try {
-                runNextStepsTimestampMigration();
-                new MigrationTask(REFERRAL_NEXT_STEPS_TASK).save();
-            } catch (Exception e) {
-                Logger.error("Error migrating next steps timestamp: " + e);
-            }
-        }
-
-        if (MigrationTask.getByTaskName(CLIENT_GROUP_TASK) == null) {
-            try {
-                runClientGroupMigration();
-            } catch (Exception e) {
-                Logger.error("Error migrating client groups: " + e);
-            }
-
-        }
+//        if (MigrationTask.getByTaskName(REFERRAL_NOTES_TASK) == null) {
+//            try {
+//                runReferralNotesMigration();
+//                new MigrationTask(REFERRAL_NOTES_TASK).save();
+//            } catch (Exception e) {
+//                Logger.error("Error migrating referral notes: " + e);
+//            }
+//        }
+//
+//        if (MigrationTask.getByTaskName(REFERRAL_NEXT_STEPS_TASK) == null) {
+//            try {
+//                runNextStepsTimestampMigration();
+//                new MigrationTask(REFERRAL_NEXT_STEPS_TASK).save();
+//            } catch (Exception e) {
+//                Logger.error("Error migrating next steps timestamp: " + e);
+//            }
+//        }
+//
+//        if (MigrationTask.getByTaskName(CLIENT_GROUP_TASK) == null) {
+//            try {
+//                runClientGroupMigration();
+//            } catch (Exception e) {
+//                Logger.error("Error migrating client groups: " + e);
+//            }
+//
+//        }
     }
 
     /**
@@ -104,14 +104,14 @@ public class MigrationTasksActor extends UntypedActor {
         for (Client client : Client.all()) {
 
             // Looks like these are unique, why return a list?
-            List<Referral> referrals = Referral.getByClientId(client.getId());
-            if (referrals == null || referrals.size() == 0) {
-                continue;
-            }
+//            List<Referral> referrals = Referral.getByClientId(client.getId());
+//            if (referrals == null || referrals.size() == 0) {
+//                continue;
+//            }
 
-            Referral referral = referrals.get(0);
-            client.setGroup(referral.getCreatorId());
-            client.save();
+//            Referral referral = referrals.get(0);
+//            client.setGroup(referral.getCreatorId());
+//            client.save();
         }
     }
 }

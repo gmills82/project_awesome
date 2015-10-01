@@ -49,6 +49,9 @@ public class UserModel extends Model {
 	public UserModel parent_team_member;
 
     @Column(name = "role_type")
+    private Integer roleType;
+
+    @Transient
     private UserRole role;
 
     //Unique name check
@@ -175,7 +178,14 @@ public class UserModel extends Model {
      GETTERS & SETTERS
      ************************************************************/
 
+    public void setRoleType(Integer roleType) {
+        this.roleType = roleType;
+    }
+
     public UserRole getRole() {
+        if (role == null) {
+            role = UserRole.getUserRoleForPermissionLevel(this.roleType);
+        }
         return role;
     }
 
