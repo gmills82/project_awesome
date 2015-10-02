@@ -131,6 +131,7 @@ public class Application extends Controller {
 		UserModel currentUser = getCurrentUser();
 		if(null != currentUser) {
 			newUser.parent_team_member = currentUser;
+            newUser.setGroupId(currentUser.getGroupId());
 		}else {
 			signupForm.reject("Error associating new team member with currently logged in team member.");
 		}

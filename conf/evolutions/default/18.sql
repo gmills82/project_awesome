@@ -23,6 +23,8 @@ UPDATE action SET action_name = 'Create an LSP account' WHERE id = 7;
 
 ALTER TABLE "public"."client" ADD COLUMN "group" BIGINT;
 
+ALTER TABLE "public"."user_model" ADD COLUMN "group_id" BIGINT;
+
 UPDATE "action" SET required_permission_level = 100 WHERE required_permission_level = 1;
 
 UPDATE "action" SET required_permission_level = 200 WHERE required_permission_level = 2;
@@ -67,6 +69,8 @@ drop sequence if exists referral_notes_seq;
 drop sequence if exists migration_tasks_seq;
 
 ALTER TABLE "public"."client" DROP COLUMN "group";
+
+ALTER TABLE "public"."user_model" DROP COLUMN "group_id";
 
 UPDATE "action" SET required_permission_level = 1 WHERE required_permission_level = 100;
 
