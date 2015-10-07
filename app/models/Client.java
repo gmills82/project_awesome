@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Expr;
+import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.common.BeanSet;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -49,6 +50,8 @@ public class Client extends Model {
 	@JsonManagedReference
     public List<Debt> debtList;
 
+    public Long groupId;
+
     public long getId() {
         return id;
     }
@@ -63,6 +66,14 @@ public class Client extends Model {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
     }
 
     public static void addDebt(Client client, Debt debt) {
@@ -85,18 +96,36 @@ public class Client extends Model {
         Long.class, Client.class
     );
 
-	public static Set<Client> query(String queryString) {
+    public static Set<Client> query(String queryString) {
+        return query(queryString, null);
+    }
+
+	public static Set<Client> query(String queryString, Long groupId) {
+
 		//Break string up by word
 		String[] values = queryString.split(" ");
 		Set<Client> clientList = new HashSet<Client>();
 		for (String value: values) {
-			clientList.addAll(find.where().disjunction()
-				.add(Expr.icontains("name", value))
-				.add(Expr.icontains("phone_number", value))
-				.add(Expr.icontains("address1", value))
-				.add(Expr.icontains("zipcode", value))
-				.findSet());
+
+            ExpressionList<Client> expression = find.where().disjunction()
+                    .add(Expr.icontains("name", value))
+                    .add(Expr.icontains("phone_number", value))
+                    .add(Expr.icontains("address1", value))
+                    .add(Expr.icontains("zipcode", value));
+
+			clientList.addAll(expression.findSet());
 		}
+
+        // For some reason, adding the filter on group_id doesn't seem to parse out the results during search. So we'll
+        // get around that by looking up the group ID of each of the clients and tossing the ones that don't match.
+        if (groupId != null) {
+            for (Client client : clientList) {
+                if (!Objects.equals(client.getGroupId(), groupId)) {
+                    client.delete();
+                }
+            }
+        }
+
 		return clientList;
 	}
 

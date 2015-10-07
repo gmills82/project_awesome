@@ -30,7 +30,7 @@ GET           /json/client/:clientId                       controllers.ClientCtr
 GET           /json/client/history/:clientId               controllers.ClientCtrl.getClientHistoryRecords(clientId: Long)
 PUT           /json/client                                 controllers.ClientCtrl.editClientJSON()
 #Client Query
-GET           /json/client/query/:query                    controllers.ClientCtrl.query(query: String)
+GET           /json/client/query/:query                    controllers.ClientCtrl.query(query: String, userid: Long ?= 0)
 
 #Referral CRUD
 POST          /json/referral                               controllers.ReferralCtrl.addReferral()

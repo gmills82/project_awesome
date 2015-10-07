@@ -54,20 +54,21 @@ public class MigrationTasksActor extends UntypedActor {
             }
         }
 
-        if (MigrationTask.getByTaskName(CLIENT_GROUP_TASK) == null) {
-            try {
-                runClientGroupMigration();
-            } catch (Exception e) {
-                Logger.error("Error migrating client groups: " + e);
-            }
-        }
-
         if (MigrationTask.getByTaskName(TEAM_GROUP_TASK) == null) {
             try {
                 runTeamGroupMigration();
                 new MigrationTask(TEAM_GROUP_TASK).save();
             } catch (Exception e) {
                 Logger.error("Error migrating team groups: " + e);
+            }
+        }
+
+        if (MigrationTask.getByTaskName(CLIENT_GROUP_TASK) == null) {
+            try {
+                runClientGroupMigration();
+                new MigrationTask(CLIENT_GROUP_TASK).save();
+            } catch (Exception e) {
+                Logger.error("Error migrating client groups: " + e);
             }
         }
     }
@@ -105,21 +106,25 @@ public class MigrationTasksActor extends UntypedActor {
     }
 
     /**
-
+     Looks up all clients, and the users that created them, and assigns them a group ID that matches the group ID of the
+     user that created them.
      */
     private void runClientGroupMigration() {
 
         for (Client client : Client.all()) {
 
             // Looks like these are unique, why return a list?
-//            List<Referral> referrals = Referral.getByClientId(client.getId());
-//            if (referrals == null || referrals.size() == 0) {
-//                continue;
-//            }
+            List<Referral> referrals = Referral.getByClientId(client.getId());
+            if (referrals == null || referrals.size() == 0) {
+                continue;
+            }
 
-//            Referral referral = referrals.get(0);
-//            client.setGroup(referral.getCreatorId());
-//            client.save();
+            Referral referral = referrals.get(0);
+            UserModel userModel = UserModel.getById(referral.getCreatorId());
+            if (userModel != null) {
+                client.setGroupId(Long.valueOf(userModel.getGroupId()));
+                client.update();
+            }
         }
     }
 
