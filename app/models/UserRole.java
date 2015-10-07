@@ -12,32 +12,35 @@ import java.util.List;
  */
 public enum UserRole {
 
-    FA(0, "EFA"),
-    EFA_ASSISTANT(1, "EFA Assistant"),
-    AGENT(100, "Agent"),
-    PRODUCER(200, "LSP");
+    // EFA Roles
+    FA(0, null, "EFA", "an"),
+    EFA_ASSISTANT(1, UserRole.FA, "EFA Assistant", "an"),
+    SUB_EFA(10, UserRole.FA, "Sub Producer", "a"),
+
+    // Agent Roles
+    AGENT(100, null, "Agent", "an"),
+
+    // Producer/LSP Roles
+    PRODUCER(200, null, "LSP", "an");
 
     private Integer permissionLevel;
+    private UserRole group;
     private String declaration;
+    private String article;
 
     /**
-     Constructor with a provided permission level
+     Constructor with a provided permission level, group, declaration, and article
 
      @param permissionLevel Permission level
-     */
-    UserRole(Integer permissionLevel) {
-        this.permissionLevel = permissionLevel;
-    }
-
-    /**
-     Constructor with a provided permission level
-
-     @param permissionLevel Permission level
+     @param group Group
      @param declaration Role declaration
+     @param article Article
      */
-    UserRole(Integer permissionLevel, String declaration) {
+    UserRole(Integer permissionLevel, UserRole group, String declaration, String article) {
         this.permissionLevel = permissionLevel;
+        this.group = group;
         this.declaration = declaration;
+        this.article = article;
     }
 
     /**
@@ -50,12 +53,30 @@ public enum UserRole {
     }
 
     /**
+     Returns the group
+
+     @return Group
+     */
+    public UserRole getGroup() {
+        return group;
+    }
+
+    /**
      Returns the user role declaration
 
      @return Declaration
      */
     public String getDeclaration() {
         return declaration;
+    }
+
+    /**
+     Returns the article
+
+     @return Article
+     */
+    public String getArticle() {
+        return article;
     }
 
     /**
@@ -92,6 +113,19 @@ public enum UserRole {
     public boolean isPassingPermissionLevel(Integer permissionLevel) {
         UserRole userRole = UserRole.getUserRoleForPermissionLevel(permissionLevel);
         return isPassingPermissionLevel(userRole);
+    }
+
+    /**
+     Returns whether or not the user role is of the provided group
+
+     @param userRole User role group
+     @return True if part of group, false otherwise
+     */
+    public boolean isGroupRole(UserRole userRole) {
+        if (this.getGroup() == null) {
+            return this == userRole;
+        }
+        return this.getGroup() == userRole;
     }
 
     /**

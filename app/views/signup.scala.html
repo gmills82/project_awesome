@@ -1,6 +1,7 @@
 @(user: UserModel, signupForm: Form[UserModel], roleType: Integer)
 
 @roleDeclaration(role: Integer) = {@UserRole.getUserRoleForPermissionLevel(role).getDeclaration}
+@roleArticle(role: Integer) = {@UserRole.getUserRoleForPermissionLevel(role).getArticle}
 
 @home(user, "Signup page") {
 
@@ -10,7 +11,7 @@
 
     <div class="main-box">
         <header class="main-box-header">
-            <h2 >Sign your team member up as an @roleDeclaration(roleType)</h2>
+            <h2 >Sign your team member up as @roleArticle(roleType) @roleDeclaration(roleType)</h2>
         </header>
         <div class="main-box-body clearfix">
             @if(signupForm.hasGlobalErrors) {

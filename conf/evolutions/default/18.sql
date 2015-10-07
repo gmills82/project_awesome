@@ -57,6 +57,22 @@ INSERT INTO "action"(
   'admin'
 );
 
+INSERT INTO "action"(
+  "id",
+  "action_name",
+  "action_url",
+  "required_permission_level",
+  "short_description",
+  "category"
+) VALUES (
+  17,
+  'Create sub producer',
+  '/signup/10',
+  1,
+  'Create sub producer',
+  'admin'
+);
+
 
 # --- !Downs
 
@@ -87,3 +103,5 @@ UPDATE "action" SET action_url = '/signup/1' WHERE action_url = '/signup/100';
 UPDATE "action" SET action_url = '/signup/2' WHERE action_url = '/signup/200';
 
 delete from "action" where id = 16;
+
+delete from "action" where id = 17;

@@ -19,7 +19,7 @@
 	</div>
 
     @*Break into separate views based on user roleType*@
-	@if(user.getRole.isPassingPermissionLevel(UserRole.EFA_ASSISTANT)) {
+	@if(user.getRole.isGroupRole(UserRole.FA)) {
         @efsDashboard()
     }
 	@if(user.getRole == UserRole.AGENT) {
