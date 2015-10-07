@@ -439,6 +439,7 @@ public class Referral extends Model implements HistoryRecord {
         return finder.where()
                 .in("user_id", userIds)
                 .between("date_created", fromDate.getTime(), toDate.getTime())
+                .orderBy("date_created desc")
                 .findList();
     }
 

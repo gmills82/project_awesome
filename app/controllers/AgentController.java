@@ -1,9 +1,13 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Referral;
+import models.ReferralList;
 import models.UserModel;
 import models.UserRole;
 import org.apache.poi.hssf.usermodel.*;
+import org.joda.time.DateTime;
+import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -22,6 +26,38 @@ public class AgentController extends Controller {
 
     /** The max column size for the referral excel sheet */
     private static final int MAX_XLS_COL_WIDTH = 10000;
+
+    /**
+     Returns the recent referrals for the provided agent and their assigned LSPs for the last 7 days
+
+     @param agentId Agent ID
+     @return List of referrals
+     */
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result getLatestTeamReferrals(Long agentId) {
+
+        // Look up the agent to verify that the provided ID exists. If found, make sure the ID belongs to a user set to
+        // the "agent" role type.
+        UserModel agent = UserModel.getById(agentId);
+        if (agent == null || !agent.getRole().isPassingPermissionLevel(UserRole.AGENT)) {
+            return notFound(String.format("No agent found matching the id %s", agentId));
+        }
+
+        // Look up all LSPs currently assigned to the agent
+        List<Long> userIds = new ArrayList<>();
+        userIds.add(agent.getId());
+        Set<UserModel> lsps = UserModel.getChildUserModelsByParentAllLevels(agent);
+        for (UserModel lsp : lsps) {
+            userIds.add(lsp.getId());
+        }
+
+        // Look up all referrals
+        ReferralList referralList = new ReferralList();
+        referralList.setReferrals(Referral.getByUserIdsBetweenDates(userIds, new DateTime().minusDays(7).toDate(), new Date()));
+        ObjectNode result = Json.newObject();
+        result.put("data", Json.toJson(referralList));
+        return ok(result);
+    }
 
     /**
      Downloads an excel spreadsheet of referrals for the provided agent and producer. If the producer ID is not defined,

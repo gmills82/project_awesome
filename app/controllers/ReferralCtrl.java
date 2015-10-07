@@ -468,7 +468,7 @@ public class ReferralCtrl extends Controller {
         if (referral != null) {
 
             // Why is this a string?
-            referral.setLastEditedDate(String.valueOf(new Date().getTime()));
+            referral.setLastEditedDate(DateUtilities.getFormattedDate(new Date()));
             referral.save();
         }
 

@@ -149,5 +149,20 @@ app.factory('referralService', ['$http', '$log', 'clientService', function($http
         }
     };
 
+    /**
+     Returns the referrals for the team of the provided user ID
+
+     @param     {Number}        userId          User ID
+     @param     {Function}      [callback]      Callback method
+     @todo      This currently only supports agents. Update to use any role if this gets called more often.
+     */
+    service.getTeamReferrals = function (userId, callback) {
+        $http.get('/agent/' + userId + '/team/referrals').success(function (data) {
+            if (typeof callback === "function") {
+                callback(data);
+            }
+        });
+    };
+
 	return service;
 }]);

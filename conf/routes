@@ -60,6 +60,7 @@ GET           /assets/*file                                controllers.Assets.at
 
 # Agent controller (You can't have optional named parameters? What kind of nonsense is this?)
 GET           /agent/:agentId/referrals                    controllers.AgentController.getReferralsByAgentId(agentId: Long, producerId: Long ?= 0)
+GET			  /agent/:agentId/team/referrals			   controllers.AgentController.getLatestTeamReferrals(agentId: Long)
 
 # Stats controller
 GET           /stats/efs/:efsid/:from/:to                  controllers.StatsController.getEFSStats(efsid: Long, from: Long, to: Long)
