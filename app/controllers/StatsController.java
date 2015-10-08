@@ -44,7 +44,7 @@ public class StatsController extends Controller {
         Date toDate = new Date(toTimestamp);
 
         UserModel efs = UserModel.getById(efsId);
-        if (efs == null || !efs.getRole().isPassingPermissionLevel(UserRole.EFA_ASSISTANT)) {
+        if (efs == null || !efs.getRole().isGroupRole(UserRole.FA)) {
             return notFound(String.format("No EFS found matching ID %s", efsId));
         }
 
@@ -53,6 +53,7 @@ public class StatsController extends Controller {
         userIds.add(efsId);
         List<Referral> referrals = Referral.getByCreatorIdsBetweenDates(userIds, fromDate, toDate);
         List<Referral> productiveReferrals = referrals.stream().filter(referral -> referral.wasProductive).collect(Collectors.toList());
+        List<Referral> processingReferrals = referrals.stream().filter(referral -> referral.getStatus().equalsIgnoreCase("processing")).collect(Collectors.toList());
 
         // Generate the models
         Referral totals = Referral.getTotalsBetweenDatesByCreatorIds(userIds, fromDate, toDate);
@@ -61,6 +62,7 @@ public class StatsController extends Controller {
         // Populate the data
         stats.setTotalReferrals(referrals.size());
         stats.setTotalProductiveReferrals(productiveReferrals.size());
+        stats.setTotalProcessingReferrals(processingReferrals.size());
         stats.setTotalInsurance(totals.gettInsurance());
         stats.setTotalIPS(totals.gettIps());
         stats.setTotalPC(totals.gettPc());
