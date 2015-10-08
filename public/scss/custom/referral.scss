@@ -1,0 +1,6 @@
+.accordion .panel-default .panel-title > a.accordion-toggle:after {
+  content: "\f067";
+}
+.accordion .panel-default.panel-open .panel-title > a.accordion-toggle:after {
+  content: "\f068";
+}

@@ -10,137 +10,135 @@
             <div class="panel-body clearfix">
                 <p>Enter a client's information or use the "Find Existing Clients" tab to pre-fill an existing client's information</p>
                 <div class="tabs-wrapper" role="tabpanel">
-                    <ul class="nav nav-tabs">
-                        <li role="presentation" class="active"><a href="#referral" data-toggle="tab">Refer Client</a></li>
-                        <li role="presentation"><a href="#search" data-toggle="tab">Find Existing Clients</a></li>
-                    </ul>
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="referral">
-                            <div class="main-box">
-                                <header class="main-box-header">
-                                    <h2>Client Information</h2>
-                                </header>
-                                <div class="main-box-body">
-                                    <form class="form-horizontal" ng-submit="addReferralFormSubmission(referral)" name="referralForm" novalidate>
-                                <div class="form-group required">
-                                    <label class="col-md-2 control-label" >Referral Type:</label>
-                                    <div class="col-md-10">
-                                        <select ng-model="referral.refType" required>
-                                            <option value="Callout">Callout</option>
-                                            <option value="Appt">Appointment</option>
-                                            <option value="Quote">Quote</option>
-                                            <option value="Profiles Review">Profiles Review</option>
-                                            <option value="Declined">Declined</option>
-                                            <option value="Follow Up">Follow Up</option>
-                                            <option value="Seminar">Seminar</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group required">
-                                    <label class="col-md-2 control-label">Name:</label>
-                                    <div class="col-md-10">
-                                        <input type="text" ng-model="referral.client.name" name="name" placeholder="Client Name" class="form-control" required />
-                                    </div>
-                                </div>
+					<tabset>
+						<tab heading="Refer Client">
+							<div class="main-box">
+								<header class="main-box-header">
+									<h2>Client Information</h2>
+								</header>
+								<div class="main-box-body">
+									<form class="form-horizontal" ng-submit="addReferralFormSubmission(referral)" name="referralForm" novalidate>
+										<div class="form-group required">
+											<label class="col-md-2 control-label" >Referral Type:</label>
+											<div class="col-md-10">
+												<select ng-model="referral.refType" required>
+													<option value="Callout">Callout</option>
+													<option value="Appt">Appointment</option>
+													<option value="Quote">Quote</option>
+													<option value="Profiles Review">Profiles Review</option>
+													<option value="Declined">Declined</option>
+													<option value="Follow Up">Follow Up</option>
+													<option value="Seminar">Seminar</option>
+												</select>
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="col-md-2 control-label">Name:</label>
+											<div class="col-md-10">
+												<input type="text" ng-model="referral.client.name" name="name" placeholder="Client Name" class="form-control" required />
+											</div>
+										</div>
 
-                                <div class="form-group required">
-                                    <label class="col-md-2 control-label" >Phone Number:</label>
-                                    <div class="col-md-2">
-                                        <input type="text" ng-model="referral.client.phoneNumber" name="phoneNumber" class="form-control" required />
-                                    </div>
-                                </div>
+										<div class="form-group required">
+											<label class="col-md-2 control-label" >Phone Number:</label>
+											<div class="col-md-2">
+												<input type="text" ng-model="referral.client.phoneNumber" name="phoneNumber" class="form-control" required />
+											</div>
+										</div>
 
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label" >E-mail:</label>
-                                    <div class="col-md-4">
-                                        <input type="email" ng-model="referral.client.userName" name="userName" class="form-control" placeholder="Email" />
-                                    </div>
-                                </div>
+										<div class="form-group">
+											<label class="col-md-2 control-label" >E-mail:</label>
+											<div class="col-md-4">
+												<input type="email" ng-model="referral.client.userName" name="userName" class="form-control" placeholder="Email" />
+											</div>
+										</div>
 
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label" >Street Address:</label>
-                                    <div class="col-md-10">
-                                        <input type="text" placeholder="Street Address" ng-model="referral.client.address1" name="address1" class="form-control" />
-                                    </div>
-                                </div>
+										<div class="form-group">
+											<label class="col-md-2 control-label" >Street Address:</label>
+											<div class="col-md-10">
+												<input type="text" placeholder="Street Address" ng-model="referral.client.address1" name="address1" class="form-control" />
+											</div>
+										</div>
 
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label" >City:</label>
-                                    <div class="col-md-3">
-                                        <input type="text" ng-model="referral.client.city" name="city" class="form-control" placeholder="City" />
-                                    </div>
-                                    <label class="col-md-1 control-label" >State:</label>
-                                    <div class="col-md-2">
-                                        <input type="text" ng-model="referral.client.state" name="state" class="form-control" placeholder="State" />
-                                    </div>
-                                    <label class="col-md-1 control-label" >Zip:</label>
-                                    <div class="col-md-2">
-                                        <input type="text" ng-model="referral.client.zipcode" name="zipcode" class="form-control" placeholder="Zipcode" />
-                                    </div>
-                                </div>
+										<div class="form-group">
+											<label class="col-md-2 control-label" >City:</label>
+											<div class="col-md-3">
+												<input type="text" ng-model="referral.client.city" name="city" class="form-control" placeholder="City" />
+											</div>
+											<label class="col-md-1 control-label" >State:</label>
+											<div class="col-md-2">
+												<input type="text" ng-model="referral.client.state" name="state" class="form-control" placeholder="State" />
+											</div>
+											<label class="col-md-1 control-label" >Zip:</label>
+											<div class="col-md-2">
+												<input type="text" ng-model="referral.client.zipcode" name="zipcode" class="form-control" placeholder="Zipcode" />
+											</div>
+										</div>
 
 
-                                <div class="form-group required">
-                                    <label class="col-md-2 control-label" >Reason for referral:</label>
-                                    <div class="col-md-10">
-                                        <textarea ng-model="referral.reasonForReferral" name="reasonForReferral" class="form-control" placeholder="Reason you are referring this person to a financial advisor" required></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label" >Client Goals:</label>
-                                    <div class="col-md-10">
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" ng-model="referral.client.goals.death" name="goals" />In Event of Death</label>
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" ng-model="referral.client.goals.retirement" name="goals" />Retirement</label>
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" ng-model="referral.client.goals.college" name="goals" />College Savings</label>
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" ng-model="referral.client.goals.longtermcare" name="goals" />Long Term Care</label>
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" ng-model="referral.client.goals.heath" name="goals" />Health</label>
-                                        <label class="checkbox-inline">
-                                            <input type="checkbox" ng-model="referral.client.goals.benefits" name="goals" />Benefits</label>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <label class="col-md-2 control-label" >Notes:</label>
-                                    <div class="col-md-10">
-                                        <textarea ng-model="referral.refNotes" name="refNotes" class="form-control" placeholder="General Notes"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group required">
-                                    <label class="col-md-2 control-label">Follow up date:</label>
-                                    <div class="col-md-2">
-                                        <input class="form-control ng-pristine ng-valid" name="nextStepDate" ng-model="referral.nextStepDate" data-provide="datepicker" data-date-today-highlight="true" data-date-format="yyyy-mm-dd" required>
-                                    </div>
-                                    <label class="col-md-1 control-label">Time:</label>
-                                    <div class="col-md-2 bootstrap-timepicker">
-                                        <input type="text" class="form-control" ng-model="referral.nextStepTime" id="timepicker" data-default-time="false" data-template="dropdown" data-show-inputs="false" required />
-                                    </div>
-                                </div>
-                                <div class="form-group required">
-                                    <label class="col-md-2 control-label" >Assign to Agent:</label>
-                                    <div class="col-md-10">
-                                        <select ng-model="referral.agentId" required>
-                                        @for(agent <- agents) {
-                                            <option value="@agent.id">@agent.userName</option>
-                                        }
-                                        </select>
-                                    </div>
-                                </div>
-                                <input type="hidden" ng-model="creatorId" value="@user.id" />
-                                <div class="alert alert-info required">
-                                    <i class="fa fa-info-circle fa-fw fa-lg"></i>
-                                    <span>*</span> denotes required fields
-                                </div>
-                                <input type="submit" class="btn btn-primary col-md-offset-2" value="Submit" ng-disabled="referralForm.$invalid"/>
-                            </form>
-                                </div>
-                            </div>
-                        </div>
-                        <div role="tabpanel" class="tab-pane" id="search" client-search-directive></div>
-                    </div>
+										<div class="form-group required">
+											<label class="col-md-2 control-label" >Reason for referral:</label>
+											<div class="col-md-10">
+												<textarea ng-model="referral.reasonForReferral" name="reasonForReferral" class="form-control" placeholder="Reason you are referring this person to a financial advisor" required></textarea>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-2 control-label" >Client Goals:</label>
+											<div class="col-md-10">
+												<label class="checkbox-inline">
+													<input type="checkbox" ng-model="referral.client.goals.death" name="goals" />In Event of Death</label>
+												<label class="checkbox-inline">
+													<input type="checkbox" ng-model="referral.client.goals.retirement" name="goals" />Retirement</label>
+												<label class="checkbox-inline">
+													<input type="checkbox" ng-model="referral.client.goals.college" name="goals" />College Savings</label>
+												<label class="checkbox-inline">
+													<input type="checkbox" ng-model="referral.client.goals.longtermcare" name="goals" />Long Term Care</label>
+												<label class="checkbox-inline">
+													<input type="checkbox" ng-model="referral.client.goals.heath" name="goals" />Health</label>
+												<label class="checkbox-inline">
+													<input type="checkbox" ng-model="referral.client.goals.benefits" name="goals" />Benefits</label>
+											</div>
+										</div>
+										<div class="form-group">
+											<label class="col-md-2 control-label" >Notes:</label>
+											<div class="col-md-10">
+												<textarea ng-model="referral.refNotes" name="refNotes" class="form-control" placeholder="General Notes"></textarea>
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="col-md-2 control-label">Follow up date:</label>
+											<div class="col-md-2">
+												<input class="form-control ng-pristine ng-valid" name="nextStepDate" ng-model="referral.nextStepDate" data-provide="datepicker" data-date-today-highlight="true" data-date-format="yyyy-mm-dd" required>
+											</div>
+											<label class="col-md-1 control-label">Time:</label>
+											<div class="col-md-2 bootstrap-timepicker">
+												<input type="text" class="form-control" ng-model="referral.nextStepTime" id="timepicker" data-default-time="false" data-template="dropdown" data-show-inputs="false" required />
+											</div>
+										</div>
+										<div class="form-group required">
+											<label class="col-md-2 control-label" >Assign to Agent:</label>
+											<div class="col-md-10">
+												<select ng-model="referral.agentId" required>
+												@for(agent <- agents) {
+													<option value="@agent.id">@agent.userName</option>
+												}
+												</select>
+											</div>
+										</div>
+										<input type="hidden" ng-model="creatorId" value="@user.id" />
+										<div class="alert alert-info required">
+											<i class="fa fa-info-circle fa-fw fa-lg"></i>
+											<span>*</span> denotes required fields
+										</div>
+										<input type="submit" class="btn btn-primary col-md-offset-2" value="Submit" ng-disabled="referralForm.$invalid"/>
+									</form>
+								</div>
+							</div>
+						</tab>
+						<tab heading="Find Existing Clients">
+							<div client-search-directive></div>
+						</tab>
+					</tabset>
                 </div>
             </div>
         </div>

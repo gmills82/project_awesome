@@ -22189,4 +22189,12 @@ ul.nav-pills.nav-stacked li.sub-pill:hover a {
   min-width: 120px;
 }
 
+.accordion .panel-default .panel-title > a.accordion-toggle:after {
+  content: "\f067";
+}
+
+.accordion .panel-default.panel-open .panel-title > a.accordion-toggle:after {
+  content: "\f068";
+}
+
 /*# sourceMappingURL=custom.css.map */
