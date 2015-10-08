@@ -102,6 +102,8 @@ public class ClientCtrl extends Controller {
 			client.goalsString = tmpStr;
 		}
 
+
+
         client.save();
         response().setHeader(LOCATION, routes.ClientCtrl.getClientJSON(client.id).url());
 

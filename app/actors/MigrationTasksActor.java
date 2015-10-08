@@ -93,7 +93,7 @@ public class MigrationTasksActor extends UntypedActor {
             note.save();
 
             referral.setRefNotes(null);
-//            referral.update();
+            referral.update();
         }
     }
 

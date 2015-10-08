@@ -91,6 +91,15 @@ public class ReferralCtrl extends Controller {
             note.save();
         }
 
+        Client client = Client.getById(referral.getClientId());
+        if (client != null) {
+            UserModel userModel = UserModel.getById(referral.getCreatorId());
+            if (userModel != null) {
+                client.setGroupId(Long.valueOf(userModel.getGroupId()));
+                client.update();
+            }
+        }
+
 		flash().put("success", "Your referral was created successfully");
 		response().setHeader(LOCATION, routes.ReferralCtrl.getReferral(referral.id).url());
 
