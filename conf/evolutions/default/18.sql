@@ -1,5 +1,7 @@
 # --- !Ups
 
+alter table "public"."user_model" drop CONSTRAINT IF EXISTS ck_user_model_role_type;
+
 create table referral_notes (
   id                        bigint not null,
   referral_id               bigint,
@@ -29,7 +31,7 @@ UPDATE "action" SET required_permission_level = 100 WHERE required_permission_le
 
 UPDATE "action" SET required_permission_level = 200 WHERE required_permission_level = 2;
 
-UPDATE "action" SET required_permission_level = 1 WHERE required_permission_level = 0;
+UPDATE "action" SET required_permission_level = 10 WHERE required_permission_level = 0;
 
 ALTER TABLE user_model DROP CONSTRAINT IF EXISTS ck_user_model_role_type;
 
@@ -52,7 +54,7 @@ INSERT INTO "action"(
   16,
   'Create assistant account',
   '/signup/1',
-  1,
+  10,
   'Create assistant account',
   'admin'
 );
@@ -68,13 +70,15 @@ INSERT INTO "action"(
   17,
   'Create sub producer',
   '/signup/10',
-  1,
+  10,
   'Create sub producer',
   'admin'
 );
 
 
 # --- !Downs
+
+ALTER TABLE "public"."user_model" ADD CONSTRAINT ck_user_model_role_type check (role_type in (0,1,2));
 
 drop table if exists referral_notes cascade;
 

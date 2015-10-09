@@ -112,6 +112,7 @@ create table user_model (
   first_name                varchar(255),
   last_name                 varchar(255),
   role_type                 integer,
+  constraint ck_user_model_role_type check (role_type in (0,1,2)),
   constraint uq_user_model_user_name unique (user_name),
   constraint pk_user_model primary key (id))
 ;
