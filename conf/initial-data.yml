@@ -1,5 +1,4 @@
 - !!models.Client
-    acctNumber: 1234
     name: The One
     userName: gmills82@gmail.com
 
