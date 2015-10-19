@@ -5,7 +5,7 @@
     <div ng-repeat="note in referral.notes">
         <p>
             <span ng-if="note.userModel">
-                {{note.userModel.fullName}}, {{note.formattedCreatedDate}}
+                {{note.formattedCreatedDate}} - {{note.userModel.fullName}} -
             </span>
             {{note.note}}
         </p>
