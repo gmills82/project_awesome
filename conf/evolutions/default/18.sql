@@ -75,6 +75,7 @@ INSERT INTO "action"(
   'admin'
 );
 
+UPDATE action set action_name='Create LSP account' where id=3;
 
 # --- !Downs
 
@@ -109,3 +110,5 @@ UPDATE "action" SET action_url = '/signup/2' WHERE action_url = '/signup/200';
 delete from "action" where id = 16;
 
 delete from "action" where id = 17;
+
+UPDATE action set action_name='Create producer account' where id=3;
