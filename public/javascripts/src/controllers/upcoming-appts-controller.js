@@ -32,7 +32,7 @@ app.controller('UpcomingApptsController', [
                         //Loop over appts and prepare combined address
                         angular.forEach(orderedData, function (value, key){
                             var address = "";
-                            if(value.client.address1) {
+                            if(value.client && value.client.address1) {
                                 address = value.client.address1;
                                 if(value.client.city) {
                                     address = address + ", " + value.client.city;
@@ -43,7 +43,6 @@ app.controller('UpcomingApptsController', [
                                 if(value.client.zipcode) {
                                     address = address + ", " + value.client.zipcode;
                                 }
-
                             }
 
                             value.client.address = address;
