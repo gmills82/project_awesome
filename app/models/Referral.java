@@ -86,10 +86,38 @@ public class Referral extends Model implements HistoryRecord {
 		int MAX_RECENT_REFERRALS = 25;
         return finder.where().eq("creatorId", id).orderBy("date_created DESC").setMaxRows(MAX_RECENT_REFERRALS).findList();
     }
+
+    /**
+     Returns a max of 25 referrals for the provided creator ID
+
+     @param id Creator ID
+     @return List of referrals
+     */
     public static List<Referral> getByCreatorId(Long id) {
-		int MAX_RECENT_REFERRALS = 25;
-        return finder.where().eq("creatorId", id).orderBy("id").setMaxRows(MAX_RECENT_REFERRALS).findList();
+		return getByCreatorId(id, 25);
     }
+
+    /**
+     Returns referrals for the provided creator ID and a defined max number of results
+
+     @param id Creator ID
+     @param maxResults Max number of results, or null if no max
+     @return List of referrals
+     */
+    public static List<Referral> getByCreatorId(Long id, Integer maxResults) {
+        Query<Referral> query = finder
+                .where()
+                .eq("creatorId", id)
+                .orderBy("id");
+
+        // Set a max if one was provided...
+        if (maxResults != null) {
+            query = query.setMaxRows(maxResults);
+        }
+
+        return query.findList();
+    }
+
 	public static List<Referral> getByAssignedIdInRange(Long assigneeId, Long range) {
 		return finder.where().eq("user_id", assigneeId).ge("dateCreated", range).findList();
 	}

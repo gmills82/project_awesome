@@ -507,7 +507,7 @@ public class ReferralCtrl extends Controller {
 			UserModel currentTeamMember = uIter.next();
 
 			//Add list of referrals they created to all referrals
-			List<Referral> createdReferrals = Referral.getByCreatorId(currentTeamMember.id);
+			List<Referral> createdReferrals = Referral.getByCreatorId(currentTeamMember.id, null);
 			referrals.addAll(createdReferrals);
 		}
 
