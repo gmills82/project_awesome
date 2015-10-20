@@ -8,6 +8,13 @@ app.controller('TeamReferralsController', [
         $scope.referrals = [];
         $scope.referralTypes = [{'title': 'No Filter', 'id': ''}];
 
+        var
+            /**
+             Property that determines whether or not the page has been rendered
+             @type {boolean}
+             */
+            hasRendered = false;
+
         $scope.teamReferralsTable = new ngTableParams(
             {
                 page: 1,
@@ -32,18 +39,21 @@ app.controller('TeamReferralsController', [
                         params.total(orderedData.length);
 
                         // Look up the referral types from the service to populate the filter dropdown
-                        referralService.getReferralTypes(function (error, data) {
-                            if (error || !data) {
-                                $log.error("Error getting referral types.", error || "No data returned from the service.");
-                                return;
-                            }
-                            angular.forEach(data, function (type) {
-                                $scope.referralTypes.push({
-                                    'id': type.id,
-                                    'title': type.title
+                        if (!hasRendered) {
+                            referralService.getReferralTypes(function (error, data) {
+                                if (error || !data) {
+                                    $log.error("Error getting referral types.", error || "No data returned from the service.");
+                                    return;
+                                }
+                                angular.forEach(data, function (type) {
+                                    $scope.referralTypes.push({
+                                        'id': type.id,
+                                        'title': type.title
+                                    });
                                 });
                             });
-                        });
+                        }
+                        hasRendered = true;
 
                         $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));
                     });

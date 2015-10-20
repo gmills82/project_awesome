@@ -11,18 +11,12 @@ app.controller('ViewTeamReferralsController', [
         $scope.teamRefs = [{'title': 'No Filter', 'id': ''}];
         $scope.arr=[];
 
-        //Helper function
-        var inArray = Array.prototype.indexOf ?
-            function (val, arr) {
-                return arr.indexOf(val)
-            } :
-            function (val, arr) {
-                var i = arr.length;
-                while (i--) {
-                    if (arr[i] === val) return i;
-                }
-                return -1;
-            };
+        var
+            /**
+             Property that determines whether or not the page has been rendered
+             @type {boolean}
+             */
+            hasRendered = false;
 
         this.init = function () {
 
@@ -62,21 +56,25 @@ app.controller('ViewTeamReferralsController', [
                         params.total(total);
 
                         // Look up the referral types from the service to populate the filter dropdown
-                        referralService.getReferralTypes(function (error, data) {
-                            if (error || !data) {
-                                $log.error("Error getting referral types.", error || "No data returned from the service.");
-                                return;
-                            }
+                        if (!hasRendered) {
+                            referralService.getReferralTypes(function (error, data) {
+                                if (error || !data) {
+                                    $log.error("Error getting referral types.", error || "No data returned from the service.");
+                                    return;
+                                }
 
-                            // Why do we have to loop through each referral type and push it into the array here? Concatting
-                            // the teamRefs array with the data object didn't work.
-                            angular.forEach(data, function (type) {
-                                $scope.teamRefs.push({
-                                    'id': type.id,
-                                    'title': type.title
+                                // Why do we have to loop through each referral type and push it into the array here? Concatting
+                                // the teamRefs array with the data object didn't work.
+                                angular.forEach(data, function (type) {
+                                    $scope.teamRefs.push({
+                                        'id': type.id,
+                                        'title': type.title
+                                    });
                                 });
                             });
-                        });
+                        }
+
+                        hasRendered = true;
 
                         //Resolve data gathering
                         $defer.resolve(referrals);
