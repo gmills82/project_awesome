@@ -118,15 +118,16 @@ public class Client extends Model {
 
         // For some reason, adding the filter on group_id doesn't seem to parse out the results during search. So we'll
         // get around that by looking up the group ID of each of the clients and tossing the ones that don't match.
+        Set<Client> returnClientList = new HashSet<>();
         if (groupId != null) {
             for (Client client : clientList) {
-                if (!Objects.equals(client.getGroupId(), groupId)) {
-                    client.delete();
+                if (Objects.equals(client.getGroupId(), groupId)) {
+                    returnClientList.add(client);
                 }
             }
         }
 
-		return clientList;
+		return returnClientList;
 	}
 
     public static List<Client> all() {
