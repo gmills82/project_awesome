@@ -62,6 +62,21 @@ app.factory('referralService', ['$http', '$log', 'clientService', function($http
 	};
 
 	service.put = function (referral, callback) {
+
+        // Referral notes are now handled by a separate service. Including them in the referral causes issues when
+        // mapping to a model on the server, so we'll kill these before submission.
+        if (referral) {
+            if (referral.notes) {
+                delete referral.notes;
+            }
+            if (referral.referralNotes) {
+                delete referral.referralNotes;
+            }
+            if (referral.refNotes) {
+                delete referral.refNotes;
+            }
+        }
+
 		$http.put("/json/referral", referral).success(function ( data, status, headers) {
 			clientService.put(referral.client, function () {
 				if(typeof(callback) == "function") {
