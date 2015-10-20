@@ -44,8 +44,9 @@ app.controller('UpcomingApptsController', [
                                     address = address + ", " + value.client.zipcode;
                                 }
                             }
-
-                            value.client.address = address;
+                            if (value.client) {
+                                value.client.address = address;
+                            }
                         });
 
                         //Pass out total to larger scope

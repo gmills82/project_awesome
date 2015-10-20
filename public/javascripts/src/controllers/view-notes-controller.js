@@ -12,16 +12,19 @@ app.controller('ViewNotesController', [
          */
         $scope.showViewNotesModal = function ($event) {
             $event.preventDefault();
-            $modal.open({
-                animation: true,
-                controller: 'ViewNotesModalController',
-                templateUrl: '/assets/javascripts/src/views/view-notes-modal.html',
-                resolve: {
-                    referral: function () {
-                        return $scope.referral;
+
+            referralService.get($scope.referral.id, function (data) {
+                $modal.open({
+                    animation: true,
+                    controller: 'ViewNotesModalController',
+                    templateUrl: '/assets/javascripts/src/views/view-notes-modal.html',
+                    resolve: {
+                        referral: function () {
+                            return data;
+                        }
                     }
-                }
+                });
             });
-        }
+        };
     }
 ]);
