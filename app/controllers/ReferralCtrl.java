@@ -489,6 +489,62 @@ public class ReferralCtrl extends Controller {
         return status(201, result);
     }
 
+    /**
+     Returns the processing referrals for the provided user ID
+
+     @todo This method is almost the same as the others to return filtered referrals. We should combine them.
+     @param userId User ID
+     @return Processing referrals
+     */
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result getProcessingReferrals(Long userId) {
+
+        ObjectNode result = Json.newObject();
+
+        UserModel currentUser = UserModel.getById(userId);
+        if (currentUser == null) {
+            return notFound("No user found matching ID " + userId);
+        }
+
+        List<Referral> referrals = getReferrals(userId, ReferralStatus.PROCESSING);
+        result.put("data", gatherClientsForReferrals(referrals));
+        return ok(result);
+    }
+
+    /**
+     Returns the referrals for the provided user ID and status
+
+     @param userId User ID
+     @param status Status
+     @return List of referrals
+     */
+    private static List<Referral> getReferrals(Long userId, ReferralStatus status) {
+
+        SimpleDateFormat sdf = DateUtilities.getDateFormat();
+        Calendar cal = new GregorianCalendar();
+        String startDate = sdf.format(cal.getTime());
+
+        // Lookup...
+        List<Referral> currentUsersRefs = Referral.getByUserIdNotInFuture(userId, startDate);
+
+        // Filter...
+        List<Referral> referrals = filter(
+                having(
+                        on(Referral.class).getRecordStatus(), equalTo(status.getStatus())
+                ),
+                currentUsersRefs
+        );
+
+        // Sort...
+        referrals = sort(
+                referrals,
+                on(Referral.class).getNextStepTimestamp()
+        );
+
+        // Profit
+        return referrals;
+    }
+
 	private static Set<UserModel> gatherChildTeamMembers(UserModel parent) {
 		//Unique team members collection
 		Set<UserModel> team = UserModel.getChildUserModelsByParentAllLevels(parent);

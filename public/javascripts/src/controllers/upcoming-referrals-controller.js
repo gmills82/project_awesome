@@ -66,7 +66,6 @@ app.controller('UpcomingReferralsController', [
                     });
                 }
             });
-
         };
 
         $scope.$on(events.REFERRAL_DELETED, function (event, args) {

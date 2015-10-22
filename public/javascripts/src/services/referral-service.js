@@ -208,5 +208,15 @@ app.factory('referralService', ['$http', '$log', 'clientService', function($http
         });
     };
 
+    /**
+     Returns the processing referrals for the provided user ID
+
+     @param     {Number}        userId          User ID
+     @returns   {HttpPromise}
+     */
+    service.getProcessingReferrals = function (userId) {
+        return $http.get('/json/referrals/processing/' + userId);
+    };
+
 	return service;
 }]);
