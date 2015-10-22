@@ -11,7 +11,7 @@
                 <p>Enter a client's information or use the "Find Existing Clients" tab to pre-fill an existing client's information</p>
                 <div class="tabs-wrapper" role="tabpanel">
 					<tabset>
-						<tab heading="Refer Client">
+						<tab heading="Refer Client" active="referClientActive" select="tabSelected('refer')">
 							<div class="main-box">
 								<header class="main-box-header">
 									<h2>Client Information</h2>
@@ -135,7 +135,7 @@
 								</div>
 							</div>
 						</tab>
-						<tab heading="Find Existing Clients">
+						<tab heading="Find Existing Clients"  select="tabSelected('search')">
 							<div client-search-directive></div>
 						</tab>
 					</tabset>

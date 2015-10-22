@@ -47,11 +47,20 @@ app.controller('ReferralController', [
 
         $scope.referral.nextStepDate = this.getTodaysDate();
 
+        $scope.referClientActive = true;
+
         //Adds existing client to referral in scope
         $scope.addClientToReferral = function (client) {
             $scope.referral.updateExistingClientFlag = true;
             $scope.referral.client = client;
-            angular.element(".tabs-wrapper li a[href='#referral']").tab("show");
+            if (!$scope.referClientActive || $scope.referClientActive === true) {
+                $scope.referClientActive = false;
+            }
+            $scope.referClientActive = true;
+        };
+
+        $scope.tabSelected = function (type) {
+            $scope.referClientActive = (type !== 'search');
         };
 
         //Handles add view form submission
