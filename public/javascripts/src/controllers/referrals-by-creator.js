@@ -5,23 +5,18 @@ app.controller('ReferralsByCreatorController', [
     "ngTableParams",
     "$filter",
     "events",
-    function ($scope, $http, ngTableParams, $filter, events) {
+    'referralService',
+    function ($scope, $http, ngTableParams, $filter, events, referralService) {
         $scope.referrals = [];
         $scope.recentRefTypes = [{'title': 'No Filter', 'id': ''}];
         $scope.arr=[];
 
-        //Helper function
-        var inArray = Array.prototype.indexOf ?
-            function (val, arr) {
-                return arr.indexOf(val)
-            } :
-            function (val, arr) {
-                var i = arr.length;
-                while (i--) {
-                    if (arr[i] === val) return i;
-                }
-                return -1;
-            };
+        var
+            /**
+             Property that determines whether or not the page has been rendered
+             @type {boolean}
+             */
+            hasRendered = false;
 
         this.init = function () {
             //Setup ng-table
@@ -48,16 +43,22 @@ app.controller('ReferralsByCreatorController', [
                         $scope.total = orderedData.length;
                         params.total(orderedData.length);
 
-                        //Create scope for RefType filter
-                        angular.forEach(orderedData, function(item){
-                            if (inArray(item.refType, $scope.arr) === -1) {
-                                $scope.arr.push(item.refType);
-                                $scope.recentRefTypes.push({
-                                    'id': item.refType,
-                                    'title': item.refType
+                        // Look up the referral types from the service to populate the filter dropdown
+                        if (!hasRendered) {
+                            referralService.getReferralTypes(function (error, data) {
+                                if (error || !data) {
+                                    $log.error("Error getting referral types.", error || "No data returned from the service.");
+                                    return;
+                                }
+                                angular.forEach(data, function (type) {
+                                    $scope.recentRefTypes.push({
+                                        'id': type.id,
+                                        'title': type.title
+                                    });
                                 });
-                            }
-                        });
+                            });
+                        }
+                        hasRendered = true;
 
                         //Resolve data gathering
                         $defer.resolve(orderedData.slice((params.page() - 1) * params.count(), params.page() * params.count()));

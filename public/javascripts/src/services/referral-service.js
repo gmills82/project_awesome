@@ -8,6 +8,9 @@ app.factory('referralService', ['$http', '$log', 'clientService', function($http
 		$log.warn("referralService returned a status of " + status + "and an error: " + error);
 	};
 
+    var
+        _referralTypes = [];
+
 	service.get = function (refId, callback) {
 		$http.get("/json/referral/" + refId).success(function ( data, status, headers) {
 			var referral = data.data;
@@ -131,37 +134,63 @@ app.factory('referralService', ['$http', '$log', 'clientService', function($http
      */
     service.getReferralTypes = function (callback) {
         if (typeof callback === 'function') {
-            callback(null, [
-                {
-                    'id': 'Callout',
-                    'title': 'Callout'
-                },
-                {
-                    'id': 'Appt',
-                    'title': 'Appointment'
-                },
-                {
-                    'id': 'Quote',
-                    'title': 'Quote'
-                },
-                {
-                    'id': 'Profiles Review',
-                    'title': 'Profiles Review'
-                },
-                {
-                    'id': 'Declined',
-                    'title': 'Declined'
-                },
-                {
-                    'id': 'Follow Up',
-                    'title': 'Follow Up'
-                },
-                {
-                    'id': 'Seminar',
-                    'title': 'Seminar'
-                }
-            ]);
+            if (!_referralTypes || _referralTypes.length === 0) {
+                _referralTypes = [
+                    {
+                        'id': 'Callout',
+                        'title': 'Callout'
+                    },
+                    {
+                        'id': 'Appt',
+                        'title': 'Appointment'
+                    },
+                    {
+                        'id': 'Quote',
+                        'title': 'Quote'
+                    },
+                    {
+                        'id': 'Profiles Review',
+                        'title': 'Profiles Review'
+                    },
+                    {
+                        'id': 'Declined',
+                        'title': 'Declined'
+                    },
+                    {
+                        'id': 'Follow Up',
+                        'title': 'Follow Up'
+                    },
+                    {
+                        'id': 'Seminar',
+                        'title': 'Seminar'
+                    }
+                ];
+            }
+            callback(null, _referralTypes);
         }
+    };
+
+    /**
+     Returns the referral type for the provided ID
+
+     @param     {String}        id              Referral type ID
+     @param     {Function}      [callback]      Callback method
+     */
+    service.getReferralTypeById = function (id, callback) {
+        if (typeof id !== "string") {
+            return callback("ID must be provided as a string");
+        }
+        service.getReferralTypes(function (error, data) {
+            if (error || !data) {
+                return callback("Error getting referral types from the service");
+            }
+            for (var i = 0, length = data.length; i < length; i++) {
+                if (data[i].id === id) {
+                    return callback(null, data[i]);
+                }
+            }
+            return callback(null, null);
+        });
     };
 
     /**
