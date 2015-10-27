@@ -1,3 +1,5 @@
+package example;
+
 import java.util.List;
 
 import static org.mockito.Mockito.*;

@@ -17,7 +17,7 @@ import static org.junit.Assert.assertTrue;
  User: justin.podzimek
  Date: 10/1/15
  */
-public class UserModelTest {
+public class UserModelUnitTest {
 
     @Test
     public void testGetChildUserModelsByParentAllLevels() {
