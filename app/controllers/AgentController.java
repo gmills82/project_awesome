@@ -85,12 +85,20 @@ public class AgentController extends Controller {
         producerIds.add(agent.id);
         producerMap.put(agent.id, agent);
         if (producerId == null || producerId == 0) {
-            if (agent.childTeamMembers != null) {
-                for (UserModel userModel : agent.childTeamMembers) {
-                    producerMap.put(userModel.id, userModel);
+
+            Set<UserModel> children = UserModel.getChildUserModelsByParentAllLevels(agent);
+            if (children != null) {
+                for (UserModel userModel : children) {
+                    producerMap.put(userModel.getId(), userModel);
+                    producerIds.add(userModel.getId());
                 }
-                producerIds.addAll(agent.childTeamMembers.stream().map(producer -> producer.id).collect(Collectors.toList()));
             }
+//            if (agent.childTeamMembers != null) {
+//                for (UserModel userModel : agent.childTeamMembers) {
+//                    producerMap.put(userModel.id, userModel);
+//                }
+//                producerIds.addAll(agent.childTeamMembers.stream().map(producer -> producer.id).collect(Collectors.toList()));
+//            }
         } else {
             producerIds.add(producerId);
             UserModel producer = UserModel.getById(producerId);
