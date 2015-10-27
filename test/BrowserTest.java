@@ -15,8 +15,8 @@ public class BrowserTest {
 				browser.goTo("http://localhost:3333");
 
 				//Fill in creds
-				browser.$("input[name=userName]").text("test@test.com");
-				browser.$("input[name=password]").text("salt");
+				browser.$("input[name=userName]").text("test@efsmanager.com");
+				browser.$("input[name=password]").text("test");
 
 				//Submit by clicking the Login button
 				FluentList<FluentWebElement> submitButton = browser.$("input[type='submit']");
@@ -35,7 +35,7 @@ public class BrowserTest {
 				browser.goTo("http://localhost:3333");
 
 				//Fill in creds
-				browser.$("input[name=userName]").text("test@test.com");
+				browser.$("input[name=userName]").text("test@efsmanager.com");
 				browser.$("input[name=password]").text("saltyDog");
 
 				//Submit by clicking the Login button

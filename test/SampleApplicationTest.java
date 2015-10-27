@@ -29,11 +29,4 @@ public class SampleApplicationTest {
 		assertThat(contentAsString(result)).contains("Login");
 	}
 
-//	@Test
-//	public void renderTemplate() {
-//		Content html = login.render("Welcome to Play!");
-//		assertThat(contentType(html)).isEqualTo("text/html");
-//		assertThat(contentAsString(html)).contains("Welcome to Play!");
-//	}
-
 }
