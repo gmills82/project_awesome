@@ -62,6 +62,11 @@ public class JsonRouteTests {
 				//ID 402 is testlsp@efsmanager.com
 				assertEquals("GET /stats/producer/:producerid/:from/:to", OK, getUrl("/stats/producer/402/1420494290844/1445873007394").getStatus());
 
+				//Testing bad request response code
+				assertEquals("GET /json/testNonsense", NOT_FOUND, getUrl("/json/testNonsense").getStatus());
+				//TODO: Cleanup all json routes that accept paramaters to check for null and type, returning
+				//TODO: BAD_REQUEST in those cases
+//				assertEquals("GET /json/client/:clientId", BAD_REQUEST, getUrl("/json/client/butts").getStatus());
 			}
 		});
 	}
