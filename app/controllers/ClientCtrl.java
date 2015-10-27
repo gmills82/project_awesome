@@ -46,6 +46,8 @@ public class ClientCtrl extends Controller {
 
         Client currentClient = Client.getById(clientId);
 		ObjectNode clientJson = (ObjectNode) Json.toJson(currentClient);
+	    //TODO: This needs to be cleaned up to work better. Copies goal string in db like death death death death
+	    //TODO: Also causes NPE when goalsString is empty
 		String[] goalsArray = currentClient.goalsString.split(" ");
 
 		ObjectNode goalNode = Json.newObject();
