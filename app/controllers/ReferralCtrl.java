@@ -524,8 +524,18 @@ public class ReferralCtrl extends Controller {
         Calendar cal = new GregorianCalendar();
         String startDate = sdf.format(cal.getTime());
 
-        // Lookup...
-        List<Referral> currentUsersRefs = Referral.getByUserIdNotInFuture(userId, startDate);
+        // Lookup the user
+        UserModel user = UserModel.getById(userId);
+        if (user == null) {
+            return null;
+        }
+
+        // Lookup the children of the user and add them to a list. Since we also care about the user (not just the
+        // children), we'll add the user to the list as well.
+        Set<UserModel> users = UserModel.getChildUserModelsByParentAllLevels(user);
+        users.add(user);
+        List<Long> userIds = users.stream().map(UserModel::getId).collect(Collectors.toList());
+        List<Referral> currentUsersRefs = Referral.getByUserIdsNotInFuture(userIds, startDate);
 
         // Filter...
         List<Referral> referrals = filter(

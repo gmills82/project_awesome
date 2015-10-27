@@ -150,11 +150,16 @@ public class Referral extends Model implements HistoryRecord {
 	}
 
 	public static List<Referral> getByUserIdNotInFuture(Long assignedUserId, String today) {
-		return finder.where().eq("user_id", assignedUserId).disjunction()
-			.add(Expr.le("nextStepDate", today))
-			.add(Expr.icontains("nextStepDate", "undefined"))
-			.findList();
+		return getByUserIdsNotInFuture(Arrays.asList(assignedUserId), today);
 	}
+
+    public static List<Referral> getByUserIdsNotInFuture(List<Long> userIds, String today) {
+        return finder
+                .where().in("user_id", userIds).disjunction()
+                .add(Expr.le("nextStepDate", today))
+                .add(Expr.icontains("nextStepDate", "undefined"))
+                .findList();
+    }
 
 	public static List<Referral> getByClientId(Long id) {
 		return populateReferralData(finder.where().eq("clientId", id).findList());
