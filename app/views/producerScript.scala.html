@@ -1,10 +1,10 @@
 @(user: UserModel)
-@home(user, "Producer Phone Scripts") {
+@home(user, "LSP Phone Scripts") {
 
     <div class="row">
         <div class="col-lg-12">
             <div id="content-header" class="clearfix">
-                <h1>Producer Phone Scripts</h1>
+                <h1>LSP Phone Scripts</h1>
             </div>
         </div>
     </div>
@@ -16,340 +16,246 @@
                 </header>
                 <div class="main-box-body clearfix">
                     <div class="tabs-wrapper scriptTabs">
-                            <!-- Tabs -->
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="active">
-                                <a href="#script1" role="tab" data-toggle="tab">Address Change</a>
-                            </li>
-                            <li>
-                                <a href="#script2" role="tab" data-toggle="tab">Auto Change</a>
-                            </li>
-                            <li>
-                                <a href="#script3" role="tab" data-toggle="tab">Name Change</a>
-                            </li>
-                            <li>
-                                <a href="#script4" role="tab" data-toggle="tab">Payment</a>
-                            </li>
-                            <li>
-                                <a href="#script5" role="tab" data-toggle="tab">Decline</a>
-                            </li>
-                        </ul>
 
-                            <!-- Tab panes -->
-                        <div class="tab-content">
-                            <div class="tab-pane fade in active" id="script1">
-                                <div class="main-box clearfix">
-                                    <div class="main-box-body clearfix">
-                                        <div class="panel-group accordion" id="accordion">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
-                                                            Did you change jobs as well?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseOne" class="panel-collapse collapse in">
-                                                    <div class="panel-body">
-                                                        Address Changes along with Job Changes represent a significant change in your financial picture. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                                                            Did you move?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseTwo" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        Moving to a new home represents a big change in your financial picture, not limited to: new mortgage payments, insurance, even things like your daily cost of living. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to r
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                                                            Were there other changes in your financial picture as well?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseThree" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        Any change in your financial picture can make a significant impact on your short-and-long-term concerns and goals. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="script2">
-                                <div class="main-box clearfix">
-                                    <div class="main-box-body clearfix">
-                                        <div class="panel-group accordion" id="accordion2">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle " data-toggle="collapse" data-parent="#accordion2" href="#collapse2One">
-                                                            Did you recently buy or sell a car?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse2One" class="panel-collapse collapse in" >
-                                                    <div class="panel-body">
-                                                        Buying or selling a car represents a significant change in your financial picture. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse2Two">
-                                                            Do you have any other changes with the drivers in your household?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse2Two" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        Changes with the drivers in your household represents a big change in your financial picture, not limited to: new car payments, insurance, even things like your daily cost of living. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion2" href="#collapse2Three">
-                                                            Have you had other changes in your financial picture as well?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse2Three" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        Any change in your financial picture can make a significant impact on your short-and-long-term concerns and goals. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade " id="script3">
-                                <div class="main-box clearfix">
-                                    <div class="main-box-body clearfix">
-                                        <div class="panel-group accordion" id="accordion3">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle " data-toggle="collapse" data-parent="#accordion3" href="#collapse3One">
-                                                            Did you recently get married or divorced?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse3One" class="panel-collapse collapse in" >
-                                                    <div class="panel-body">
-                                                        Marriages/Divorces represent a significant change in your financial picture. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse3Two">
-                                                            Do you have any changes with dependents or other drivers?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse3Two" class="panel-collapse collapse ">
-                                                    <div class="panel-body">
-                                                        Having those changes in your life represents a significant change in your financial picture. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion3" href="#collapse3Three">
-                                                            Have you had any other changes in your financial picture?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse3Three" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        Any change in your financial picture can make a significant impact on your short-and-long-term concerns and goals. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="script4">
-                                <div class="main-box clearfix">
-                                    <div class="main-box-body clearfix">
-                                        <div class="panel-group accordion" id="accordion4">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle " data-toggle="collapse" data-parent="#accordion4" href="#collapse4One">
-                                                            Are you taking advantage of all of the discounts available to you?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse4One" class="panel-collapse collapse in" >
-                                                    <div class="panel-body">
-                                                        There may be many discounts available to you that you are currently unaware of. We can also make sure that your money is working as hard as you do, both to grow your wealth, and protect your wealth for your loved ones. Here at Allstate, we have a financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion4" href="#collapse4Two">
-                                                            Is there a reason you don’t use automatic payment?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse4Two" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        It is good to be involved and hands-on with your finances, and we would like to help you any way we can. In order to best serve you, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion4" href="#collapse4Three">
-                                                            Have you had any changes in your financial picture?
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse4Three" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        Any change in your financial picture can make a significant impact on your short-and-long-term concerns and goals. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="tab-pane fade" id="script5">
-                                <div class="main-box clearfix">
-                                    <div class="main-box-body clearfix">
-                                        <div class="panel-group accordion" id="accordion5">
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion5" href="#collapse5One">
-                                                            I don’t have time
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse5One" class="panel-collapse collapse in" >
-                                                    <div class="panel-body">
-                                                        Thank you for helping me understand. We know our clients are busy, and want to be mindful of your time. I would like to let you know that we can set appointments in the morning, afternoon, evening and on weekends. Or if it is more convenient for you, I can give our financial specialist your contact information and have him call you. Since this is important for you, can we still assist you?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion5" href="#collapse5Two">
-                                                            I have a lot going on
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse5Two" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        Thank you for helping me understand. I know you have a lot going on, and we want to be sympathetic to your needs. Your financial security is very important to us, and by meeting with our financial specialist, it could help us to take more concerns off of your plate and give that time and energy back to you. We can also set appointments in the morning, afternoon, evening or on weekends at your convenience. Or at the least, I could pass your information to them and have him give you a call to introduce himself and his services. Can we still assist you?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion5" href="#collapse5Three">
-                                                            I already have an advisor helping me
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapse5Three" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        Thank you for helping me understand. I'm glad that you have someone helping you with your finances that is very important to us. I do want to make sure you know that our financial specialist is an expert in a number of areas that other advisors cannot offer, including Life Insurance and Supplemental Benefits which can protect your assets, your loved ones, or even lower your health care costs. In addition, we can set appointments at your convenience in the mornings, afternoons, evenings and even weekends. Or at the least, I could pass your information to them and have him give you a call to introduce himself and his services. Can we still assist you?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="panel panel-default">
-                                                <div class="panel-heading">
-                                                    <h4 class="panel-title">
-                                                        <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion5" href="#collapseFour">
-                                                            I don’t have any money for investments or insurance
-                                                        </a>
-                                                    </h4>
-                                                </div>
-                                                <div id="collapseFour" class="panel-collapse collapse">
-                                                    <div class="panel-body">
-                                                        Thank you for helping me understand. I do want to make sure that you know what is available to you. We have a wide range of products and services, and want to help everyone, even if you don't have a lot of money saved right now. Our hope would be to assist you in building your wealth. We can set an appointment at your convenience, in the morning, afternoon, evening or even the weekend. Or if it is more convenient, I can pass your information to our financial specialist, so he can reach out to you and introduce himself and his services. Can we still assist you?
-                                                    </div>
-                                                    <div class="refer-btn">
-                                                        <a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+						<tabset>
+							<tab heading="Address Change">
+
+								<div class="main-box clearfix">
+									<div class="main-box-body clearfix accordion">
+										<accordion>
+											<accordion-group is-open="true">
+												<accordion-heading>
+													Did you change jobs as well?
+												</accordion-heading>
+												<div class="panel-body">
+													Address Changes along with Job Changes represent a significant change in your financial picture. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">
+														Refer this client
+													</a>
+												</div>
+											</accordion-group>
+											<accordion-group>
+												<accordion-heading>
+													Did you move?
+												</accordion-heading>
+												<div class="panel-body">
+													Moving to a new home represents a big change in your financial picture, not limited to: new mortgage payments, insurance, even things like your daily cost of living. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+												</div>
+											</accordion-group>
+											<accordion-group>
+												<accordion-heading>
+													Were there other changes in your financial picture as well?
+												</accordion-heading>
+												<div class="panel-body">
+													Any change in your financial picture can make a significant impact on your short-and-long-term concerns and goals. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+												</div>
+											</accordion-group>
+										</accordion>
+									</div>
+								</div>
+
+							</tab>
+							<tab heading="Auto Change">
+
+								<div class="main-box clearfix">
+									<div class="main-box-body clearfix accordion">
+										<accordion>
+											<accordion-group is-open="true">
+												<accordion-heading>
+													Did you recently buy or sell a car?
+												</accordion-heading>
+												<div class="panel-body">
+													Buying or selling a car represents a significant change in your financial picture. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">
+														Refer this client
+													</a>
+												</div>
+											</accordion-group>
+											<accordion-group>
+												<accordion-heading>
+													Do you have any other changes with the drivers in your household?
+												</accordion-heading>
+												<div class="panel-body">
+													Changes with the drivers in your household represents a big change in your financial picture, not limited to: new car payments, insurance, even things like your daily cost of living. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+												</div>
+											</accordion-group>
+											<accordion-group>
+												<accordion-heading>
+													Have you had other changes in your financial picture as well?
+												</accordion-heading>
+												<div class="panel-body">
+													Any change in your financial picture can make a significant impact on your short-and-long-term concerns and goals. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+												</div>
+											</accordion-group>
+										</accordion>
+									</div>
+								</div>
+
+							</tab>
+							<tab heading="Name Change">
+
+								<div class="main-box clearfix">
+									<div class="main-box-body clearfix accordion">
+										<accordion>
+											<accordion-group is-open="true">
+												<accordion-heading>
+													Did you recently get married or divorced?
+												</accordion-heading>
+												<div class="panel-body">
+													Marriages/Divorces represent a significant change in your financial picture. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">
+														Refer this client
+													</a>
+												</div>
+											</accordion-group>
+											<accordion-group>
+												<accordion-heading>
+													Do you have any changes with dependents or other drivers?
+												</accordion-heading>
+												<div class="panel-body">
+													Having those changes in your life represents a significant change in your financial picture. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+												</div>
+											</accordion-group>
+											<accordion-group>
+												<accordion-heading>
+													Have you had any other changes in your financial picture?
+												</accordion-heading>
+												<div class="panel-body">
+													Any change in your financial picture can make a significant impact on your short-and-long-term concerns and goals. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+												</div>
+											</accordion-group>
+										</accordion>
+									</div>
+								</div>
+
+							</tab>
+							<tab heading="Payment">
+
+								<div class="main-box clearfix">
+									<div class="main-box-body clearfix accordion">
+										<accordion>
+											<accordion-group is-open="true">
+												<accordion-heading>
+													Are you taking advantage of all of the discounts available to you?
+												</accordion-heading>
+												<div class="panel-body">
+													There may be many discounts available to you that you are currently unaware of. We can also make sure that your money is working as hard as you do, both to grow your wealth, and protect your wealth for your loved ones. Here at Allstate, we have a financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">
+														Refer this client
+													</a>
+												</div>
+											</accordion-group>
+											<accordion-group>
+												<accordion-heading>
+													Is there a reason you don't use automatic payment?
+												</accordion-heading>
+												<div class="panel-body">
+													It is good to be involved and hands-on with your finances, and we would like to help you any way we can. In order to best serve you, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+												</div>
+											</accordion-group>
+											<accordion-group>
+												<accordion-heading>
+													Have you had any changes in your financial picture?
+												</accordion-heading>
+												<div class="panel-body">
+													Any change in your financial picture can make a significant impact on your short-and-long-term concerns and goals. Whenever these changes take place, we recommend speaking with our financial specialist, who can assist with any financial concerns you may have, as well as make sure you are on track to reach your financial goals, and protect yourself for the future. When can we set an appointment for you to meet with him?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+												</div>
+											</accordion-group>
+										</accordion>
+									</div>
+								</div>
+
+							</tab>
+							<tab heading="Decline">
+
+								<div class="main-box clearfix">
+									<div class="main-box-body clearfix accordion">
+										<accordion>
+											<accordion-group is-open="true">
+												<accordion-heading>
+													I don't have time
+												</accordion-heading>
+												<div class="panel-body">
+													Thank you for helping me understand. We know our clients are busy, and want to be mindful of your time. I would like to let you know that we can set appointments in the morning, afternoon, evening and on weekends. Or if it is more convenient for you, I can give our financial specialist your contact information and have him call you. Since this is important for you, can we still assist you?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">
+														Refer this client
+													</a>
+												</div>
+											</accordion-group>
+											<accordion-group>
+												<accordion-heading>
+													I have a lot going on
+												</accordion-heading>
+												<div class="panel-body">
+													Thank you for helping me understand. I know you have a lot going on, and we want to be sympathetic to your needs. Your financial security is very important to us, and by meeting with our financial specialist, it could help us to take more concerns off of your plate and give that time and energy back to you. We can also set appointments in the morning, afternoon, evening or on weekends at your convenience. Or at the least, I could pass your information to them and have him give you a call to introduce himself and his services. Can we still assist you?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+												</div>
+											</accordion-group>
+											<accordion-group>
+												<accordion-heading>
+													I already have an advisor helping me
+												</accordion-heading>
+												<div class="panel-body">
+													Thank you for helping me understand. I'm glad that you have someone helping you with your finances that is very important to us. I do want to make sure you know that our financial specialist is an expert in a number of areas that other advisors cannot offer, including Life Insurance and Supplemental Benefits which can protect your assets, your loved ones, or even lower your health care costs. In addition, we can set appointments at your convenience in the mornings, afternoons, evenings and even weekends. Or at the least, I could pass your information to them and have him give you a call to introduce himself and his services. Can we still assist you?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+												</div>
+											</accordion-group>
+											<accordion-group>
+												<accordion-heading>
+													I don’t have any money for investments or insurance
+												</accordion-heading>
+												<div class="panel-body">
+													Thank you for helping me understand. I do want to make sure that you know what is available to you. We have a wide range of products and services, and want to help everyone, even if you don't have a lot of money saved right now. Our hope would be to assist you in building your wealth. We can set an appointment at your convenience, in the morning, afternoon, evening or even the weekend. Or if it is more convenient, I can pass your information to our financial specialist, so he can reach out to you and introduce himself and his services. Can we still assist you?
+												</div>
+												<div class="refer-btn">
+													<a href="@routes.Application.referral()" class="btn btn-primary">Refer this client</a>
+												</div>
+											</accordion-group>
+										</accordion>
+									</div>
+								</div>
+
+							</tab>
+						</tabset>
+
                     </div>
                 </div>
             </div>

@@ -10,6 +10,7 @@ app.controller('EfsStatsController', ["$scope", "$http", function($scope, $http)
         data = (data && data.data) ? data : {data: {}};
         var totalReferrals = parseFloat(data.data.totalReferrals || 0),
             totalProductiveReferrals = parseFloat(data.data.totalProductiveReferrals || 0),
+            totalProcessingReferrals = parseFloat(data.data.totalProcessingReferrals || 0),
             totalIPS = parseFloat(data.data.totalIPS || 0),
             totalPC = parseFloat(data.data.totalPC || 0),
             totalInsurance = parseFloat(data.data.totalInsurance || 0),
@@ -17,8 +18,10 @@ app.controller('EfsStatsController', ["$scope", "$http", function($scope, $http)
         if (isNaN(percentageProductiveReferrals)) {
             percentageProductiveReferrals = 0;
         }
+
         $scope.totalReferrals = totalReferrals;
         $scope.percentageProductiveReferrals = percentageProductiveReferrals;
+        $scope.totalProcessingReferrals = totalProcessingReferrals;
         $scope.totalIPS = totalIPS;
         $scope.totalPC = totalPC;
         $scope.totalInsurance = totalInsurance;

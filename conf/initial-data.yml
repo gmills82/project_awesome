@@ -1,12 +1,11 @@
 - !!models.Client
-    acctNumber: 1234
     name: The One
     userName: gmills82@gmail.com
 
 - !!models.UserModel
     userName: test@test.com
     password: $2a$10$RIFSpI/UgdJDdkurk2MbRuVJ/NMeLiTprJjwOPRvA4HVKtC74Kyju
-    roleType: FA
+    role: FA
     firstName: Grant
     lastName: Mills
 
@@ -18,10 +17,10 @@
     category: tool
 
 - !!models.Action
-    actionName: Create a producer account
+    actionName: Create an LSP account
     requiredPermissionLevel: 1
     actionURL: /signup/2
-    shortDescription: Create a producer account for a team member
+    shortDescription: Create an LSP account for a team member
     category: admin
 
 - !!models.Action

@@ -1,6 +1,7 @@
 package models;
 
 import com.avaje.ebean.Expr;
+import com.avaje.ebean.ExpressionList;
 import com.avaje.ebean.common.BeanSet;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -49,6 +50,32 @@ public class Client extends Model {
 	@JsonManagedReference
     public List<Debt> debtList;
 
+    public Long groupId;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Long getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Long groupId) {
+        this.groupId = groupId;
+    }
+
     public static void addDebt(Client client, Debt debt) {
         client.debtList.add(debt);
     }
@@ -69,19 +96,38 @@ public class Client extends Model {
         Long.class, Client.class
     );
 
-	public static Set<Client> query(String queryString) {
+    public static Set<Client> query(String queryString) {
+        return query(queryString, null);
+    }
+
+	public static Set<Client> query(String queryString, Long groupId) {
+
 		//Break string up by word
 		String[] values = queryString.split(" ");
 		Set<Client> clientList = new HashSet<Client>();
 		for (String value: values) {
-			clientList.addAll(find.where().disjunction()
-				.add(Expr.icontains("name", value))
-				.add(Expr.icontains("phone_number", value))
-				.add(Expr.icontains("address1", value))
-				.add(Expr.icontains("zipcode", value))
-				.findSet());
+
+            ExpressionList<Client> expression = find.where().disjunction()
+                    .add(Expr.icontains("name", value))
+                    .add(Expr.icontains("phone_number", value))
+                    .add(Expr.icontains("address1", value))
+                    .add(Expr.icontains("zipcode", value));
+
+			clientList.addAll(expression.findSet());
 		}
-		return clientList;
+
+        // For some reason, adding the filter on group_id doesn't seem to parse out the results during search. So we'll
+        // get around that by looking up the group ID of each of the clients and tossing the ones that don't match.
+        Set<Client> returnClientList = new HashSet<>();
+        if (groupId != null) {
+            for (Client client : clientList) {
+                if (Objects.equals(client.getGroupId(), groupId)) {
+                    returnClientList.add(client);
+                }
+            }
+        }
+
+		return returnClientList;
 	}
 
     public static List<Client> all() {
@@ -90,6 +136,16 @@ public class Client extends Model {
 
     public static Client getById(long id) {
         return find.byId(id);
+    }
+
+    /**
+     Returns the list of clients matching the provided IDs
+
+     @param ids Client ID list
+     @return Client list
+     */
+    public static List<Client> getByIds(List<Long> ids) {
+        return find.where().in("id", ids).findList();
     }
 
     /**
@@ -112,5 +168,4 @@ public class Client extends Model {
             client.delete();
         }
     }
-
 }

@@ -14,7 +14,10 @@ import java.util.Date;
  * Time: 10:18 AM
  */
 public class DateUtilities {
+
 	private static final String dateFormat = "yyyy-MM-dd";
+    private static final String dateFormatWithTime = "yyyy-MM-dd hh:mm a";
+
 	private static SimpleDateFormat instance = null;
 
 	public static SimpleDateFormat getDateFormat() {
@@ -32,6 +35,16 @@ public class DateUtilities {
      */
     public static String getFormattedDate(Date date) {
         return getDateFormat().format(date);
+    }
+
+    /**
+     Formats a date into a common string pattern with the time
+
+     @param date Date to format
+     @return Formatted date with time
+     */
+    public static String getFormattedDateWithTime(Date date) {
+        return new SimpleDateFormat(dateFormatWithTime).format(date);
     }
 
     /**

@@ -28,7 +28,7 @@ public class UserCtrl extends Controller {
         result.put("status", "OK");
 
         UserModel currentUser = UserModel.getById(userId);
-        List<Action> actionList = Action.actionsByUserRole(currentUser.roleType.getPermissionLevel());
+        List<Action> actionList = Action.actionsByUserRole(currentUser.getRole().getPermissionLevel());
         if(null != actionList) {
             actionList = Action.filterByCategory(actionList, category);
         }

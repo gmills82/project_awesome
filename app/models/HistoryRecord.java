@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * User: grant.mills
@@ -18,7 +19,9 @@ public interface HistoryRecord extends Comparable<HistoryRecord> {
 
 	public String getLink();
 
-	public String getNotes();
+//	public String getNotes();
+
+    public List<ReferralNote> getNotes();
 
 	public String getCreatorName();
 

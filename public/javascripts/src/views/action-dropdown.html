@@ -1,0 +1,13 @@
+<div class="btn-group action-dropdown" dropdown>
+    <button type="button" class="btn btn-default">Actions</button>
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" dropdown-toggle>
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu">
+        <li><a href="/editReferral/{{referral.id}}">Edit Referral</a></li>
+        <li class="divider"></li>
+        <li add-note-button referral="referral"></li>
+        <li class="divider"></li>
+        <li delete-referral-button referral="referral"></li>
+    </ul>
+</div>

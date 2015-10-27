@@ -81,23 +81,24 @@
                             <label class="col-md-2 control-label" >Client Goals:</label>
                             <div class="col-md-10">
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" ng-model="referral.client.goals.death" ng-true-value="death" name="goals" ng-checked="referral.client.goals.death" />In Event of Death</label>
+                                    <input type="checkbox" ng-model="referral.client.goals.death" ng-true-value='"true"' name="goals" />In Event of Death</label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" ng-model="referral.client.goals.retirement" ng-true-value="retirement" ng-checked="referral.client.goals.retirement" name="goals" />Retirement</label>
+                                    <input type="checkbox" ng-model="referral.client.goals.retirement" ng-true-value='"true"' name="goals" />Retirement</label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" ng-model="referral.client.goals.college" ng-true-value="college" ng-checked="referral.client.goals.college" name="goals" />College Savings</label>
+                                    <input type="checkbox" ng-model="referral.client.goals.college" ng-true-value='"true"' name="goals" />College Savings</label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" ng-model="referral.client.goals.longtermcare" ng-true-value="longtermcare" ng-checked="referral.client.goals.longtermcare" name="goals" />Long Term Care</label>
+                                    <input type="checkbox" ng-model="referral.client.goals.longtermcare" ng-true-value='"true"' name="goals" />Long Term Care</label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" ng-model="referral.client.goals.heath" ng-true-value="heath" ng-checked="referral.client.goals.heath" name="goals" />Health</label>
+                                    <input type="checkbox" ng-model="referral.client.goals.heath" ng-true-value='"true"' name="goals" />Health</label>
                                 <label class="checkbox-inline">
-                                    <input type="checkbox" ng-model="referral.client.goals.benefits" ng-true-value="benefits" ng-checked="referral.client.goals.benefits" name="goals" />Benefits</label>
+                                    <input type="checkbox" ng-model="referral.client.goals.benefits" ng-true-value='"true"' name="goals" />Benefits</label>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label" >Notes:</label>
                             <div class="col-md-10">
-                                <textarea ng-model="referral.refNotes" name="refNotes" class="form-control"></textarea>
+								<div class="col-md-2 client-notes-button" add-note-button referral="referral" type="button"></div>
+								<div class="col-md-2" view-notes-button referral="referral" type="button"></div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -145,6 +146,16 @@
                                 </select>
                             </div>
                         </div>
+						<div class="form-group">
+							<label class="col-md-2 control-label" >Quality Referral:</label>
+							<div class="col-md-10">
+								<select ng-model="referral.apptKept">
+									<option value=""></option>
+									<option value="true">Yes</option>
+									<option value="false">No</option>
+								</select>
+							</div>
+						</div>
                         <input type="submit" class="btn btn-primary col-md-offset-2" value="Submit" ng-disabled="(referralForm.$invalid || clientForm.$invalid)"/>
                     </form>
                 </div>

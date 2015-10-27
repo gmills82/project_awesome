@@ -1,0 +1,41 @@
+<header class="main-box-header">
+    <h2>{{listTitle}} <span class="badge badge-info">{{total}}</span></h2>
+</header>
+<div class="main-box-body">
+    <div class="table-responsive">
+        <table class="table dataTable no-footer" show-filter="true" ng-table="referralsTable">
+            <tbody>
+                <tr ng-repeat="referral in $data">
+                    <td sortable="'refType'" data-title="'Referral Type'" filter="{ 'refType': 'select' }" filter-data="referralTypes">
+                        {{referral.refType}} Referral
+                    </td>
+                    <td sortable="'clientName'" data-title="'Client Name'" filter="{ 'clientName': 'text' }">
+                        <a href="/client/history/{{referral.client.id}}">
+                            {{referral.clientName}}
+                        </a>
+                    </td>
+                    <td sortable="'nextStepDate'" data-title="'Next Steps Date'">
+                        <span tooltip="{{referral.refNotes}}" tooltip-trigger="mouseenter">
+                            {{referral.nextStepTimestamp | formatDate}}
+                        </span>
+                    </td>
+                    <td data-title="'Phone Number'">
+                        <a href="tel:+1{{referral.client.phoneNumber}}">
+                            {{referral.client.phoneNumber | telly}}
+                        </a>
+                    </td>
+                    <td data-title="'Actions'" class="table-actions" header-class="'header-center'">
+                        <div action-dropdown referral="referral"></div>
+                    </td>
+                    <td sortable="'creatorName'" data-title="'Creator'" filter="{ 'creatorName': 'text' }">
+                        {{referral.creatorName}}
+                    </td>
+                    <td sortable="'lastEditedDate'" data-title="'Last Edited Date'">
+                        {{referral.lastEditedDate}}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</div>

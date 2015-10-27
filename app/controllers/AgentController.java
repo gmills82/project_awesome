@@ -1,8 +1,13 @@
 package controllers;
 
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.Referral;
+import models.ReferralList;
 import models.UserModel;
+import models.UserRole;
 import org.apache.poi.hssf.usermodel.*;
+import org.joda.time.DateTime;
+import play.libs.Json;
 import play.mvc.BodyParser;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -23,6 +28,38 @@ public class AgentController extends Controller {
     private static final int MAX_XLS_COL_WIDTH = 10000;
 
     /**
+     Returns the recent referrals for the provided agent and their assigned LSPs for the last 7 days
+
+     @param agentId Agent ID
+     @return List of referrals
+     */
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result getLatestTeamReferrals(Long agentId) {
+
+        // Look up the agent to verify that the provided ID exists. If found, make sure the ID belongs to a user set to
+        // the "agent" role type.
+        UserModel agent = UserModel.getById(agentId);
+        if (agent == null || !agent.getRole().isPassingPermissionLevel(UserRole.AGENT)) {
+            return notFound(String.format("No agent found matching the id %s", agentId));
+        }
+
+        // Look up all LSPs currently assigned to the agent
+        List<Long> userIds = new ArrayList<>();
+        userIds.add(agent.getId());
+        Set<UserModel> lsps = UserModel.getChildUserModelsByParentAllLevels(agent);
+        for (UserModel lsp : lsps) {
+            userIds.add(lsp.getId());
+        }
+
+        // Look up all referrals
+        ReferralList referralList = new ReferralList();
+        referralList.setReferrals(Referral.getByUserIdsBetweenDates(userIds, new DateTime().minusDays(7).toDate(), new Date()));
+        ObjectNode result = Json.newObject();
+        result.put("data", Json.toJson(referralList));
+        return ok(result);
+    }
+
+    /**
      Downloads an excel spreadsheet of referrals for the provided agent and producer. If the producer ID is not defined,
      look up all producers. Each producer in the excel file will have their own sheet populated with their referrals.
 
@@ -36,7 +73,7 @@ public class AgentController extends Controller {
         // Look up the agent to verify that the provided ID exists. If found, make sure the ID belongs to a user set to
         // the "agent" role type.
         UserModel agent = UserModel.getById(agentId);
-        if (agent == null || (agent.roleType != UserModel.Role.Agent && agent.roleType != UserModel.Role.FA)) {
+        if (agent == null || (agent.getRole() != UserRole.AGENT && agent.getRole() != UserRole.FA)) {
             return notFound(String.format("No agent found matching the id %s", agentId));
         }
 
@@ -48,17 +85,25 @@ public class AgentController extends Controller {
         producerIds.add(agent.id);
         producerMap.put(agent.id, agent);
         if (producerId == null || producerId == 0) {
-            if (agent.childTeamMembers != null) {
-                for (UserModel userModel : agent.childTeamMembers) {
-                    producerMap.put(userModel.id, userModel);
+
+            Set<UserModel> children = UserModel.getChildUserModelsByParentAllLevels(agent);
+            if (children != null) {
+                for (UserModel userModel : children) {
+                    producerMap.put(userModel.getId(), userModel);
+                    producerIds.add(userModel.getId());
                 }
-                producerIds.addAll(agent.childTeamMembers.stream().map(producer -> producer.id).collect(Collectors.toList()));
             }
+//            if (agent.childTeamMembers != null) {
+//                for (UserModel userModel : agent.childTeamMembers) {
+//                    producerMap.put(userModel.id, userModel);
+//                }
+//                producerIds.addAll(agent.childTeamMembers.stream().map(producer -> producer.id).collect(Collectors.toList()));
+//            }
         } else {
             producerIds.add(producerId);
             UserModel producer = UserModel.getById(producerId);
             if (producer == null) {
-                return notFound(String.format("No producer found matching id %s", producerId));
+                return notFound(String.format("No LSP found matching id %s", producerId));
             }
             producerMap.put(producerId, producer);
         }

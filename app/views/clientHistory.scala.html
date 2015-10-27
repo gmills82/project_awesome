@@ -85,31 +85,7 @@
             </div>
             @*Client Notes Summary*@
             <div class="main-box">
-                <div class="main-box-header">
-                    <h2>Client Notes Summary</h2>
-                </div>
-                <div class="main-box-body">
-                    <div class="table">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th>Date of Last Interaction</th>
-                                    <th>Notes</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @for(index <- 0 until historyRecords.size) {
-                                @if(historyRecords(index).getNotes != "") {
-                                    <tr>
-                                        <td>@historyRecords(index).getDateOfLastInteractionString</td>
-                                        <td>@historyRecords(index).getNotes</td>
-                                    </tr>
-                                }
-                            }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+				<div client-notes clientId="@client.id"></div>
             </div>
         </div>
         <div class="col-lg-4">
