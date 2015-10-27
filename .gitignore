@@ -20,4 +20,3 @@ prod_db_dumps
 .sass-cache
 public/scss/compiled/*
 .DS_Store
-lib/*

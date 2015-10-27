@@ -23,7 +23,7 @@ public class UserModelTest {
     public void testGetChildUserModelsByParentAllLevels() {
         running(fakeApplication(), () -> {
 
-            UserModel user = UserModel.getByUserRole(UserRole.FA).get(1);
+            UserModel user = UserModel.getByUserRole(UserRole.FA).get(0);
 
             final Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -41,9 +41,7 @@ public class UserModelTest {
             Logger.info("Looking up children iteratively took: {}", stopwatch);
             stopwatch.stop();
 
-	        //Old method and new method are not equal and old method behavior is now deprecated. Lets test for the
-	        //new method containing all the old method.
-	        assertTrue("New children contains all old children", newChildren.containsAll(oldChildren));
+            assertTrue("Searching by group ID should return the same results", newChildren.equals(oldChildren));
 
         });
     }
