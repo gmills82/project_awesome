@@ -12,6 +12,7 @@ import static ch.lambdaj.Lambda.*;
 import static org.hamcrest.Matchers.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * User: grant.mills
@@ -66,12 +67,14 @@ public class Reports extends Controller {
 		}
 
 		//Filter
-		todaysReferrals = filter(having(on(Referral.class).creatorId, isIn(teamMemberIds)), todaysReferrals);
+//		todaysReferrals = filter(having(on(Referral.class).creatorId, isIn(teamMemberIds)), todaysReferrals);
 
-		//TODO: Hitting database for each referral to get user name.
+        List<Referral> referrals = todaysReferrals.stream().filter(referral -> teamMemberIds.indexOf(referral.creatorId) != -1).collect(Collectors.toList());
+
+        //TODO: Hitting database for each referral to get user name.
 		//TODO: Make method to get all based on a group of user ids
 		List<Map<String, String>> referralList = new ArrayList<Map<String, String>>();
-		Iterator<Referral> iter = todaysReferrals.iterator();
+		Iterator<Referral> iter = referrals.iterator();
 		while(iter.hasNext()) {
 			Referral ref = iter.next();
 			Map propMap = new HashMap<String, String>();
