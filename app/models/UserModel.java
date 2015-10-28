@@ -191,10 +191,6 @@ public class UserModel extends Model {
         return find.where().eq("userName", email).findList().listIterator().next();
     }
 
-	public Integer getUserPermissionLevel() {
-		return this.roleType.getPermissionLevel();
-	}
-
     public static List<UserModel> getAll() {
         return find.all();
     }
