@@ -17,13 +17,13 @@ import static org.junit.Assert.assertTrue;
  User: justin.podzimek
  Date: 10/1/15
  */
-public class UserModelTest {
+public class UserModelUnitTest {
 
     @Test
     public void testGetChildUserModelsByParentAllLevels() {
         running(fakeApplication(), () -> {
 
-            UserModel user = UserModel.getByUserRole(UserRole.FA).get(0);
+            UserModel user = UserModel.getByUserRole(UserRole.FA).get(1);
 
             final Stopwatch stopwatch = Stopwatch.createStarted();
 
@@ -41,7 +41,9 @@ public class UserModelTest {
             Logger.info("Looking up children iteratively took: {}", stopwatch);
             stopwatch.stop();
 
-            assertTrue("Searching by group ID should return the same results", newChildren.equals(oldChildren));
+	        //Old method and new method are not equal and old method behavior is now deprecated. Lets test for the
+	        //new method containing all the old method.
+	        assertTrue("New children contains all old children", newChildren.containsAll(oldChildren));
 
         });
     }

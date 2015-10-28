@@ -12,7 +12,7 @@ import static org.junit.Assert.assertThat;
  User: justin.podzimek
  Date: 10/1/15
  */
-public class UserRoleTest {
+public class UserRoleUnitTest {
 
     @Test
     public void testGetChildRole() {
@@ -28,8 +28,9 @@ public class UserRoleTest {
         running(fakeApplication(), () -> {
             assertThat(UserRole.FA.getChildRoles(true), is(Arrays.asList(
                     UserRole.EFA_ASSISTANT,
-                    UserRole.AGENT,
-                    UserRole.PRODUCER
+                    UserRole.SUB_EFA,
+		            UserRole.AGENT,
+		            UserRole.PRODUCER
             )));
             assertThat(UserRole.FA.getChildRoles(false), is(Arrays.asList(
                     UserRole.AGENT,

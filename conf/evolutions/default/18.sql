@@ -1,3 +1,4 @@
+# --- !Ups
 ALTER TABLE "public"."referral" ADD COLUMN "appt_kept" BOOLEAN DEFAULT NULL;
 
 # --- !Downs

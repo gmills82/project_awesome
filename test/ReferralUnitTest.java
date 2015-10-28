@@ -18,7 +18,7 @@ import static play.test.Helpers.running;
  User: justin.podzimek
  Date: 7/28/15
  */
-public class ReferralTest {
+public class ReferralUnitTest {
 
     @Test
     public void testDateCreation() {

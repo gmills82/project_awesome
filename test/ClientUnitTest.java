@@ -18,7 +18,7 @@ import static play.test.Helpers.*;
  User: justin.podzimek
  Date: 8/12/15
  */
-public class ClientTest {
+public class ClientUnitTest {
 
     @After
     public void cleanUp() {
