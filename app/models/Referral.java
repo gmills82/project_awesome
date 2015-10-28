@@ -7,6 +7,7 @@ import play.Logger;
 import play.db.ebean.Model;
 import utils.DateUtilities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Transient;
@@ -58,6 +59,21 @@ public class Referral extends Model implements HistoryRecord {
 	public String advisorRecommendation;
     public Boolean wasProductive = false;
 
+    /**
+     Reference to the full client.
+     */
+    private Client client;
+
+    /**
+     Whether or not the client kept their appointment
+     */
+    private Boolean apptKept;
+
+    @Transient
+    private List<ReferralNote> referralNotes;
+
+
+
 
     public static Model.Finder<Long, Referral> finder = new Model.Finder(Long.class, Referral.class);
     public static Referral getById(Long id) {
@@ -70,10 +86,38 @@ public class Referral extends Model implements HistoryRecord {
 		int MAX_RECENT_REFERRALS = 25;
         return finder.where().eq("creatorId", id).orderBy("date_created DESC").setMaxRows(MAX_RECENT_REFERRALS).findList();
     }
+
+    /**
+     Returns a max of 25 referrals for the provided creator ID
+
+     @param id Creator ID
+     @return List of referrals
+     */
     public static List<Referral> getByCreatorId(Long id) {
-		int MAX_RECENT_REFERRALS = 25;
-        return finder.where().eq("creatorId", id).orderBy("id").setMaxRows(MAX_RECENT_REFERRALS).findList();
+		return getByCreatorId(id, 25);
     }
+
+    /**
+     Returns referrals for the provided creator ID and a defined max number of results
+
+     @param id Creator ID
+     @param maxResults Max number of results, or null if no max
+     @return List of referrals
+     */
+    public static List<Referral> getByCreatorId(Long id, Integer maxResults) {
+        Query<Referral> query = finder
+                .where()
+                .eq("creatorId", id)
+                .orderBy("id");
+
+        // Set a max if one was provided...
+        if (maxResults != null) {
+            query = query.setMaxRows(maxResults);
+        }
+
+        return query.findList();
+    }
+
 	public static List<Referral> getByAssignedIdInRange(Long assigneeId, Long range) {
 		return finder.where().eq("user_id", assigneeId).ge("dateCreated", range).findList();
 	}
@@ -106,14 +150,19 @@ public class Referral extends Model implements HistoryRecord {
 	}
 
 	public static List<Referral> getByUserIdNotInFuture(Long assignedUserId, String today) {
-		return finder.where().eq("user_id", assignedUserId).disjunction()
-			.add(Expr.le("nextStepDate", today))
-			.add(Expr.icontains("nextStepDate", "undefined"))
-			.findList();
+		return getByUserIdsNotInFuture(Arrays.asList(assignedUserId), today);
 	}
 
+    public static List<Referral> getByUserIdsNotInFuture(List<Long> userIds, String today) {
+        return finder
+                .where().in("user_id", userIds).disjunction()
+                .add(Expr.le("nextStepDate", today))
+                .add(Expr.icontains("nextStepDate", "undefined"))
+                .findList();
+    }
+
 	public static List<Referral> getByClientId(Long id) {
-		return finder.where().eq("clientId", id).findList();
+		return populateReferralData(finder.where().eq("clientId", id).findList());
 	}
 	public static List<Referral> getByDate(Date date) {
 		//If referral is from that date
@@ -421,22 +470,35 @@ public class Referral extends Model implements HistoryRecord {
 
     public static List<Referral> getByUserIdsBetweenDates(List<Long> userIds, Date fromDate, Date toDate) {
         return finder.where()
-                .in("user_id", userIds)
+                .in("creator_id", userIds)
                 .between("date_created", fromDate.getTime(), toDate.getTime())
+                .orderBy("date_created desc")
                 .findList();
+    }
+
+    public static void setApptKeptById(Long id, Boolean apptKept) {
+        if (apptKept == null) {
+            Ebean
+                    .createUpdate(Referral.class, "UPDATE referral SET apptKept = null WHERE id=:id")
+                    .setParameter("id", id)
+                    .execute();
+        }
+        else {
+            Ebean
+                    .createUpdate(Referral.class, "UPDATE referral SET apptKept = :apptKept WHERE id=:id")
+                    .setParameter("apptKept", apptKept)
+                    .setParameter("id", id)
+                    .execute();
+        }
     }
 
 	@Override
 	public Long getDateOfLastInteraction() {
-		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-		Date d = null;
-		try {
-			d = f.parse(this.lastEditedDate);
-		} catch (ParseException e) {
-			e.printStackTrace();
+        Date date = DateUtilities.normalizeDateString(this.lastEditedDate);
+        if (date == null) {
+            return null;
         }
-
-		return d.getTime();
+        return date.getTime();
 	}
 
 	@Override
@@ -451,6 +513,9 @@ public class Referral extends Model implements HistoryRecord {
 
 	@Override
 	public int compareTo(HistoryRecord historyRecord) {
+        if (historyRecord.getDateOfLastInteraction() == null) {
+            return 0;
+        }
 		if (historyRecord.getDateOfLastInteraction() > this.getDateOfLastInteraction()) {
 			return 1;
 		} else if (historyRecord.getDateOfLastInteraction() < this.getDateOfLastInteraction()) {
@@ -464,12 +529,16 @@ public class Referral extends Model implements HistoryRecord {
 		return this.status;
 	}
 
-	@Override
-	public String getNotes() {
-		return this.refNotes;
-	}
+    @Override
+    public List<ReferralNote> getNotes() {
+        return this.referralNotes;
+    }
 
-	public void setLink(String link) {
+    public void setRefNotes(String refNotes) {
+        this.refNotes = refNotes;
+    }
+
+    public void setLink(String link) {
 		this.link = link;
 	}
 
@@ -536,6 +605,15 @@ public class Referral extends Model implements HistoryRecord {
 		return new Date(this.dateCreated);
 	}
 
+    /**
+     Returns the referral type
+
+     @return Referral type
+     */
+    public String getRefType() {
+        return refType;
+    }
+
     public Integer gettInsurance() {
         return tInsurance;
     }
@@ -560,9 +638,86 @@ public class Referral extends Model implements HistoryRecord {
         this.tIps = tIps;
     }
 
-	@Override
+    public long getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(long clientId) {
+        this.clientId = clientId;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
+    public Boolean getApptKept() {
+        return apptKept;
+    }
+
+    public void setApptKept(Boolean apptKept) {
+        this.apptKept = apptKept;
+    }
+
+    public List<ReferralNote> getReferralNotes() {
+        return referralNotes;
+    }
+
+    public void setReferralNotes(List<ReferralNote> referralNotes) {
+        this.referralNotes = referralNotes;
+    }
+
+    public long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public String getLastEditedDate() {
+        return lastEditedDate;
+    }
+
+    public void setLastEditedDate(String lastEditedDate) {
+        this.lastEditedDate = lastEditedDate;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Override
 	public String getCreatorName() {
 		UserModel creator = UserModel.getById(this.creatorId);
 		return creator.getFullName();
 	}
+
+    private static List<Referral> populateReferralData(List<Referral> referrals) {
+        if (referrals == null || referrals.size() == 0) {
+            return referrals;
+        }
+
+        // Loop through each of the referrals and set their respective referral notes
+        for (Referral referral : referrals) {
+            referral.setReferralNotes(ReferralNote.getByReferralId(referral.id));
+
+            // If there are referral notes, loop through each one and populate the user model that made the note
+            if (referral.getReferralNotes() != null) {
+                for (ReferralNote referralNote : referral.getReferralNotes()) {
+                    if (referralNote.getUserModelId() != null) {
+                        referralNote.setUserModel(UserModel.getById(referralNote.getUserModelId()));
+                    }
+                }
+            }
+        }
+        return referrals;
+    }
 }

@@ -6,8 +6,14 @@ module.exports = function (grunt) {
             main: {
                 src: [
                     "javascripts/libs/moment.js",
-                    "javascripts/libs/bootstrap.js",
-                    "javascripts/libs/angular.js",
+
+                    "bower_components/angular/angular.js",
+                    "bower_components/angular-bootstrap/ui-bootstrap.js",
+                    "bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+
+                    //"javascripts/libs/bootstrap.js",
+
+                    //"javascripts/libs/angular.js",
                     "javascripts/libs/angular-route.js",
                     "javascripts/libs/angular-match.js",
                     "javascripts/src/app.js",
@@ -22,8 +28,10 @@ module.exports = function (grunt) {
 					"javascripts/libs/bootstrap-datepicker.js",
 					"javascripts/libs/bootstrap-timepicker.js",
 					"javascripts/libs/table2CSV.js",
-					"javascripts/libs/ui-bootstrap-custom-tpls-0.12.1.min.js",
+					//"javascripts/libs/ui-bootstrap-custom-tpls-0.12.1.min.js",
 					"javascripts/src/scripts.js"
+
+
                     ],
                 dest: 'javascripts/min/<%= pkg.name %>.min.js'
             },
@@ -33,7 +41,7 @@ module.exports = function (grunt) {
 			},
 
             css: {
-				src: [ "scss/compiled/theme.css", "stylesheets/libs/*.css", "stylesheets/src/*.css"],
+				src: [ "scss/compiled/theme.css", "stylesheets/libs/*.css", "stylesheets/src/*.css", "scss/compiled/custom.css"],
 				dest: "stylesheets/min/<%= pkg.name %>.min.css"
             },
 			bootstrap: {
@@ -48,7 +56,8 @@ module.exports = function (grunt) {
 				},
 				files: {                         // Dictionary of files
 					'scss/compiled/theme.css': 'scss/theme/theme_styles.scss',
-					'scss/compiled/bootstrap.css': 'scss/bootstrap.scss'
+					'scss/compiled/bootstrap.css': 'scss/bootstrap.scss',
+                    'scss/compiled/custom.css': 'scss/custom/custom.scss'
 				}
 			}
 		},

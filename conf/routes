@@ -29,12 +29,14 @@ GET           /actions/:userId/:category                   controllers.UserCtrl.
 #Client CRUD
 POST          /json/client                                 controllers.ClientCtrl.addClientJSON()
 GET           /json/client/:clientId                       controllers.ClientCtrl.getClientJSON(clientId: Long)
+GET           /json/client/history/:clientId               controllers.ClientCtrl.getClientHistoryRecords(clientId: Long)
 PUT           /json/client                                 controllers.ClientCtrl.editClientJSON()
 #Client Query
-GET           /json/client/query/:query                    controllers.ClientCtrl.query(query: String)
+GET           /json/client/query/:query                    controllers.ClientCtrl.query(query: String, userid: Long ?= 0)
 
 #Referral CRUD
 POST          /json/referral                               controllers.ReferralCtrl.addReferral()
+POST          /json/referral/note                          controllers.ReferralCtrl.addNoteToReferral()
 GET           /json/referral/:referralId                   controllers.ReferralCtrl.getReferral(referralId: Long)
 PUT           /json/referral                               controllers.ReferralCtrl.updateReferral()
 DELETE        /json/referral/:referralId                   controllers.ReferralCtrl.deleteReferral(referralId: Long)
@@ -45,6 +47,7 @@ GET           /json/referrals/upcoming/:userId             controllers.ReferralC
 GET           /json/appts/upcoming/:userId                 controllers.ReferralCtrl.getUpcomingAppts(userId: Long)
 GET           /json/referrals/creator/:userId              controllers.ReferralCtrl.getReferralsByCreatorId(userId: Long)
 GET           /json/referrals/team/:userId                 controllers.ReferralCtrl.getTeamReferralsByParentId(userId: Long)
+GET           /json/referrals/processing/:userId           controllers.ReferralCtrl.getProcessingReferrals(userId: Long)
 
 #Assets and Debts CRUD
 GET           /json/assetTypes                             controllers.ClientCtrl.getAssetTypes()
@@ -60,11 +63,9 @@ GET           /assets/*file                                controllers.Assets.at
 
 # Agent controller (You can't have optional named parameters? What kind of nonsense is this?)
 GET           /agent/:agentId/referrals                    controllers.AgentController.getReferralsByAgentId(agentId: Long, producerId: Long ?= 0)
+GET           /agent/:agentId/team/referrals               controllers.AgentController.getLatestTeamReferrals(agentId: Long)
 
 # Stats controller
-GET           /stats/efs/:efsid/:from/:to                    controllers.StatsController.getEFSStats(efsid: Long, from: Long, to: Long)
-GET           /stats/producer/:producerid/:from/:to   controllers.StatsController.getProducerStats(producerid: Long, from: Long, to: Long)
-GET           /stats/agent/:agentid/:from/:to         controllers.StatsController.getAgentStats(agentid: Long, from: Long, to: Long)
-
-# NOTE: This method should be called once and removed. Although calling it multiple times won't do anything, it's an unnecessary method after the initial migration.
-PUT           /json/referral/patch                         controllers.ReferralCtrl.patchReferrals()
+GET           /stats/efs/:efsid/:from/:to                  controllers.StatsController.getEFSStats(efsid: Long, from: Long, to: Long)
+GET           /stats/producer/:producerid/:from/:to        controllers.StatsController.getProducerStats(producerid: Long, from: Long, to: Long)
+GET           /stats/agent/:agentid/:from/:to              controllers.StatsController.getAgentStats(agentid: Long, from: Long, to: Long)

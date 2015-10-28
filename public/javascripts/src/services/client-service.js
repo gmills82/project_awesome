@@ -32,5 +32,19 @@ app.factory('clientService', ['$http', '$log', function($http, $log) {
 		}).error(errorMsg);
 	};
 
+    /**
+     Returns the history records for the provided client ID
+
+     @param     {Number}        clientId        Client ID
+     @param     {Function}      [callback]      Callback method
+     */
+    service.getRecords = function (clientId, callback) {
+        $http.get('/json/client/history/' + clientId).success(function (data) {
+            if(typeof callback == 'function') {
+                callback(data.data);
+            }
+        });
+    };
+
 	return service;
 }]);

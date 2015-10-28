@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import models.UserModel;
+import models.UserRole;
 import models.stats.EFSStats;
 import models.Referral;
 import play.libs.Json;
@@ -43,19 +44,16 @@ public class StatsController extends Controller {
         Date toDate = new Date(toTimestamp);
 
         UserModel efs = UserModel.getById(efsId);
-        if (efs == null || efs.roleType != UserModel.Role.FA) {
+        if (efs == null || !efs.getRole().isGroupRole(UserRole.FA)) {
             return notFound(String.format("No EFS found matching ID %s", efsId));
         }
 
-        List<Long> userIds = new ArrayList<>();
+        List<Long> userIds = UserModel.getChildUserModelsByParentAllLevels(efs).stream().map(model -> model.id).collect(Collectors.toList());
 
-        for (UserModel model : UserModel.getChildUserModelsByParentAllLevels(efs)) {
-            userIds.add(model.id);
-        }
-        
         userIds.add(efsId);
         List<Referral> referrals = Referral.getByCreatorIdsBetweenDates(userIds, fromDate, toDate);
         List<Referral> productiveReferrals = referrals.stream().filter(referral -> referral.wasProductive).collect(Collectors.toList());
+        List<Referral> processingReferrals = referrals.stream().filter(referral -> referral.getStatus().equalsIgnoreCase("processing")).collect(Collectors.toList());
 
         // Generate the models
         Referral totals = Referral.getTotalsBetweenDatesByCreatorIds(userIds, fromDate, toDate);
@@ -64,6 +62,7 @@ public class StatsController extends Controller {
         // Populate the data
         stats.setTotalReferrals(referrals.size());
         stats.setTotalProductiveReferrals(productiveReferrals.size());
+        stats.setTotalProcessingReferrals(processingReferrals.size());
         stats.setTotalInsurance(totals.gettInsurance());
         stats.setTotalIPS(totals.gettIps());
         stats.setTotalPC(totals.gettPc());
@@ -107,7 +106,7 @@ public class StatsController extends Controller {
 
         // Get the user and make sure they're an agent.
         UserModel agent = UserModel.getById(agentId);
-        if (agent == null || agent.roleType != UserModel.Role.Agent) {
+        if (agent == null || !agent.getRole().isPassingPermissionLevel(UserRole.AGENT)) {
             return notFound(String.format("No agent found matching ID %s", agentId));
         }
 

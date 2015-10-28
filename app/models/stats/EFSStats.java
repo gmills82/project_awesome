@@ -11,6 +11,7 @@ public class EFSStats {
 
     private Integer totalReferrals;
     private Integer totalProductiveReferrals;
+    private Integer totalProcessingReferrals;
     private Integer totalIPS;
     private Integer totalPC;
     private Integer totalInsurance;
@@ -32,6 +33,14 @@ public class EFSStats {
 
     public void setTotalProductiveReferrals(Integer totalProductiveReferrals) {
         this.totalProductiveReferrals = totalProductiveReferrals;
+    }
+
+    public Integer getTotalProcessingReferrals() {
+        return totalProcessingReferrals;
+    }
+
+    public void setTotalProcessingReferrals(Integer totalProcessingReferrals) {
+        this.totalProcessingReferrals = totalProcessingReferrals;
     }
 
     public Integer getTotalIPS() {

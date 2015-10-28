@@ -48,35 +48,13 @@ public class UserModel extends Model {
 	@JsonBackReference
 	public UserModel parent_team_member;
 
-	public enum Role {
-        FA(0), Agent(1), Producer(2);
-        private Integer permissionLevel;
-        Role(Integer permissionLevel) {
-            this.permissionLevel = permissionLevel;
-        }
-        public Integer getPermissionLevel() {
-            return permissionLevel;
-        }
-    }
+    @Column(name = "role_type")
+    private Integer roleType;
 
-    public Role roleType;
+    @Transient
+    private UserRole role;
 
-    public static void setRoleType(UserModel user, String roleType) {
-        user.roleType = Role.valueOf(roleType);
-    }
-    public static void setRoleType(UserModel user, Integer roleTypeNum) {
-		switch(roleTypeNum) {
-			case 0: user.roleType = Role.FA;
-				break;
-			case 1: user.roleType = Role.Agent;
-				break;
-			case 2: user.roleType = Role.Producer;
-				break;
-			default:
-				user.roleType = null;
-				break;
-		}
-    }
+    private Integer groupId;
 
     //Unique name check
     public static Boolean isUserNameTaken(String name) {
@@ -118,20 +96,54 @@ public class UserModel extends Model {
         return find.where().in("id", userIds).findList();
     }
 
-	public static UserModel getTopParentUser(UserModel user) {
-		if(null == user.parent_team_member) {
-			return user;
-		}else {
-			return UserModel.getTopParentUser(user.parent_team_member);
-		}
-	}
+    /**
+     * Returns all users matching the provided role
+     *
+     * @param role Role to match
+     * @return List of users
+     */
+    public static List<UserModel> getByUserRole(UserRole role) {
+        return find.where().eq("role_type", role.getPermissionLevel()).findList();
+    }
 
-	/**
-	 * Recursively searches for all children and children of children users of the parent UserModel
-	 * @param parent - UserModel which has been assigned as parent UserModel to some child UserModels
-	 * @return team - List of child user models
-	 */
+    /**
+     Returns all users matching the provided group ID and roles
+
+     @param groupId Group ID
+     @param roles Roles
+     @return List of users
+     */
+    public static List<UserModel> getByGroupAndRole(Integer groupId, UserRole... roles) {
+        List<Integer> permissionLevels = new ArrayList<>();
+        for (UserRole role : roles) {
+            permissionLevels.add(role.getPermissionLevel());
+        }
+        return find.where()
+                .eq("group_id", groupId)
+                .in("role_type", permissionLevels)
+                .findList();
+    }
+
+    /**
+     Returns all team members that are children of the provided parent in the same group
+
+     @param parent Parent team member
+     @return Children team members
+     */
 	public static Set<UserModel> getChildUserModelsByParentAllLevels(UserModel parent) {
+
+        // If the parent has a group ID, we can use that to look up all children. Otherwise, we need to get the children
+        // and (theoretically, it's not actually happening like this) recursively look up *their* children to get the
+        // full list of users.
+        if (parent.getGroupId() != null && parent.getRole() != null) {
+            Logger.info("Looking up children for team member {} by group ID...", parent.getId());
+            List<UserRole> roles = parent.getRole().getChildRoles(true);
+            UserRole[] userRoles = roles.toArray(new UserRole[roles.size()]);
+            return new HashSet<>(UserModel.getByGroupAndRole(parent.getGroupId(), userRoles));
+        }
+
+        Logger.info("Looking up children for team member {} iteratively...", parent.getId());
+
 		//Unique set of team members to be returned
 		Set<UserModel> team = new HashSet<UserModel>();
 
@@ -161,14 +173,22 @@ public class UserModel extends Model {
 	 * @return unique set of 1st level child team members
 	 */
 	public static Set<UserModel> getChildUserModelByParent(UserModel parent) {
+
+        // If there's a group ID on the parent, use it to look up the children for a more specific set. In the grand
+        // scheme of things, this won't usually make a difference, but it's good for assurance that the child is part
+        // of the same group.
+        if (parent.getGroupId() != null) {
+            return find.where()
+                    .isNotNull("parent_team_member")
+                    .eq("parent_team_member", parent)
+                    .eq("group_id", parent.getGroupId())
+                    .findSet();
+        }
 		return find.where().isNotNull("parent_team_member").eq("parent_team_member", parent).findSet();
 	}
 
     public static UserModel getByEmail(String email) {
         return find.where().eq("userName", email).findList().listIterator().next();
-    }
-    public static List<UserModel> getByPermissionLevel(Role roleType) {
-        return find.where().eq("roleType", roleType.getPermissionLevel()).findList();
     }
 
 	public Integer getUserPermissionLevel() {
@@ -210,5 +230,40 @@ public class UserModel extends Model {
         String firstName = (this.firstName != null) ? this.firstName : "";
         String lastName = (this.lastName != null) ? this.lastName : "";
         return String.format("%s %s", firstName, lastName);
+    }
+
+    /*************************************************************
+     GETTERS & SETTERS
+     ************************************************************/
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setRoleType(Integer roleType) {
+        this.roleType = roleType;
+    }
+
+    public UserRole getRole() {
+        if (role == null) {
+            role = UserRole.getUserRoleForPermissionLevel(this.roleType);
+        }
+        return role;
+    }
+
+    public void setRole(UserRole role) {
+        this.role = role;
+    }
+
+    public Integer getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 }

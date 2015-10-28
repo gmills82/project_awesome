@@ -8,9 +8,21 @@ app.data = {};
  */
 app.filter('formatDate', function () {
     return function (item) {
+        if (!item) {
+            item = new Date();
+        }
         return moment(item).format("YYYY-MM-DD h:mm a");
     };
 });
+
+/**
+ Event constants that are emitted and listened on.
+ */
+app.constant('events', {
+    'REFERRAL_DELETED': 'referralDeleted',
+    'REFERRAL_NOTE_ADDED': 'referralNoteAdded'
+});
+
 if(document.getElementById("baseContainer")){
 	app.data.currentUserId = document.getElementById("baseContainer").getAttribute("data-user");
 }

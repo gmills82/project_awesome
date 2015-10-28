@@ -60,6 +60,17 @@ public class ClientCtrl extends Controller {
         return ok(result);
     }
 
+    @BodyParser.Of(BodyParser.Json.class)
+    public static Result getClientHistoryRecords(Long clientId) {
+        List<HistoryRecord> recordList = gatherClientHistory(clientId);
+        HistoryRecords records = new HistoryRecords();
+        records.setRecords(recordList);
+
+        ObjectNode result = Json.newObject();
+        result.put("data", Json.toJson(records));
+        return ok(result);
+    }
+
     @BodyParser.Of(play.mvc.BodyParser.Json.class)
      public static Result addClientJSON() throws ParseException {
         Form<Client> clientForm = Form.form(Client.class);
@@ -90,6 +101,8 @@ public class ClientCtrl extends Controller {
 			}
 			client.goalsString = tmpStr;
 		}
+
+
 
         client.save();
         response().setHeader(LOCATION, routes.ClientCtrl.getClientJSON(client.id).url());
@@ -161,22 +174,40 @@ public class ClientCtrl extends Controller {
 	}
 
 	@BodyParser.Of(BodyParser.Json.class)
-	public static Result query(String queryString) {
+	public static Result query(String queryString, Long userId) {
+
 		//Response object
 		ObjectNode result = Json.newObject();
 		Set<Client> clientList = new HashSet<Client>();
 		Integer MINUTES_TO_CACHE = 1;
 
+        String cacheKey = queryString;
+
+        // If the user ID was passed in, use it to look up the group ID. Because different groups can query the same
+        // members, we'll use the group ID as part of the cache key and use that to look up the client.
+        UserModel userModel = null;
+        if (userId != null && userId != 0) {
+            userModel = UserModel.getById(userId);
+            if (userModel != null && userModel.getGroupId() != null) {
+                cacheKey = cacheKey.concat("group").concat(String.valueOf(userModel.getGroupId()));
+            }
+        }
+
 		//Check cache for request
 		//If in cache attach that to results
-		if(null != Cache.get(queryString)) {
-			clientList = (Set<Client>) Cache.get(queryString);
+		if(null != Cache.get(cacheKey)) {
+			clientList = (Set<Client>) Cache.get(cacheKey);
 		}else {
 			//Else get requested data
-			clientList = Client.query(queryString);
+            if (userModel != null && userModel.getGroupId() != null) {
+                clientList = Client.query(queryString, Long.valueOf(userModel.getGroupId()));
+            }
+            else {
+                clientList = Client.query(queryString);
+            }
 
 			//Add to cache
-			Cache.set(queryString, clientList, 60 * MINUTES_TO_CACHE);
+			Cache.set(cacheKey, clientList, 60 * MINUTES_TO_CACHE);
 		}
 
 		//Add to result
@@ -192,7 +223,8 @@ public class ClientCtrl extends Controller {
 
 		Collections.sort(historyModels);
 
-		for(HistoryRecord record: historyModels) {
+		for(HistoryRecord record : historyModels) {
+
 			//TODO: This was an if leftover from when records could be profiles
 			if(record instanceof Referral) {
 				Referral rRecord = (Referral) record;

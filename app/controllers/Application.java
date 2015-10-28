@@ -89,11 +89,11 @@ public class Application extends Controller {
 		if(null != currentUser) {
 
 			Form<UserModel> signupForm = Form.form(UserModel.class);
-			if (roleType < 0 || roleType > 2) {
+			if (UserRole.getUserRoleForPermissionLevel(roleType) == null) {
 				return badRequest(pageError.render());
 			} else {
 				//If currentUser is allowed to use signup action
-				if(currentUser.roleType.getPermissionLevel() < roleType) {
+                if (currentUser.getRole().isPassingPermissionLevel(roleType)) {
 					return ok(signup.render(currentUser, signupForm, roleType));
 				}else {
 					return badRequest(pageError.render());
@@ -127,12 +127,13 @@ public class Application extends Controller {
 
 		//Set Roletype
 		Integer originalRoleType = Integer.parseInt(requestMap.get("roleTypeNum")[0]);
-		UserModel.setRoleType(newUser, originalRoleType);
+        newUser.setRoleType(originalRoleType);
 
 		//Set parent team member to the User currently signing them up
 		UserModel currentUser = getCurrentUser();
 		if(null != currentUser) {
 			newUser.parent_team_member = currentUser;
+            newUser.setGroupId(currentUser.getGroupId());
 		}else {
 			signupForm.reject("Error associating new team member with currently logged in team member.");
 		}
@@ -252,17 +253,13 @@ public class Application extends Controller {
 		//List of agents should contain parent team members (Agents) and their parent team members (FA)
 		List<UserModel> assignableTeamMembers = new ArrayList<UserModel>();
 
-		//EFS and Agents are only assignable users, currently
-		//TODO: Eventually gather these by groupId
-		UserModel topParent = UserModel.getTopParentUser(currentUser);
-		if(null != topParent) {
-			assignableTeamMembers.add(topParent);
-			Set<UserModel> children = UserModel.getChildUserModelsByParentAllLevels(topParent);
-			if(null != children) {
-				//Filter by role level
-				List<UserModel> agentsAndEFS = filter(having(on(UserModel.class).getUserPermissionLevel(), lessThanOrEqualTo(1)), children);
-				assignableTeamMembers.addAll(agentsAndEFS);
-			}
+		//If currentUser is FA of Agent assignable to self
+        if (currentUser.getRole().isPassingPermissionLevel(UserRole.AGENT)) {
+			assignableTeamMembers.add(currentUser);
+
+			//Get all descendant users
+			Set<UserModel> allAgents = UserModel.getChildUserModelsByParentAllLevels(currentUser);
+			assignableTeamMembers.addAll(allAgents);
 		}
 
 		return assignableTeamMembers;

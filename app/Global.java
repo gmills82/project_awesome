@@ -1,27 +1,28 @@
 import actors.DeclinedReferralActor;
-import akka.actor.Props;
+import actors.MigrationTasksActor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import play.*;
 import play.api.mvc.Handler;
-import play.api.mvc.RequestHeader;
 import play.libs.*;
 import com.avaje.ebean.Ebean;
 import models.*;
 import play.mvc.Http;
 import play.mvc.Result;
-import play.mvc.SimpleResult;
-import play.mvc.Http.*;
 import play.libs.F.*;
-import static play.mvc.Results.*;
+
 import java.util.*;
+
+import static play.mvc.Results.notFound;
+import static play.mvc.Results.ok;
 
 public class Global extends GlobalSettings {
     @Override
     public void onStart(Application app) {
 	    Akka.system().actorOf(DeclinedReferralActor.props);
+        Akka.system().actorOf(MigrationTasksActor.props);
 
         // Check if the database is empty
         if (UserModel.find.findRowCount() == 0) {

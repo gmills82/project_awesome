@@ -14,28 +14,15 @@
                 <td sortable="'nextStepDate'" data-title="'Next Steps Date'">{{referral.nextStepTimestamp | formatDate}}</td>
                 <td sortable="'client.phoneNumber'" data-title="'Phone Number'"><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
                 <td data-title="'Status'"><status-label status="referral.status" data-title="'Status'"><status-label status="referral.status"></status-label></td>
-                <td data-title="'Was Productive'">{{referral.wasProductive}}</td>
+                <td sortable="'dateOfLastInteraction'" data-title="'Last Updated'">{{referral.dateOfLastInteraction | formatDate}}</td>
                 <td sortable="'tInsurance'" data-title="'Total Insurance'">{{referral.tInsurance}}</td>
                 <td sortable="'tPc'" data-title="'Total PCs'">{{referral.tPc}}</td>
                 <td sortable="'tIps'" data-title="'Total IPS'">{{referral.tIps}}</td>
-                <td data-title="'Actions'"><a href="/editReferral/{{referral.id}}">Edit Referral</a> - <a href="#deleteModal" data-toggle="modal" data-referral="{{referral.id}}">Delete Referral</a></td>
+                <td data-title="'Actions'">
+                    <div action-dropdown referral="referral"></div>
+                </td>
             </tr>
             </tbody>
         </table>
-    </div>
-</div>
-
-<!--Delete referral modal-->
-<div id="deleteModal" class="modal fade">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4>Delete this referral?</h4>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-default" data-dismiss="modal">No</button>
-                <button class="btn btn-primary">Yes</button>
-            </div>
-        </div>
     </div>
 </div>

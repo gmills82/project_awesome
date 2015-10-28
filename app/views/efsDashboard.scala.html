@@ -5,7 +5,7 @@
 				Your Team's Metrics for {{timeDisplay}}
 			</div>
             <div ng-controller="EfsStatsController" ng-cloak class="main-box-body clearfix">
-                <div class="row">
+                <div class="row stats-row">
                     <div class="col-md-3">
                         <div class="small-graph-box emerald-bg efs-referrals-box">
                             <span class="value">{{totalReferrals}}</span>
@@ -105,7 +105,7 @@
                             <div class=" clearfix profile-box-contact">
                                 <div class=" clearfix">
                                     <div class="profile-box-header gray-bg clearfix trophy-box">
-                                        <h3>Most Efficient Producer</h3>
+                                        <h3>Most Efficient LSP</h3>
                                         <i class="fa fa-trophy trophy"></i>
                                         <h4>{{highestPercentageProductiveReferrals.user.fullName}}</h4>
                                         <ul class="contact-details">
@@ -127,23 +127,31 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-lg-12">
-        @* Fresh Referrals Directive *@
-    <div class="main-box fresh-referral" upcoming-appts></div>
-    </div>
-</div>
+<div ng-controller="ReferralListController">
+	<div class="row">
+		<div class="col-lg-12">
+			@* Fresh Referrals Directive *@
+			<div class="main-box fresh-referral" upcoming-appts></div>
+		</div>
+	</div>
 
-<div class="row">
-    <div class="col-lg-12">
-        @* Fresh Referrals Directive *@
-    <div class="main-box fresh-referral" upcoming-referrals></div>
-    </div>
-</div>
+	<div class="row">
+		<div class="col-lg-12">
+			@* Fresh Referrals Directive *@
+			<div class="main-box fresh-referral" upcoming-referrals></div>
+		</div>
+	</div>
 
-<div class="row">
-    <div class="col-lg-12">
-        @* Fresh Referrals Directive *@
-    <div class="main-box fresh-referral" fresh-referrals></div>
-    </div>
+	<div class="row">
+		<div class="col-lg-12">
+			@* Fresh Referrals Directive *@
+			<div class="main-box fresh-referral" fresh-referrals></div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			@* Processing Referrals Directive *@
+		<div class="main-box fresh-referral" processing-referrals></div>
+		</div>
+	</div>
 </div>
