@@ -253,6 +253,14 @@ public class Application extends Controller {
 		//List of agents should contain parent team members (Agents) and their parent team members (FA)
 		List<UserModel> assignableTeamMembers = new ArrayList<UserModel>();
 
+		//If this gets more complex make it recursive
+		if(null != currentUser.parent_team_member) {
+			assignableTeamMembers.add(currentUser.parent_team_member);
+			if(null != assignableTeamMembers.get(0).parent_team_member) {
+				assignableTeamMembers.add(assignableTeamMembers.get(0).parent_team_member);
+			}
+		}
+
 		//If currentUser is FA of Agent assignable to self
         if (currentUser.getRole().isPassingPermissionLevel(UserRole.AGENT)) {
 			assignableTeamMembers.add(currentUser);
