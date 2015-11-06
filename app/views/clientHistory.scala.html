@@ -103,19 +103,18 @@
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            <th>Date</th>
-                                                            <th>User</th>
+                                                            <th>User/Date</th>
                                                             <th>Note</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
                                                     @for(note <- historyRecords(index).getNotes()) {
                                                         <tr>
-                                                            <td width="20%">@note.getFormattedCreatedDate()</td>
-                                                            <td width="15%">@if(null != note.getUserModelId()) {
+                                                            <td width="20%">@if(null != note.getUserModelId()) {
                                                                 @note.getUserModel().firstName @note.getUserModel().lastName
-                                                            }</td>
-                                                            <td width="65%">@note.getNote()</td>
+                                                            }<br>
+                                                                @note.getFormattedCreatedDate()</td>
+                                                            <td width="65%" class="note">@note.getNote()</td>
                                                         </tr>
                                                     }
                                                     </tbody>

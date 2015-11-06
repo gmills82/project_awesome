@@ -111,3 +111,6 @@
   padding: 0 15px 10px;
   text-align: right;
 }
+.table tbody>tr>td.note {
+  font-size: 1em;
+}
