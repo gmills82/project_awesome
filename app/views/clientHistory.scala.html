@@ -7,7 +7,7 @@
     <div class="main-box-body clearfix ">
         <div class="row">
             @* Client Basic Info *@
-            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-12 ">
+            <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">
                 <div class="main-box project-box profile-box-menu green-box clearfix" >
                     <div class="main-box-body clearfix ">
                         <div class="project-box-header green-bg clearfix"><div class="name"><a href><i class="fa fa-user fa-lg"></i> @client.name</a></div></div>
@@ -24,7 +24,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-9 col-md-8 col-sm-6 col-xs-12">
+            <div class="col-lg-6 col-md-8 col-sm-12 col-xs-12">
                 <div class="main-box">
                     <div class="main-box-header">
                         <h2>Home Address:</h2>
@@ -34,12 +34,30 @@
                     </div>
                 </div>
             </div>
+            <div class="col-lg-3 hidden-md hidden-sm hidden-xs">
+                @* Client totals *@
+                <div class="main-box infographic-box colored green-bg">
+                    <i class="fa fa-money"></i>
+                    <span class="headline">Total Insurance</span>
+                    <span class="value">@sums.getSumInsurance</span>
+                </div>
+                <div class="main-box infographic-box colored purple-bg ">
+                    <i class="fa fa-money"></i>
+                    <span class="headline">Total PC</span>
+                    <span class="value">@sums.getSumPcs</span>
+                </div>
+                <div class="main-box infographic-box colored emerald-bg">
+                    <i class="fa fa-money"></i>
+                    <span class="headline">Total IPS</span>
+                    <span class="value">@sums.getSumIps</span>
+                </div>
+            </div>
         </div>
     </div>
 
     @* Client Interaction History *@
     <div class="row">
-        <div class="col-lg-8">
+        <div class="col-lg-12">
             <div class="main-box">
                 <div class="main-box-header">
                     <h2>Client History</h2>
@@ -77,35 +95,43 @@
                                         }
                                     </td>
                                 </tr>
+                                @if(!historyRecords(index).getNotes().isEmpty()) {
+                                    <tr>
+                                        <td>Notes</td>
+                                        <td colspan="4">
+                                            <div class="table">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Date</th>
+                                                            <th>User</th>
+                                                            <th>Note</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    @for(note <- historyRecords(index).getNotes()) {
+                                                        <tr>
+                                                            <td width="20%">@note.getFormattedCreatedDate()</td>
+                                                            <td width="15%">@if(null != note.getUserModelId()) {
+                                                                @note.getUserModel().firstName @note.getUserModel().lastName
+                                                            }</td>
+                                                            <td width="65%">@note.getNote()</td>
+                                                        </tr>
+                                                    }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                }
                             }
                             </tbody>
                         </table>
                     </div>
                 </div>
             </div>
-            @*Client Notes Summary*@
-            <div class="main-box">
-				<div client-notes clientId="@client.id"></div>
-            </div>
         </div>
-        <div class="col-lg-4">
-            @* Client totals *@
-            <div class="main-box infographic-box colored green-bg">
-                <i class="fa fa-money"></i>
-                <span class="headline">Total Insurance</span>
-                <span class="value">@sums.getSumInsurance</span>
-            </div>
-            <div class="main-box infographic-box colored purple-bg ">
-                <i class="fa fa-money"></i>
-                <span class="headline">Total PC</span>
-                <span class="value">@sums.getSumPcs</span>
-            </div>
-            <div class="main-box infographic-box colored emerald-bg">
-                <i class="fa fa-money"></i>
-                <span class="headline">Total IPS</span>
-                <span class="value">@sums.getSumIps</span>
-            </div>
-        </div>
+
 
     </div>
 }
