@@ -1,9 +1,10 @@
 app.controller('AddNoteController', [
     "$scope",
+    "$rootScope",
     "$modal",
     "referralService",
     "events",
-    function ($scope, $modal, referralService, events) {
+    function ($scope, $rootScope, $modal, referralService, events) {
 
         /**
          Presents the modal allowing the user to add a note to the referral
@@ -27,7 +28,7 @@ app.controller('AddNoteController', [
             instance.result.then(function (data) {
                 if (data) {
                     referralService.addNoteToReferral(data.note, data.referral.id, function (data) {
-                        $scope.$emit(events.REFERRAL_NOTE_ADDED, data.data);
+                        $rootScope.$emit(events.REFERRAL_NOTE_ADDED, data.data);
                     });
                 }
             });

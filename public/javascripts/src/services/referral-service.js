@@ -218,5 +218,9 @@ app.factory('referralService', ['$http', '$log', 'clientService', function($http
         return $http.get('/json/referrals/processing/' + userId);
     };
 
+    service.getByClientId = function (clientId) {
+        return $http.get('/')
+    }
+
 	return service;
 }]);

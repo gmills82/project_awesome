@@ -1,24 +1,23 @@
-<div ng-repeat="record in records">
-    <div class="main-box-header">
-        <h2>
-            Client Notes Summary
-            <div class="pull-right" add-note-button referral="record" type="button"></div>
-        </h2>
-    </div>
-    <div class="main-box-body">
-        <div class="table">
-            <table class="table">
-                <tbody>
-                    <tr ng-repeat="note in record.notes">
-                        <td>
-                            <span ng-if="note.userModel">
-                                {{note.formattedCreatedDate}} - {{note.userModel.fullName}} -
-                            </span>
-                            {{note.note}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
+<div class="table" ng-repeat="record in records">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User/Date</th>
+                <th>Note</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="note in record.notes">
+                <td width="20%">
+                    <span ng-if="note.userModel">
+                        {{note.userModel.fullName}}<br />
+                        {{note.formattedCreatedDate}}
+                    </span>
+                </td>
+                <td width="65%" class="note">
+                    {{note.note}}
+                </td>
+            </tr>
+        </tbody>
+    </table>
 </div>

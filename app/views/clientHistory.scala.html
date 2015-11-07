@@ -4,7 +4,7 @@
 
 @home(user, "Manage Clients") {
     <h1>Client Information</h1>
-    <div class="main-box-body clearfix ">
+    <div class="main-box-body clearfix">
         <div class="row">
             @* Client Basic Info *@
             <div class="col-lg-3 col-md-4 col-sm-12 col-xs-12 ">
@@ -83,15 +83,16 @@
                                     <td>@historyRecords(index).getCreatorName</td>
                                     <td>
                                         @if(historyRecords(index).getLink != null) {
-                                            <a href="@historyRecords(index).getLink">
-                                                @if(historyRecords(index).getRecordType == "Referral") {
-                                                    Edit this @historyRecords(index).getRecordType
-                                                }else {
-                                                    @if(historyRecords(index).getRecordType == "Profile") {
-                                                        View this @historyRecords(index).getRecordType Summary
-                                                    }
-                                                }
-                                            </a>
+											@if(historyRecords(index).getRecordType == "Referral") {
+												@*Edit this @historyRecords(index).getRecordType*@
+												<div action-dropdown client-id="@client.id"></div>
+											}else {
+												@if(historyRecords(index).getRecordType == "Profile") {
+													<a href="@historyRecords(index).getLink">
+														View this @historyRecords(index).getRecordType Summary
+													</a>
+												}
+											}
                                         }
                                     </td>
                                 </tr>
@@ -99,27 +100,7 @@
                                     <tr>
                                         <td>Notes</td>
                                         <td colspan="4">
-                                            <div class="table">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>User/Date</th>
-                                                            <th>Note</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    @for(note <- historyRecords(index).getNotes()) {
-                                                        <tr>
-                                                            <td width="20%">@if(null != note.getUserModelId()) {
-                                                                @note.getUserModel().firstName @note.getUserModel().lastName
-                                                            }<br>
-                                                                @note.getFormattedCreatedDate()</td>
-                                                            <td width="65%" class="note">@note.getNote()</td>
-                                                        </tr>
-                                                    }
-                                                    </tbody>
-                                                </table>
-                                            </div>
+											<div client-notes clientid="@client.id"></div>
                                         </td>
                                     </tr>
                                 }

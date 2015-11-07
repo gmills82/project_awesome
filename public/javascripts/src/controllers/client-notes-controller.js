@@ -1,9 +1,10 @@
 app.controller('ClientNotesController', [
     "$scope",
+    "$rootScope",
     "clientService",
     "userService",
     "events",
-    function ($scope, clientService, userService, events) {
+    function ($scope, $rootScope, clientService, userService, events) {
 
         /** The records list for the client */
         $scope.records = undefined;
@@ -16,7 +17,7 @@ app.controller('ClientNotesController', [
             $scope.records = data.records;
         });
 
-        $scope.$on(events.REFERRAL_NOTE_ADDED, function (event, args) {
+        $rootScope.$on(events.REFERRAL_NOTE_ADDED, function (event, args) {
             if (!$scope.records) {
                 $scope.records = [];
             }

@@ -9,6 +9,9 @@ import java.util.List;
  * Time: 10:06 AM
  */
 public interface HistoryRecord extends Comparable<HistoryRecord> {
+
+    public long getId();
+
 	public Long getDateOfLastInteraction();
 
 	public String getDateOfLastInteractionString();

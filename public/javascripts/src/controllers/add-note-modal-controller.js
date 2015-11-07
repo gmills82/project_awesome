@@ -2,7 +2,8 @@ app.controller('AddNoteModalController', [
     "$scope",
     "$modalInstance",
     "referral",
-    function ($scope, $modalInstance, referral) {
+    "referralService",
+    function ($scope, $modalInstance, referral, referralService) {
 
         /**
          Closes the modal and takes no action
@@ -20,5 +21,9 @@ app.controller('AddNoteModalController', [
                 note: $scope.note
             });
         };
+
+        referralService.get(referral.id, function (data) {
+            $scope.referral = data;
+        });
     }
 ]);
