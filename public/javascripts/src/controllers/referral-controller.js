@@ -2,8 +2,9 @@
 app.controller('ReferralController', [
     "$scope",
     "$http",
+    '$location',
     "referralService",
-    function ($scope, $http, referralService) {
+    function ($scope, $http, $location, referralService) {
         //Reference to original controller scope
         var that = this;
 
@@ -89,6 +90,14 @@ app.controller('ReferralController', [
                 referral.date = referral.nextStepDate.split(" ")[0];
                 referral.time = referral.nextStepDate.split(" ")[1];
 
+                // If there's a provided "nextsteps" parameter in the URL, use that
+                // as an override.
+                if ($location.search()['nextsteps']) {
+                    var nextSteps = moment(parseInt($location.search()['nextsteps']));
+                    referral.date = nextSteps.format('YYYY-MM-DD');
+                    referral.time = nextSteps.format("hh:mm A");
+                }
+
                 if (referral.apptKept === true) {
                     referral.apptKept = "true";
                 } else if (referral.apptKept === false) {
@@ -116,19 +125,12 @@ app.controller('ReferralController', [
         };
 
         //Prepare scope for edit view if the url param refId is present in the url
-        if(window.location.href.match(/\/editReferral\/\d+$/)){
-            var param = window.location.href.match(/\/editReferral\/\d+$/)[0];
+        // FIXME - Use routing instead of regexp matching for the URL parameter...
+        if(window.location.href.match(/\/editReferral\/\d+/)){
+            var param = window.location.href.match(/\/editReferral\/\d+/)[0];
             param = param.slice(param.indexOf("Referral/") + 9);
             //Prepares edit form view related business logic
             $scope.prepareEditReferralForm(param);
         }
-
-        $scope.addNote = function (referral) {
-
-        };
-
-        $scope.viewNotes = function (referral) {
-
-        };
     }
 ]);

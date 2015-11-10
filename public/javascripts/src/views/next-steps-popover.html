@@ -1,0 +1,20 @@
+<button type="button" class="btn btn-link popover-button" popover-template="'next-steps-popover-content.html'" popover-append-to-body="true" popover-is-open="isOpen" ng-click="popoverLinkClicked()">
+    <div ng-transclude></div>
+</button>
+
+<script type="text/ng-template" id="next-steps-popover-content.html">
+    <div class="next-steps-popover-content">
+        <div id="next-steps-datepicker" data-date="{{defaultDate}}"></div>
+        <div id="next-steps-timepicker" class="timepicker">
+            <timepicker ng-model="$parent.timestamp" ng-change="timestampChanged()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></timepicker>
+        </div>
+        <div class="footer-buttons row">
+            <button type="button" class="btn btn-default col-xs-5 pull-left" ng-click="cancelClicked()">
+                Cancel
+            </button>
+            <button type="button" class="btn btn-primary col-xs-5 pull-right" ng-click="confirmClicked()">
+                Confirm
+            </button>
+        </div>
+    </div>
+</script>

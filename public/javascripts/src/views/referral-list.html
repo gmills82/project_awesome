@@ -16,7 +16,9 @@
                     </td>
                     <td sortable="'nextStepDate'" data-title="'Next Steps Date'">
                         <span tooltip="{{referral.refNotes}}" tooltip-trigger="mouseenter">
-                            {{referral.nextStepTimestamp | formatDate}}
+                            <div next-steps-popover current-date="{{referral.nextStepTimestamp}}" referral-id="{{referral.id}}">
+                                {{referral.nextStepTimestamp | formatDate}}
+                            </div>
                         </span>
                     </td>
                     <td data-title="'Phone Number'">

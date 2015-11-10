@@ -1,0 +1,26 @@
+.popover-button {
+  color: #03a9f4 !important;
+}
+.next-steps-popover-content {
+  .datepicker {
+    .table-condensed {
+      margin: 0 auto;
+    }
+  }
+  .timepicker {
+    text-align: center;
+    table {
+      margin: 0 auto;
+    }
+    td {
+      padding: 0 3px;
+    }
+  }
+  .footer-buttons {
+    text-align: center;
+    padding-bottom: 5px;
+    button {
+      margin: 0 5px;
+    }
+  }
+}

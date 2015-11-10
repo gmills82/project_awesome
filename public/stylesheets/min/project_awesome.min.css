@@ -22208,4 +22208,37 @@ ul.nav-pills.nav-stacked li.sub-pill:hover a {
   margin-bottom: 15px;
 }
 
+.datepicker td,
+.datepicker th {
+  padding: 4px !important;
+}
+
+.datepicker-switch {
+  text-align: center !important;
+}
+
+.popover-button {
+  color: #03a9f4 !important;
+}
+
+.next-steps-popover-content .datepicker .table-condensed {
+  margin: 0 auto;
+}
+.next-steps-popover-content .timepicker {
+  text-align: center;
+}
+.next-steps-popover-content .timepicker table {
+  margin: 0 auto;
+}
+.next-steps-popover-content .timepicker td {
+  padding: 0 3px;
+}
+.next-steps-popover-content .footer-buttons {
+  text-align: center;
+  padding-bottom: 5px;
+}
+.next-steps-popover-content .footer-buttons button {
+  margin: 0 5px;
+}
+
 /*# sourceMappingURL=custom.css.map */

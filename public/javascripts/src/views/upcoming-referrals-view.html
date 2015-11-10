@@ -9,7 +9,11 @@
             <tr ng-repeat="referral in $data">
                 <td sortable="'refType'" data-title="'Referral Type'" filter="{ 'refType': 'select' }" filter-data="refTypes">{{referral.refType}} Referral</td>
                 <td sortable="'clientName'" data-title="'Client Name'" filter="{ 'clientName': 'text' }"><a href="/client/history/{{referral.client.id}}">{{referral.clientName}}</a></td>
-                <td sortable="'nextStepDate'" data-title="'Next Steps Date'"><span tooltip="{{referral.refNotes}}" tooltip-trigger="mouseenter">{{referral.nextStepTimestamp | formatDate}}</span></td>
+                <td sortable="'nextStepDate'" data-title="'Next Steps Date'"><span tooltip="{{referral.refNotes}}" tooltip-trigger="mouseenter">
+                    <div next-steps-popover current-date="{{referral.nextStepTimestamp}}" referral-id="{{referral.id}}">
+                        {{referral.nextStepTimestamp | formatDate}}
+                    </div>
+                </span></td>
                 <td sortable="'client.phoneNumber'" data-title="'Phone Number'"><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
                 <td data-title="'Status'"><status-label status="referral.status" data-title="'Status'"></status-label></td>
                 <td data-title="'Actions'" class="table-actions" header-class="'header-center'">
