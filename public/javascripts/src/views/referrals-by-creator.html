@@ -15,8 +15,7 @@
                 </td>
                 <td sortable="'client.phoneNumber'" data-title="'Phone Number'"><a href="tel:+1{{referral.client.phoneNumber}}">{{referral.client.phoneNumber | telly}}</a></td>
                 <td data-title="'Actions'">
-                    <a href="/editReferral/{{referral.id}}">Edit Referral</a> -
-                    <span delete-referral-button referral="referral"></span>
+                    <div action-dropdown referral="referral"></div>
                 </td>
                 <td sortable="'lastEditedDate'" data-title="'Last Edited Date'">{{referral.lastEditedDate}}</td>
             </tr>
