@@ -1,12 +1,13 @@
 //Referrals By Creator Controller
 app.controller('ReferralsByCreatorController', [
     "$scope",
+    "$rootScope",
     "$http",
     "ngTableParams",
     "$filter",
     "events",
     'referralService',
-    function ($scope, $http, ngTableParams, $filter, events, referralService) {
+    function ($scope, $rootScope, $http, ngTableParams, $filter, events, referralService) {
         $scope.referrals = [];
         $scope.recentRefTypes = [{'title': 'No Filter', 'id': ''}];
         $scope.arr=[];
@@ -72,6 +73,17 @@ app.controller('ReferralsByCreatorController', [
             for(var y = 0; y < $scope.refByCreator.data.length; y++) {
                 if($scope.refByCreator.data[y].id === referral.id) {
                     $scope.refByCreator.data.splice(y, 1);
+                }
+            }
+        });
+
+        $rootScope.$on(events.REFERRAL_UPDATED, function (event, args) {
+            if (!args || !args.id) {
+                return;
+            }
+            for (var i = 0; i < $scope.refByCreator.data.length; i++) {
+                if ($scope.refByCreator.data[i].id === args.id) {
+                    $scope.refByCreator.data[i] = args;
                 }
             }
         });

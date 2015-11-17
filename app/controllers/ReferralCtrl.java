@@ -115,7 +115,9 @@ public class ReferralCtrl extends Controller {
 
 		JsonNode data = request().body().asJson();
 		JsonNode refStatusNode = data.findValue("status");
-		referral.status = refStatusNode.get("status").textValue();
+        if (refStatusNode != null && refStatusNode.get("status") != null) {
+            referral.status = refStatusNode.get("status").textValue();
+        }
 
 		//Map agentId to user_id
 		if(null != data.findValue("agentId")){

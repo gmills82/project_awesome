@@ -1,13 +1,14 @@
 //Fresh Referral Controller
 app.controller('FreshReferralController', [
     "$scope",
+    "$rootScope",
     "$http",
     '$log',
     "ngTableParams",
     "$filter",
     'referralService',
     'events',
-    function ($scope, $http, $log, ngTableParams, $filter, referralService, events) {
+    function ($scope, $rootScope, $http, $log, ngTableParams, $filter, referralService, events) {
         $scope.referrals = [];
         $scope.freshRefTypes = [{'title': 'No Filter', 'id': ''}];
         $scope.arr=[];
@@ -74,6 +75,17 @@ app.controller('FreshReferralController', [
             for(var y = 0; y < $scope.freshReferralsTable.data.length; y++) {
                 if($scope.freshReferralsTable.data[y].id === referral.id) {
                     $scope.freshReferralsTable.data.splice(y, 1);
+                }
+            }
+        });
+
+        $rootScope.$on(events.REFERRAL_UPDATED, function (event, args) {
+            if (!args || !args.id) {
+                return;
+            }
+            for (var i = 0; i < $scope.freshReferralsTable.data.length; i++) {
+                if ($scope.freshReferralsTable.data[i].id === args.id) {
+                    $scope.freshReferralsTable.data[i] = args;
                 }
             }
         });

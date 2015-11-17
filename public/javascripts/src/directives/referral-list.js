@@ -2,12 +2,13 @@
 
     app.controller('ReferralListController', [
         '$scope',
+        '$rootScope',
         '$filter',
         '$timeout',
         'ngTableParams',
         'referralService',
         'events',
-        function defineReferralListController($scope, $filter, $timeout, ngTableParams, referralService, events) {
+        function defineReferralListController($scope, $rootScope, $filter, $timeout, ngTableParams, referralService, events) {
 
             $scope.referralTypes = [{'title': 'No Filter', 'id': ''}];
 
@@ -81,6 +82,17 @@
                 for(var y = 0; y < $scope.referralsTable.data.length; y++) {
                     if($scope.referralsTable.data[y].id === referral.id) {
                         $scope.referralsTable.data.splice(y, 1);
+                    }
+                }
+            });
+
+            $rootScope.$on(events.REFERRAL_UPDATED, function (event, args) {
+                if (!args || !args.id) {
+                    return;
+                }
+                for (var i = 0; i < $scope.referralsTable.data.length; i++) {
+                    if ($scope.referralsTable.data[i].id === args.id) {
+                        $scope.referralsTable.data[i] = args;
                     }
                 }
             });

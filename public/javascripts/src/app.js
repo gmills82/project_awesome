@@ -22,7 +22,8 @@ app.filter('formatDate', function () {
 // Event constants that are emitted and listened on.
 app.constant('events', {
     'REFERRAL_DELETED': 'referralDeleted',
-    'REFERRAL_NOTE_ADDED': 'referralNoteAdded'
+    'REFERRAL_NOTE_ADDED': 'referralNoteAdded',
+    'REFERRAL_UPDATED': 'referralUpdated'
 });
 
 if(document.getElementById("baseContainer")){

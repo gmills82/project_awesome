@@ -2,7 +2,10 @@
 
     app.controller('NextStepsPopoverController', [
         '$scope',
-        function defineNextStepsPopoverController($scope) {
+        '$rootScope',
+        'referralService',
+        'events',
+        function defineNextStepsPopoverController($scope, $rootScope, referralService, events) {
 
             // Get the current date to display from the provided scope. This will be
             // our final date selected.
@@ -42,7 +45,17 @@
             // and uses it on the edit screen.
             $scope.confirmClicked = function () {
                 date.setHours($scope.timestamp.getHours(), $scope.timestamp.getMinutes());
-                location.href = '/editReferral/' + $scope.referralId + '#?nextsteps=' + date.getTime()
+                referralService.get($scope.referralId, function (data) {
+                    if (!data) {
+                        return;
+                    }
+                    data.nextStepTimestamp = date.getTime();
+                    data.nextStepDate = moment(date.getTime()).format("YYYY-MM-DD HH:mm");
+                    referralService.put(data, function () {
+                        $rootScope.$emit(events.REFERRAL_UPDATED, data);
+                    });
+                });
+                //location.href = '/editReferral/' + $scope.referralId + '#?nextsteps=' + date.getTime()
             };
 
             // Action to take when the cancel button is clicked. Closes the popover and

@@ -1,12 +1,13 @@
 //Referrals By Creator Controller
 app.controller('ViewTeamReferralsController', [
     "$scope",
+    "$rootScope",
     "$http",
     '$log',
     "ngTableParams",
     'referralService',
     'events',
-    function ($scope, $http, $log, ngTableParams, referralService, events) {
+    function ($scope, $rootScope, $http, $log, ngTableParams, referralService, events) {
         $scope.referrals = [];
         $scope.teamRefs = [{'title': 'No Filter', 'id': ''}];
         $scope.arr=[];
@@ -88,6 +89,17 @@ app.controller('ViewTeamReferralsController', [
             for(var y = 0; y < $scope.viewTeamReferrals.data.length; y++) {
                 if($scope.viewTeamReferrals.data[y].id === referral.id) {
                     $scope.viewTeamReferrals.data.splice(y, 1);
+                }
+            }
+        });
+
+        $rootScope.$on(events.REFERRAL_UPDATED, function (event, args) {
+            if (!args || !args.id) {
+                return;
+            }
+            for (var i = 0; i < $scope.viewTeamReferrals.data.length; i++) {
+                if ($scope.viewTeamReferrals.data[i].id === args.id) {
+                    $scope.viewTeamReferrals.data[i] = args;
                 }
             }
         });

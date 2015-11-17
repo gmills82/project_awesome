@@ -142,6 +142,9 @@ public class DateUtilities {
         }
 
         // A little housecleaning
+        // Most of the dates coming through will now contain an AM or PM, so this is no longer needed. Leaving it commented
+        // out for now just in case. - Justin Podzimek (11.17.15)
+        /*
         if (!hasAmPmDefined) {
             DateTime temporaryDate = new DateTime(date);
 
@@ -152,7 +155,7 @@ public class DateUtilities {
             }
             date = temporaryDate.toDate();
         }
-
+        */
         return date;
     }
 }
