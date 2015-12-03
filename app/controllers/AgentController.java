@@ -46,7 +46,7 @@ public class AgentController extends Controller {
         // Look up all LSPs currently assigned to the agent
         List<Long> userIds = new ArrayList<>();
         userIds.add(agent.getId());
-        Set<UserModel> lsps = UserModel.getChildUserModelsByParentAllLevels(agent);
+        List<UserModel> lsps = agent.getChildTeamMembers();
         for (UserModel lsp : lsps) {
             userIds.add(lsp.getId());
         }
